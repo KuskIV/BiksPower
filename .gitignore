@@ -19,6 +19,8 @@
 09th-semester-report/main.toc
 09th-semester-report/main-blx.bib
 
+*.aux
+
 # User-specific files
 *.rsuser
 *.suo
