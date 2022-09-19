@@ -3,6 +3,22 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# latex
+09th-semester-report/main.aux
+09th-semester-report/main.bbl
+09th-semester-report/main.blg
+09th-semester-report/main.fdb_latexmk
+09th-semester-report/main.fls
+09th-semester-report/main.log
+09th-semester-report/main.out
+09th-semester-report/main.pdf
+09th-semester-report/main.run.xml
+09th-semester-report/main.synctex.gz
+09th-semester-report/main.tdo
+09th-semester-report/main.thm
+09th-semester-report/main.toc
+09th-semester-report/main-blx.bib
+
 # User-specific files
 *.rsuser
 *.suo
