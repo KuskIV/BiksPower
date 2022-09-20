@@ -1,3 +1,18 @@
 
 Introduction should be here\todo[color=green]{write introduction}
 
+In recent years and even much more in recent months there has been an increased focus on our emissions, and power consumption. 
+These emissions are partly because of the amount of energy that we as a species produce and subsequently use. 
+The computer has after the IBM personal computer become a mainstay in pretty much every household in the developed world, and even in the developing world an increasing amount of people have access to their own computational devices such as computers and smartphones. 
+Because of this development the energy consumed from these devices has become more and more relevant as they become increasingly common, and thus they also take up a larger amount of our total energy consumption. 
+While hardware has become much more efficient over the years as transistor sizes have become smaller and thus uses less power, this will not be enough to single hardly handle the growth in the market for computation devices's energy consumption, because of this an understanding of when the hardware uses energy is interesting as the software could help reduce the energy usage. 
+In recent year studies of how and when software uses energy has been conducted, but it is largely still a very new field of study, it has been found that some software depending on programming languages used can have a large effect on the power consumption even for functionally identical programs up to a 90x more energy. 
+A majority of these studies have been conducted on Linux devices as they utilize the tool RAPL, which is exclusive on linux. While the studies for linux are important, the literature does not indicate if the finding for linux energy consumption translates directly to windows. 
+Windows have in many years and at the time of writing is still the most commonly used operating system for personal computers, therefore it is hugely relevant how energy is consumed on these devices as they are a large part of the problem. To monitor energy consumption on windows other programs such as RAPL exist, but the actual reliability that these solutions have to our knowledge never been verified in the literature, thus we do not know how accurate or reliable the results are. 
+Thus we want to compare the different methods of measuring power consumption of programs to see if the solutions for windows are reliable, we will also utilize hardware measurement verify and compare the result with RAPL. 
+To do this we have formulated 4 different research questions that we would like to answer during, to gain insight into the solution on windows.
+ 
+1. How do we systematically measure the power consumption of software on different hardware and OS and how do we make the results comparable.
+2. How do existing solutions to power measurements compare to each other?
+3. How does the measured power consumption change between windows and linux measurements?
+4. Do some problems favour some OS or hardware, or does the same trend continue on both machines.
