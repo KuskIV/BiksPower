@@ -1,0 +1,11 @@
+\section{Intel PowerGadget}
+
+The Intel Power Gadget\cite[]{powergadget} is a software tool for measuring power consumption of Intel Core processors from the 2nd to 10th generation, for both Windows and macOS.
+
+What this software tool offers, is real-time estimations of the energy consumption in watts using the energy counters in the processors.
+
+The tool also contains a command line version called Powerlog, in addition to this, the newest versions also includes estimations of energy consumption on multi socket systems and externally callable APIs. These APIs can b used to extract information within sections of code. This is achieved by evaluating the energy MSR on a per-socket basis.
+
+When measuring energy consumption the average power is measured in watts, cumulative energy in joules, cumulative energy in miliWatt-hours, temperature in Celsius and frequency in GHz.
+
+When considering the API, the sampling frequency can range from 1 to 1000 milliseconds. Here it is noted a high frequency will bring a greater accuracy, but poorer performance of the system, and a frequency of 100 milliseconds, which is the default value, is recommended.\cite*[]{powergadget_api}

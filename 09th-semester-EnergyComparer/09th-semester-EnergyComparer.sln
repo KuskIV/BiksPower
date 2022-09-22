@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyComparer", "EnergyComparer\EnergyComparer.csproj", "{25486AD3-A2F4-4CBB-AE76-74D2B5094BFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnergyComparer", "EnergyComparer\EnergyComparer.csproj", "{25486AD3-A2F4-4CBB-AE76-74D2B5094BFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreHardwareMonitorLib", "LibreHardwareMonitor\LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj", "{32DF6396-4686-4D5E-93CA-28301F70B56B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{25486AD3-A2F4-4CBB-AE76-74D2B5094BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25486AD3-A2F4-4CBB-AE76-74D2B5094BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25486AD3-A2F4-4CBB-AE76-74D2B5094BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DF6396-4686-4D5E-93CA-28301F70B56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DF6396-4686-4D5E-93CA-28301F70B56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DF6396-4686-4D5E-93CA-28301F70B56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DF6396-4686-4D5E-93CA-28301F70B56B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,16 +5,6 @@ using EnergyComparer.Services;
 using System.Data;
 using Serilog;
 
-//IHost host = Host.CreateDefaultBuilder(args)
-//    .ConfigureServices(services =>
-//    {
-//        services.AddHostedService<Worker>();
-//    })
-//    .Build();
-
-//await host.RunAsync();
-
-
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {

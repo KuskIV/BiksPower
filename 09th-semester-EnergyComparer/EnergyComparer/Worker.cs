@@ -19,7 +19,13 @@ namespace EnergyComparer
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _hardwareMonitorService.GetCpuTemperature();
+                var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
+                var memory = _hardwareMonitorService.GetCpuMemory();
+                var avgLoad = _hardwareMonitorService.GetAverageCpuLoad();
+                var totalLoad = _hardwareMonitorService.GetTotalLoad();
+                var maxTemp = _hardwareMonitorService.GetMaxTemperature();
+
+                _logger.Information($"avg temp = {avgTemp}\nmax temp = {maxTemp}\nmemory={memory}\navg load = {avgLoad}\ntotal load {totalLoad}\n---");
 
                 _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
