@@ -1,0 +1,24 @@
+\begin{table}
+    \centering
+    \begin{tabular}{ | c | c |}
+        \hline
+        \thead{Function} & Description \\
+        \hline
+        \texttt{bool IntelEnergyLibInitialize();} &  \makecell{The library is initialized and a connection is\\made to the driver}  \\
+        \hline
+        \texttt{bool ReadSample();} &  \makecell{Sample data is read from all supported MSRs\\through the driver}  \\
+        \hline
+        \makecell{\texttt{bool GetPowerData(}\\ \texttt{int iNode, int iMSR,}\\ \texttt{double *pResult, int *nResult);}} &  \makecell{The data collected by the most recent\\ReadSample() is returned. The data returned is only for the package iNode specified, from the iMSR MSR specified. pResult represents the data returned, and nResults represents the number of double results in pResult.}  \\
+        \hline
+        \texttt{bool StartLog(wchart szFileName);} & \makecell{Some really \\ longer text}  \\
+        \hline
+        \texttt{bool StopLog();} &  \makecell{Some really \\ longer text}  \\
+        \hline
+    \end{tabular}
+    \caption{Function prototypes of relevant functions.}
+    \label{tab:intel_power_gadget_functions}
+\end{table}
+
+% Returns the data collected by the most recent call to ReadSample(). The returned data is for the data on the package specified by iNode, from the MSR specified by iMSR. The data is returned in pResult, and the number of double results returned in pResult is returned in nResult. Refer Table 1: MSR Functions.
+
+% The data collected by the most recent ReadSample() is returned. The data returned is only for the package iNode specified, from the iMSR MSR specified. pResult represents the data returned, and nResults represents the number of double results in pResult.
