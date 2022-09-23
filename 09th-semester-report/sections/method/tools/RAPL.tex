@@ -9,6 +9,8 @@ The different power domains which are supported are:
     \item Power Plane 1 (PP1): Includes uncore components. Excluding cores.
     \item PSys: Includes the consumption of the system-on-chip (SoC) which along with the processor usually includes a GPU, memory, power management circuits and USB controller. Only available on a smaller subset of models.
 \end{itemize}
-Not all power domains are supported by each processor model.
+Although there are some limitations, since not all power domains are supported by each processor model e.g. PP1 is only supported on desktop models. The energy counters un RAPL are accessed by utilizing model-specific registers (MSRs). By default these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}. \nytafsnit
 
-The driver are only available on linux, therefore it cannot be utilized on Windows. 
+Another limitation is the poor driver support. There are only drivers available for the linux kernel. Therefore it could be beneficial to investigate wether there are useful alternatives for Windows.\cite{RAPL_in_action}  
+
+%% We can go into more depth if needed "RAPL in Action: Experiences in using RAPL for Power Measurement"
