@@ -8,17 +8,21 @@ namespace EnergyComparer
     {
         private readonly ILogger _logger;
         private readonly IHardwareMonitorService _hardwareMonitorService;
+        private readonly IIntelPowerGadgetService _intelPowerGadget;
 
-        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService)
+        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget)
         {
             _logger = logger;
             _hardwareMonitorService = hardwareMonitorService;
+            _intelPowerGadget = intelPowerGadget;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                await _intelPowerGadget.Initialise();
+
                 var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
                 var memory = _hardwareMonitorService.GetCpuMemory();
                 var avgLoad = _hardwareMonitorService.GetAverageCpuLoad();

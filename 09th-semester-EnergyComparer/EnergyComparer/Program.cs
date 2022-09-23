@@ -25,6 +25,7 @@ builder
         //}).As<IDbConnection>().AsSelf().InstancePerDependency().ExternallyOwned();
 
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
+        builder.RegisterType<IntelPowerGadgetService>().As<IIntelPowerGadgetService>().SingleInstance().AutoActivate();
     })
     .UseSerilog((ctx, lc) => lc
     .WriteTo.Console());
