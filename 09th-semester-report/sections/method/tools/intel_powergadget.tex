@@ -7,6 +7,8 @@ When measuring energy consumption the average power is measured in watts, cumula
 
 When using the Power Gadget API a reference to \texttt{EnergyLib64.dll} will make functions available. When using the library, it must first be initialized, by calling 
 
-\texttt{IntelEnergyLibInitialize()}, where the drivers are loaded. In addition to this, the library also contains contains other method. Similar for all these methods is how they return a boolean, representing if the call was a success. In this study, this tool will only be used for power measuring, despite also having additional features like temperatures or frequencies of the processor. All functions can be found in the official documentation\cite*[]{powergadget_api}, where the relevant functions can be found in \cref{tab:intel_power_gadget_functions}
+\texttt{IntelEnergyLibInitialize()}, where the drivers are loaded. In addition to this, the library also contains contains other method. Similar for all these methods is how they return a boolean, representing if the call was a success. In this study, this tool will only be used for power measuring, despite also having additional features like temperatures or frequencies of the processor. All functions can be found in the official documentation\cite*[]{powergadget_api}, where the relevant functions can be found in \cref{tab:intel_power_gadget_functions}.
+
+Intel Power Gadget and its API has so far been used in studies\cite[]{Bruce2015ReducingEC, Ozturk2019, Unlu2021}, but, as is noted in the studies, no studies exists looking at the accuracy of the tool. In addition to this, it is also noted that the tool only measures energy consumption of the CPU, and not the GPU.
 
 \input{tabels/intel_power_gadget_functions.tex}
