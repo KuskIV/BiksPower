@@ -1,2 +1,14 @@
-\section*{Running Average Power Limit (RAPL)}
-Intel's Running Average Power Limit (RAPL) is a tool that allows for measuring energy consumption of the CPU, DRAM and on board GPU. It was introduced with Intel’s Sandy Bridge architecture from 2011. It allows to get real time data on the power consumption. 
+\section{Running Average Power Limit (RAPL)}
+Intel's Running Average Power Limit (RAPL) is a tool that allows for measuring energy consumption of different power domains and limiting the average power consumption of the components in the processor. In this report we use the functionality of RAPL to get real time data on the power consumption. It was introduced with Intel’s Sandy Bridge architecture from 2011 and it has since Intel Haswell been improved to be a viable alternative to manual complex power monitors with a low and negligible performance overhead. \cite{RAPL_in_action}
+
+The different power domains which are supported are:
+\begin{itemize}
+    \item CPU package (PKG): Includes the consumption of the entire socket which is all cores and uncore components which are parts that are not in the core, but is closely connected e.g. caches, memory controller, integrated graphics.
+    \item DRAM: Includes the consumption of the RAM which is integrated into the memory controller.  
+    \item Power Plane 0 (PP0): Includes the consumption of all cores. Excluding uncore components.
+    \item Power Plane 1 (PP1): Includes uncore components. Excluding cores.
+    \item PSys: Includes the consumption of the system-on-chip (SoC) which along with the processor usually includes a GPU, memory, power management circuits and USB controller. Only available on a smaller subset of models.
+\end{itemize}
+Not all power domains are supported by each processor model.
+
+The driver are only available on linux, therefore it cannot be utilized on Windows. 
