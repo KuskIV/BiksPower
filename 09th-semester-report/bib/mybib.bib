@@ -68,7 +68,48 @@
 }
 
 @misc{Intel_developers_manual,
-  author = {Intel Corporation},
-  title  = {Intel® 64 and IA-32 Architectures Software Developer’s Manual Volume 3B: System Programming Guide, Part 2},
-  year   = {2007}
+author = {Intel Corporation},
+title = {Intel® 64 and IA-32 Architectures Software Developer’s Manual Volume 3B: System Programming Guide, Part 2},
+year = {2007},
+addendum     = {23/09/2022}
+}
+
+@ARTICLE{Power-Management_Sandy_Bridge,
+author={Rotem, Efraim and Naveh, Alon and Ananthakrishnan, Avinash and Weissmann, Eliezer and Rajwan, Doron},
+journal={IEEE Micro},
+title={Power-Management Architecture of the Intel Microarchitecture Code-Named Sandy Bridge},
+year={2012},
+volume={32},
+number={2},
+pages={20-27},
+doi={10.1109/MM.2012.12}
+}
+
+@article{RAPL_ACU1,
+author = {H\"{a}hnel, Marcus and D\"{o}bel, Bj\"{o}rn and V\"{o}lp, Marcus and H\"{a}rtig, Hermann},
+title = {Measuring Energy Consumption for Short Code Paths Using RAPL},
+year = {2012},
+issue_date = {December 2012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {3},
+issn = {0163-5999},
+url = {https://doi.org/10.1145/2425248.2425252},
+doi = {10.1145/2425248.2425252},
+abstract = {Measuring the energy consumption of software components is a major building block for generating models that allow for energy-aware scheduling, accounting and budgeting. Current measurement techniques focus on coarse-grained measurements of application or system events. However, fine grain adjustments in particular in the operating-system kernel and in application-level servers require power profiles at the level of a single software function. Until recently, this appeared to be impossible due to the lacking fine grain resolution and high costs of measurement equipment. In this paper we report on our experience in using the Running Average Power Limit (RAPL) energy sensors available in recent Intel CPUs for measuring energy consumption of short code paths. We investigate the granularity at which RAPL measurements can be performed and discuss practical obstacles that occur when performing these measurements on complex modern CPUs. Furthermore, we demonstrate how to use the RAPL infrastructure to characterize the energy costs for decoding video slices.},
+journal = {SIGMETRICS Perform. Eval. Rev.},
+month = {jan},
+pages = {13–17},
+numpages = {5},
+keywords = {power consumption, operating systems, RAPL}
+}
+
+@INPROCEEDINGS{RAPL_ACU2,  author={Hackenberg, Daniel and Ilsche, Thomas and Schöne, Robert and Molka, Daniel and Schmidt, Maik and Nagel, Wolfgang E.},  booktitle={2013 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},   title={Power measurement techniques on standard compute nodes: A quantitative comparison},   year={2013},  volume={},  number={},  pages={194-204},  doi={10.1109/ISPASS.2013.6557170}
+}
+
+@misc{linux_manual_msr,
+author ={The Linux man-pages project},
+title={msr(4)},
+addendum     = {23/09/2022}
 }
