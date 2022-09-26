@@ -4,4 +4,16 @@
 
 When considering what existing work already aims to compare the accuracies of different energy measurement tools there exists a few. One is the work by Hackenber et. al\cite*[]{Hackenberg2013}, where Intel's RAPL, AMD's APM with both AC and DC measurings. Here the AC are used as the ground truth, as it is concluded to be very accurate, as $95\%$ and $96\%$ of samples vary with less than 2W in the two tests conducted.
 
-Another work comparing different energy profilers is the work by Jagroep et al.\cite[]{Jagroep2015}.
+Another work comparing different energy profilers is the work by Jagroep et al.\cite[]{Jagroep2015}. This work evaluates different energy profilers through a series of experiments on both functionality and accuracy and notes that despite having access to roughly the same data the results can differ significantly. The study includes 14 different energy profilers, picked based four criteria. These include:
+
+%% This work used watts up meter
+
+\begin{itemize}
+    \item The available versions should at least be 'beta'
+    \item Should be able to sample at least once per second
+    \item Should be on Linux or Windows
+    \item Should be compatible with the hardware
+\end{itemize}
+
+They do however have some issues when trying to download and set up most of the energy profilers.
+

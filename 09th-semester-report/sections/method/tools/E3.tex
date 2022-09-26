@@ -16,14 +16,24 @@ The reports created by E3 will by default contain logs of power usage for the pr
 
 As of the time of writing no study or external entity apart from Microsoft themselves have either used nor verified the accuracy and reliability of the numbers provided by E3. Because of this the information about E3 mostly comes from blog posts or presentation by Microsoft themselves, and are very sparse in the information provided. An additional limitation is how this software only works on windows devices with a battery, meaning that E3 is not accessible on the average Windows workstation.
 
-To generate the raw energy report from E3 a elevated command shell is needed. Then the desired destination for the report should be navigated to, then in the command shell write:
-\newline
-\textbf{powercfg.exe \textbackslash srumutil}
-\newline
-If the report is created successfully:
-\newline
-\textbf{Completed with status 0 (0x00000000)}
-Examples of the full measurements and an example with only the attributes that is relevant for this study can be found in the appendix, like with the other measurement tools. \todo[]{Actually do this}
+To generate the raw energy report from E3 a elevated command shell is needed. Then the desired destination for the report should be navigated to, then in the command shell write as can be seen in \cref{listing:start_e3}
+
+\begin{lstlisting}[caption=How to start E3, label=listing:start_e3]
+    powercfg.exe \srumutil
+\end{lstlisting}
+
+Upon a successful execution, the message in \cref{listing:success_e3} can be observed.
+
+\begin{lstlisting}[caption=If the report is created successfully
+    , label=listing:success_e3]
+    Completed with status 0 (0x00000000): Examples of the full measurements and an example with only the attributes that is relevant for this study can be found in the appendix, like with the other measurement tools.
+\end{lstlisting}
 
 
 
+
+% start normal listing
+% \begin{lstlisting}[language=Python, caption=Python example]
+
+% From file
+% \lstinputlisting[language=Octave]{BitXorMatrix.m}
