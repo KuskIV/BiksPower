@@ -48,10 +48,22 @@
   abstract = {Abstract Mobile devices and accessing the web have become essential in our daily lives. However, their limitations in terms of both hardware such as the battery, and software capabilities can affect the user experience such as battery drain. There are some best practices for the web page design that are shown to affect the downloading time of web pages. In this study, we report our experience in applying these practices to see their effect on energy saving. We propose two techniques: (1) concatenating external script and stylesheet files and (2) minifying external script and stylesheets that can be used to transcode web pages to improve energy consumption on the client-side and therefore improve the battery life. We present our experimental architecture, implementation, and a systematic evaluation of these two techniques. The evaluation results show that the proposed techniques can achieve approximately 12\% processor energy-saving and 4\% power saving in two different client types, 13\% improvement in a typical laptop battery life, and 4\% improvement in a typical mobile phone battery life.},
   year     = {2022}
 }
+@misc{E3Video,
+  title        = {{Defrag Tools 157 - Energy Estimation Engine \(E3\)}},
+  howpublished = {\url{https://learn.microsoft.com/en-us/shows/defrag-tools/157-energy-estimation-engine-e3}},
+  note         =  {{Accessed: 09/23/2022}}
+}
 @misc{E3WinHec,
   title        = {{WinHEC 2015 12/4/2017}},
   howpublished = {\url{https://slideplayer.com/slide/12250080/}},
-  year         = {{Accessed: 09/23/2022}}
+  note         = {{Accessed: 09/23/2022}}
+}
+
+@misc{E3Doc,
+  title        = {Powercfg command-line options},
+  howpublished = {\url{https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options}},
+  year         = {{2021}},
+  note         = {{Accessed: 09/23/2022}}
 }
 
 @article{RAPL_in_action,
@@ -67,7 +79,6 @@
   url        = {https://doi.org/10.1145/3177754},
   doi        = {10.1145/3177754},
   journal    = {ACM Trans. Model. Perform. Eval. Comput. Syst.},
-  month      = {mar},
   articleno  = {9},
   numpages   = {26},
   keywords   = {RAPL validation, power modeling, RAPL, DRAM power, RAPL accuracy}
@@ -105,7 +116,6 @@ url = {https://doi.org/10.1145/2425248.2425252},
 doi = {10.1145/2425248.2425252},
 abstract = {Measuring the energy consumption of software components is a major building block for generating models that allow for energy-aware scheduling, accounting and budgeting. Current measurement techniques focus on coarse-grained measurements of application or system events. However, fine grain adjustments in particular in the operating-system kernel and in application-level servers require power profiles at the level of a single software function. Until recently, this appeared to be impossible due to the lacking fine grain resolution and high costs of measurement equipment. In this paper we report on our experience in using the Running Average Power Limit (RAPL) energy sensors available in recent Intel CPUs for measuring energy consumption of short code paths. We investigate the granularity at which RAPL measurements can be performed and discuss practical obstacles that occur when performing these measurements on complex modern CPUs. Furthermore, we demonstrate how to use the RAPL infrastructure to characterize the energy costs for decoding video slices.},
 journal = {SIGMETRICS Perform. Eval. Rev.},
-month = {jan},
 pages = {13–17},
 numpages = {5},
 keywords = {power consumption, operating systems, RAPL}
