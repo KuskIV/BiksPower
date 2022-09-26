@@ -1,16 +1,20 @@
 \section{Microsoft energy estimation engine}
-Microsoft estimation energy estimation engine(E3), is a tool created to monitor battery usage on windows devices, because of this it is only available on windows devices with battery's. E3 monitors the computer at all times to created battery energy usage reports, 
-
-that can be accessed in the power battery settings under Battery usage \cite[p.43]{E3WinHec}. The reported accuracy of E3 varies based on certain factors specifically if a specifically made energy measurement chip is build into the computer. The reported accuracies for each part of the computer can be seen in \cref{tab:E3_acc_Table}. 
+Microsoft Energy Estimation Engine (E3) is a tool created to monitor energy consumption of batteries on windows devices. E3 monitors the computer at all times to created battery energy usage reports, accessible in the power battery settings under Battery usage.\cite[p.43]{E3WinHec}
+The reported accuracy of E3 varies based on different factors specifically if a special energy measurement chip is build into the computer. The reported accuracies for each part of the computer can be seen in \cref{tab:E3_acc_Table}. 
 
 \input{tabels/E3Accuracy.tex}
-It can be seen that there is large differences in the accuracy between devices with and without the chip. The chips refereed to here are specifically the Maxim MAX34407 and the Maxim MAX34417, finding the models of computers that actually contain these chips have proven difficult, with very few computer known to actually contain the chip. 
 
-E3 differs from other tools with similar functionality in that it creates estimates for each program running on the machine individually. Most tools will instead provide some energy usage estimate in a giving time span. 
+In \cref*{tab:E3_acc_Table} it can be observed how there is a large differences in the accuracy between devices with and without the chip on the motherboard. The chips refereed to here are specifically the Maxim MAX34407 and the Maxim MAX34417, contained for example in different Microsoft Surface devices.
 
-The reports created by E3 will by default contain logs of power usage for the previous $7$ days, where each process and their power usage is logged. Each log entry accounts for $1-5$ minutes depending on the actual length of the process execution \cite[]{E3Video}. Each entry of the reported power contains the following attributes that are relevant and many more can be seen in \cref{tab:E3_attr_Table}
+% , finding the models of computers that actually contain these chips have proven difficult, with very few computer known to actually contain the chip. 
+
+E3 differs from other tools with similar functionality in that it creates estimates for each process running on the machine individually. Most tools will instead provide some energy usage estimate of the entire system in a giving time span. This makes it easier to draw certain conclusions about energy usage from E3, if the estimation are accurate. 
+
+The reports created by E3 will by default contain logs of power usage for the previous $7$ days, where each process and their power usage is logged. Each log entry accounts for $1-5$ minutes depending on the actual length of the process execution \cite[]{E3Video}. Each entry in the report contains many attributes, where some of the relevant attributes to this study can be seen in \cref{tab:E3_attr_Table}
+
 \input{tabels/E3AttrTable.tex}
-As of the time of writing no study or external entity from microsoft themselves have either used nor verified the accuracy and reliability of the numbers provided by E3. Because of this the information about E3 mostly comes from blog posts or presentation by microsoft themselves, and are very sparse in the information provided.
+
+As of the time of writing no study or external entity apart from Microsoft themselves have either used nor verified the accuracy and reliability of the numbers provided by E3. Because of this the information about E3 mostly comes from blog posts or presentation by Microsoft themselves, and are very sparse in the information provided. An additional limitation is how this software only works on windows devices with a battery, meaning that E3 is not accessible on the average Windows workstation.
 
 To generate the raw energy report from E3 a elevated command shell is needed. Then the desired destination for the report should be navigated to, then in the command shell write:
 \newline
@@ -18,5 +22,8 @@ To generate the raw energy report from E3 a elevated command shell is needed. Th
 \newline
 If the report is created successfully:
 \newline
-\textbf{Completed with status 0 (0x00000000)} 
+\textbf{Completed with status 0 (0x00000000)}
+Examples of the full measurements and an example with only the attributes that is relevant for this study can be found in the appendix, like with the other measurement tools. \todo[]{Actually do this}
+
+
 
