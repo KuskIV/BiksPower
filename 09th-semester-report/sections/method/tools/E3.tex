@@ -1,12 +1,22 @@
 \section{Microsoft energy estimation engine}
 Microsoft estimation energy estimation engine(E3), is a tool created to monitor battery usage on windows devices, because of this it is only available on windows devices with battery's. E3 monitors the computer at all times to created battery energy usage reports, 
 
-that can be accessed in the power battery settings under Battery usage \cite[p.43]{E3WinHec}. The reported accuracy of E3 varies based on certain factors specifically if a specifically made energy measurement chip is build into the computer. The reported accuracies for each part can be seen in \cref{tab:E3_acc_Table}. 
+that can be accessed in the power battery settings under Battery usage \cite[p.43]{E3WinHec}. The reported accuracy of E3 varies based on certain factors specifically if a specifically made energy measurement chip is build into the computer. The reported accuracies for each part of the computer can be seen in \cref{tab:E3_acc_Table}. 
 
 \input{tabels/E3Accuracy.tex}
-It can be seen that there seems to be large differences in the accuracy between devices with and without the chip. The chips refereed to here are specifically the Maxim MAX34407 and the Maxim MAX34417, finding the models of computers that actually contain these chips have proven difficult. 
+It can be seen that there is large differences in the accuracy between devices with and without the chip. The chips refereed to here are specifically the Maxim MAX34407 and the Maxim MAX34417, finding the models of computers that actually contain these chips have proven difficult, with very few computer known to actually contain the chip. 
 
 E3 differs from other tools with similar functionality in that it creates estimates for each program running on the machine individually. Most tools will instead provide some energy usage estimate in a giving time span. 
 
-The reports created by E3 will by default contain logs of power usage for the previous $7$ days, where each program and their power usage is logged. Each log entry accounts for $1-5$ minutes depending on the actual length of the program execution \cite[]{E3Video}. Each entry of the reported power contains the following attributes:
-AppI
+The reports created by E3 will by default contain logs of power usage for the previous $7$ days, where each process and their power usage is logged. Each log entry accounts for $1-5$ minutes depending on the actual length of the process execution \cite[]{E3Video}. Each entry of the reported power contains the following attributes that are relevant and many more can be seen in \cref{tab:E3_attr_Table}
+\input{tabels/E3AttrTable.tex}
+As of the time of writing no study or external entity from microsoft themselves have either used nor verified the accuracy and reliability of the numbers provided by E3. Because of this the information about E3 mostly comes from blog posts or presentation by microsoft themselves, and are very sparse in the information provided.
+
+To generate the raw energy report from E3 a elevated command shell is needed. Then the desired destination for the report should be navigated to, then in the command shell write:
+\newline
+\textbf{powercfg.exe \textbackslash srumutil}
+\newline
+If the report is created successfully:
+\newline
+\textbf{Completed with status 0 (0x00000000)} 
+

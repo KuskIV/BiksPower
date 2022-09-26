@@ -19,6 +19,10 @@
 09th-semester-report/main.toc
 09th-semester-report/main-blx.bib
 
+# Jeppe fuckup
+09th-semester-report/.vscode/*
+
+
 *.aux
 
 # User-specific files
