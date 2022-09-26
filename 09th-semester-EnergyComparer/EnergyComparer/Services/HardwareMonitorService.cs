@@ -15,6 +15,7 @@ namespace EnergyComparer.Services
     {
         float GetAverageCpuLoad();
         float GetAverageCpuTemperature();
+        List<Temperature> GetCoreTemperatures();
         float GetCpuMemory();
         float GetMaxTemperature();
         float GetTotalLoad();
@@ -53,6 +54,32 @@ namespace EnergyComparer.Services
             }
         }
 
+        public List<Temperature> GetCoreTemperatures()
+        {
+            var temperatures = new List<Temperature>();
+            var defaultName = "CPU Core #";
+
+            var i = 1;
+            var time = DateTime.UtcNow;
+            var name = defaultName + i;
+
+            while (TryGetValueForSensor(SensorType.Temperature, name, out var value))
+            {
+                temperatures.Add(
+                    new Temperature()
+                    {
+                        name = name,
+                        time = time,
+                        value = value
+                    });
+
+                i += 1;
+                name = defaultName + i;
+            }
+
+            return temperatures;
+        }
+
         public float GetAverageCpuTemperature()
         {
             return GetAverageValueForSensor(SensorType.Temperature);
@@ -76,6 +103,21 @@ namespace EnergyComparer.Services
         public float GetCpuMemory()
         {
             return GetValueForSensor(SensorType.Power, "CPU Memory");
+        }
+
+        private bool TryGetValueForSensor(SensorType sensorType, string key, out float value)
+        {
+            UpdateCpuValues();
+
+            if (_cpuValues.TryGetValue(sensorType, out var data) && data.TryGetValue(key, out value))
+            {
+                return true;
+            }
+            else
+            {
+                value = 0;
+                return false;
+            }
         }
 
         private float GetValueForSensor(SensorType sensorType, string key)
