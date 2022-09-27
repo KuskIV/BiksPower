@@ -9,19 +9,32 @@ namespace EnergyComparer
         private readonly ILogger _logger;
         private readonly IHardwareMonitorService _hardwareMonitorService;
         private readonly IIntelPowerGadgetService _intelPowerGadget;
+        private readonly IPrepareService _prepare;
 
-        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget)
+        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget, IPrepareService prepare)
         {
             _logger = logger;
             _hardwareMonitorService = hardwareMonitorService;
             _intelPowerGadget = intelPowerGadget;
+            _prepare = prepare;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await _intelPowerGadget.Initialise();
+                await _intelPowerGadget.Initialise(); // TODO: Move to intel powergadget
+
+                //InitializeExperiment();
+
+                var a = _hardwareMonitorService.GetCoreTemperatures();
+
+                //EndExperiment();
+
+                _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
+                await Task.Delay(1000, stoppingToken);
+
+
 
                 var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
                 var memory = _hardwareMonitorService.GetCpuMemory();
@@ -29,11 +42,24 @@ namespace EnergyComparer
                 var totalLoad = _hardwareMonitorService.GetTotalLoad();
                 var maxTemp = _hardwareMonitorService.GetMaxTemperature();
 
-                _logger.Information($"avg temp = {avgTemp}\nmax temp = {maxTemp}\nmemory={memory}\navg load = {avgLoad}\ntotal load {totalLoad}\n---");
+                _logger.Information($"avg temp  = {avgTemp}");
+                _logger.Information($"memory     = {memory}");
+                _logger.Information($"avg load   = {avgLoad}");
+                _logger.Information($"total load = {totalLoad}");
+                _logger.Information($"max temp   = {maxTemp}");
+                _logger.Information($"---");
 
-                _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
             }
+        }
+
+        private void EndExperiment()
+        {
+            _prepare.EnableWifi();
+        }
+
+        private void InitializeExperiment()
+        {
+            _prepare.DisableWifi();
         }
     }
 }
