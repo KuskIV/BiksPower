@@ -12,10 +12,17 @@ The different power domains which are supported are shown in \cref*{tab:RAPL_Dom
 % \end{itemize}
 
 \input{tabels/RAPL_Domain.tex}
+\todo{We can also add a figure, some of the other reports have a figure showing the domains.}
 
-Although there are some limitations, since not all power domains are supported by each processor model e.g. PP1 is only supported on desktop models. The energy counters in RAPL are accessed by utilizing model-specific registers (MSRs). By default these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}.\nytafsnit
+Although there are some limitations, since not all power domains are supported by each processor model e.g. PP1 is only supported on desktop models. 
 
-Another limitation is the poor driver support. There are only drivers available for the linux kernel, and not for other popular operating system like Windows or MacOS.\cite{RAPL_in_action}  \todo[]{More depth would be nice}
+The energy counters in RAPL are accessed by utilizing model-specific registers (MSRs). By default these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}. There are also alternatives to using the MSRs. The Power Capping Framework allows the user to access RAPL by using sysfs, which is a pseudo file system in the Linux kernel\cite{PowerCappingFramework, RAPL_in_action}. Furthermore perf or perf_events are linux commands available in the linux kernel which allows to access performance counters. \cite{Perf_events,RAPL_in_action} Another option is the Performance Application Programming Interface (PAPI) library, which is a tool that can be used to measure the performance and providing an interface so the measurement in near real time\cite{PAPI}.\nytafsnit
+
+%% Der er ogsp jRAPL, men det virker kun med java
+
+
+
+However another limitation is the poor driver support. There are only drivers available for the linux kernel, and not for other popular operating system like Windows or MacOS\todo{I think it is avaliable on MAC OS actually}.\cite{RAPL_in_action}  \todo[]{More depth would be nice}
 
 \todo{Tools}
 
