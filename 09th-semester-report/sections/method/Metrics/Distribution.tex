@@ -1,15 +1,26 @@
 \subsection{Distribution}
+Here our method for statistically comparing the distribution of the different measurement will be elaborated and explained.
+
+\paragraph{Shapiro-Wilk}
 To answer the first question it is important to find out which statistical tests that could be used on the data. One of the most common preconditions for statistical test is that the data should be a normal distribution for the results to work. To test if a distribution is a normal Distribution a normalcy test have to be used. While there are many different normalcy tests it seems that the Shapiro-Wilk test is generally more powerful than the others that are commonly used \cite{razali2011power}. Because of this the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test:
 $$W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}$$
 The null hypnosis's $H_0$ for the test is:
 \textit{The sample comes from a normally-distributes population}
 There is also the concept of a P-value which is essentially a threshold for wether we can reject $H_0$ or not. The P-value is then compared with a alpha value that we chose, essentially if $P \geq \alpha$ then $H_0$ can be rejected. The P stands for probability a common value for this is $0.05$ meaning that if we sampled a 100 times then 95 time we would reject the $H_0$, this is related to chance and confidence in the results. Generally a lower value of P results in more confidence in the results.
-
+\paragraph{T-Test}
 If the $H_0$ for the Shapiro-Wilk test could not be rejected we assume that the distribution are normal or close enough not to be important.
 
-
+In the case of a normal distribution we a can use a students t-test to check if there is a statistically significant difference between the two samples. There are a couple of conditions when using t-test these are:
 \begin{itemize}
     \item Both samples should follow a normal Distribution.
     \item The samples are independent of each other.
     \item Both the samples should also have approximately the same variance.
 \end{itemize}
+The null hypothesis $H_0$ for the t-test is as follows: \textit{There is no statistically significant difference between the samples}
+
+The t-test is essentially performed using two values the $t_{value}$ and the $p_{value}$:
+The formula for the calculation of the t value can be seens:
+$$t_{Value} = \frac{|\bar{x_1}- \bar{x_2}|}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}$$ 
+
+The actual rejection of $H_0$ is now dependent on the choice op $p$ which is set to $0.05$ Because it is a common value for it in scientific applications. A t-table is then used to determine the correct $p_{value}$.
+If the $t_{Value} > p_{Value}$ then we can reject $H_0$
