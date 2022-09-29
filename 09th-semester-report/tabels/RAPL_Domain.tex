@@ -1,0 +1,13 @@
+\begin{table}
+    \begin{tabular}{| p{0.25\linewidth} | p{0.7\linewidth}|}
+    \hline
+    \textbf{Power Domain}  & \textbf{Description}                            \\ \hline
+    CPU package (PKG)        & Includes the consumption of the entire socket which is all cores and uncore components which are parts that are not in the core, but is closely connected e.g. caches, memory controller, integrated graphics.       \\ \hline
+    DRAM                & Includes the consumption of the RAM which is integrated into the memory controller.                       \\ \hline
+    Power Plane 0 (PP0)                 & Includes the consumption of all cores. Excluding uncore components.               \\ \hline
+    Power Plane 1 (PP1)      & Includes uncore components. Excluding cores.           \\ \hline
+    PSys & Includes the consumption of the system-on-chip (SoC) which along with the processor usually includes a GPU, memory, power management circuits and USB controller. Only available on a smaller subset of models.       \\ \hline
+    \end{tabular}
+    \caption{The power domains supported by RAPL}
+    \label{tab:RAPL_Domain}
+    \end{table}

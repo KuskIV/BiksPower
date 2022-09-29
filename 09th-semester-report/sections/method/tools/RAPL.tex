@@ -1,18 +1,30 @@
 \section{Running Average Power Limit (RAPL)}
-Intel's Running Average Power Limit (RAPL) is a tool that allows for measuring energy consumption of different power domains and \todo[]{Limiting? does it effect the power consumption?} limiting the average power consumption of the components in the processor. RAPL is a software power model estimating the energy consumption by utilizing hardware performance counters and I/O models.\cite{Power-Management_Sandy_Bridge} The accuracy of the energy consumption is \todo[]{How hight} high even though it is a software power model\cite{RAPL_ACU1,RAPL_ACU2}. RAPL was introduced with Intel's Sandy Bridge architecture from 2011 and it has since \todo[]{Didn't you mention it was since a specific chip it got good?} been deemed a viable alternative to manual complex power monitors with a low and negligible performance overhead. \cite{RAPL_in_action}
+Intel's Running Average Power Limit (RAPL) is a tool that allows for measuring energy consumption of different power domains and \todo[]{Limiting? does it effect the power consumption?} limiting the average power consumption of the components in the processor. RAPL is a software power model estimating the energy consumption by utilizing hardware performance counters and I/O models.\cite{Power-Management_Sandy_Bridge} The accuracy of the energy consumption is \todo[]{How hight} high even though it is a software power model\cite{RAPL_ACU1,RAPL_ACU2}. In an experiment measuring the package power with RAPL and the full system power consumption from the wall the two numbers had a correlation coefficient of 0.99.\cite{RAPL_in_action} RAPL was introduced with Intel's Sandy Bridge architecture from 2011 and it has since improved with the generations of new chips. In Intel Haswell(2013) the control of the frequencies were improved and a long with on chip voltage regulators, the accuracy of RAPL became better. Then with Intel Skylake (2015) a new domain was added (PSys) as well as better granularity for the PP0 measurements. It is deemed as  \todo[]{Didn't you mention it was since a specific chip it got good?} a viable alternative to manual complex power monitors with a low and negligible performance overhead. \cite{RAPL_in_action}
 
-The different power domains which are supported are:
-\todo[]{Simliar itemize in E3, but in a tabel instead. Consistency is key}
-\begin{itemize}
-    \item CPU package (PKG): Includes the consumption of the entire socket which is all cores and uncore components which are parts that are not in the core, but is closely connected e.g. caches, memory controller, integrated graphics.
-    \item DRAM: Includes the consumption of the RAM which is integrated into the memory controller.  
-    \item Power Plane 0 (PP0): Includes the consumption of all cores. Excluding uncore components.
-    \item Power Plane 1 (PP1): Includes uncore components. Excluding cores.
-    \item PSys: Includes the consumption of the system-on-chip (SoC) which along with the processor usually includes a GPU, memory, power management circuits and USB controller. Only available on a smaller subset of models.
-\end{itemize}
+The different power domains which are supported are shown in \cref{tab:RAPL_Domain}\nytafsnit
+% \todo[]{Simliar itemize in E3, but in a tabel instead. Consistency is key}
+% \begin{itemize}
+%     \item CPU package (PKG): Includes the consumption of the entire socket which is all cores and uncore components which are parts that are not in the core, but is closely connected e.g. caches, memory controller, integrated graphics.
+%     \item DRAM: Includes the consumption of the RAM which is integrated into the memory controller.  
+%     \item Power Plane 0 (PP0): Includes the consumption of all cores. Excluding uncore components.
+%     \item Power Plane 1 (PP1): Includes uncore components. Excluding cores.
+%     \item PSys: Includes the consumption of the system-on-chip (SoC) which along with the processor usually includes a GPU, memory, power management circuits and USB controller. Only available on a smaller subset of models.
+% \end{itemize}
 
-Although there are some limitations, since not all power domains are supported by each processor model e.g. PP1 is only supported on desktop models. The energy counters in RAPL are accessed by utilizing model-specific registers (MSRs). By default these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}.\nytafsnit
+\input{tabels/RAPL_Domain.tex}
+\todo{We can also add a figure, some of the other reports have a figure showing the domains.}
 
-Another limitation is the poor driver support. There are only drivers available for the linux kernel, and not for other popular operating system like Windows or MacOS.\cite{RAPL_in_action}  \todo[]{More depth would be nice}
+Although there are some limitations, since not all power domains are supported by each processor model e.g. PP1 is only supported on desktop models. 
+
+The energy counters in RAPL are accessed by utilizing model-specific registers (MSRs). By default these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}. There are also alternatives to using the MSRs. The Power Capping Framework allows the user to access RAPL by using sysfs, which is a pseudo file system in the Linux kernel\cite{PowerCappingFramework,RAPL_in_action}. Furthermore perf or perf\_events are linux commands available in the linux kernel which allows to access performance counters.\cite{Perf_events,RAPL_in_action} 
+Another option is the Performance Application Programming Interface (PAPI) library, which is a tool that can be used to measure the performance and providing an interface so the measurement in near real time\cite{PAPI}.\nytafsnit
+
+%% Der er ogsp jRAPL, men det virker kun med java
+
+%% mozilla rapl
+
+
+
+However another limitation is the poor driver support. There are only drivers available for the linux kernel, and not for other popular operating system like Windows or MacOS\todo{I think it is avaliable on MAC OS actually}.\cite{RAPL_in_action}  \todo[]{More depth would be nice}
 
 %% We can go into more depth if needed "RAPL in Action: Experiences in using RAPL for Power Measurement"
