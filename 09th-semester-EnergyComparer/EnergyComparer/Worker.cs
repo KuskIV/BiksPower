@@ -1,6 +1,10 @@
+using EnergyComparer.Handlers;
+using EnergyComparer.Models;
+using EnergyComparer.Repositories;
 using EnergyComparer.Services;
 using EnergyComparer.Utils;
 using Serilog;
+using System.ComponentModel;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer
@@ -9,58 +13,83 @@ namespace EnergyComparer
     {
         private readonly ILogger _logger;
         private readonly IHardwareMonitorService _hardwareMonitorService;
-        private readonly IIntelPowerGadgetService _intelPowerGadget;
-        private readonly IHardwareService _prepare;
+        private readonly IHardwareHandler _hardwareHandler;
+        private readonly IDataHandler _experimentHandler;
+        private readonly DtoSystem _system;
 
-        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget, IHardwareService prepare)
+        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler)
         {
             _logger = logger;
             _hardwareMonitorService = hardwareMonitorService;
-            _intelPowerGadget = intelPowerGadget;
-            _prepare = prepare;
+            _hardwareHandler = hardwareHandler;
+            _experimentHandler = experimentHandler;
+
+            _system = _experimentHandler.GetSystem().Result;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            _hardwareHandler.EnsurePathsExists();
+            var bw = new BackgroundWorker()
             {
-                await _intelPowerGadget.Initialise(); // TODO: Move to intel powergadget
+                WorkerSupportsCancellation = true,
+            };
 
-                InitializeExperiment();
+            bw.DoWork += new DoWorkEventHandler(
+                delegate (object o, DoWorkEventArgs args)
+                {
+                    BackgroundWorker b = o as BackgroundWorker;
 
-                var a = _hardwareMonitorService.GetCoreTemperatures();
+                    while (true)
+                    {
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            Thread.Sleep(1000);
+                        }
+                    }
+                });
 
-                EndExperiment();
+            InitializeExperiment();
 
-                _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+            var cts = new CancellationTokenSource(Constants.DurationOfExperiments);
+            var cancellationToken = cts.Token;
+            cancellationToken.Register(bw.CancelAsync);
+
+            
+            bw.RunWorkerAsync();
+            
+            await Task.Delay(Constants.DurationOfExperiments);
+                
+
+            EndExperiment();
+
+            _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
+            await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
 
 
 
-                var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
-                var memory = _hardwareMonitorService.GetCpuMemory();
-                var avgLoad = _hardwareMonitorService.GetAverageCpuLoad();
-                var totalLoad = _hardwareMonitorService.GetTotalLoad();
-                var maxTemp = _hardwareMonitorService.GetMaxTemperature();
+                //var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
+                //var memory = _hardwareMonitorService.GetCpuMemory();
+                //var avgLoad = _hardwareMonitorService.GetAverageCpuLoad();
+                //var totalLoad = _hardwareMonitorService.GetTotalLoad();
+                //var maxTemp = _hardwareMonitorService.GetMaxTemperature();
 
-                _logger.Information($"avg temp  = {avgTemp}");
-                _logger.Information($"memory     = {memory}");
-                _logger.Information($"avg load   = {avgLoad}");
-                _logger.Information($"total load = {totalLoad}");
-                _logger.Information($"max temp   = {maxTemp}");
-                _logger.Information($"---");
-
-            }
+                //_logger.Information($"avg temp  = {avgTemp}");
+                //_logger.Information($"memory     = {memory}");
+                //_logger.Information($"avg load   = {avgLoad}");
+                //_logger.Information($"total load = {totalLoad}");
+                //_logger.Information($"max temp   = {maxTemp}");
+                //_logger.Information($"---");
         }
 
         private void EndExperiment()
         {
-            _prepare.EnableWifi();
+            _hardwareHandler.EnableWifi();
         }
 
         private void InitializeExperiment()
         {
-            _prepare.DisableWifi();
+            _hardwareHandler.DisableWifi();
         }
     }
 }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Models
 {
-    public class Temperature
+    public class DtoProgram
     {
-        public DateTime time { get; set; }
-        public string name { get; set; }
-        public float value { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
