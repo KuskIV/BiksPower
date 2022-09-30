@@ -26,7 +26,7 @@ builder
 
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
         builder.RegisterType<IntelPowerGadgetService>().As<IIntelPowerGadgetService>().SingleInstance().AutoActivate();
-        builder.RegisterType<PrepareService>().As<IPrepareService>().SingleInstance().AutoActivate();
+        builder.RegisterType<HardwareService>().As<IHardwareService>().SingleInstance().AutoActivate();
     })
     .UseSerilog((ctx, lc) => lc
     .WriteTo.Console());

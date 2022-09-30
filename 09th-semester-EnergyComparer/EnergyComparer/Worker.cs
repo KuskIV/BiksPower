@@ -1,4 +1,5 @@
 using EnergyComparer.Services;
+using EnergyComparer.Utils;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -9,9 +10,9 @@ namespace EnergyComparer
         private readonly ILogger _logger;
         private readonly IHardwareMonitorService _hardwareMonitorService;
         private readonly IIntelPowerGadgetService _intelPowerGadget;
-        private readonly IPrepareService _prepare;
+        private readonly IHardwareService _prepare;
 
-        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget, IPrepareService prepare)
+        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget, IHardwareService prepare)
         {
             _logger = logger;
             _hardwareMonitorService = hardwareMonitorService;
@@ -25,11 +26,11 @@ namespace EnergyComparer
             {
                 await _intelPowerGadget.Initialise(); // TODO: Move to intel powergadget
 
-                //InitializeExperiment();
+                InitializeExperiment();
 
                 var a = _hardwareMonitorService.GetCoreTemperatures();
 
-                //EndExperiment();
+                EndExperiment();
 
                 _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);

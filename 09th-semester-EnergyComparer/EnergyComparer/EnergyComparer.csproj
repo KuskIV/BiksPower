@@ -23,13 +23,4 @@
       <Name>LibreHardwareMonitorLib</Name>
     </ProjectReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <!--<Reference Include="OpenHardwareMonitorLib">
-      <HintPath>OpenHardwareMonitorLib.dll</HintPath>
-    </Reference>-->
-    <!--<Reference Include="System.Management">
-      <HintPath>System.Management.dll</HintPath>
-    </Reference>-->
-  </ItemGroup>
 </Project>
