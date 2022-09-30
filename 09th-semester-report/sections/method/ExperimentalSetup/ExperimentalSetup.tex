@@ -1,0 +1,42 @@
+\section{Experimental/Test Setup}\label[subsection]{ExperimentalSetup}
+After the different components required in order to execute the experiment has been introduced, it is not time to take a deeper look into the experiment. This will be in regards to the languages used, how the data is saved, how many times the experiments are run ect.
+
+
+\subsection{Sample size}
+The amount of times to run the experiment are important to ensure that we have enough test for each benchmark to arrive at representative number, while also avoiding wasting resources by running an large amount of unnecessary test. To find our sample size we utilize Cochran's formula\cite{Cochran}:
+
+$$n_0 = \frac{Z^2*p*q}{e^2}$$ 
+
+Where, 
+\begin{itemize}
+    \item $n_0$ is the number of samples
+    \item $Z$ is the z-value, which is found using the z-table and represents the confidence level
+    \item $p$ is the standard deviation
+    \item $q$ is $1- p$
+    \item $e$ is the margin of error
+\end{itemize}
+
+With Cochran's formula given a desired level of margin of error, desired confidence level and an estimate of the standard deviation a sample size can be calculated.
+If the confidence level is 95\% it means that if the experiment was done multiple times the results would match 95\% of the times.
+A confidence level of 95\% and a margin of error of 5\% is most common and as such are chosen.\todo{I have not yet found a good source as to why this is the case.}
+
+The 
+
+
+% VEJLEDERMØDE 30/09/22
+
+% Hypoteser / forventning til vores resultater burde skrives i begyndelsen af rapporten et sted. 
+
+% Benchmark game okay til vores sanity check. måske også bruge noget større fx rosetta code. for merer repræsentative programmer.
+
+% We will answer (research questions)
+
+% We need research question before describing the rest
+
+% Hvorfor gennemgør vi lige de software based approached til at measure energy. 
+
+% Not quick introduction, maybe short. But maybe just delete in entirety. They don't like unnecessary words
+
+% Første sætning af related work sucks. 
+
+% Lære peter seztoft (staves) måske vores censor.
