@@ -6,7 +6,8 @@ To answer the first question it is important to find out which statistical tests
 $$W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}$$
 The null hypnosis's $H_0$ for the test is:
 \textit{The sample comes from a normally-distributes population}
-There is also the concept of a P-value which is essentially a threshold for wether we can reject $H_0$ or not. The P-value is then compared with a alpha value that we chose, essentially if $P \geq \alpha$ then $H_0$ can be rejected. The P stands for probability a common value for this is $0.05$ meaning that if we sampled a 100 times then 95 time we would reject the $H_0$, this is related to chance and confidence in the results. Generally a lower value of P results in more confidence in the results.
+
+To find out whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is essentially the probability of the achieving the same results under $H_0$ of a statistical test. We also have a value alpha which is essentials a value we set to determine the statistical significance, a common threshold is $0.05$. If the $p_{Value}$ is less than alpha the we can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing, and it is also used for the rest of the test in this section.
 \paragraph{T-Test}
 If the $H_0$ for the Shapiro-Wilk test could not be rejected we assume that the distribution are normal or close enough not to be important.
 
@@ -21,9 +22,6 @@ The null hypothesis $H_0$ for the t-test is as follows: \textit{There is no stat
 The t-test is essentially performed using two values the $t_{value}$ and the $p_{value}$:
 The formula for the calculation of the t value can be seens:
 $$t_{Value} = \frac{|\bar{x_1}- \bar{x_2}|}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}$$ 
-
-The actual rejection of $H_0$ is now dependent on the choice op $p$ which is set to $0.05$ Because it is a common value for it in scientific applications. A t-table is then used to determine the correct $p_{value}$.
-If the $t_{Value} > p_{Value}$ then we can reject $H_0$
 
 \paragraph{Mann–Whitney U test}
 If however it was determined the the distribution are not normally distributed then another test will have to be made instead of the student t-test. There are some important differences between the two methods. The t-test calculates the difference in the mean between two samples, while the Mann–Whitney U test check is there is a difference in the rank sum of the samples\cite{mann1947test}. 
@@ -46,4 +44,4 @@ $$\sigma U = \sqrt{\frac{n_1*n_2*(n_1+n_2+1)}{12}}$$
 Then to calculated the value $z$.
 $$z = \frac{U-\varphi U}{\sigma U}$$
 
-using z we can now find the p-value to check if we can reject $H_0$, again the significance level is set to $0.05$. 
+using z we can now find the p-value to check if we can reject $H_0$, again the alpha is set to $0.05$. 
