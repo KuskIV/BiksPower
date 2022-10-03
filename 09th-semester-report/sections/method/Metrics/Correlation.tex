@@ -14,5 +14,13 @@ If however the data does not follow the conditions then another method of calcul
 \paragraph{Kendall tau correlation}
 There are two common choices when doing non-parametric rank correlation, which we can use on non-normally distributed data. These are the Spearman's rank correlation coefficient and Kendall tau's correlation coefficient. While both can be used in the same scenarios there are some differences betweens them.Both are ranked with the same procedure that Mann–Whitney U tests are. The Spearman rank seems to be the most popular way measuring correlations, but some argue that Kendall tau is better in most cases \cite{gilpin1993table}. Some of the big differences between the two the effect of outliers Spearman's rank is largely effected by a few outliers in the data while Kendall tau in comparison seems more robust. Because of this the choice to utilize Kendall tau seems the most natural, and is what will be continued with. The results from Kendall tau can be interpreted the same way as from Pearson, the range is from $-1$ to $1$. The formula for kendall tau is also pretty straight forward:
 $$\frac{C-D}{C+D}$$
-C is Concordant pairs and D is Discordant. Essentially a Concordant pairs are every time the rankings are in order while Discordant is disordered pairs\cite{kendall1938new}.
+C is Concordant pairs and D is Discordant. Essentially a Concordant pairs are every time the rankings are in order while Discordant is disordered pairs\cite{kendall1938new}. The evaluate the correlations we will use the scale present by Guildford in \cite[219]{guilford1950fundamental}.
+\begin{itemize}
+    \item $<20$: Slight; almost negligible relationship
+    \item Low correlation; definite but small relationship
+    \item Moderate correlation; substantial relationship
+    \item High Correlation; marked relationship
+    \item Very high correlation; very dependable relationship
+\end{itemize}
+This is the scale that we will be working with to evaluate the correlations of our experiments.
 
