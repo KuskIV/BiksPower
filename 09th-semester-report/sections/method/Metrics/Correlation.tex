@@ -1,2 +1,12 @@
 \subsection{Correlation}
-Yeet
+Correlation is a statistical measurement that essentially informs us of the relationship between two samples. The correlation can be either positive or negative and a measure of how correlated they are. A strong correlation does however not mean that changes i one variable effects the other just that it statically seems to be the case.
+\paragraph{Pearson correlation coefficient} The Pearson correlation coefficient is one of if not the most used method for finding the correlations in linear relationships. The strength of the correlation is spans between $-1 \dotsc 1$, were the directions is given by the polarity sign. Depending on the context different strength are considered as strong or weak, but commonly 0 means that there is no correlation between the two samples. Some Assumptions have to be true about the data for us to utilize Pearson correlation coefficient:
+\begin{itemize}
+    \item The data must be quantitative
+    \item The two samples must be normally distributed
+    \item There must be no outliers in the data
+    \item The relationship between the two must also be linear
+\end{itemize}
+If all of these assumptions are true for the data then the Pearson correlation coefficient can be calculated with the formula:
+$$r=\frac{n\sum{xy- (\sum{x})(\sum{y})}}{\sqrt{[n\sum{x^2}-(\sum{x})^2][n\sum{y^2}-(\sum{y}^2)]}}$$
+If however the data does not follow the conditions then another method of calculating the correlation will have to be used. 
