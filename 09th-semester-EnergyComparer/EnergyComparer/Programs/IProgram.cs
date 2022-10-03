@@ -1,0 +1,11 @@
+﻿using EnergyComparer.Models;
+
+namespace EnergyComparer.Programs
+{
+    public interface IProgram
+    {
+        DtoProgram GetProgram();
+        string GetLanguage();
+        Task Run();
+    }
+}

@@ -13,10 +13,26 @@ namespace EnergyComparer.Models
         public DtoProgram program { get; set; }
         public DtoExperiment experiment { get; set; }
         public DtoSystem system { get; set; }
+        public DtoProfiler profiler { get; set; }
 
-        public DateTime GetStartDate()
+        internal int GetProfilerId()
         {
-            return experiment.StartTime;
+            return profiler.Id;
+        }
+
+        internal int GetProgramId()
+        {
+            return program.Id;
+        }
+
+        internal int GetSystemId()
+        {
+            return system.Id;
+        }
+
+        internal int GetVersion()
+        {
+            return system.Version;
         }
     }
 }

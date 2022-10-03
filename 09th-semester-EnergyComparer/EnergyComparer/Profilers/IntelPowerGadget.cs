@@ -23,10 +23,10 @@ namespace EnergyComparer.Profilers
 
         private readonly ESource _source;
 
-        public IntelPowerGadget(IConfiguration configuration)
+        public IntelPowerGadget()
         {
             _source = ESource.IntelPowerGadget;
-            var success = Initialise();
+            Initialise();
         }
 
         public void Start(DateTime date)
@@ -34,17 +34,32 @@ namespace EnergyComparer.Profilers
             var path = Constants.GetFilePathForSouce(_source, date);
 
             var success = StartLog(path);
+            EnsureSuccess(success);
         }
 
         public void Stop()
         {
             var success = StopLog();
+            EnsureSuccess(success);
         }
 
-        public bool Initialise()
+        public void Initialise()
         {
-            return IntelEnergyLibInitialize();
+            var success =  IntelEnergyLibInitialize();
+            EnsureSuccess(success);
         }
 
+        private static void EnsureSuccess(bool success)
+        {
+            if (!success)
+            {
+                throw new Exception("IntelPowerGadget failed to initialize");
+            }
+        }
+
+        public string GetName()
+        {
+            return _source.ToString();
+        }
     }
 }

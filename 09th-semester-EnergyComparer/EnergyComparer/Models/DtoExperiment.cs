@@ -8,7 +8,7 @@ namespace EnergyComparer.Models
 {
     public class DtoExperiment
     {
-        public int ToolId { get; set; }
+        public int ProfilerId { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime StartTime { get; set; }
         public string Language { get; set; }

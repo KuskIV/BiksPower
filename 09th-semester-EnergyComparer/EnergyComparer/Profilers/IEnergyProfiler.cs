@@ -8,6 +8,7 @@ namespace EnergyComparer.Profilers
 {
     public interface IEnergyProfiler
     {
+        string GetName();
         public void Start(DateTime date);
         public void Stop();
     }

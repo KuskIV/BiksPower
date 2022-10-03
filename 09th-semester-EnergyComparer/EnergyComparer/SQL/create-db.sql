@@ -44,4 +44,11 @@ CREATE TABLE RawData(
     Time DATETIME,
 
     PRIMARY KEY (Id)
+),
+
+CREATE TABLE Profiler(
+    Id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(100),
+
+    PRIMARY KEY (Id)
 )

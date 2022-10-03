@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer
 {
-
-
     public static class Constants
     {
         public static TimeSpan TimeBetweenExperiments = TimeSpan.FromMinutes(30);
-        public static TimeSpan DurationOfExperiments = TimeSpan.FromSeconds(5);
+        public static TimeSpan DurationOfExperiments = TimeSpan.FromSeconds(10);
         public static string DefaultFolderName = "09-experiment-data";
         public static string DatetimeFormat = "s";
         public static string DataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

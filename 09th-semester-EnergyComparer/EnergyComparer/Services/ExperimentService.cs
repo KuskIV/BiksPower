@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
 using MySqlX.XDevAPI.Common;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
@@ -20,84 +24,113 @@ namespace EnergyComparer.Services
         private readonly IHardwareMonitorService _hardwareMonitorService;
         private Result<IntelPowerGadgetData> _result;
         private readonly IDataHandler _dataHandler;
+        private readonly IHardwareHandler _hardwareHandler;
 
-        public ExperimentService(ILogger logger, IHardwareMonitorService hardwareMonitorService, Result<IntelPowerGadgetData> result, IDataHandler dataHandler)
+        public ExperimentService(ILogger logger, IHardwareMonitorService hardwareMonitorService, IDataHandler dataHandler, IHardwareHandler hardwareHandler)
         {
             _logger = logger;
             _hardwareMonitorService = hardwareMonitorService;
-            _result = result;
             _dataHandler = dataHandler;
+            _hardwareHandler = hardwareHandler;
+        }
+
+        public async Task RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
+        {
+            var startTime = DateTime.UtcNow;
+            var counter = 0;
+            await InitializeExperiment(program, startTime, energyProfiler);
+
+            var bw = InitializeWorker(program, counter);
+
+            _logger.Information("The energy profiler has started");
+            energyProfiler.Start(startTime);
+
+            bw.RunWorkerAsync();
+            _logger.Information("The BackgroudWorker has started. Will run for: {time}", Constants.DurationOfExperiments);
+
+            await Task.Delay(Constants.DurationOfExperiments);
+            
+            bw.CancelAsync();
+
+            energyProfiler.Stop();
+            _logger.Information("The experiment has stopped, and data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
+
+            var stopTime = DateTime.UtcNow;
+
+            await EndExperiment(program, stopTime, startTime);
+            SaveResults();
         }
 
         public void SaveResults()
         {
-
+            // TODO: Parse CSV file and save data
         }
 
-        public async Task RunExperiment(IEnergyProfiler energyProfiler)
+        private async Task EndExperiment(IProgram program, DateTime stopTime, DateTime startTime)
         {
-            await SetupExperiment();
-            PerformMeasurings();
-            var bw = InitializeWorker();
-            SetupCancelationToken(bw);
-            
-            energyProfiler.Start(_result.GetStartDate());
+            PerformMeasurings(stopTime);
 
-            bw.RunWorkerAsync();
-            await Task.Delay(Constants.DurationOfExperiments);
+            _hardwareHandler.EnableWifi();
+            await Task.Delay(TimeSpan.FromSeconds(30)); // Give the wifi time to reconnect
 
-            energyProfiler.Stop();
-            
-            PerformMeasurings();
-            SaveResults();
+            _result.experiment = await _dataHandler.GetExperiment(_result, program, startTime, stopTime);
         }
 
-        private async Task SetupExperiment()
+        private async Task InitializeExperiment(IProgram program, DateTime startTime, IEnergyProfiler energyProfiler)
+        {
+            await SetupExperiment(program, energyProfiler);
+
+            _hardwareHandler.DisableWifi();
+            
+            PerformMeasurings(startTime);
+        }
+
+        private async Task SetupExperiment(IProgram program, IEnergyProfiler energyProfiler)
         {
             _result = new Result<IntelPowerGadgetData>()
             {
                 system = await _dataHandler.GetSystem(),
+                program = program.GetProgram(),
+                profiler = await _dataHandler.GetProfiler(energyProfiler)
             };
+
         }
 
-        private static void SetupCancelationToken(BackgroundWorker bw)
-        {
-            var cts = new CancellationTokenSource(Constants.DurationOfExperiments);
-            var cancellationToken = cts.Token;
-            cancellationToken.Register(bw.CancelAsync);
-        }
-
-        private BackgroundWorker InitializeWorker()
+        private BackgroundWorker InitializeWorker(IProgram program, int counter)
         {
             var bw = new BackgroundWorker()
             {
                 WorkerSupportsCancellation = true,
+
             };
 
             bw.DoWork += new DoWorkEventHandler(
-                delegate (object o, DoWorkEventArgs args)
+                async delegate (object o, DoWorkEventArgs args)
                 {
                     BackgroundWorker b = o as BackgroundWorker;
 
                     while (true)
                     {
-                        for (int i = 1; i <= 10; i++)
-                        {
-                            Thread.Sleep(1000);
-                        }
+                        await program.Run();
+                        counter += 1;
+                        _logger.Information("Run complete. Counte: {count}", counter);
                     }
                 });
+
             return bw;
         }
 
-        public void PerformMeasurings()
+        public void PerformMeasurings(DateTime date)
         {
-            var coreTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+            var coreTemperatures = _hardwareMonitorService.GetCoreTemperatures(date);
 
+            _result.temperatures.AddRange(coreTemperatures);
         }
     }
 
     public interface IExperimentService
     {
+        Task RunExperiment(IEnergyProfiler energyProfiler, IProgram testProgram);
+        void SaveResults();
     }
 }
