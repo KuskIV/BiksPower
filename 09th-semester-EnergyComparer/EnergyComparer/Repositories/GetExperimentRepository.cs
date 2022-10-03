@@ -42,17 +42,15 @@ namespace EnergyComparer.Repositories
 
         public async Task<DtoExperiment> GetExperiment(DtoExperiment experiment)
         {
-            var query = "SELECT * FROM Experiment WHERE StartTime = @startdate AND EndTime = @enddate AND Language = @language AND ProgramId = @programid AND Version = @version AND SystemId = @systemid AND ProfilerId = @profilerid";
-
+            var query = "SELECT * FROM Experiment WHERE Language = @language AND ProgramId = @programid AND Version = @version AND SystemId = @systemid AND ProfilerId = @profilerid ORDER BY StartTime DESC";
+            
             var response = await _connection.QueryFirstAsync<DtoExperiment>(query, new 
             {
-                startdate = experiment.StartTime,
-                enddate = experiment.EndTime ,
                 language = experiment.Language,
                 programid = experiment.ProgramId,
                 version = experiment.Version,
                 systemid = experiment.SystemId,
-                profilerid = experiment.ProfilerId
+                profilerid = experiment.ProfilerId,
             });
 
             return response;

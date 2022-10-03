@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,11 +73,35 @@ namespace EnergyComparer.Services
             PerformMeasurings(stopTime);
 
             _hardwareHandler.EnableWifi();
-            await Task.Delay(TimeSpan.FromSeconds(20)); // Give the wifi time to reconnect
-            
+            await IsWifiEnabled();
+
             _dataHandler.InitializeConnection();
 
             _result.experiment = await _dataHandler.GetExperiment(_result, program, startTime, stopTime);
+        }
+
+        private async Task IsWifiEnabled()
+        {
+            while (!PingGoogleSuccessfully())
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+        }
+
+        private bool PingGoogleSuccessfully()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = client.OpenRead("http://www.google.com"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private async Task InitializeExperiment(IProgram program, DateTime startTime, IEnergyProfiler energyProfiler)
