@@ -25,6 +25,18 @@ namespace EnergyComparer.Handlers
             _getRepository = getRepository;
         }
 
+        public void InitializeConnection()
+        {
+            _insertRepository.InitializeDatabase();
+            _getRepository.InitializeDatabase();
+        }
+
+        public void CloseConnection()
+        {
+            _insertRepository.CloseConnection();
+            _getRepository.CloseConnection();
+        }
+
         public async Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime)
         {
             var experiment = new DtoExperiment()
@@ -92,10 +104,12 @@ namespace EnergyComparer.Handlers
 
     public interface IDataHandler
     {
+        void CloseConnection();
         Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime);
         Task<DtoProfiler> GetProfiler(EnergyComparer.Profilers.IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();
+        void InitializeConnection();
     }
 }

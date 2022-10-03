@@ -71,7 +71,9 @@ namespace EnergyComparer.Services
             PerformMeasurings(stopTime);
 
             _hardwareHandler.EnableWifi();
-            await Task.Delay(TimeSpan.FromSeconds(30)); // Give the wifi time to reconnect
+            await Task.Delay(TimeSpan.FromSeconds(20)); // Give the wifi time to reconnect
+            
+            _dataHandler.InitializeConnection();
 
             _result.experiment = await _dataHandler.GetExperiment(_result, program, startTime, stopTime);
         }
@@ -80,6 +82,7 @@ namespace EnergyComparer.Services
         {
             await SetupExperiment(program, energyProfiler);
 
+            _dataHandler.CloseConnection();
             _hardwareHandler.DisableWifi();
             
             PerformMeasurings(startTime);

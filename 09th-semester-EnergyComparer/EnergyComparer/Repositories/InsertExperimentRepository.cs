@@ -2,6 +2,7 @@
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using MySqlX.XDevAPI;
+using Org.BouncyCastle.Asn1.BC;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,13 +17,24 @@ namespace EnergyComparer.Repositories
 {
     public class InsertExperimentRepository : IInsertExperimentRepository
     {
-        private readonly IDbConnection _connection;
+        private readonly Func<IDbConnection> _connectionFactory;
+        private IDbConnection _connection;
         private readonly ILogger _logger;
 
-        public InsertExperimentRepository(IDbConnection connection, ILogger logger)
+        public InsertExperimentRepository(Func<IDbConnection> connectionFactory, ILogger logger)
         {
-            _connection = connection;
+            _connectionFactory = connectionFactory;
             _logger = logger;
+        }
+
+        public void InitializeDatabase()
+        {
+            _connection = _connectionFactory();
+        }
+
+        public void CloseConnection()
+        {
+            _connection.Close();
         }
 
         public async Task IncrementVersion(DtoSystem system)
@@ -36,21 +48,29 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId)" +
-                "VALUES(@starttime, @enddtime, @language, @programid, @version, @systemid, @profilerid)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId) VALUES(@starttime, @endtime, @language, @programid, @version, @systemid, @profilerid)";
 
-            var count = await _connection.ExecuteAsync(query, new 
-            { 
-                @starttime = experiment.StartTime,
-                @enddtime = experiment.EndTime,
-                @language = experiment.Language,
-                @programid = experiment.ProgramId,
-                @version = experiment.Version,
-                @systemid = experiment.SystemId,
-                @profilerid = experiment.ProfilerId
-            });
+            try
+            {
+                var count = await _connection.ExecuteAsync(query, new 
+                {
+                    starttime = experiment.StartTime,
+                    endtime = experiment.EndTime,
+                    language = experiment.Language,
+                    programid = experiment.ProgramId,
+                    version = experiment.Version,
+                    systemid = experiment.SystemId,
+                    profilerid = experiment.ProfilerId
+                });
 
-            LogCount("EXPERIMENT", count);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+            //LogCount("EXPERIMENT", count);
 
         }
 
@@ -98,7 +118,9 @@ namespace EnergyComparer.Repositories
 
     public interface IInsertExperimentRepository
     {
+        void CloseConnection();
         Task IncrementVersion(DtoSystem system);
+        void InitializeDatabase();
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
         Task InsertProgram(string name);

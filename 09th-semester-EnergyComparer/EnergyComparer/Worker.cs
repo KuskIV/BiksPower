@@ -17,7 +17,6 @@ namespace EnergyComparer
         private readonly IExperimentService _experimentService;
         private readonly IHardwareHandler _hardwareHandler;
         private readonly IDataHandler _dataHandler;
-        private readonly DtoSystem _system;
 
         public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler)
         {
@@ -25,7 +24,8 @@ namespace EnergyComparer
             _experimentService = experimentService;
             _hardwareHandler = hardwareHandler;
             _dataHandler = experimentHandler;
-            _system = _dataHandler.GetSystem().Result;
+
+            _dataHandler.InitializeConnection();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

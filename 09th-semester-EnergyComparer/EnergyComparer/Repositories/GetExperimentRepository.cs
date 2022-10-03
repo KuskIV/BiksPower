@@ -13,11 +13,22 @@ namespace EnergyComparer.Repositories
 {
     public class GetExperimentRepository : IGetExperimentRepository
     {
-        private readonly IDbConnection _connection;
+        private IDbConnection _connection;
+        private readonly Func<IDbConnection> _connectionFactory;
 
-        public GetExperimentRepository(IDbConnection connection)
+        public GetExperimentRepository(Func<IDbConnection> connectionFactory)
         {
-            _connection = connection;
+            _connectionFactory = connectionFactory;
+        }
+
+        public void InitializeDatabase()
+        {
+            _connection = _connectionFactory();
+        }
+
+        public void CloseConnection()
+        {
+            _connection.Close();
         }
 
         public async Task<DtoExperiment> GetExperiment(int id)
@@ -31,8 +42,7 @@ namespace EnergyComparer.Repositories
 
         public async Task<DtoExperiment> GetExperiment(DtoExperiment experiment)
         {
-            var query = "SELECT * FROM Experiment WHERE StartTime = @startdate AND EndTime = @enddate AND Language = @language" +
-                "ProgramId = @programid AND Version = @version AND SystemId = @systemid AND ProfilerId = @profilerid";
+            var query = "SELECT * FROM Experiment WHERE StartTime = @startdate AND EndTime = @enddate AND Language = @language AND ProgramId = @programid AND Version = @version AND SystemId = @systemid AND ProfilerId = @profilerid";
 
             var response = await _connection.QueryFirstAsync<DtoExperiment>(query, new 
             {
@@ -105,10 +115,12 @@ namespace EnergyComparer.Repositories
 
     public interface IGetExperimentRepository
     {
+        void CloseConnection();
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem(string Os, string Name);
+        void InitializeDatabase();
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> ProgramExists(string name);
         Task<bool> SystemExists(string os, string name);
