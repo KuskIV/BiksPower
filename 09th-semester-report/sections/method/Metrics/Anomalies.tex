@@ -1,2 +1,51 @@
 \subsection{Anomalies}
-Yeet
+Anomaly detection is important when using the data as i will influence the results from the experiments. When an anomaly is detected it will be removed from teh data as to not corrupt the rest of teh results.
+\paragraph{DBScan}
+To find and remove these anomalies the DBScan algorithm will be used. The DBScan algorithm is essentials a clustering algorithm that is used to cluster data into groups, but is can also be used for density based abnormality detection. The psudo code for the DBScan algorithm
+\begin{lstlisting}
+DBSCAN(D(*@\feetnote{D is the dataset}@*), eps(*@\feetnote{esp is a radius around a point}@*), MinPts(*@\feetnote{MinPts is the minimum amount of points found in the radius of a point to be a core point}@*))
+{
+    C = 0;
+    foreach unvisited point p in dataset D
+    {
+        mark P as visited;
+        NeighborPts = regionQuery(P, eps);
+        if(sizeof(neighborPts) < MinPts)
+        {
+            mark P as NOISE;
+        }else
+        {
+            C = next cluster;
+            expandCluster(P, NeighborPts, C, eps, MinPts);
+        }
+    }
+}
+expandCluster(P, NeighborPts, C, eps, MinPts){
+    add P to cluster C;
+    foreach( point P' in NeighborPts)
+    {
+        if(P' is not visited)
+        {
+            mark P' as visited;
+            NeighborPts' = regionQuery(P', eps);
+            if(sizeof(NeighborPts')>= MinPts)
+            {
+                NeighborPts = NeighborPts joined with NeighborPts';
+            }
+        }
+        if(P' is not yet member of any cluster)
+        {
+            add P' to cluster C
+        }
+    }
+
+}
+regionQuery(P, esp)
+{
+    return all points within P's eps-neighborhood (including P)
+}
+\end{lstlisting}
+
+Essentially the algorithm goes trough each point and count how many other point are in the radius around if this i equal to or larger than the a set threshold then the point will be labeled a core point. The points that does not fit this criteria, but are still inside the radius of a core point, are instead labeled border points. The points that have not received a label yet are then outlier or anomalies. The variable assignment of esp and MinPts \todo[]{Find out if some stadard values exsist for esp and MinPts}
+
+
