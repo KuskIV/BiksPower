@@ -11,19 +11,19 @@ Windows has been the most commonly used operating system for personal computers 
 The aim of this work is therefore to compare different methods of measuring power consumption of software to see how the solutions for windows perform. 
 In order to verify these results, hardware measurements will be utilized and the results will also be compared to Intel RAPL.
 
-In order to conduct this research, four different research questions are formulated. The overall idea is to compare different energy profilers on the same hardware, but as some profilers either requires specific hardware or claims to perform better on certain hardware, this will also be explored. This means several energy profilers will measure the energy consumption on several systems in order to see how well they perform compared to RAPL and a hardware measuring.
+In order to conduct this study, four different research questions are formulated. The overall idea is to compare different energy profilers on the same hardware, but as some profilers either requires specific hardware or claims to perform better on certain hardware, this will also be explored. This means several energy profilers will measure the energy consumption on several systems in order to see how well they perform compared to RAPL and a measurement directly on the hardware.
 
 
 \begin{itemize}
-    \item \textbf{RQ1:} How do we systematically measure the power consumption of software on different hardware and OS and how do we make the results comparable.
+    \item \textbf{RQ1:} How do we systematically measure the power consumption of software on different hardware and OS and how do we make the results comparable?
     \item \textbf{RQ2:} How do existing solutions to power measurements compare to each other?
     \item \textbf{RQ3:} How does the measured power consumption compare between windows and linux measurements?
     \item \textbf{RQ4:} How does the measured power consumption compare between different hardware?
 \end{itemize}
 
-Since multiple hardware setups are tested, \textbf{RQ1} addresses how a way to compare the results is required. This is required before a comparison can be made in between the different energy profilers in \textbf{RQ2}. Based on \textbf{RQ2}, an analysis will be made comparing the profilers with each other based on performance on different operating systems systems (\textbf{RQ3}) and different hardware (\textbf{RQ4}).
+Since multiple hardware setups are tested, \textbf{RQ1} addresses a way to compare the results is required. This is required before a comparison can be made in between the different energy profilers in \textbf{RQ2}. Based on \textbf{RQ2}, an analysis will be made comparing the profilers with each other based on performance on different operating systems systems (\textbf{RQ3}) and different hardware (\textbf{RQ4}).
 
-This work is motivated by how most research today mainly uses Intel RAPL on Linux\cite*[]{Rasmussen2021,Pereira2017,Theilmann2022,Lindholt2022}, and those who do not, has the disclaimer of not knowing how accurate their results actually are\cite[]{Bruce2015ReducingEC, Ozturk2019, Unlu2021}. This is despite claims from Microsoft how their tool can perform with 98\% accuracy in certain cases\cite[]{E3WinHec}. The main contribution of this work is to gather an independent source of how accurate different energy profilers are.
+This work is motivated by how most research today mainly uses Intel Running Avarage Power limit (RAPL) on Linux\cite[]{Rasmussen2021,Pereira2017,Theilmann2022,Lindholt2022}, and those who do not, has the disclaimer of not knowing how accurate their results actually are\cite[]{Bruce2015ReducingEC, Ozturk2019, Unlu2021}. This is despite claims from Microsoft how their tool can perform with 98\% accuracy in certain cases\cite[]{E3WinHec}. The main contribution of this work is to gather an independent source of how accurate different energy profilers are.
 
 
 

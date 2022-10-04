@@ -1,20 +1,31 @@
 \subsection{Correlation}
-Correlation is a statistical measurement that essentially informs us of the relationship between two samples. The correlation can be either positive or negative and a measure of how correlated they are. A strong correlation does however not mean that changes i one variable effects the other just that it statically seems to be the case.
-\paragraph{Pearson correlation coefficient} The Pearson correlation coefficient is one of if not the most used method for finding the correlations in linear relationships. The strength of the correlation is spans between $-1 \dotsc 1$, were the directions is given by the polarity sign. Depending on the context different strength are considered as strong or weak, but commonly 0 means that there is no correlation between the two samples. Some Assumptions have to be true about the data for us to utilize Pearson correlation coefficient:
+Correlation is a statistical measurement informing about the relationship between two samples. The correlation can be either be positive or negative and a measure of how correlated they are. A strong correlation does not mean that changes in one variable effects the other just that it statically seems to be the case. Commonly $0$ means there is no correlation between the two samples. A positive value, means that the two samples are positively correlated, meaning that they seems to grow together. A negative value inversely mean that they are negatively correlated the one seems to shrink as the other grows.
+
+\paragraph{Pearson correlation coefficient} The Pearson correlation coefficient is a frequently used method for finding the correlations in linear relationships. The strength of the correlation spans between $-1 \dotsc 1$, were the directions is given by the polarity sign. Depending on the context, different strength are considered as strong or weak. Some Assumptions have to be true about the data for us to utilize Pearson correlation coefficient:
+
 \begin{itemize}
     \item The data must be quantitative
     \item The two samples must be normally distributed
     \item There must be no outliers in the data
-    \item The relationship between the two must also be linear
+    \item The relationship between the two must be linear
 \end{itemize}
+
 If all of these assumptions are true for the data then the Pearson correlation coefficient can be calculated with the formula:
-% $$r=\frac{n\sum{xy- (\sum{x})(\sum{y})}}{\sqrt{[n\sum{x^2}-(\sum{x})^2][n\sum{y^2}-(\sum{y}^2)]}}$$
-$$r=\frac{\sum{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum{(x_i-\bar{x})^2}\sum{(y_i-\bar{y})^2}}}$$
-If however the data does not follow the conditions then another method of calculating the correlation will have to be used. 
-\paragraph{Kendall tau correlation}
-There are two common choices when doing non-parametric rank correlation, which we can use on non-normally distributed data. These are the Spearman's rank correlation coefficient and Kendall tau's correlation coefficient. While both can be used in the same scenarios there are some differences betweens them.Both are ranked with the same procedure that Mann–Whitney U tests are. The Spearman rank seems to be the most popular way measuring correlations, but some argue that Kendall tau is better in most cases \cite{gilpin1993table}. Some of the big differences between the two the effect of outliers Spearman's rank is largely effected by a few outliers in the data while Kendall tau in comparison seems more robust. Because of this the choice to utilize Kendall tau seems the most natural, and is what will be continued with. The results from Kendall tau can be interpreted the same way as from Pearson, the range is from $-1$ to $1$. The formula for kendall tau is also pretty straight forward:
-$$\frac{C-D}{C+D}$$
-C is Concordant pairs and D is Discordant. Essentially a Concordant pairs are every time the rankings are in order while Discordant is disordered pairs\cite{kendall1938new}. The evaluate the correlations we will use the scale present by Guildford in \cite[219]{guilford1950fundamental}.
+
+\begin{equation}
+    r=\frac{\sum{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum{(x_i-\bar{x})^2}\sum{(y_i-\bar{y})^2}}}
+\end{equation}
+
+If however the data does not follow the conditions, another method of calculating the correlation will have to be used. 
+
+\paragraph{Kendall Tau correlation}
+There are two common choices when doing non-parametric rank correlation, which can be used on non-normally distributed data. These are the Spearman's rank correlation coefficient and Kendall Tau's correlation coefficient. While both can be used in the same scenarios there are some differences betweens them. Both are ranked with the same procedure that Mann-Whitney U tests are. The Spearman rank seems to be the most popular way measuring correlations, but some argue that Kendall Tau is better in most cases \cite{gilpin1993table}. Some of the big differences between the two is the effect of outliers, Spearman's rank is largely effected by a few outliers in the data while Kendall Tau in comparison seems more robust. Because of this the choice to utilize Kendall Tau seems the most natural, and is what will be continued with. The results from Kendall Tau can be interpreted the same way as from Pearson, the range is from $-1$ to $1$. The formula for kendall Tau is also straight forward:
+
+\begin{equation}
+    \frac{C-D}{C+D}
+\end{equation}
+
+$C$ is Concordant pairs and $D$ is Discordant. A Concordant pairs is ordered, while Discordant is disordered pairs\cite{kendall1938new}. To evaluate the correlations the scale present by Guildford in \cite[219]{guilford1950fundamental}.
 \begin{itemize}
     \item $<.20$: Slight; almost negligible relationship
     \item $.20-.40$: Low correlation; definite but small relationship
@@ -22,5 +33,6 @@ C is Concordant pairs and D is Discordant. Essentially a Concordant pairs are ev
     \item $.70-.90$: High Correlation; marked relationship
     \item $.90-1$: Very high correlation; very dependable relationship
 \end{itemize}
-This is the scale that we will be working with to evaluate the correlations of our experiments.
+
+This is the scale that will be worked with to evaluate the correlations of the experiments.
 
