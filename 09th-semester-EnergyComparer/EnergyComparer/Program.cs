@@ -6,6 +6,7 @@ using System.Data;
 using Serilog;
 using EnergyComparer.Repositories;
 using EnergyComparer.Handlers;
+using ILogger = Serilog.ILogger;
 
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -27,9 +28,14 @@ builder
             return con;
         });
 
+        builder.Register<IHardwareHandler>(f => {
+            var wifiAdapterName = host.Configuration.GetValue<string>("wifiAdapterName");
+            return new HardwareHandler(f.Resolve<ILogger>(), wifiAdapterName);
+        });
+
+
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
         builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();
-        builder.RegisterType<HardwareHandler>().As<IHardwareHandler>().SingleInstance().AutoActivate();
         builder.RegisterType<InsertExperimentRepository>().As<IInsertExperimentRepository>().SingleInstance().AutoActivate();
         builder.RegisterType<GetExperimentRepository>().As<IGetExperimentRepository>().SingleInstance().AutoActivate();
         builder.RegisterType<DataHandler>().As<IDataHandler>().SingleInstance().AutoActivate();

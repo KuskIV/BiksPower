@@ -14,11 +14,12 @@ namespace EnergyComparer.Services
     public class HardwareHandler : IHardwareHandler, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly string wifiAdapterName = "Wi-Fi";
+        private readonly string _wifiAdapterName;
 
-        public HardwareHandler(ILogger logger)
+        public HardwareHandler(ILogger logger, string wifiAdapterName)
         {
             _logger = logger;
+            _wifiAdapterName = wifiAdapterName;
         }
 
         public void EnsurePathsExists()
@@ -35,13 +36,13 @@ namespace EnergyComparer.Services
         public void DisableWifi()
         {
             _logger.Information("About to disable wifi...");
-             AdapterUtils.Disable(wifiAdapterName);
+             AdapterUtils.Disable(_wifiAdapterName);
         }
 
         public void EnableWifi()
         {
             _logger.Information("About to enable wifi...");
-            AdapterUtils.Enable(wifiAdapterName);
+            AdapterUtils.Enable(_wifiAdapterName);
         }
 
         public void Dispose()
@@ -49,7 +50,7 @@ namespace EnergyComparer.Services
             try
             {
                 _logger.Information("Re-enbeling wifi upon shutdown.");
-                AdapterUtils.Enable(wifiAdapterName);
+                AdapterUtils.Enable(_wifiAdapterName);
 
             }
             catch (Exception e)
