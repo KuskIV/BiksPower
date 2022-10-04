@@ -1,10 +1,10 @@
 \section{Experimental/Test Setup}\label[subsection]{ExperimentalSetup}
-After the different components required in order to execute the experiment has been introduced, it is now time to take a deeper look into the experiment. This will be in regards to the languages used, how the data is saved, how many times the experiments are run ect.
+After the different components required in order to execute the experiment has been introduced, it is now time to take a look into the experiment. This will be in regards to the languages used, how the data is saved, how many times the experiments are run ect.
 
 
 \subsection{Sample size}
-The amount of times to run the experiment are important to ensure that we have enough test for each benchmark to arrive at a representative mean and standard deviation, while also avoiding wasting resources by running an large amount of unnecessary test. There are several approaches used in the literature. As example some papers use what seems like an arbitrary number of samples. Another method is to base the number of samples on how many times it can be run within in a timeframe.\cite{sestoft2013microbenchmarks} A more structure approach is utilized in this report, which is to use Cochran's formula\cite{Cochran, kotrlik2001organizational,israel1992determining}, which gives the minimum number of required observations so that our performance metrics are within a specified standard deviation. There are two versions which are considered.
-The first one in \cref*{cochransEQ1}\footnote{Note the terminology used by Cochran is different to the one utilized in this report} is for categorical data:
+The amount of times to run the experiment are important to ensure enough tests are conducted for each benchmark to arrive at a representative mean and standard deviation, while also avoiding wasting resources by running an large amount of unnecessary test. There are several approaches used in the literature. As example some papers use what seems like an arbitrary number of samples\todo[]{source}. Another method is to base the number of samples on how many times the experiment can be run within in a time-frame.\cite{sestoft2013microbenchmarks} A more structured approach is utilized to calculate this, is to use Cochran's formula\cite{Cochran, kotrlik2001organizational,israel1992determining},\todo{Other methods for calculating sample size?} which gives the minimum number of required observations for a performance metrics within a specified standard deviation. There are two versions which are considered.
+The first one in \cref{cochransEQ1}\footnote{Note the terminology used by Cochran is different to the one utilized in this report} is for categorical data:
 
 \begin{equation}
     n_0 = \frac{Z^2*p*q}{e^2}
@@ -18,12 +18,12 @@ Where,
     \item $pq$ is an estimate of variance, where
     \begin{itemize}
         \item $p$ is the estimated proportion of an attribute in the data
-        \item $q$ is $1- p$
+        \item $q$ is $1 - p$
     \end{itemize}
     \item $e$ is desired level of precision (acceptable margin of error)
 \end{itemize}
 
-The other one in \cref*{cochransEQ2} is for continuous data. However it should still be considered if categorical variables will play an important role in the data analysis, then \cref*{cochransEQ1} should be used.
+The other one in \cref{cochransEQ2} is for continuous data. However it should still be considered if categorical variables will play an important role in the data analysis, then \cref*{cochransEQ1} should be used.
 
 \begin{equation}
     n_0 = \frac{Z^2*\sigma^2}{e^2}
@@ -35,16 +35,16 @@ Where, instead of $pq$ we have $\sigma$ which is the standard deviation of the d
 
 
 
-For our data \cref*{cochransEQ2} seem to most accurately fit the description and is therefore chosen. With Cochran's formula given a acceptable margin of error, desired confidence level and an estimate of the standard deviation a sample size can be calculated. So we need to determine these variables. 
+For our data \cref{cochransEQ2} seem to most accurately fit the description and is therefore chosen. With Cochran's formula given a acceptable margin of error, desired confidence level and an estimate of the standard deviation a sample size can be calculated. So these variables are determined as following. 
 
-What the confidence level  represents is that if the confidence level is 95\% it means that if the experiment was done multiple times the results would match 95\% of the times. If a confidence level of 95\% is desired and confidence level $= 1 - \alpha$ then $\alpha = 0.05$. 
-A margin of error of 5\% is commenly chosen and is deemed acceptable for categorical data, but for continuous data a 3\% margin of error is deemed acceptable\cite{kotrlik2001organizational} and as such is chosen.
+The confidence level is how little the results must deviate. A confidence level at 95\% would represents 95\% of the data points would match 95\% of the times. If a confidence level of 95\% is desired and confidence level $= 1 - \alpha$ then $\alpha = 0.05$. 
+A margin of error of 5\% is commonly chosen and is deemed acceptable for categorical data, but for continuous data a 3\% margin of error is deemed acceptable\cite{kotrlik2001organizational} and as such is chosen.
 
-The Z-score reflects how many standard deviations a sample is from the mean. An approximate score can be found in a Z-table when we have a desired confidence level or $\alpha$. The most commonly used $\alpha$ is $0.05$ or $0.01$.\cite{kotrlik2001organizational} In this report $0.05$ is chosen which gives a confidence level of 95\%. \todo{I have not found a reason as to why...}From the Z-table the estimated Z-value is then $1.96$. 
+The Z-score reflects how many standard deviations a sample is from the mean. An approximate score can be found in a Z-table when there is a desired confidence level or $\alpha$. The most commonly used $\alpha$ is $0.05$ or $0.01$.\cite{kotrlik2001organizational} In this report $0.05$ is chosen which gives a confidence level of 95\%. \todo{I have not found a reason as to why yet.}From the Z-table the estimated Z-value is then $1.96$. 
 
-Lastly an estimate of the standard deviation is also needed, which we do not have. Cochran listed four methods for estimating the standard deviation in case it is not initially available:
+Lastly an estimate of the standard deviation is also needed, which is not available. Cochran listed four methods for estimating the standard deviation in case it is not initially available:
 \begin{enumerate}
-    \item The sample is taken in two steps. The first step is used to determine how many further samples are required based on the standard deviation in the first set of samples.
+    \item The sample is taken in two steps. The first step is used to determine how many further samples are required in step two, based on the standard deviation in the first set of samples.
     \item Utilizing results of a pilot study
     \item Utilizing results from similar study
     \item Come up with a guess assisted with logical mathematical results.
@@ -55,7 +55,7 @@ Method one and two are both based on the same principle of getting an initial sm
 
 % Influence of pragmming paradigms picks 100 based on 9781118805350.
 
-From the initial sample an estimated standard deviation of each parameter measured can be acquired. Then the minimum number of samples required can be calculated for each parameter. Then we can take the largest of the values and run the experiments for that amount of times.
+From the initial sample an estimated standard deviation of each parameter measured can be acquired. Then the minimum number of samples required can be calculated for each parameter. Then the largest of the values and run the experiments for that amount of times to get the minimum required samples.
 
 
 % Focus on report influence of programming paradigms.
