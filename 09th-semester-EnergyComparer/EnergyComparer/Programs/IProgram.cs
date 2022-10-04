@@ -6,6 +6,6 @@ namespace EnergyComparer.Programs
     {
         DtoProgram GetProgram();
         string GetLanguage();
-        Task Run();
+        void Run();
     }
 }

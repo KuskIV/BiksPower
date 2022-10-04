@@ -16,5 +16,6 @@ namespace EnergyComparer.Models
         public int Version { get; set; }
         public int SystemId { get; set; }
         public int Id { get; set; }
+        public int Runs { get; set; }
     }
 }

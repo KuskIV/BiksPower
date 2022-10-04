@@ -34,12 +34,11 @@ namespace EnergyComparer.Programs
             return _program;
         }
 
-        public async Task Run()
+        public void Run()
         {
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 2; i++)
             {
-                await Task.Delay(1000);
-                //Thread.Sleep(1000);
+                Thread.Sleep(1000);
             }
         }
 

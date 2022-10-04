@@ -27,6 +27,8 @@ namespace EnergyComparer.Services
         private Result<IntelPowerGadgetData> _result;
         private readonly IDataHandler _dataHandler;
         private readonly IHardwareHandler _hardwareHandler;
+        private int _counter = 0;
+        private BackgroundWorker _bw;
 
         public ExperimentService(ILogger logger, IHardwareMonitorService hardwareMonitorService, IDataHandler dataHandler, IHardwareHandler hardwareHandler)
         {
@@ -39,20 +41,19 @@ namespace EnergyComparer.Services
         public async Task RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
         {
             var startTime = DateTime.UtcNow;
-            var counter = 0;
             await InitializeExperiment(program, startTime, energyProfiler);
 
-            var bw = InitializeWorker(program, counter);
+            _bw = InitializeWorker(program);
 
             _logger.Information("The energy profiler has started");
             energyProfiler.Start(startTime);
 
-            bw.RunWorkerAsync();
+            _bw.RunWorkerAsync();
             _logger.Information("The BackgroudWorker has started. Will run for: {time}", Constants.DurationOfExperiments);
 
             await Task.Delay(Constants.DurationOfExperiments);
             
-            bw.CancelAsync();
+            _bw.CancelAsync(); // TODO: shoul it be killed? https://stackoverflow.com/questions/1559255/whats-wrong-with-using-thread-abort/1560567#1560567
 
             energyProfiler.Stop();
             _logger.Information("The experiment has stopped, and data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
@@ -77,14 +78,16 @@ namespace EnergyComparer.Services
 
             _dataHandler.InitializeConnection();
 
-            _result.experiment = await _dataHandler.GetExperiment(_result, program, startTime, stopTime);
+            _result.experiment = await _dataHandler.GetExperiment(_result, program, startTime, stopTime, _counter);
         }
 
         private async Task IsWifiEnabled()
         {
+            await Task.Delay(TimeSpan.FromSeconds(15));
+
             while (!PingGoogleSuccessfully())
             {
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(3));
             }
         }
 
@@ -122,31 +125,41 @@ namespace EnergyComparer.Services
                 program = program.GetProgram(),
                 profiler = await _dataHandler.GetProfiler(energyProfiler)
             };
-
         }
 
-        private BackgroundWorker InitializeWorker(IProgram program, int counter)
+        private BackgroundWorker InitializeWorker(IProgram program)
         {
             var bw = new BackgroundWorker()
             {
                 WorkerSupportsCancellation = true,
-
+                WorkerReportsProgress = true,
             };
 
+            bw.ProgressChanged += new ProgressChangedEventHandler(BackgrouWorkerProgressChanged);
+
             bw.DoWork += new DoWorkEventHandler(
-                async delegate (object o, DoWorkEventArgs args)
+                delegate (object o, DoWorkEventArgs args)
                 {
                     BackgroundWorker b = o as BackgroundWorker;
+                    var counter = 0;
 
-                    while (true)
+                    while (!b.CancellationPending)
                     {
-                        await program.Run();
+                        program.Run();
                         counter += 1;
+                        b.ReportProgress(counter);
                         _logger.Information("Run complete. Counte: {count}", counter);
                     }
+                    
+                    _logger.Information("background worker has been cancelled");
                 });
 
             return bw;
+        }
+
+        private void BackgrouWorkerProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            _counter = e.ProgressPercentage;
         }
 
         public void PerformMeasurings(DateTime date)

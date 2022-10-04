@@ -9,6 +9,7 @@ using Serilog;
 using ILogger = Serilog.ILogger;
 using EnergyComparer.Programs;
 using EnergyComparer.Profilers;
+using Ubiety.Dns.Core.Records.NotUsed;
 
 namespace EnergyComparer.Handlers
 {
@@ -37,7 +38,7 @@ namespace EnergyComparer.Handlers
             _getRepository.CloseConnection();
         }
 
-        public async Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime)
+        public async Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime, int counter)
         {
             var experiment = new DtoExperiment()
             {
@@ -47,7 +48,8 @@ namespace EnergyComparer.Handlers
                 ProgramId = result.GetProgramId(),
                 SystemId = result.GetSystemId(),
                 Version = result.GetVersion(),
-                ProfilerId = result.GetProfilerId()
+                ProfilerId = result.GetProfilerId(),
+                Runs = counter
             };
 
             await _insertRepository.InsertExperiment(experiment);
@@ -105,7 +107,7 @@ namespace EnergyComparer.Handlers
     public interface IDataHandler
     {
         void CloseConnection();
-        Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime);
+        Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime, int _counter);
         Task<DtoProfiler> GetProfiler(EnergyComparer.Profilers.IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem();

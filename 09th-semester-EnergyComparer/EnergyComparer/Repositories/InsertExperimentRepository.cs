@@ -48,7 +48,7 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId) VALUES(@starttime, @endtime, @language, @programid, @version, @systemid, @profilerid)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId, Runs) VALUES(@starttime, @endtime, @language, @programid, @version, @systemid, @profilerid, @runs)";
 
             try
             {
@@ -60,8 +60,11 @@ namespace EnergyComparer.Repositories
                     programid = experiment.ProgramId,
                     version = experiment.Version,
                     systemid = experiment.SystemId,
-                    profilerid = experiment.ProfilerId
+                    profilerid = experiment.ProfilerId,
+                    runs = experiment.Runs,
                 });
+                
+                LogCount("EXPERIMENT", count);
 
             }
             catch (Exception e)
@@ -70,7 +73,6 @@ namespace EnergyComparer.Repositories
                 throw;
             }
 
-            //LogCount("EXPERIMENT", count);
 
         }
 

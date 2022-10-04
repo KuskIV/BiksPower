@@ -15,7 +15,8 @@ CREATE TABLE Experiment(
     Language VARCHAR(50),
     StartTime DATETIME,
     EndTime DATETIME,
-    ToolId int,
+    ProfilerId int,
+    Runs int,
 
     PRIMARY KEY (Id)
 ),

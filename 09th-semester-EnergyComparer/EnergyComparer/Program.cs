@@ -27,15 +27,6 @@ builder
             return con;
         });
 
-
-        //builder.Register<IDbConnection>(f =>
-        //{
-        //    var connectionString = host.Configuration.GetValue<string>("ConnectionString");
-        //    var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-        //    con.Open();
-        //    return con;
-        //}).As<IDbConnection>().AsSelf().InstancePerDependency().ExternallyOwned();
-
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
         builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();
         builder.RegisterType<HardwareHandler>().As<IHardwareHandler>().SingleInstance().AutoActivate();
