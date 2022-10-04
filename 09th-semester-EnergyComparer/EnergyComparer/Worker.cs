@@ -17,25 +17,27 @@ namespace EnergyComparer
         private readonly IExperimentService _experimentService;
         private readonly IHardwareHandler _hardwareHandler;
         private readonly IDataHandler _dataHandler;
+        private readonly IEnergyProfilerService _profilerService;
 
-        public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler)
+        public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler, IEnergyProfilerService profilerService)
         {
             _logger = logger;
             _experimentService = experimentService;
             _hardwareHandler = hardwareHandler;
             _dataHandler = experimentHandler;
-
+            _profilerService = profilerService;
             _dataHandler.InitializeConnection();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var intelPowerGadget = new IntelPowerGadget();
-            var testProgram = new TestProgram(_dataHandler);
-
             //await _dataHandler.IncrementVersionForSystem();
 
-            await _experimentService.RunExperiment(intelPowerGadget, testProgram);
+            var testProgram = new TestProgram(_dataHandler);
+
+            var profiler = await _profilerService.GetNext(testProgram);
+
+            await _experimentService.RunExperiment(profiler, testProgram);
 
             _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
             await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);

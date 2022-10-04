@@ -21,17 +21,17 @@ namespace EnergyComparer.Profilers
         private static extern bool StopLog();
 
 
-        private readonly ESource _source;
+        private readonly EWindowsProfilers _source;
 
         public IntelPowerGadget()
         {
-            _source = ESource.IntelPowerGadget;
+            _source = EWindowsProfilers.IntelPowerGadget;
             Initialise();
         }
 
         public void Start(DateTime date)
         {
-            var path = Constants.GetFilePathForSouce(_source, date);
+            var path = Constants.GetFilePathForSouce(_source.ToString(), date);
 
             var success = StartLog(path);
             EnsureSuccess(success);

@@ -10,6 +10,8 @@ using ILogger = Serilog.ILogger;
 using EnergyComparer.Programs;
 using EnergyComparer.Profilers;
 using Ubiety.Dns.Core.Records.NotUsed;
+using EnergyComparer.Utils;
+using System.Text.Json;
 
 namespace EnergyComparer.Handlers
 {
@@ -102,6 +104,39 @@ namespace EnergyComparer.Handlers
 
             await _insertRepository.IncrementVersion(system);
         }
+
+        public async Task<List<Profiler>> GetProfilerFromLastRunOrDefault(IProgram program)
+        {
+            var system = await GetSystem();
+
+            if (await LastRunExistsForSystem(system, program))
+            {
+                return await _getRepository.GetLastRunForSystem(system, program);
+            }
+
+            var profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program);
+
+            await _insertRepository.InsertProfilers(profilers, system, program);
+
+            return profilers;
+
+        }
+
+        private async Task<bool> LastRunExistsForSystem(DtoSystem system, IProgram program)
+        {
+            return await _getRepository.RunExistsForSystem(system, program);
+        }
+
+        public async Task UpdateProfilers(IProgram program, List<Profiler> profilers)
+        {
+            var system = await GetSystem();
+
+            var systemId = system.Id;
+            var programId = program.GetProgram().Id;
+            var value = JsonSerializer.Serialize(profilers);
+
+            await _insertRepository.UpdateProfilers(systemId, programId, value);
+        }
     }
 
     public interface IDataHandler
@@ -109,9 +144,11 @@ namespace EnergyComparer.Handlers
         void CloseConnection();
         Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime, int _counter);
         Task<DtoProfiler> GetProfiler(EnergyComparer.Profilers.IEnergyProfiler energyProfiler);
+        Task<List<Profiler>> GetProfilerFromLastRunOrDefault(IProgram program);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();
         void InitializeConnection();
+        Task UpdateProfilers(IProgram program, List<Profiler> profilers);
     }
 }

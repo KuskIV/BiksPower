@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Programs
 {
-    
-
     public class TestProgram : IProgram
     {
         public TestProgram(IDataHandler dataHandler)
@@ -27,6 +25,11 @@ namespace EnergyComparer.Programs
         public string GetLanguage()
         {
             return _language;
+        }
+
+        public string GetName()
+        {
+            return _name;
         }
 
         public DtoProgram GetProgram()

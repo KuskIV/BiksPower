@@ -1,10 +1,14 @@
 ﻿namespace EnergyComparer
 {
-    public enum ESource
+    public enum EWindowsProfilers
     {
         IntelPowerGadget,
         E3,
         HardwareMonitor,
+    }
+
+    public enum ELinuxProfilers
+    {
         RAPL
     }
 }

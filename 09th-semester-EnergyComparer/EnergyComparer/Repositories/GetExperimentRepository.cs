@@ -1,11 +1,13 @@
 ﻿using Dapper;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Programs;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -109,18 +111,46 @@ namespace EnergyComparer.Repositories
 
             return response == 1;
         }
+
+        public async Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, IProgram program)
+        {
+            var systemId = system.Id;
+            var programId = program.GetProgram().Id;
+
+            var query = "SELECT Value FROM Run WHERE SystemId = @systemid AND programid = @programid";
+
+            var response = await _connection.QueryFirstAsync<string>(query, new { systemId = systemId, programId = programId });
+
+            var profilers =  JsonSerializer.Deserialize<List<Profiler>>(response);
+
+            return profilers;
+        }
+
+        public async Task<bool> RunExistsForSystem(DtoSystem system, IProgram program)
+        {
+            var systemId = system.Id;
+            var programId = program.GetProgram().Id;
+
+            var query = "SELECT COUNT(*) FROM Run WHERE SystemId = @systemid AND ProgramId = @programid";
+
+            var response = await _connection.ExecuteScalarAsync<int>(query, new { systemid = systemId, programid = programId });
+
+            return response == 1;
+        }
     }
 
     public interface IGetExperimentRepository
     {
         void CloseConnection();
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
+        Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.IProgram program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem(string Os, string Name);
         void InitializeDatabase();
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> ProgramExists(string name);
+        Task<bool> RunExistsForSystem(DtoSystem system, Programs.IProgram program);
         Task<bool> SystemExists(string os, string name);
     }
 }

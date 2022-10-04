@@ -33,6 +33,11 @@ builder
             return new HardwareHandler(f.Resolve<ILogger>(), wifiAdapterName);
         });
 
+        builder.Register<IEnergyProfilerService>(f =>
+        {
+            var iterateOverProfilers = host.Configuration.GetValue<bool>("IterateOverProfilers");
+            return new EnergyProfilerService(f.Resolve<IDataHandler>(), iterateOverProfilers);
+        });
 
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
         builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();

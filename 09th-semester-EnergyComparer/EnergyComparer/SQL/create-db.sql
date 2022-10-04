@@ -52,4 +52,12 @@ CREATE TABLE Profiler(
     Name VARCHAR(100),
 
     PRIMARY KEY (Id)
+),
+
+CREATE TABLE Run(
+    Id INT NOT NULL AUTO_INCREMENT,
+    SystemId INT,
+    ProgramId INT,
+
+    PRIMARY KEY (Id)
 )

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EnergyComparer.Models;
+using EnergyComparer.Profilers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -23,6 +25,30 @@ namespace EnergyComparer.Utils
             Process p = new Process();
             p.StartInfo = psi;
             p.Start();
+        }
+        public static List<string> GetAllSouces()
+        {
+            return Enum.GetNames(typeof(EWindowsProfilers)).ToList();
+        }
+
+        public static IEnergyProfiler MapEnergyProfiler(Profiler profiler)
+        {
+            if (profiler.Name == EWindowsProfilers.IntelPowerGadget.ToString())
+            {
+                return new IntelPowerGadget();
+            }
+            else if (profiler.Name == EWindowsProfilers.E3.ToString())
+            {
+                throw new NotImplementedException("E3 has not been implemented");
+            }
+            else if (profiler.Name == EWindowsProfilers.HardwareMonitor.ToString())
+            {
+                throw new NotImplementedException("HardwareMonitor has not been implemented");
+            }
+            else
+            {
+                throw new NotImplementedException($"{profiler.Name} has not been implemented");
+            }
         }
     }
 }

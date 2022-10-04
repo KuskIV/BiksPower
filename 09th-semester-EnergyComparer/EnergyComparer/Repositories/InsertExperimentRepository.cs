@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Programs;
 using MySqlX.XDevAPI;
 using Org.BouncyCastle.Asn1.BC;
 using System;
@@ -9,6 +10,8 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using ILogger = Serilog.ILogger;
@@ -50,30 +53,19 @@ namespace EnergyComparer.Repositories
         {
             var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId, Runs) VALUES(@starttime, @endtime, @language, @programid, @version, @systemid, @profilerid, @runs)";
 
-            try
+            var count = await _connection.ExecuteAsync(query, new 
             {
-                var count = await _connection.ExecuteAsync(query, new 
-                {
-                    starttime = experiment.StartTime,
-                    endtime = experiment.EndTime,
-                    language = experiment.Language,
-                    programid = experiment.ProgramId,
-                    version = experiment.Version,
-                    systemid = experiment.SystemId,
-                    profilerid = experiment.ProfilerId,
-                    runs = experiment.Runs,
-                });
+                starttime = experiment.StartTime,
+                endtime = experiment.EndTime,
+                language = experiment.Language,
+                programid = experiment.ProgramId,
+                version = experiment.Version,
+                systemid = experiment.SystemId,
+                profilerid = experiment.ProfilerId,
+                runs = experiment.Runs,
+            });
                 
-                LogCount("EXPERIMENT", count);
-
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-
-
+            LogCount("EXPERIMENT", count);
         }
 
         public async Task InsertProfiler(IEnergyProfiler energyProfiler)
@@ -105,6 +97,27 @@ namespace EnergyComparer.Repositories
             LogCount(name, count);
         }
 
+        public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program)
+        {
+            var systemId = system.Id;
+            var programId = program.GetProgram().Id;
+            var value = JsonSerializer.Serialize(profilers);
+
+            var query = "INSERT INTO Run(SystemId, ProgramId, Value) VALUES(@systemid, @programid, @value)";
+
+            var count = await _connection.ExecuteAsync(query, new { systemid = systemId, programid = programId, value= value });
+
+            LogCount("RUN", count);
+        }
+        public async Task UpdateProfilers(int systemId, int programId, string value)
+        {
+            var query = "UPDATE Run SET Value = @value WHERE SystemId = @systemid AND ProgramId = @programid";
+
+            var count = await _connection.ExecuteAsync(query, new { systemid = systemId, programid = programId, value = value });
+
+            LogCount("RUN", count);
+        }
+
         private void LogCount(string name, int count)
         {
             if (count == 1)
@@ -116,6 +129,7 @@ namespace EnergyComparer.Repositories
                 _logger.Information("Program named {name} already existed", name);
             }
         }
+
     }
 
     public interface IInsertExperimentRepository
@@ -125,7 +139,9 @@ namespace EnergyComparer.Repositories
         void InitializeDatabase();
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
+        Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program);
         Task InsertProgram(string name);
         Task InsertSystem(string name, string os, int version = 1);
+        Task UpdateProfilers(int systemId, int programId, string value);
     }
 }
