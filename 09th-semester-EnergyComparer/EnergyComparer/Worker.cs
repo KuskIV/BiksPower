@@ -1,6 +1,12 @@
+using EnergyComparer.Handlers;
+using EnergyComparer.Models;
+using EnergyComparer.Profilers;
+using EnergyComparer.Programs;
+using EnergyComparer.Repositories;
 using EnergyComparer.Services;
 using EnergyComparer.Utils;
 using Serilog;
+using System.ComponentModel;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer
@@ -8,59 +14,33 @@ namespace EnergyComparer
     public class Worker : BackgroundService
     {
         private readonly ILogger _logger;
-        private readonly IHardwareMonitorService _hardwareMonitorService;
-        private readonly IIntelPowerGadgetService _intelPowerGadget;
-        private readonly IHardwareService _prepare;
+        private readonly IExperimentService _experimentService;
+        private readonly IHardwareHandler _hardwareHandler;
+        private readonly IDataHandler _dataHandler;
 
-        public Worker(ILogger logger, IHardwareMonitorService hardwareMonitorService, IIntelPowerGadgetService intelPowerGadget, IHardwareService prepare)
+        public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler)
         {
             _logger = logger;
-            _hardwareMonitorService = hardwareMonitorService;
-            _intelPowerGadget = intelPowerGadget;
-            _prepare = prepare;
+            _experimentService = experimentService;
+            _hardwareHandler = hardwareHandler;
+            _dataHandler = experimentHandler;
+
+            _dataHandler.InitializeConnection();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                await _intelPowerGadget.Initialise(); // TODO: Move to intel powergadget
+            var intelPowerGadget = new IntelPowerGadget();
+            var testProgram = new TestProgram(_dataHandler);
 
-                InitializeExperiment();
+            //await _dataHandler.IncrementVersionForSystem();
 
-                var a = _hardwareMonitorService.GetCoreTemperatures();
+            await _experimentService.RunExperiment(intelPowerGadget, testProgram);
 
-                EndExperiment();
-
-                _logger.Information("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
-
-
-
-                var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
-                var memory = _hardwareMonitorService.GetCpuMemory();
-                var avgLoad = _hardwareMonitorService.GetAverageCpuLoad();
-                var totalLoad = _hardwareMonitorService.GetTotalLoad();
-                var maxTemp = _hardwareMonitorService.GetMaxTemperature();
-
-                _logger.Information($"avg temp  = {avgTemp}");
-                _logger.Information($"memory     = {memory}");
-                _logger.Information($"avg load   = {avgLoad}");
-                _logger.Information($"total load = {totalLoad}");
-                _logger.Information($"max temp   = {maxTemp}");
-                _logger.Information($"---");
-
-            }
+            _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
+            await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
         }
 
-        private void EndExperiment()
-        {
-            _prepare.EnableWifi();
-        }
 
-        private void InitializeExperiment()
-        {
-            _prepare.DisableWifi();
-        }
     }
 }

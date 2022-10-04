@@ -15,7 +15,7 @@ namespace EnergyComparer.Services
     {
         float GetAverageCpuLoad();
         float GetAverageCpuTemperature();
-        List<Temperature> GetCoreTemperatures();
+        List<DtoTemperature> GetCoreTemperatures(DateTime time);
         float GetCpuMemory();
         float GetMaxTemperature();
         float GetTotalLoad();
@@ -54,28 +54,30 @@ namespace EnergyComparer.Services
             }
         }
 
-        public List<Temperature> GetCoreTemperatures()
+        public List<DtoTemperature> GetCoreTemperatures(DateTime time)
         {
-            var temperatures = new List<Temperature>();
+            var temperatures = new List<DtoTemperature>();
             var defaultName = "CPU Core #";
 
             var i = 1;
-            var time = DateTime.UtcNow;
             var name = defaultName + i;
 
             while (TryGetValueForSensor(SensorType.Temperature, name, out var value))
             {
                 temperatures.Add(
-                    new Temperature()
+                    new DtoTemperature()
                     {
-                        name = name,
-                        time = time,
-                        value = value
+                        Name = name,
+                        Time = time,
+                        Value = value
                     });
 
                 i += 1;
                 name = defaultName + i;
             }
+
+            _logger.Information("Temperature measured for {count} cores, avg temperature: {temp}", 
+                temperatures.Count(), temperatures.Select(x => x.Value).Sum() / temperatures.Count());
 
             return temperatures;
         }
