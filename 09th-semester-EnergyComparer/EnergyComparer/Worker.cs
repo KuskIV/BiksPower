@@ -5,8 +5,10 @@ using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
 using EnergyComparer.Services;
 using EnergyComparer.Utils;
+using LibreHardwareMonitor.Hardware;
 using Serilog;
 using System.ComponentModel;
+using System.Management;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer
@@ -31,18 +33,28 @@ namespace EnergyComparer
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //await _dataHandler.IncrementVersionForSystem();
+            try
+            {
+                //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
+                var programToRun = AdapterUtils.GetProgram(_dataHandler);
+                
+                while (!AdapterUtils.ShouldStopExperiment())
+                {
+                    var profiler = await _profilerService.GetNext(programToRun);
 
-            var testProgram = new TestProgram(_dataHandler);
+                    await _experimentService.RunExperiment(profiler, programToRun);
 
-            var profiler = await _profilerService.GetNext(testProgram);
+                    _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
+                    await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
+                }
+                
+                await _profilerService.SaveProfilers();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception orrucred while running the experiments");
+            }
 
-            await _experimentService.RunExperiment(profiler, testProgram);
-
-            _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
         }
-
-
     }
 }
