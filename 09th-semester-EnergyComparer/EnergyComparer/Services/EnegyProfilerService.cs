@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Services
 {
-    public class EnergyProfilerService : IEnergyProfilerService
+    public class EnergyProfilerService : IEnergyProfilerService, IDisposable
     {
         private readonly IDataHandler _dataHandler;
         private readonly bool _iterateOverProfilers;
@@ -29,7 +29,7 @@ namespace EnergyComparer.Services
                 return GetDefaultProfiler();
             }
 
-            await OnInitialize(program);
+            await InitializeProfilers(program);
 
             var currentProfiler = await GetCurrentProfilerAndUpdateIsFirst(program);
 
@@ -55,12 +55,29 @@ namespace EnergyComparer.Services
             return currentProfiler;
         }
 
-        private async Task OnInitialize(IProgram program)
+        private async Task UpdateIsFirstProfiler(IProgram program)
+        {
+            var currentProfiler = _profilers.Where(x => x.IsFirst == true).First();
+            var currentProfilerIndex = _profilers.IndexOf(currentProfiler);
+            var nextIndex = currentProfilerIndex == _profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
+
+            _profilers[currentProfilerIndex].IsFirst = false;
+            _profilers[nextIndex].IsFirst = true;
+
+            await _dataHandler.UpdateProfilers(program, _profilers);
+        }
+
+        private async Task InitializeProfilers(IProgram program)
         {
             if (_profilers.Count == 0)
             {
                 _profilers = await _dataHandler.GetProfilerFromLastRunOrDefault(program);
             }
+        }
+
+        public async void Dispose()
+        {
+            await UpdateIsFirstProfiler();
         }
     }
 
