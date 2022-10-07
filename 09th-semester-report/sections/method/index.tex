@@ -18,20 +18,12 @@ When selecting the profilers, promising ones were chosen in different categories
 
 When measuring the energy consumption of hardware, different software measuring tools were introduced in \cref{sec:energy_profilers}. In this section the hardware these tools will measure the energy consumption on will be introduced. This will include an analysis of the different requirements the tools had, in order to find which combination of hardware will give the best result.
 
-\section{Metrics}\label{sec:metrics}
+\section{statical methods}\label{sec:stat}
 
-As this work will aim to compare different ways to measure the energy consumption of software, not only across different measuring approaches, but also different hardware and operating systems, a way to represent the data is required. In this section different ways to make the data presentable and comparable will be presented. To make this easier to read the following sub-questions have been formulated which will help in clarifying the goals of each of the metrics, and the relevance.
-\begin{itemize}
-    \item How would different implementations of a functionally identical programs from the same languages be compared to see differences in energy consumption?
-    \item How are the data from the different systems comparable, can the correlated is the same experiment across the different machines and operating systems?
-    \item How are outliers detected and how often do they occurs in the data?.
-\end{itemize}
-To answer
+As this work will aim to compare different ways to measure the energy consumption of software, not only across different measuring approaches, but also different hardware and operating systems, a way to represent the data is required. In this section different ways to make the data presentable and comparable will be presented.
 \include{sections/method/Metrics/Distribution.tex}
 \include{sections/method/Metrics/Correlation.tex}
 \include{sections/method/Metrics/Anomalies.tex}
-
-
 \include{sections/method/ExperimentalSetup/ExperimentalSetup.tex}
 
 %% save in DB in SQL
