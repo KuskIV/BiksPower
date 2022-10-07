@@ -109,7 +109,7 @@ namespace EnergyComparer.Repositories
 
             LogCount("RUN", count);
         }
-        public async Task UpdateProfilers(int systemId, int programId, string value)
+        public async Task UpdateProfilers(string systemId, string programId, string value)
         {
             var query = "UPDATE Run SET Value = @value WHERE SystemId = @systemid AND ProgramId = @programid";
 
@@ -142,6 +142,6 @@ namespace EnergyComparer.Repositories
         Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program);
         Task InsertProgram(string name);
         Task InsertSystem(string name, string os, int version = 1);
-        Task UpdateProfilers(int systemId, int programId, string value);
+        Task UpdateProfilers(string systemId, string programId, string value);
     }
 }

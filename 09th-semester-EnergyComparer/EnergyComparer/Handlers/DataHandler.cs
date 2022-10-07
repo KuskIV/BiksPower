@@ -108,15 +108,21 @@ namespace EnergyComparer.Handlers
         public async Task<List<Profiler>> GetProfilerFromLastRunOrDefault(IProgram program)
         {
             var system = await GetSystem();
+            var profilers = new List<Profiler>();
 
             if (await LastRunExistsForSystem(system, program))
             {
-                return await _getRepository.GetLastRunForSystem(system, program);
+                profilers = await _getRepository.GetLastRunForSystem(system, program);
+            }
+            else
+            {
+                profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program);
+
+                await _insertRepository.InsertProfilers(profilers, system, program);
             }
 
-            var profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program);
-
-            await _insertRepository.InsertProfilers(profilers, system, program);
+            foreach (var p in profilers.Where(x => x.IsFirst == true))
+                p.IsCurrent = true;
 
             return profilers;
 
@@ -127,12 +133,12 @@ namespace EnergyComparer.Handlers
             return await _getRepository.RunExistsForSystem(system, program);
         }
 
-        public async Task UpdateProfilers(IProgram program, List<Profiler> profilers)
+        public async Task UpdateProfilers(string id, List<Profiler> profilers)
         {
             var system = await GetSystem();
 
-            var systemId = system.Id;
-            var programId = program.GetProgram().Id;
+            var systemId = system.Id.ToString();
+            var programId = id;
             var value = JsonSerializer.Serialize(profilers);
 
             await _insertRepository.UpdateProfilers(systemId, programId, value);
@@ -149,6 +155,6 @@ namespace EnergyComparer.Handlers
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();
         void InitializeConnection();
-        Task UpdateProfilers(IProgram program, List<Profiler> profilers);
+        Task UpdateProfilers(string id, List<Profiler> profilers);
     }
 }
