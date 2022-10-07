@@ -14,18 +14,18 @@ namespace EnergyComparer.Services
     public class EnergyProfilerService : IEnergyProfilerService
     {
         private readonly IDataHandler _dataHandler;
-        private readonly bool _iterateOverProfilers;
+        private readonly bool _isProd;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
 
         public EnergyProfilerService(IDataHandler dataHandler, bool iterateOverProfilers)
         {
             _dataHandler = dataHandler;
-            _iterateOverProfilers = iterateOverProfilers;
+            _isProd = iterateOverProfilers;
         }
 
         public async Task<IEnergyProfiler> GetNext(IProgram program)
         {
-            if (!_iterateOverProfilers)
+            if (!_isProd)
             {
                 return GetDefaultProfiler();
             }

@@ -19,7 +19,6 @@ builder
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>((host, builder) =>
     {
-
         builder.Register<Func<IDbConnection>>(f => () =>
         {
             var connectionString = host.Configuration.GetValue<string>("ConnectionString");
@@ -35,7 +34,7 @@ builder
 
         builder.Register<IEnergyProfilerService>(f =>
         {
-            var iterateOverProfilers = host.Configuration.GetValue<bool>("IterateOverProfilers");
+            var iterateOverProfilers = host.Configuration.GetValue<bool>("IsProd");
             return new EnergyProfilerService(f.Resolve<IDataHandler>(), iterateOverProfilers);
         });
 

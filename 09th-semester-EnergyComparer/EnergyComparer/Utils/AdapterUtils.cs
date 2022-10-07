@@ -56,6 +56,14 @@ namespace EnergyComparer.Utils
             return true;
         }
 
+        public static void Restart(bool _isProd)
+        {
+            if (true)
+            {
+                Process.Start("ShutDown", "/r /t 0");
+            }
+        }
+
         public static IProgram GetProgram(IDataHandler dataHandler)
         {
             return new TestProgram(dataHandler);
