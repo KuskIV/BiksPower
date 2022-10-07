@@ -1,4 +1,4 @@
-﻿using EnergyComparer.Utils;
+﻿using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +10,14 @@ namespace EnergyComparer
     public static class Constants
     {
         public static TimeSpan TimeBetweenExperiments = TimeSpan.FromMinutes(30);
-        public static TimeSpan DurationOfExperiments = TimeSpan.FromSeconds(10);
-        public static int ChargeLimit = 20;
+        public static int DurationOfExperimentsInMinutes = 10;
+        public static int ChargeLowerLimit = 20;
+        public static int ChargeUpperLimit = 100;
+        public static int TemperatureLowerLimit = 50;
+        public static int TemperatureUpperLimit = 80;
         public static string DefaultFolderName = "09-experiment-data";
         public static string DatetimeFormat = "s";
         public static string DataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-
-
-        public static List<string> GetAllRequiredPaths()
-        {
-            return AdapterUtils.GetAllSouces().Select(x => GetPathForSource(x)).ToList();
-        }
 
         public static string GetPathForSource(string source)
         {

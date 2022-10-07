@@ -10,12 +10,22 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using ILogger = Serilog.ILogger;
 
-namespace EnergyComparer.Utils
+namespace EnergyComparer.Services
 {
-    public static class AdapterUtils
+    public class AdapterWindowsLaptopService : IAdapterService
     {
-        public static void Enable(string interfaceName)
+        private readonly IHardwareMonitorService _hardwareMonitorService;
+        private readonly ILogger _logger;
+
+        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger)
+        {
+            _hardwareMonitorService = hardwareMonitorService;
+            _logger = logger;
+        }
+
+        public void EnableWifi(string interfaceName)
         {
             ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" enable");
             Process p = new Process();
@@ -23,53 +33,57 @@ namespace EnergyComparer.Utils
             p.Start();
         }
 
-        public static void Disable(string interfaceName)
+        public void DisableWifi(string interfaceName)
         {
             ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
             Process p = new Process();
             p.StartInfo = psi;
             p.Start();
         }
-        public static List<string> GetAllSouces()
+        public List<string> GetAllSouces()
         {
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList();
         }
 
-        public static bool ShouldStopExperiment()
+        public bool ShouldStopExperiment()
         {
+            var chargeRemaining = GetChargeRemaining();
             
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
-
-            if (mos == null)
-            {
-                // TODO: ensure this is what happens if there is not battery.
-            }
-            else
-            {
-                foreach (ManagementObject mo in mos.Get())
-                {
-                    var chargeRemaning = (int)mo["EstimatedChargeRemaining"];
-                    return chargeRemaning < Constants.ChargeLimit;
-                }
-            }
-
-            return true;
+            return chargeRemaining < Constants.ChargeLowerLimit;
         }
 
-        public static void Restart(bool _isProd)
+        public List<string> GetAllRequiredPaths()
         {
-            if (true)
+            return GetAllSouces().Select(x => Constants.GetPathForSource(x)).ToList();
+        }
+
+        private int GetChargeRemaining()
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
+
+            foreach (ManagementObject mo in mos.Get())
+            {
+                var chargeRemaning = mo["EstimatedChargeRemaining"].ToString();
+                return int.Parse(chargeRemaning);
+            }
+
+            throw new Exception("This machine does not have a battery");
+        }
+
+        public void Restart(bool _isProd)
+        {
+            if (_isProd)
             {
                 Process.Start("ShutDown", "/r /t 0");
             }
         }
 
-        public static IProgram GetProgram(IDataHandler dataHandler)
+        public IProgram GetProgram(IDataHandler dataHandler)
         {
             return new TestProgram(dataHandler);
         }
 
-        public static IEnergyProfiler MapEnergyProfiler(Profiler profiler)
+        public IEnergyProfiler MapEnergyProfiler(Profiler profiler)
         {
             if (profiler.Name == EWindowsProfilers.IntelPowerGadget.ToString())
             {
@@ -87,6 +101,17 @@ namespace EnergyComparer.Utils
             {
                 throw new NotImplementedException($"{profiler.Name} has not been implemented");
             }
+        }
+
+        public async Task WaitTillStableState(bool isProd)
+        {
+            if (!isProd)
+            {
+                return;
+            }
+
+            while (GetChargeRemaining() < Constants.ChargeUpperLimit || _hardwareMonitorService.GetAverageCpuTemperature() > Constants.TemperatureLowerLimit)
+                await Task.Delay(TimeSpan.FromMinutes(5));
         }
     }
 }

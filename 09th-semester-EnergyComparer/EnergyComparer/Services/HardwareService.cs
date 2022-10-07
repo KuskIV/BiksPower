@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EnergyComparer.Utils;
 using Microsoft.AspNetCore.Hosting.Server;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -15,16 +14,18 @@ namespace EnergyComparer.Services
     {
         private readonly ILogger _logger;
         private readonly string _wifiAdapterName;
+        private readonly IAdapterService _adapterService;
 
-        public HardwareHandler(ILogger logger, string wifiAdapterName)
+        public HardwareHandler(ILogger logger, string wifiAdapterName, IAdapterService adapterService)
         {
             _logger = logger;
             _wifiAdapterName = wifiAdapterName;
+            _adapterService = adapterService;
         }
 
         public void EnsurePathsExists()
         {
-            foreach (var path in Constants.GetAllRequiredPaths())
+            foreach (var path in _adapterService.GetAllRequiredPaths())
             {
                 if (!Directory.Exists(path))
                 {
@@ -36,13 +37,13 @@ namespace EnergyComparer.Services
         public void DisableWifi()
         {
             _logger.Information("About to disable wifi...");
-             AdapterUtils.Disable(_wifiAdapterName);
+            _adapterService.DisableWifi(_wifiAdapterName);
         }
 
         public void EnableWifi()
         {
             _logger.Information("About to enable wifi...");
-            AdapterUtils.Enable(_wifiAdapterName);
+            _adapterService.EnableWifi(_wifiAdapterName);
         }
 
         public void Dispose()
@@ -50,7 +51,7 @@ namespace EnergyComparer.Services
             try
             {
                 _logger.Information("Re-enbeling wifi upon shutdown.");
-                AdapterUtils.Enable(_wifiAdapterName);
+                _adapterService.EnableWifi(_wifiAdapterName);
 
             }
             catch (Exception e)

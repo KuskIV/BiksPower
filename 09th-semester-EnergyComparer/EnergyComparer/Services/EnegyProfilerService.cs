@@ -2,7 +2,6 @@
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
-using EnergyComparer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +14,14 @@ namespace EnergyComparer.Services
     {
         private readonly IDataHandler _dataHandler;
         private readonly bool _isProd;
+        private readonly IAdapterService _adapterService;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
 
-        public EnergyProfilerService(IDataHandler dataHandler, bool iterateOverProfilers)
+        public EnergyProfilerService(IDataHandler dataHandler, bool iterateOverProfilers, IAdapterService adapterService)
         {
             _dataHandler = dataHandler;
             _isProd = iterateOverProfilers;
+            _adapterService = adapterService;
         }
 
         public async Task<IEnergyProfiler> GetNext(IProgram program)
@@ -51,7 +52,7 @@ namespace EnergyComparer.Services
 
             UpdateProfilers(program, profilers);
 
-            return AdapterUtils.MapEnergyProfiler(currentProfiler);
+            return _adapterService.MapEnergyProfiler(currentProfiler);
         }
 
         private IEnergyProfiler GetDefaultProfiler()
@@ -70,7 +71,7 @@ namespace EnergyComparer.Services
 
             UpdateProfilers(program, profilers);
 
-            return AdapterUtils.MapEnergyProfiler(currentProfiler);
+            return _adapterService.MapEnergyProfiler(currentProfiler);
         }
 
         private void UpdateProfilers(IProgram program, List<Profiler> profilers)
@@ -118,8 +119,6 @@ namespace EnergyComparer.Services
 
             return _profilers[name];
         }
-
-
     }
 
     public interface IEnergyProfilerService
