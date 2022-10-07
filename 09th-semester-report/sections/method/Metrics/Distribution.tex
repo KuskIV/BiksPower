@@ -1,5 +1,5 @@
 \subsection{Distribution}
-Here the method for statistically comparing the distribution of the different measurement will be elaborated and explained. The selection of the varies statical methods for distributions are in inspired by Koedijk et al\cite{koedijk2022finding}
+Here the method for statistically comparing the distribution of the different measurement will be elaborated and explained.
 
 \paragraph{Shapiro-Wilk}
 One of the most common preconditions for statistical tests is that the data should be a normal distribution for the results to work optimally. To test if a distribution is a normal Distribution a normalcy test can be used. While there are many different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
@@ -8,14 +8,14 @@ One of the most common preconditions for statistical tests is that the data shou
     W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}
 \end{equation}
 
-The null hypnosis's $H_0$ for the test is:
+The null hypnosis $H_0$ for the test is:
 
 \begin{quotation}
-    \textit{The sample comes from a normally-distributes population}
+    \textit{The sample comes from a normally-distributed population}
 \end{quotation}
 
 \todo[]{Confidence level the same in both cochran and stats}
-To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is the probability of achieving the same results under $H_0$ of a statistical test. Alpha represents the statistical significance, a common threshold is $0.05$. If the $p_{Value}$ is less than alpha, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing, and it is also used for the rest of the tests in this section and unless specified otherwise all test are conducted with an alpha of $0.05$.
+To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is the probability of achieving the same results under $H_0$ of a statistical test. Alpha represents the statistical significance, a common threshold is $0.05$. If the $p_{Value}$ is less than alpha, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing[greenland2016statistical], and it is also used for the rest of the tests in this section and unless specified otherwise all test are conducted with an alpha of $0.05$.
 
 \paragraph{T-Test}
 
@@ -92,5 +92,5 @@ $$F_2 = cdf(sample2,x)$$
 where cdf (cumulative distribution function) assuming a sorted list of observations counts the number of observations below x and the divide with the total number of samples. The KS2 depends on a parameter $en$, which can be calculated using the following formula:
 $$en=\frac{(m*n)}{(m+n)}$$
 where $n$ is the size of sample 1 and $m$ is the size of sample 2.
-The $H_0$: \textit{The two samples are from the same distribution}.
+The $H_0$ for KS2: \textit{The two samples are from the same distribution}.
 $H_0$ can be rejected in the case of $D_{n,m} > c(\alpha)\sqrt{en}$\cite{massey1951kolmogorov}
