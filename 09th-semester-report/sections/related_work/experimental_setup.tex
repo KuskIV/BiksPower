@@ -4,3 +4,6 @@
 
 When running experiments on energy consumption of hardware, 
 %% benchmarking c# for energy consumption ørsted nielsen
+
+
+Bokhari et al\cite{Bokhari2020r3} found that when running benchmarks comparing different variants of the same program on Android systems, noise had an impact on the results. This was due to noise coming from several uncontrollable factors. Firstly the systems software states meaning the background processes which could not be fully controlled during the execution of the experiments. Secondly the memory consumption of the Android system and background processes. Thirdly the battery voltage, because even though the system was fully charged at the starting point as well as the remaining voltage level after. To solve this they propose a method called \textit{R3-VALIDATION} which is a rotated round-robin approach to running the program variants, which ensures more fair execution conditions. In this approach the variants (A, B, C) are rotated as follows: setup, ABC, ABC, setup, BCA, BCA, setup, CAB, CAB. Where the setup phase is a restart, initialization and recharge of the system. They achieved more consistent system states from this approach.
