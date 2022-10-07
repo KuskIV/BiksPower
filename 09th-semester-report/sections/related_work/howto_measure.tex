@@ -4,7 +4,7 @@
 
 When measuring the energy consumption of a process, different energy profilers exists which has been used in existing work. One popular approach are model-based power consumption estimators provided by x86 microprocessors, including Intel's RAPL for intel chips, and Application Power Management (APM) for AMD.
 
-Work exists for RAPL, here it is deemed a viable alternative to physical measurements, where it consistently under-estimates\cite[]{Dongarra2012, Hackenberg2013}, but it does have some limitations, as RAPL values are not physical measurements, it is rather based on modeling approach\cite[]{Hackenberg2013}. Another limitation is how RAPL returns energy data and not power data. Because of this, the average update interval is used as timestamps for each update, and this value is assumed to be accurate enough.\cite[]{Hackenberg2013}
+\todo{I think this sentence is weird.}Work exists for RAPL, here it is deemed a viable alternative to physical measurements, where it consistently under-estimates\cite[]{Dongarra2012, Hackenberg2013}, but it does have some limitations, as RAPL values are not physical measurements, it is rather based on modeling approach\cite[]{Hackenberg2013}. Another limitation is how RAPL returns energy data and not power data. Because of this, the average update interval is used as timestamps for each update, and this value is assumed to be accurate enough.\cite[]{Hackenberg2013}
 
 When considering APM, it is reasonably accurate, but suffers from for example systematic inaccuracies most likely caused by novelty of the interface.\cite[]{Hackenberg2013}
 
