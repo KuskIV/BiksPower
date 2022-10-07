@@ -4,7 +4,6 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
 using EnergyComparer.Services;
-using EnergyComparer.Utils;
 using LibreHardwareMonitor.Hardware;
 using Microsoft.Win32;
 using Serilog;
@@ -21,17 +20,17 @@ namespace EnergyComparer
         private readonly IHardwareHandler _hardwareHandler;
         private readonly IDataHandler _dataHandler;
         private readonly IEnergyProfilerService _profilerService;
-        private readonly IHardwareMonitorService _hardwareMonitorService;
+        private readonly IAdapterService _adapterService;
         private readonly bool _isProd;
 
-        public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler, IEnergyProfilerService profilerService, IConfiguration configuration, IHardwareMonitorService hardwareMonitorService)
+        public Worker(ILogger logger, IExperimentService experimentService, IHardwareHandler hardwareHandler, IDataHandler experimentHandler, IEnergyProfilerService profilerService, IConfiguration configuration, IAdapterService adapterService)
         {
             _logger = logger;
             _experimentService = experimentService;
             _hardwareHandler = hardwareHandler;
             _dataHandler = experimentHandler;
             _profilerService = profilerService;
-            _hardwareMonitorService = hardwareMonitorService;
+            _adapterService = adapterService;
             _isProd = configuration.GetValue<bool>("IsProd");
             _dataHandler.InitializeConnection();
         }
@@ -41,20 +40,23 @@ namespace EnergyComparer
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
             try
             {
-                var programToRun = AdapterUtils.GetProgram(_dataHandler);
+                await _adapterService.WaitTillStableState(_isProd);
+                var isExperimentValid = true;
 
-                while (!AdapterUtils.ShouldStopExperiment())
+                var programToRun = _adapterService.GetProgram(_dataHandler);
+
+                while (!_adapterService.ShouldStopExperiment() && isExperimentValid)
                 {
                     var profiler = await _profilerService.GetNext(programToRun);
 
-                    await _experimentService.RunExperiment(profiler, programToRun);
+                    isExperimentValid = await _experimentService.RunExperiment(profiler, programToRun);
 
                     _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
                     await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
                 }
 
                 await _profilerService.SaveProfilers();
-                AdapterUtils.Restart(_isProd);
+                _adapterService.Restart(_isProd);
             }
             catch (Exception e)
             {

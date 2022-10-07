@@ -12,6 +12,7 @@ using EnergyComparer.Profilers;
 using Ubiety.Dns.Core.Records.NotUsed;
 using EnergyComparer.Utils;
 using System.Text.Json;
+using EnergyComparer.Services;
 
 namespace EnergyComparer.Handlers
 {
@@ -20,12 +21,14 @@ namespace EnergyComparer.Handlers
         private readonly ILogger _logger;
         private readonly IInsertExperimentRepository _insertRepository;
         private readonly IGetExperimentRepository _getRepository;
+        private readonly IAdapterService _adapterService;
 
-        public DataHandler(ILogger logger, IInsertExperimentRepository insertRepository, IGetExperimentRepository getRepository)
+        public DataHandler(ILogger logger, IInsertExperimentRepository insertRepository, IGetExperimentRepository getRepository, IAdapterService adapterService)
         {
             _logger = logger;
             _insertRepository = insertRepository;
             _getRepository = getRepository;
+            _adapterService = adapterService;
         }
 
         public void InitializeConnection()
@@ -116,7 +119,8 @@ namespace EnergyComparer.Handlers
             }
             else
             {
-                profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program);
+                var sources = _adapterService.GetAllSouces();
+                profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program, sources);
 
                 await _insertRepository.InsertProfilers(profilers, system, program);
             }

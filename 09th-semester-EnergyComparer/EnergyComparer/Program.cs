@@ -38,16 +38,17 @@ builder
 
         builder.Register<IHardwareHandler>(f => {
             var wifiAdapterName = host.Configuration.GetValue<string>("wifiAdapterName");
-            return new HardwareHandler(f.Resolve<ILogger>(), wifiAdapterName);
+            return new HardwareHandler(f.Resolve<ILogger>(), wifiAdapterName, f.Resolve<IAdapterService>());
         });
 
         builder.Register<IEnergyProfilerService>(f =>
         {
             var iterateOverProfilers = host.Configuration.GetValue<bool>("IsProd");
-            return new EnergyProfilerService(f.Resolve<IDataHandler>(), iterateOverProfilers);
+            return new EnergyProfilerService(f.Resolve<IDataHandler>(), iterateOverProfilers, f.Resolve<IAdapterService>());
         });
 
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
+        builder.RegisterType<AdapterWindowsLaptopService>().As<IAdapterService>().SingleInstance().AutoActivate();
         builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();
         builder.RegisterType<InsertExperimentRepository>().As<IInsertExperimentRepository>().SingleInstance().AutoActivate();
         builder.RegisterType<GetExperimentRepository>().As<IGetExperimentRepository>().SingleInstance().AutoActivate();
