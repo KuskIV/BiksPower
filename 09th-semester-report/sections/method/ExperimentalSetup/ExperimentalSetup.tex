@@ -3,15 +3,14 @@ After the different components required in order to execute the experiment has b
 
 
 \subsection{Sample size}
-The amount of times to run the experiment are important to ensure enough tests are conducted for each benchmark to arrive at a representative mean and standard deviation, while also avoiding wasting resources by running an large amount of unnecessary test. There are several approaches used in the literature. As example some papers use what seems like an arbitrary number of samples\todo[]{source}. Another method is to base the number of samples on how many times the experiment can be run within in a time-frame.\cite{sestoft2013microbenchmarks} A more structured approach is utilized to calculate this, is to use Cochran's formula\cite{Cochran, kotrlik2001organizational,israel1992determining},\todo{Other methods for calculating sample size?} which gives the minimum number of required observations for a performance metrics within a specified standard deviation. There are two versions which are considered.
-The first one in \cref{cochransEQ1}\footnote{Note the terminology used by Cochran is different to the one utilized in this report} is for categorical data:
+The amount of times to run the experiment are important to ensure enough tests are conducted for each benchmark to arrive at a representative mean and standard deviation, while also avoiding wasting resources by running an large amount of unnecessary test. There are several approaches used in the literature. As example some papers use what seems like an arbitrary number of samples\cite{Pereira2017,Koedijk2022diff,Georgiou2020}. Another method is to base the number of samples on how many times the experiment can be run within in a time-frame\cite{sestoft2013microbenchmarks}. In this report a formula will be used to calculate the sample size. One formula or family of formulas are Cochran's formula.\cite{Cochran, kotrlik2001organizational,israel1992determining},\todo{Other methods for calculating sample size?} which gives the minimum number of required observations for a performance metrics within a specified standard deviation. However there are several versions of the formula.
+The first one in \cref{cochransEQ1}\footnote{Note the terminology used by Cochran is different to the one utilized in this report} is for categorical data when the population is large\cite{israel1992determining}:
 
 \begin{equation}
     n_0 = \frac{Z^2*p*q}{e^2}
     \label[equation]{cochransEQ1}
 \end{equation}
 
-Where, 
 \begin{itemize}
     \item $n_0$ is the number of samples
     \item $Z$ is the abscissa of the normal curve which removes an area $\alpha$ at the tails of the distribution. (Z-score) Where $1 - \alpha$ is the desired confidence level.%is the z-value, which is found using the z-table and represents the confidence level
@@ -23,7 +22,18 @@ Where,
     \item $e$ is desired level of precision (acceptable margin of error)
 \end{itemize}
 
-The other one in \cref{cochransEQ2} is for continuous data. However it should still be considered if categorical variables will play an important role in the data analysis, then \cref*{cochransEQ1} should be used.
+
+Then there is a correction step for smaller populations since then a smaller sample size is required, shown in \cref{cochransCorrection, kotrlik2001organizational}.
+
+\begin{equation}
+    n = \frac{n_0}{1+\frac{(n_0-1)}{N}}
+    \label[equation]{cochransCorrection}
+\end{equation}
+
+Furthermore there is a simplified formula called Yamane's formula 
+
+
+The other one in \cref{cochransEQ2} is for continuous data. However it should still be considered if categorical variables will play an important role in the data analysis, then \cref{cochransEQ1} should be used.
 
 \begin{equation}
     n_0 = \frac{Z^2*\sigma^2}{e^2}

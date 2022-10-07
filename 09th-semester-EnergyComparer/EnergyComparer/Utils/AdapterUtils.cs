@@ -1,9 +1,13 @@
-﻿using EnergyComparer.Models;
+﻿using Autofac.Core.Activators.Reflection;
+using EnergyComparer.Handlers;
+using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Programs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +35,32 @@ namespace EnergyComparer.Utils
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList();
         }
 
+        public static bool ShouldStopExperiment()
+        {
+            
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
+
+            if (mos == null)
+            {
+                // TODO: ensure this is what happens if there is not battery.
+            }
+            else
+            {
+                foreach (ManagementObject mo in mos.Get())
+                {
+                    var chargeRemaning = (int)mo["EstimatedChargeRemaining"];
+                    return chargeRemaning < Constants.ChargeLimit;
+                }
+            }
+
+            return true;
+        }
+
+        public static IProgram GetProgram(IDataHandler dataHandler)
+        {
+            return new TestProgram(dataHandler);
+        }
+
         public static IEnergyProfiler MapEnergyProfiler(Profiler profiler)
         {
             if (profiler.Name == EWindowsProfilers.IntelPowerGadget.ToString())
@@ -39,7 +69,7 @@ namespace EnergyComparer.Utils
             }
             else if (profiler.Name == EWindowsProfilers.E3.ToString())
             {
-                throw new NotImplementedException("E3 has not been implemented");
+                return new E3();
             }
             else if (profiler.Name == EWindowsProfilers.HardwareMonitor.ToString())
             {

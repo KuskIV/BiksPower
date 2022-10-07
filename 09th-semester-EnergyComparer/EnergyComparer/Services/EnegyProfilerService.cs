@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Services
 {
-    public class EnergyProfilerService : IEnergyProfilerService, IDisposable
+    public class EnergyProfilerService : IEnergyProfilerService
     {
         private readonly IDataHandler _dataHandler;
         private readonly bool _iterateOverProfilers;
-        private List<Profiler> _profilers = new List<Profiler>();
+        private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
 
         public EnergyProfilerService(IDataHandler dataHandler, bool iterateOverProfilers)
         {
             _dataHandler = dataHandler;
             _iterateOverProfilers = iterateOverProfilers;
         }
+
         public async Task<IEnergyProfiler> GetNext(IProgram program)
         {
             if (!_iterateOverProfilers)
@@ -29,9 +30,26 @@ namespace EnergyComparer.Services
                 return GetDefaultProfiler();
             }
 
-            await InitializeProfilers(program);
+            var profilers = await InitializeProfilers(program);
 
-            var currentProfiler = await GetCurrentProfilerAndUpdateIsFirst(program);
+            return GetCurrentProfilerAndUpdateIsFirst(program, profilers);
+        }
+
+        public async Task SaveProfilers()
+        {
+            foreach (var key in _profilers.Keys)
+            {
+                var profiler = _profilers[key];
+
+                await UpdateIsFirstProfiler(key, profiler);
+            }
+        }
+
+        private IEnergyProfiler GetCurrentProfiler(IProgram program, List<Profiler> profilers)
+        {
+            var currentProfiler = GetCurrentProfiler(profilers);
+
+            UpdateProfilers(program, profilers);
 
             return AdapterUtils.MapEnergyProfiler(currentProfiler);
         }
@@ -41,48 +59,72 @@ namespace EnergyComparer.Services
             return new IntelPowerGadget();
         }
 
-        private async Task<Profiler> GetCurrentProfilerAndUpdateIsFirst(IProgram program)
+        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(IProgram program, List<Profiler> profilers)
         {
-            var currentProfiler = _profilers.Where(x => x.IsFirst == true).First();
-            var currentProfilerIndex = _profilers.IndexOf(currentProfiler);
-            var nextIndex = currentProfilerIndex == _profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
+            var currentProfiler = GetCurrentProfiler(profilers);
+            var currentProfilerIndex = profilers.IndexOf(currentProfiler);
+            var nextIndex = currentProfilerIndex == profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
 
-            _profilers[currentProfilerIndex].IsFirst = false;
-            _profilers[nextIndex].IsFirst = true;
+            profilers[currentProfilerIndex].IsCurrent = false;
+            profilers[nextIndex].IsCurrent = true;
 
-            await _dataHandler.UpdateProfilers(program, _profilers);
+            UpdateProfilers(program, profilers);
 
-            return currentProfiler;
+            return AdapterUtils.MapEnergyProfiler(currentProfiler);
         }
 
-        private async Task UpdateIsFirstProfiler(IProgram program)
+        private void UpdateProfilers(IProgram program, List<Profiler> profilers)
         {
-            var currentProfiler = _profilers.Where(x => x.IsFirst == true).First();
-            var currentProfilerIndex = _profilers.IndexOf(currentProfiler);
-            var nextIndex = currentProfilerIndex == _profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
-
-            _profilers[currentProfilerIndex].IsFirst = false;
-            _profilers[nextIndex].IsFirst = true;
-
-            await _dataHandler.UpdateProfilers(program, _profilers);
+            _profilers[program.GetName()] = profilers;
         }
 
-        private async Task InitializeProfilers(IProgram program)
+        private static Profiler GetCurrentProfiler(List<Profiler> profilers)
         {
-            if (_profilers.Count == 0)
+            return profilers.Where(x => x.IsCurrent == true).First();
+        }
+
+        private async Task UpdateIsFirstProfiler(string id, List<Profiler> profilers)
+        {
+            var currentProfiler = profilers.Where(x => x.IsFirst == true).First();
+            var currentProfilerIndex = profilers.IndexOf(currentProfiler);
+            var nextIndex = currentProfilerIndex == profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
+
+            profilers[currentProfilerIndex].IsFirst = false;
+            profilers[nextIndex].IsFirst = true;
+
+            await _dataHandler.UpdateProfilers(id, profilers);
+        }
+
+        private async Task<List<Profiler>> InitializeProfilers(IProgram program)
+        {
+            var profilers = GetProfilers(program);
+
+            if (profilers.Count == 0)
             {
-                _profilers = await _dataHandler.GetProfilerFromLastRunOrDefault(program);
+                profilers = await _dataHandler.GetProfilerFromLastRunOrDefault(program);
             }
+
+            return profilers;
         }
 
-        public async void Dispose()
+        private List<Profiler> GetProfilers(IProgram program)
         {
-            await UpdateIsFirstProfiler();
+            var name = program.GetName();
+
+            if (!_profilers.ContainsKey(name))
+            {
+                _profilers.Add(name, new List<Profiler>());
+            }
+
+            return _profilers[name];
         }
+
+
     }
 
     public interface IEnergyProfilerService
     {
         Task<IEnergyProfiler> GetNext(IProgram program);
+        Task SaveProfilers();
     }
 }
