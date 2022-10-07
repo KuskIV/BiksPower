@@ -17,6 +17,15 @@ var builder = Host.CreateDefaultBuilder(args)
 
 builder
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureAppConfiguration((hostingContext, config) =>
+    {
+        config.Sources.Clear();
+
+        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("secrets/appsettings.secrets.json", true)
+            .AddUserSecrets<Program>(true);
+
+    })
     .ConfigureContainer<ContainerBuilder>((host, builder) =>
     {
         builder.Register<Func<IDbConnection>>(f => () =>
