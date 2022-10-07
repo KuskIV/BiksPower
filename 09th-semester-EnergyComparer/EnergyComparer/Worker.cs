@@ -39,15 +39,6 @@ namespace EnergyComparer
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-
-            var a = _hardwareMonitorService.GetAverageCpuLoad();
-
-            _logger.Information($"average cpu load: {a}");
-
-            _logger.Information("Waiting for 2 min");
-            await Task.Delay(TimeSpan.FromMinutes(2));
-
-            AdapterUtils.Restart(_isProd);
             try
             {
                 var programToRun = AdapterUtils.GetProgram(_dataHandler);
@@ -63,7 +54,7 @@ namespace EnergyComparer
                 }
 
                 await _profilerService.SaveProfilers();
-                
+                AdapterUtils.Restart(_isProd);
             }
             catch (Exception e)
             {
