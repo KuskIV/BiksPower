@@ -15,7 +15,7 @@ namespace EnergyComparer.Services
     {
         float GetAverageCpuLoad();
         float GetAverageCpuTemperature();
-        List<DtoTemperature> GetCoreTemperatures(DateTime time);
+        List<DtoTemperature> GetCoreTemperatures();
         float GetCpuMemory();
         float GetMaxTemperature();
         float GetTotalLoad();
@@ -31,11 +31,6 @@ namespace EnergyComparer.Services
 
         public HardwareMonitorService(ILogger logger)
         {
-            if (!IsRunAsAdmin())
-            {
-                throw new Exception("Run as administrator. Otherwise this will not work");
-            }
-
             _logger = logger;
             _computer = new Computer();
             _computer.IsCpuEnabled = true;
@@ -54,7 +49,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        public List<DtoTemperature> GetCoreTemperatures(DateTime time)
+        public List<DtoTemperature> GetCoreTemperatures()
         {
             var temperatures = new List<DtoTemperature>();
             var defaultName = "CPU Core #";
@@ -68,7 +63,6 @@ namespace EnergyComparer.Services
                     new DtoTemperature()
                     {
                         Name = name,
-                        Time = time,
                         Value = value
                     });
 
@@ -184,14 +178,6 @@ namespace EnergyComparer.Services
             }
 
             return newValues;
-        }
-
-        private bool IsRunAsAdmin()
-        {
-            WindowsIdentity id = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(id);
-
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }

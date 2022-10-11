@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Models
 {
-    public class DtoRawData<T>
+    public class DtoRawData
     {
 
         public DateTime Time { get; set; }
-        public T Value { get; set; }
+        public string Value { get; set; }
         public int ExperimentId { get; set; }
         public int Id { get; set; }
     }

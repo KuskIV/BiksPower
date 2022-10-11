@@ -1,4 +1,5 @@
-﻿using EnergyComparer.Handlers;
+﻿using CsvHelper;
+using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Repositories;
 using System;
@@ -35,6 +36,11 @@ namespace EnergyComparer.Programs
         public DtoProgram GetProgram()
         {
             return _program;
+        }
+
+        public List<DtoRawData> ParseCsv(CsvReader csv)
+        {
+            throw new NotImplementedException();
         }
 
         public void Run()

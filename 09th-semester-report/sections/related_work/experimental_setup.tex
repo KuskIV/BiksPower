@@ -2,7 +2,12 @@
 
 \section{Experimental Setup}
 
-When running experiments on energy consumption of hardware, 
+When running experiments on energy consumption of hardware, it is not straight forward, as many factors can impact the experiment. This is covered in the work by Sestof\cite*[]{sestoft2013microbenchmarks}, where it is noted how it is especially aparent in modern systems, with increased complexity. This is especially clear on managed execution platforms like the Common Language Infrastructure (.Net) from Microsoft or the Java Virtual Machine (JVM) where software in an intermediate from is compiled to real machine code at runtime by just-in-time (JIT) compilation.
+
+Sestof\cite*[]{sestoft2013microbenchmarks} notes the impact of how many times the code is run, as the JIT first of all has some start-up overhead, and as it uses adaptive optimization to quickly generate code for code only run a few times, and spend more time on code run many times. The JIT compilation also tries to avoid to spend too much time on analysis, which can results in code which is optimized for certain simpler context, might not perform well in more complex situations. An additional observation is what impact the garbage collection has on performance, as it can choose to run at any time, which can affect the measurements in a negative manner. Because if this, measurings with short execution times is argued to be insufficient. 
+
+
+
 %% benchmarking c# for energy consumption ørsted nielsen
 
 

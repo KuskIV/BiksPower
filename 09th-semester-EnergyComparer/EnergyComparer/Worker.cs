@@ -40,6 +40,7 @@ namespace EnergyComparer
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
             try
             {
+                // TODO: Tie to one single core
                 await _adapterService.WaitTillStableState(_isProd);
                 var isExperimentValid = true;
 
@@ -52,7 +53,7 @@ namespace EnergyComparer
                     isExperimentValid = await _experimentService.RunExperiment(profiler, programToRun);
 
                     _logger.Information("Experiment ended running at: {time}", DateTimeOffset.Now);
-                    await Task.Delay(Constants.TimeBetweenExperiments, stoppingToken);
+                    await Task.Delay(TimeSpan.FromMinutes(Constants.MinutesBetweenExperiments), stoppingToken);
                 }
 
                 await _profilerService.SaveProfilers();

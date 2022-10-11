@@ -9,8 +9,8 @@ namespace EnergyComparer
 {
     public static class Constants
     {
-        public static TimeSpan TimeBetweenExperiments = TimeSpan.FromMinutes(30);
-        public static int DurationOfExperimentsInMinutes = 10;
+        public static int MinutesBetweenExperiments = 1;
+        public static int DurationOfExperimentsInMinutes = 1;
         public static int ChargeLowerLimit = 20;
         public static int ChargeUpperLimit = 100;
         public static int TemperatureLowerLimit = 50;

@@ -44,13 +44,12 @@ namespace EnergyComparer.Repositories
 
         public async Task<DtoExperiment> GetExperiment(DtoExperiment experiment)
         {
-            var query = "SELECT * FROM Experiment WHERE Language = @language AND ProgramId = @programid AND Version = @version AND SystemId = @systemid AND ProfilerId = @profilerid ORDER BY StartTime DESC";
+            var query = "SELECT * FROM Experiment WHERE Language = @language AND ProgramId = @programid AND SystemId = @systemid AND ProfilerId = @profilerid ORDER BY StartTime DESC";
             
             var response = await _connection.QueryFirstAsync<DtoExperiment>(query, new 
             {
                 language = experiment.Language,
                 programid = experiment.ProgramId,
-                version = experiment.Version,
                 systemid = experiment.SystemId,
                 profilerid = experiment.ProfilerId,
             });
@@ -85,6 +84,25 @@ namespace EnergyComparer.Repositories
             return response;
         }
 
+        public async Task<DtoConfiguration> GetConfiguration()
+        {
+            var query = "SELECT * FROM Configuration WHERE MinTemp = @mintemp AND MaxTemp = @maxtemp AND MinutesBetweenExperiments = @between AND " +
+                "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery";
+
+            var response = await _connection.QueryFirstAsync<DtoConfiguration>(query, new 
+            { 
+                mintemp = Constants.TemperatureLowerLimit,
+                maxtemp = Constants.TemperatureUpperLimit,
+                between = Constants.MinutesBetweenExperiments,
+                duration = Constants.DurationOfExperimentsInMinutes,
+                minbattery = Constants.ChargeLowerLimit,
+                maxbattery = Constants.ChargeUpperLimit,
+            });
+
+            return response;
+
+        }
+
         public async Task<bool> ProfilerExists(IEnergyProfiler energyProfiler)
         {
             var query = "SELECT COUNT(*) FROM Profiler WHERE Name = @name";
@@ -99,6 +117,24 @@ namespace EnergyComparer.Repositories
             var query = "SELECT COUNT(*) FROM Program WHERE Name = @name";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new { name = name });
+
+            return response == 1;
+        }
+
+        public async Task<bool> ConfigurationExists(int version)
+        {
+            var query = "SELECT * FROM Configuration WHERE MinTemp = @mintemp AND MaxTemp = @maxtemp AND MinutesBetweenExperiments = @between AND " +
+                        "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery";
+
+            var response = await _connection.ExecuteScalarAsync<int>(query, new
+            {
+                mintemp = Constants.TemperatureLowerLimit,
+                maxtemp = Constants.TemperatureUpperLimit,
+                between = Constants.MinutesBetweenExperiments,
+                duration = Constants.DurationOfExperimentsInMinutes,
+                minbattery = Constants.ChargeLowerLimit,
+                maxbattery = Constants.ChargeUpperLimit,
+            });
 
             return response == 1;
         }
@@ -137,11 +173,15 @@ namespace EnergyComparer.Repositories
 
             return response == 1;
         }
+
+
     }
 
     public interface IGetExperimentRepository
     {
         void CloseConnection();
+        Task<bool> ConfigurationExists(int version);
+        Task<DtoConfiguration> GetConfiguration();
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
         Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.IProgram program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);

@@ -51,7 +51,8 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, Version, SystemId, ProfilerId, Runs) VALUES(@starttime, @endtime, @language, @programid, @version, @systemid, @profilerid, @runs)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId) " +
+                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid)";
 
             var count = await _connection.ExecuteAsync(query, new 
             {
@@ -59,13 +60,34 @@ namespace EnergyComparer.Repositories
                 endtime = experiment.EndTime,
                 language = experiment.Language,
                 programid = experiment.ProgramId,
-                version = experiment.Version,
                 systemid = experiment.SystemId,
                 profilerid = experiment.ProfilerId,
                 runs = experiment.Runs,
+                iteration = experiment.Iteration,
+                firstprofiler = experiment.FirstProfiler,
+                configurationid = experiment.ConfigurationId,
             });
                 
             LogCount("EXPERIMENT", count);
+        }
+
+        public async Task InsertConfiguration(int version)
+        {
+            var query = "INSERT IGNORE INTO Configuration(MinTemp, MaxTemp, MinutesBetweenExperiments, MinuteDurationOfExperiments, MinBattery, MaxBattery, Version)" +
+                "VALUES(@mintemp, @maxtemp, @minbetween, @minduration, @minbattery, @maxbattery, @version)";
+
+            var count = await _connection.ExecuteAsync(query, new
+            {
+                mintemp = Constants.TemperatureLowerLimit,
+                maxtemp = Constants.TemperatureUpperLimit,
+                minbetween = Constants.MinutesBetweenExperiments,
+                minduration = Constants.DurationOfExperimentsInMinutes,
+                minbattery = Constants.ChargeLowerLimit,
+                maxbattery = Constants.ChargeUpperLimit,
+                version = version,
+            });
+
+            LogCount("Configuration", count);
         }
 
         public async Task InsertProfiler(IEnergyProfiler energyProfiler)
@@ -97,6 +119,20 @@ namespace EnergyComparer.Repositories
             LogCount(name, count);
         }
 
+        public async Task InsertTemperature(List<DtoTemperature> temperatures, int id)
+        {
+            var query = "INSERT INTO Temperature(ExperimentId, Value, Time, Name) VALUES(@id, @value, @time, @name)";
+
+            var count = 0;
+
+            foreach (var t in temperatures)
+            {
+                count += await _connection.ExecuteAsync(query, new { id = id, value = t.Value, t.Time, t.Name });
+            }
+
+            LogCount("TEMPERATURE", count);
+        }
+
         public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program)
         {
             var systemId = system.Id;
@@ -122,13 +158,14 @@ namespace EnergyComparer.Repositories
         {
             if (count == 1)
             {
-                _logger.Information("Program named {name} has successfully been inserted", name);
+                _logger.Information("{name} has successfully been inserted", name);
             }
             else
             {
-                _logger.Information("Program named {name} already existed", name);
+                _logger.Information("{name} already existed", name);
             }
         }
+
 
     }
 
@@ -137,11 +174,13 @@ namespace EnergyComparer.Repositories
         void CloseConnection();
         Task IncrementVersion(DtoSystem system);
         void InitializeDatabase();
+        Task InsertConfiguration(int version);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
         Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program);
         Task InsertProgram(string name);
         Task InsertSystem(string name, string os, int version = 1);
+        Task InsertTemperature(List<DtoTemperature> temperatures, int id);
         Task UpdateProfilers(string systemId, string programId, string value);
     }
 }

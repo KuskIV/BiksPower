@@ -43,18 +43,20 @@ namespace EnergyComparer.Handlers
             _getRepository.CloseConnection();
         }
 
-        public async Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime, int counter)
+        public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId)
         {
             var experiment = new DtoExperiment()
             {
                 EndTime = stopTime,
                 StartTime = startTime,
                 Language = program.GetLanguage(),
-                ProgramId = result.GetProgramId(),
-                SystemId = result.GetSystemId(),
-                Version = result.GetVersion(),
-                ProfilerId = result.GetProfilerId(),
-                Runs = counter
+                ProgramId = programId,
+                SystemId = systemId,
+                ProfilerId = profilerId,
+                Runs = counter,
+                Iteration = profilerCount,
+                FirstProfiler = firstProfiler,
+                ConfigurationId = configurationId,
             };
 
             await _insertRepository.InsertExperiment(experiment);
@@ -72,6 +74,13 @@ namespace EnergyComparer.Handlers
             var profiler = await _getRepository.GetProfiler(energyProfiler);
 
             return profiler;
+        }
+
+        public async Task InsertTemperatures(List<DtoTemperature> temperatures, int id, DateTime date)
+        {
+            temperatures.ForEach(x => x.Time = date);
+
+            await _insertRepository.InsertTemperature(temperatures, id);
         }
 
         public async Task<DtoProgram> GetProgram(string name)
@@ -99,6 +108,16 @@ namespace EnergyComparer.Handlers
             var system = await _getRepository.GetSystem(Os, Name);
 
             return system;
+        }
+
+        public async Task<DtoConfiguration> GetConfiguration(int version)
+        {
+            if (!await _getRepository.ConfigurationExists(version))
+            {
+                await _insertRepository.InsertConfiguration(version);
+            }
+
+            return await _getRepository.GetConfiguration();
         }
 
         public async Task IncrementVersionForSystem()
@@ -147,18 +166,22 @@ namespace EnergyComparer.Handlers
 
             await _insertRepository.UpdateProfilers(systemId, programId, value);
         }
+
+
     }
 
     public interface IDataHandler
     {
         void CloseConnection();
-        Task<DtoExperiment> GetExperiment(Result<IntelPowerGadgetData> result, IProgram program, DateTime startTime, DateTime stopTime, int _counter);
-        Task<DtoProfiler> GetProfiler(EnergyComparer.Profilers.IEnergyProfiler energyProfiler);
+        Task<DtoConfiguration> GetConfiguration(int version);
+        Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id);
+        Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<List<Profiler>> GetProfilerFromLastRunOrDefault(IProgram program);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();
         void InitializeConnection();
+        Task InsertTemperatures(List<DtoTemperature> endTemperatures, int id, DateTime date);
         Task UpdateProfilers(string id, List<Profiler> profilers);
     }
 }

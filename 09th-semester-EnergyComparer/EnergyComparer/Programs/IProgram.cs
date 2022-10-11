@@ -1,4 +1,5 @@
-﻿using EnergyComparer.Models;
+﻿using CsvHelper;
+using EnergyComparer.Models;
 
 namespace EnergyComparer.Programs
 {
@@ -8,5 +9,6 @@ namespace EnergyComparer.Programs
         string GetLanguage();
         void Run();
         public string GetName();
+        List<DtoRawData> ParseCsv(CsvReader csv);
     }
 }

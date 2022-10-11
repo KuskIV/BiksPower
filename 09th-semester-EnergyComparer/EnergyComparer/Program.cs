@@ -48,6 +48,7 @@ builder
         });
 
         builder.RegisterType<HardwareMonitorService>().As<IHardwareMonitorService>().SingleInstance().AutoActivate();
+        builder.RegisterType<WifiService>().As<IWifiService>().SingleInstance().AutoActivate();
         builder.RegisterType<AdapterWindowsLaptopService>().As<IAdapterService>().SingleInstance().AutoActivate();
         builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();
         builder.RegisterType<InsertExperimentRepository>().As<IInsertExperimentRepository>().SingleInstance().AutoActivate();
