@@ -38,7 +38,7 @@ Furthermore, there is a simplified formula called Yamane's formula, shown in \cr
 \end{equation}
 
 
-Lastly, there is another version of Cochran's formula shown in \cref{cochransEQ2}, Which is for continuous data. \todo{instead of margin of error maybe desired relative error margin and mean of the population}
+Lastly, there is another version of Cochran's formula shown in \cref{cochransEQ2}, Which is for continuous data. 
 
 \begin{equation}
     n_0 = \frac{Z^2*\sigma^2}{e^2}
@@ -49,7 +49,7 @@ Where instead of $pq$ we have $\sigma$ which is the standard deviation of the da
 
 
 
-It should still be considered if categorical variables will play an important role in the data analysis, then \cref{cochransEQ1} should be used\cite{kotrlik2001organizational}. For our data \cref{cochransEQ2} seem to most accurately fit the description and is therefore chosen. Did correction formula \cref{cochransCorrection} is not needed since we, in theory, have an infinite population, while in practice it is of course limited by time. With Cochran's formula given a desired margin of error, desired confidence level and an estimate of the standard deviation a sample size can be calculated. So these variables are determined as follows. 
+It should still be considered if categorical variables will play an important role in the data analysis, then \cref{cochransEQ1} should be used\cite{kotrlik2001organizational}. For our data \cref{cochransEQ2} seem to most accurately fit the description and is therefore chosen. The correction formula \cref{cochransCorrection} is not needed since we, in theory, have an infinite population, while in practice it is of course limited by time. With Cochran's formula given a desired margin of error, desired confidence level and an estimate of the standard deviation a sample size can be calculated. So these variables are determined as follows. 
 
 The confidence level is how little the results must deviate. A confidence level of 95\% would represent 95\% of the data points would match 95\% of the times. If a confidence level of 95\% is desired and confidence level $= 1 - \alpha$ then $\alpha = 0.05$. 
 Kotrlik et al found that a margin of error of 5\% is commonly chosen and is found acceptable for categorical data, but for continuous data, a 3\% margin of error is found acceptable\cite{kotrlik2001organizational}. Since the variables measured are continuous data a margin of error of 3\% is chosen.
@@ -65,7 +65,7 @@ Lastly, an estimate of the standard deviation is also needed, which is not avail
 \end{enumerate}
 
 
-Method one and two are both based on the same principle of getting an initial smaller sample. Method three is to the extent of our knowledge not feasible since no results from a study similar enough are available. Method four requires more knowledge than we possess to give a qualified estimate. Therefore method one is chosen. Now for step one when making the small sample it is required to know how many samples to acquire. The Central Limit Theorem says that the mean of a sample will become close to the mean of the overall population in correlation with an increase in the sample size. In general, a sample size of 30 to 50 or above is enough for the central limit theorem to hold. Which means the distributions of the sample means are close to normally distributed.\todo{We need to pick an actual number and also find a better source than investiopedia}
+Method one and two are both based on the same principle of getting an initial smaller sample. Method three is to the extent of our knowledge not feasible since no results from a study similar enough are available. Method four requires more knowledge than we possess to give a qualified estimate. Therefore method one is chosen. Now for step one when making the small sample it is required to know how many samples to acquire. The Central Limit Theorem says that the mean of a sample will become close to the mean of the overall population in correlation with an increase in the sample size. Ross found that at least 30 samples is enough for the central limit theorem to hold\cite{Ross}. Which means the distributions of the sample means are close to normally distributed.
 
 % Influence of pragmming paradigms picks 100 based on 9781118805350.
 
