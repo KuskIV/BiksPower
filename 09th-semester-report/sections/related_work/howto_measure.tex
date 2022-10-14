@@ -9,13 +9,14 @@ When measuring the energy consumption of a process, different energy profilers e
 When considering APM, it is reasonably accurate but suffers from for example systematic inaccuracies most likely caused by novelty of the interface.\cite[]{Hackenberg2013}
 
 
-When measuring the energy consumption using hardware, it can be done on either AC or DC. When measuring AC, the measuring device is located between the power supply and the electrical outlet, and for DC it is from the power supply to the system.\cite[]{Hackenberg2013} Another hardware approach could also be using the Watts Up Pro power consumption meter, also used in multiple works as it has a very high accuracy of $1.5\%$.\cite[]{Jagroep2015}
+When measuring the energy consumption using hardware, it can be done on either AC or DC. When measuring AC, the measuring device is located between the power supply and the electrical outlet, and for DC it is from the power supply to the system.\cite[]{Hackenberg2013} Another hardware approach could also be using the Watts Up Pro power consumption meter, also used in multiple works as it has a very high accuracy of $1.5\%$.\cite[]{Jagroep2015}\nytafsnit
 
 %% Intel Energy Checker SDK
 %% Application Power Management for AMD
 
 
 %% FEETINGS: Framework for Energy Efficiency Testing to Improve Environmental Goal of the Software:
+
 
 Mancebo et al. found that there are three types of problems that occur in the domain of evaluating software's energy consumption.\cite{MANCEBO2021100558} 
 \begin{enumerate}
@@ -24,18 +25,12 @@ Mancebo et al. found that there are three types of problems that occur in the do
     \item Choosing the correct measuring instruments that are fitting for the particular experiment evaluation.
 \end{enumerate}
 
-To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software}(FEETINGS). FEETINGS consist of three main components which aim to solve these issues these are the Conceptual component, Methodological component and Technological component.\nytafsnit
-
-The Conceptual component provides an extension of the work by Garcia et al. which defines Software Measurement Ontology\cite{GARCIA2006631}. This extension is called Green Software Measurement Ontology (GSMO). It provides terminology and the corresponding definitions. The extended terminology from Mancebo et al. can be seen in \cref{tab:feetTable} along with extensions from other work and new extensions useful for this report.
+To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software} (FEETINGS). FEETINGS consist of three main components which aim to solve these issues these are the Conceptual component, Methodological component and Technological component.\nytafsnit
 
 \input{tabels/TerminologyTable.tex}
-
-The Methodological component is a process called Green Software Measurement Process (GSMP) which are guidelines to assist with the study design, analysis and presenting the results presented in phases.
-
-The Technological component consists of two parts. The first part is the Energy Efficiency Tester (EET) which is a hardware-based approach to measuring energy consumption. The second part is called ELLIOT, which is a software-based tool which handles the data provided by EET with the main goal of providing a visual representation that can be used to process, analyze and construct graphs and tables of the data collected by the EET.
-
-In this report, the Conceptual components providing the terminology will be followed with some additional terminology from other work and our own as shown in \cref{tab:feetTable}
 \todo{Check terminology is consistent}
 
-% tab:feetTable
+The Conceptual component provides an extension of the work by Garcia et al. which defines Software Measurement Ontology\cite{GARCIA2006631}. This extension is called Green Software Measurement Ontology (GSMO). It provides terminology and the corresponding definitions. The extended terminology from Mancebo et al. can be seen in \cref{tab:feetTable} along with extensions from other work and new extensions useful for this report. The Methodological component is a process called Green Software Measurement Process (GSMP) which are guidelines to assist with the study design, analysis and presenting the results presented in phases. The Technological component consists of two parts. The first part is the Energy Efficiency Tester (EET) which is a hardware-based approach to measuring energy consumption. The second part is called ELLIOT, which is a software-based tool which handles the data provided by EET with the main goal of providing a visual representation that can be used to process, analyze and construct graphs and tables of the data collected by the EET.
+
+In this report, the Conceptual components providing the terminology will be followed with some additional terminology from other work and our own as shown in \cref{tab:feetTable}\nytafsnit
 
