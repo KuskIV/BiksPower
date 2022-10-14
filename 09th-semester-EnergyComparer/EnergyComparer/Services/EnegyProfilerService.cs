@@ -12,47 +12,43 @@ namespace EnergyComparer.Services
 {
     public class EnergyProfilerService : IEnergyProfilerService
     {
-        private readonly IDataHandler _dataHandler;
         private readonly bool _isProd;
-        private readonly IAdapterService _adapterService;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
 
-        public EnergyProfilerService(IDataHandler dataHandler, bool iterateOverProfilers, IAdapterService adapterService)
+        public EnergyProfilerService(bool iterateOverProfilers)
         {
-            _dataHandler = dataHandler;
             _isProd = iterateOverProfilers;
-            _adapterService = adapterService;
         }
 
-        public async Task<IEnergyProfiler> GetNext(IProgram program)
+        public async Task<IEnergyProfiler> GetNext(IProgram program, IDataHandler dataHandler, IAdapterService adapterService)
         {
             if (!_isProd)
             {
                 return GetDefaultProfiler();
             }
 
-            var profilers = await InitializeProfilers(program);
+            var profilers = await InitializeProfilers(program, dataHandler);
 
-            return GetCurrentProfilerAndUpdateIsFirst(program, profilers);
+            return GetCurrentProfilerAndUpdateIsFirst(program, profilers, adapterService);
         }
 
-        public async Task SaveProfilers()
+        public async Task SaveProfilers(IDataHandler dataHandler)
         {
             foreach (var key in _profilers.Keys)
             {
                 var profiler = _profilers[key];
 
-                await UpdateIsFirstProfiler(key, profiler);
+                await UpdateIsFirstProfiler(key, profiler, dataHandler);
             }
         }
 
-        private IEnergyProfiler GetCurrentProfiler(IProgram program, List<Profiler> profilers)
+        private IEnergyProfiler GetCurrentProfiler(IProgram program, List<Profiler> profilers, IAdapterService adapterService)
         {
             var currentProfiler = GetCurrentProfiler(profilers);
 
             UpdateProfilers(program, profilers);
 
-            return _adapterService.MapEnergyProfiler(currentProfiler);
+            return adapterService.MapEnergyProfiler(currentProfiler);
         }
 
         private IEnergyProfiler GetDefaultProfiler()
@@ -60,7 +56,7 @@ namespace EnergyComparer.Services
             return new IntelPowerGadget();
         }
 
-        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(IProgram program, List<Profiler> profilers)
+        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(IProgram program, List<Profiler> profilers, IAdapterService adapterService)
         {
             var currentProfiler = GetCurrentProfiler(profilers);
             var currentProfilerIndex = profilers.IndexOf(currentProfiler);
@@ -71,7 +67,7 @@ namespace EnergyComparer.Services
 
             UpdateProfilers(program, profilers);
 
-            return _adapterService.MapEnergyProfiler(currentProfiler);
+            return adapterService.MapEnergyProfiler(currentProfiler);
         }
 
         private void UpdateProfilers(IProgram program, List<Profiler> profilers)
@@ -84,7 +80,7 @@ namespace EnergyComparer.Services
             return profilers.Where(x => x.IsCurrent == true).First();
         }
 
-        private async Task UpdateIsFirstProfiler(string id, List<Profiler> profilers)
+        private async Task UpdateIsFirstProfiler(string id, List<Profiler> profilers, IDataHandler dataHandler)
         {
             var currentProfiler = profilers.Where(x => x.IsFirst == true).First();
             var currentProfilerIndex = profilers.IndexOf(currentProfiler);
@@ -93,16 +89,16 @@ namespace EnergyComparer.Services
             profilers[currentProfilerIndex].IsFirst = false;
             profilers[nextIndex].IsFirst = true;
 
-            await _dataHandler.UpdateProfilers(id, profilers);
+            await dataHandler.UpdateProfilers(id, profilers);
         }
 
-        private async Task<List<Profiler>> InitializeProfilers(IProgram program)
+        private async Task<List<Profiler>> InitializeProfilers(IProgram program, IDataHandler dataHandler)
         {
             var profilers = GetProfilers(program);
 
             if (profilers.Count == 0)
             {
-                profilers = await _dataHandler.GetProfilerFromLastRunOrDefault(program);
+                profilers = await dataHandler.GetProfilerFromLastRunOrDefault(program);
             }
 
             return profilers;
@@ -123,7 +119,7 @@ namespace EnergyComparer.Services
 
     public interface IEnergyProfilerService
     {
-        Task<IEnergyProfiler> GetNext(IProgram program);
-        Task SaveProfilers();
+        Task<IEnergyProfiler> GetNext(IProgram program, IDataHandler dataHandler, IAdapterService adapterService);
+        Task SaveProfilers(IDataHandler dataHandler);
     }
 }

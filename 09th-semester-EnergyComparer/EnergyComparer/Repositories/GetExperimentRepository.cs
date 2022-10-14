@@ -16,16 +16,10 @@ namespace EnergyComparer.Repositories
     public class GetExperimentRepository : IGetExperimentRepository
     {
         private IDbConnection _connection;
-        private readonly Func<IDbConnection> _connectionFactory;
 
-        public GetExperimentRepository(Func<IDbConnection> connectionFactory)
+        public void InitializeDatabase(Func<IDbConnection> connection)
         {
-            _connectionFactory = connectionFactory;
-        }
-
-        public void InitializeDatabase()
-        {
-            _connection = _connectionFactory();
+            _connection = connection();
         }
 
         public void CloseConnection()
@@ -124,7 +118,7 @@ namespace EnergyComparer.Repositories
         public async Task<bool> ConfigurationExists(int version)
         {
             var query = "SELECT * FROM Configuration WHERE MinTemp = @mintemp AND MaxTemp = @maxtemp AND MinutesBetweenExperiments = @between AND " +
-                        "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery";
+                        "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery AND Version = @version";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new
             {
@@ -134,9 +128,10 @@ namespace EnergyComparer.Repositories
                 duration = Constants.DurationOfExperimentsInMinutes,
                 minbattery = Constants.ChargeLowerLimit,
                 maxbattery = Constants.ChargeUpperLimit,
+                version = version,
             });
 
-            return response == 1;
+            return response >= 1;
         }
 
         public async Task<bool> SystemExists(string os, string name)
@@ -187,7 +182,7 @@ namespace EnergyComparer.Repositories
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem(string Os, string Name);
-        void InitializeDatabase();
+        void InitializeDatabase(Func<IDbConnection> _connectionFactory);
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> ProgramExists(string name);
         Task<bool> RunExistsForSystem(DtoSystem system, Programs.IProgram program);

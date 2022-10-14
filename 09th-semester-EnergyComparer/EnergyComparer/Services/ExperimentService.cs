@@ -27,21 +27,26 @@ namespace EnergyComparer.Services
     public class ExperimentService : IExperimentService
     {
         private readonly ILogger _logger;
-        private readonly IHardwareMonitorService _hardwareMonitorService;
-        private readonly IDataHandler _dataHandler;
-        private readonly IWifiService _wifiService;
+        private readonly Func<IDbConnection> _connectionFactory;
+        private IHardwareMonitorService _hardwareMonitorService;
+        private IAdapterService _adapter;
+        private IDataHandler _dataHandler;
+        private IHardwareHandler _energyProfilerService;
+        private IWifiService _wifiService;
         private readonly bool _isProd;
+        private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(ILogger logger, IHardwareMonitorService hardwareMonitorService, IDataHandler dataHandler, IConfiguration configuration, IWifiService wifiService)
+        public ExperimentService(ILogger logger, IConfiguration configuration, Func<IDbConnection> connectionFactory)
         {
             _logger = logger;
-            _hardwareMonitorService = hardwareMonitorService;
-            _dataHandler = dataHandler;
-            _wifiService = wifiService;
+            _connectionFactory = connectionFactory;
             _isProd = configuration.GetValue<bool>("IsProd");
+            _wifiAdapterName = configuration.GetValue<string>("wifiAdapterName");
+
+            InitializeDependencies();
         }
 
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
@@ -51,92 +56,125 @@ namespace EnergyComparer.Services
 
             InitializeExperiment(energyProfiler);
 
+
+            _logger.Information("Measuring initial cpu temperatures");
+            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+
             // TODO: Force garbage collection. This is however not recommended as it is expesive. but it out case it might make sense
             // https://stackoverflow.com/questions/4257372/how-to-force-garbage-collector-to-run
-            
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
 
-            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+            RunGarbageCollection();
+
+            _logger.Information("The experiment will now run untill at least {time}", DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
             energyProfiler.Start(startTime);
 
             while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
             {
-                program.Run(); // TODO: Perhaps use the result for something (sestoft)
+                program.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
                 counter += 1;
             }
 
             energyProfiler.Stop();
             var stopTime = DateTime.UtcNow;
-            var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
 
+            var endTemperatures = GetEndTemperatures();
+            
+            await EnableWifiAndDependencies();
 
-            _logger.Information("The experiment has stopped, and data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
+            _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
 
-            await EndExperiment(program, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures);
+            var experimentId = await EndExperiment(program, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures);
 
-            return HandleResultsIfValid(program, startTime);
+            return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
         }
 
-        private bool HandleResultsIfValid(IProgram program, DateTime date)
+        private List<DtoTemperature> GetEndTemperatures()
+        {
+            _hardwareMonitorService = new HardwareMonitorService(_logger);
+
+            _logger.Information("The experiment is done. The end temperatures will be measured.");
+            var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+            return endTemperatures;
+        }
+
+        private async Task EnableWifiAndDependencies()
+        {
+            InitializeOfflineDependencies();
+            _logger.Information("The wifi will be enabled");
+            await EnableWifi();
+
+            InitializeOnlineDependencies();
+        }
+
+        private void RunGarbageCollection()
+        {
+            DeleteDependencies();
+            _logger.Information("Running garbage collector");
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        private async Task<bool> HandleResultsIfValid(IEnergyProfiler profiler, DateTime date, int experimentId)
         {
             if (_hardwareMonitorService.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
             {
                 if (_isProd)
                 {
-                    SaveResults(program, date);
+                    _logger.Information("Saving results");
+                    await SaveResults(profiler, date, experimentId);
                 }
                 else
                 {
+                    await SaveResults(profiler, date, experimentId);
+
                     _logger.Information("Loggint results. TODO: IMPLEMENT THIS");
                 }
-
-                _logger.Information("Saving results");
 
                 return true;
             }
             else
             {
-                _logger.Warning("The average temperature is too hight. Results are not saved");
+                _logger.Warning("The average temperature is too high. Results are not saved");
                 return false;
             }
+        } 
+
+        public async Task SaveResults(IEnergyProfiler profiler, DateTime date, int experimentId)
+        {
+            var stream = GetPath(profiler, date);
+            var data = profiler.ParseCsv(stream, experimentId, date);
+
+            await _dataHandler.InsertRawData(data);
         }
 
-        public void SaveResults(IProgram program, DateTime date)
+        private string GetPath(IEnergyProfiler profiler, DateTime startTime)
         {
-            var data = new List<DtoRawData>();
-            var stream = GetPath(program, date);
-            using (var reader = new StreamReader(stream))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                data = program.ParseCsv(csv);
-
-            // TODO: Data to db
+            return Constants.GetFilePathForSouce(profiler.GetName(), startTime);
         }
 
-        private string GetPath(IProgram program, DateTime startTime)
+        private async Task<int> EndExperiment(IProgram program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures)
         {
-            return Constants.GetFilePathForSouce(program.GetName(), startTime);
-        }
-
-        private async Task EndExperiment(IProgram program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures)
-        {
-            await EnableWifi();
-
+            _logger.Information("The wifi was enabled, the data will now be parsed and saved");
             var system = await _dataHandler.GetSystem();
             var profiler = await _dataHandler.GetProfiler(energyProfiler);
             var profilerCount = IncrementAndGetProfilerCount(energyProfiler);
             var configuration = await _dataHandler.GetConfiguration(system.Version);
 
             var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id);
-            await _dataHandler.InsertTemperatures(endTemperatures, experiment.Id, stopTime);
-            await _dataHandler.InsertTemperatures(initialTemperatures, experiment.Id, startTime);
+
+            if (_isProd)
+            {
+                await _dataHandler.InsertTemperatures(endTemperatures, experiment.Id, stopTime);
+                await _dataHandler.InsertTemperatures(initialTemperatures, experiment.Id, startTime);
+            }
+
+            return experiment.Id;
         }
 
         private async Task EnableWifi()
         {
             await _wifiService.Enable();
-            _dataHandler.InitializeConnection();
         }
 
         private int IncrementAndGetProfilerCount(IEnergyProfiler energyProfiler)
@@ -158,11 +196,38 @@ namespace EnergyComparer.Services
             _dataHandler.CloseConnection();
             _wifiService.Disable();
         }
+
+        private void InitializeDependencies()
+        {
+            InitializeOnlineDependencies();
+            InitializeOfflineDependencies();
+        }
+
+        private void InitializeOnlineDependencies()
+        {
+            _dataHandler = new DataHandler(_logger, _adapter, _connectionFactory);
+        }
+
+        private void InitializeOfflineDependencies()
+        {
+            _hardwareMonitorService = new HardwareMonitorService(_logger);
+            _adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger);
+            _energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, _adapter);
+            _wifiService = new WifiService(_energyProfilerService);
+        }
+
+        private void DeleteDependencies()
+        {
+            _hardwareMonitorService = null;
+            _adapter = null;
+            _dataHandler = null;
+            _energyProfilerService = null;
+            _wifiService = null;
+        }
     }
 
     public interface IExperimentService
     {
         Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram testProgram);
-        void SaveResults(IProgram program, DateTime date);
     }
 }

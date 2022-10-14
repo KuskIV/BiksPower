@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CsvHelper;
+using EnergyComparer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,11 @@ namespace EnergyComparer.Profilers
         public string GetName()
         {
             return EWindowsProfilers.E3.ToString();
+        }
+
+        public DtoRawData ParseCsv(string path, int experimentId, DateTime startTime)
+        {
+            throw new NotImplementedException();
         }
 
         public void Start(DateTime date)

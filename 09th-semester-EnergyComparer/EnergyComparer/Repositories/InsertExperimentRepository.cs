@@ -24,15 +24,14 @@ namespace EnergyComparer.Repositories
         private IDbConnection _connection;
         private readonly ILogger _logger;
 
-        public InsertExperimentRepository(Func<IDbConnection> connectionFactory, ILogger logger)
+        public InsertExperimentRepository(ILogger logger)
         {
-            _connectionFactory = connectionFactory;
             _logger = logger;
         }
 
-        public void InitializeDatabase()
+        public void InitializeDatabase(Func<IDbConnection> connectionFactory)
         {
-            _connection = _connectionFactory();
+            _connection = connectionFactory();
         }
 
         public void CloseConnection()
@@ -73,7 +72,7 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertConfiguration(int version)
         {
-            var query = "INSERT IGNORE INTO Configuration(MinTemp, MaxTemp, MinutesBetweenExperiments, MinuteDurationOfExperiments, MinBattery, MaxBattery, Version)" +
+            var query = "INSERT INTO Configuration(MinTemp, MaxTemp, MinutesBetweenExperiments, MinuteDurationOfExperiments, MinBattery, MaxBattery, Version)" +
                 "VALUES(@mintemp, @maxtemp, @minbetween, @minduration, @minbattery, @maxbattery, @version)";
 
             var count = await _connection.ExecuteAsync(query, new
@@ -133,6 +132,16 @@ namespace EnergyComparer.Repositories
             LogCount("TEMPERATURE", count);
         }
 
+        public async Task InsertRawData(DtoRawData data)
+        {
+            var query = "INSERT INTO RawData(ExperimentId, Value, Time) VALUES(@experimentid, @value, @time)";
+
+            var count = await _connection.ExecuteAsync(query, new { experimentid = data.ExperimentId, value = data.Value, time=data.Time });
+
+            LogCount("RAW DATA", count);
+
+        }
+
         public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program)
         {
             var systemId = system.Id;
@@ -173,12 +182,13 @@ namespace EnergyComparer.Repositories
     {
         void CloseConnection();
         Task IncrementVersion(DtoSystem system);
-        void InitializeDatabase();
+        void InitializeDatabase(Func<IDbConnection> _connectionFactory);
         Task InsertConfiguration(int version);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
         Task InsertProfilers(List<Profiler> profilers, DtoSystem system, IProgram program);
         Task InsertProgram(string name);
+        Task InsertRawData(DtoRawData data);
         Task InsertSystem(string name, string os, int version = 1);
         Task InsertTemperature(List<DtoTemperature> temperatures, int id);
         Task UpdateProfilers(string systemId, string programId, string value);

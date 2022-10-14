@@ -13,28 +13,39 @@ using Ubiety.Dns.Core.Records.NotUsed;
 using EnergyComparer.Utils;
 using System.Text.Json;
 using EnergyComparer.Services;
+using System.Data;
 
 namespace EnergyComparer.Handlers
 {
     public class DataHandler : IDataHandler
     {
         private readonly ILogger _logger;
-        private readonly IInsertExperimentRepository _insertRepository;
-        private readonly IGetExperimentRepository _getRepository;
+        private IInsertExperimentRepository _insertRepository;
+        private IGetExperimentRepository _getRepository;
         private readonly IAdapterService _adapterService;
+        private readonly Func<IDbConnection> _connectionFactory;
 
-        public DataHandler(ILogger logger, IInsertExperimentRepository insertRepository, IGetExperimentRepository getRepository, IAdapterService adapterService)
+        public DataHandler(ILogger logger, IAdapterService adapterService, Func<IDbConnection> connectionFactory)
         {
             _logger = logger;
-            _insertRepository = insertRepository;
-            _getRepository = getRepository;
             _adapterService = adapterService;
+            _connectionFactory = connectionFactory;
+
+            InitializeRepositories();
+        }
+
+        public void InitializeRepositories()
+        {
+            _insertRepository = new InsertExperimentRepository(_logger);
+            _getRepository = new GetExperimentRepository();
+
+            InitializeConnection();
         }
 
         public void InitializeConnection()
         {
-            _insertRepository.InitializeDatabase();
-            _getRepository.InitializeDatabase();
+            _insertRepository.InitializeDatabase(_connectionFactory);
+            _getRepository.InitializeDatabase(_connectionFactory);
         }
 
         public void CloseConnection()
@@ -167,7 +178,10 @@ namespace EnergyComparer.Handlers
             await _insertRepository.UpdateProfilers(systemId, programId, value);
         }
 
-
+        public async Task InsertRawData(DtoRawData data)
+        {
+            await _insertRepository.InsertRawData(data);
+        }
     }
 
     public interface IDataHandler
@@ -181,6 +195,7 @@ namespace EnergyComparer.Handlers
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();
         void InitializeConnection();
+        Task InsertRawData(DtoRawData data);
         Task InsertTemperatures(List<DtoTemperature> endTemperatures, int id, DateTime date);
         Task UpdateProfilers(string id, List<Profiler> profilers);
     }

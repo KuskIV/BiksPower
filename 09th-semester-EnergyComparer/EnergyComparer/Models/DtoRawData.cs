@@ -8,7 +8,6 @@ namespace EnergyComparer.Models
 {
     public class DtoRawData
     {
-
         public DateTime Time { get; set; }
         public string Value { get; set; }
         public int ExperimentId { get; set; }
