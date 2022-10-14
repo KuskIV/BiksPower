@@ -2,12 +2,17 @@
 When conducting the experiments two different kinds of measuring approach are being utilized from the tools in \cref{sec:hardware}.
 The hardware measurements are system-level physical measurements, while RAPL, OpenHardwareMonitor and sometimes E3 are measurement using on-chip sensor's. The final approach are Energy predictive models with are E3, when the power meter chip is not available. The most accurate of these is the system-level physical measurement which can provide highly accurate measurements for the systems energy consumption, but these measurements are for the system, so it cannot provide a fine grained view of an applications power consumption. All of the tools used except for E3 does not provide the fine grained measurements for the applications energy consumption. To achieve these anyway dynamic energy consumption is calculated, this is an estimation of the applications power consumption. To Calculate the dynamic energy consumption $E_D$, as presented by Fahad et al \cite{fahad2019comparative}, the following formula can be used:
 $$E_D = E_T -(P_S * T_E)$$
-$E_T$ is the total amount of energy consumption by the system when running the experiment. $T_E$ is the duration of the program execution. $P_S$ is the amount of energy consumption when the system is idle. The dynamic energy consumption will then represent the energy consumption of the application. To do this a certain amount of control over the system is required and some precautions are necessary. The procedures that will be used are different for the machines and OS, but some will be the same for all machines.
+$E_T$ is the total amount of energy consumption by the system when running the experiment. $T_E$ is the duration of the program execution. $P_S$ is the amount of energy consumption when the system is idle. The dynamic energy consumption will then represent the energy consumption of the application. To do this a certain amount of control over the system is required and some precautions are necessary. The procedures that will be used are different for the DUT's and OS, but some will be the same for all DUT.
 \begin{itemize}
     \item The machines are reserved exclusively for our use case, this is to prevent divinations in the results.
     \item The networking will be disabled on the machines to ensure that these do not effect the results.
     \item The processes and the temperature of the machines will be measured before and after each experiment.
-    \item After each batch 
+    \item After each batch the DUT will be restarted and performs it's setup before continuing to the next batch.
+    \item The memory of the Test cases will not exceed the DUT's main memory to avoid memory swapping
 \end{itemize}
+Each batch will be tested on every DUT with a each type of OS these being Windows 10 and \todo[]{Insert some Linux version}
+The specs for the different DUT varies, bot in age, spec and manufacturer, this is done to get a wider scope of testes to see if certain measurements works better on certain systems. For the experiment one stationary workstation and two laptops will be used. The specs for the workstation can be seen in \cref(tab:Komplett), the surface pro 4 and surface books can be be seen in \cref{tab:surface} \todo[]{Insert specs when avilable}. Comparing these will.
+\input{tabels/Komplett.tex}
+
 
 \cite{sestoft2013microbenchmarks} \cite{fahad2019comparative} \cite{Bokhari2020r3}
