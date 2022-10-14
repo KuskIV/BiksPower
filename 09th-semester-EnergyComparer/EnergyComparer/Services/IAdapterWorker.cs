@@ -7,6 +7,7 @@ namespace EnergyComparer.Services
 {
     public interface IAdapterService
     {
+        void CreateFolder(string folder);
         void DisableWifi(string interfaceName);
         void EnableWifi(string interfaceName);
         List<string> GetAllRequiredPaths();

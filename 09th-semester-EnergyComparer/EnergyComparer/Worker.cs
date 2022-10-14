@@ -44,6 +44,8 @@ namespace EnergyComparer
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
             try
             {
+                CreateFolderIfNew();
+
                 // TODO: Tie to one single core
 
                 await _adapterService.WaitTillStableState(_isProd);
@@ -74,6 +76,16 @@ namespace EnergyComparer
                 throw;
             }
 
+        }
+
+        private void CreateFolderIfNew()
+        {
+            var paths = _adapterService.GetAllRequiredPaths();
+
+            foreach (var p in paths)
+            {
+                _adapterService.CreateFolder(p);
+            }
         }
 
         private void InitializeDependencies()

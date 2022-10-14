@@ -40,6 +40,15 @@ namespace EnergyComparer.Services
             p.StartInfo = psi;
             p.Start();
         }
+
+        public void CreateFolder(string folder)
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+        }
+
         public List<string> GetAllSouces()
         {
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList();
@@ -67,7 +76,7 @@ namespace EnergyComparer.Services
                 return int.Parse(chargeRemaning);
             }
 
-            throw new Exception("This machine does not have a battery");
+            return 100;
         }
 
         public void Restart(bool _isProd)
