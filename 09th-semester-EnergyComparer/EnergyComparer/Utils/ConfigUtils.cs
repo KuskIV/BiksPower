@@ -32,6 +32,15 @@ namespace EnergyComparer.Utils
 # endif
         }
 
+        public static bool GetIterateOverProfilers(IConfiguration config)
+        {
+#if !DEBUG
+            return true;
+#else
+            return config.GetValue<bool>("IterateOverProfilers");
+# endif
+        }
+
         public static string GetWifiAdapterName(IConfiguration config)
         {
             return config.GetValue<string>("wifiAdapterName");

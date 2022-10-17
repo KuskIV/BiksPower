@@ -35,14 +35,12 @@ namespace EnergyComparer
             _configuration = configuration;
             _connectionFactory = connectionFactory;
             
-            var isProd = ConfigUtils.GetIsProd(configuration);
+            var iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
             _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
-            _profilerService = new EnergyProfilerService(isProd);
+            _profilerService = new EnergyProfilerService(iterateOverProfilers);
             
             InitializeDependencies();
         }
-
-
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -91,7 +89,11 @@ namespace EnergyComparer
 
         private bool EnoughEntires()
         {
-            return _experimentService.GetProfilerCounters().All(x => x >= _iterationsBeforeRestart);
+            var profilers = _experimentService.GetProfilerCounters();
+
+            if (profilers.Count() == 0) return false; // the first run
+
+            return profilers.All(x => x >= _iterationsBeforeRestart);
         }
 
         private void CreateFolderIfNew()
