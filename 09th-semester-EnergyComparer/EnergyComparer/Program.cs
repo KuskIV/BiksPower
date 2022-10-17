@@ -35,8 +35,6 @@ builder
             con.Open();
             return con;
         });
-        
-        builder.RegisterType<ExperimentService>().As<IExperimentService>().SingleInstance().AutoActivate();
     })
     .UseSerilog((ctx, lc) => lc
     .WriteTo.Console());

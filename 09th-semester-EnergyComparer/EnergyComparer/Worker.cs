@@ -21,23 +21,26 @@ namespace EnergyComparer
         private readonly ILogger _logger;
         private IExperimentService _experimentService;
         private readonly IConfiguration _configuration;
-        private readonly Func<IDbConnection> _connectionFactory;
         private IDataHandler _dataHandler;
         private int _iterationsBeforeRestart;
         private IEnergyProfilerService _profilerService;
+        private string _wifiAdapterName;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
 
-        public Worker(ILogger logger, IExperimentService experimentService, IConfiguration configuration, Func<IDbConnection> connectionFactory)
+        public Worker(ILogger logger, IConfiguration configuration)
         {
             _logger = logger;
-            _experimentService = experimentService;
             _configuration = configuration;
-            _connectionFactory = connectionFactory;
             
             var iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
             _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
             _profilerService = new EnergyProfilerService(iterateOverProfilers);
+            _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
+
+            var saveToDb = ConfigUtils.GetSaveToDb(configuration);
+            var isProd = ConfigUtils.GetIsProd(configuration);
+            _experimentService = new ExperimentService(_logger, isProd, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
             
             InitializeDependencies();
         }
@@ -87,6 +90,34 @@ namespace EnergyComparer
 
         }
 
+        private (IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
+        {
+            var hardwareMonitorService = new HardwareMonitorService(_logger);
+            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
+            var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
+            var wifiService = new WifiService(energyProfilerService);
+
+            return (hardwareMonitorService, adapter, energyProfilerService, wifiService);
+        }
+
+        private IDataHandler InitializeOnlineDependencies()
+        {
+            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
+        }
+
+        private (IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService) DeleteDependencies()
+        {
+            return (null, null, null, null, null);
+        }
+
+        private IDbConnection GetDbConnectionFactory()
+        {
+            var connectionString = ConfigUtils.GetConnectionString(_configuration);
+            var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+            con.Open();
+            return con;
+        }
+
         private bool EnoughEntires()
         {
             var profilers = _experimentService.GetProfilerCounters();
@@ -110,7 +141,7 @@ namespace EnergyComparer
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
             _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
-            _dataHandler = new DataHandler(_logger, _adapterService, _connectionFactory);
+            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
             _dataHandler.InitializeConnection();
         }
 

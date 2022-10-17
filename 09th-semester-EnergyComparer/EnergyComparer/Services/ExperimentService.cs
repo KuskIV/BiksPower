@@ -28,30 +28,33 @@ namespace EnergyComparer.Services
     public class ExperimentService : IExperimentService
     {
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
-        private readonly Func<IDbConnection> _connectionFactory;
         private readonly bool _isProd;
         private IHardwareMonitorService _hardwareMonitorService;
-        private IAdapterService _adapter;
+        private  IAdapterService _adapter;
         private IDataHandler _dataHandler;
-        private IHardwareHandler _energyProfilerService;
-        private IWifiService _wifiService;
+        private  IHardwareHandler _hardwareHandler;
+        private  IWifiService _wifiService;
         private readonly bool _saveToDb;
+        private readonly Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> _initializeOfflineDependencies;
+        private readonly Func<IDataHandler> _initializeOnlineDependencies;
+        private readonly Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> _deleteDependencies;
         private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(ILogger logger, IConfiguration configuration, Func<IDbConnection> connectionFactory)
+        public ExperimentService(ILogger logger, bool isProd, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> deleteDependencies)
         {
             _logger = logger;
-            _configuration = configuration;
-            _connectionFactory = connectionFactory;
 
-            _isProd = ConfigUtils.GetIsProd(configuration);
-            _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
-            _saveToDb = ConfigUtils.GetSaveToDb(configuration);
-
+            _isProd = isProd;
+            _wifiAdapterName = wifiAdapterName;
+            _saveToDb = saveToDb;
+            
+            _initializeOfflineDependencies = initializeOfflineDependencies;
+            _initializeOnlineDependencies = initializeOnlineDependencies;
+            _deleteDependencies = deleteDependencies;
+            
             InitializeDependencies();
         }
 
@@ -111,16 +114,16 @@ namespace EnergyComparer.Services
 
         private async Task EnableWifiAndDependencies()
         {
-            InitializeOfflineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
-            InitializeOnlineDependencies();
+            _dataHandler = _initializeOnlineDependencies();
         }
 
         private void RunGarbageCollection()
         {
-            DeleteDependencies();
+            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -210,30 +213,8 @@ namespace EnergyComparer.Services
 
         private void InitializeDependencies()
         {
-            InitializeOnlineDependencies();
-            InitializeOfflineDependencies();
-        }
-
-        private void InitializeOnlineDependencies()
-        {
-            _dataHandler = new DataHandler(_logger, _adapter, _connectionFactory);
-        }
-
-        private void InitializeOfflineDependencies()
-        {
-            _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
-            _energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, _adapter);
-            _wifiService = new WifiService(_energyProfilerService);
-        }
-
-        private void DeleteDependencies()
-        {
-            _hardwareMonitorService = null;
-            _adapter = null;
-            _dataHandler = null;
-            _energyProfilerService = null;
-            _wifiService = null;
+            _dataHandler = _initializeOnlineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
         }
     }
 
