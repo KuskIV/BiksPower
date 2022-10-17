@@ -9,11 +9,39 @@ namespace EnergyComparer.Handlers
 {
     public class ArduinoHandler
     {
-        SerialPort  
-        //_serialPort.Open();
-        //_serialPort.Write("1");
-        //string a = _serialPort.ReadExisting();
-        //Console.WriteLine(a);
-        //Thread.Sleep(200);
+        SerialPort serialPort;
+        public ArduinoHandler(string portName = "COM3", int baud = 9600)
+        {
+            serialPort = new SerialPort(portName, baud);
+            serialPort.Open();
+        }
+
+        public void Start() 
+        {
+            while (true)
+            {
+                serialPort.Write("1"); //1 is on 0 is off
+                string responds = serialPort.ReadExisting();
+                if (responds == "HIGN") 
+                {
+                    break;
+                }
+                Thread.Sleep(200);        
+            }
+        }
+
+        public void Stop()
+        {
+            while (true)
+            {
+                serialPort.Write("0"); //1 is on 0 is off
+                string responds = serialPort.ReadExisting();
+                if (responds == "LOW")
+                {
+                    break;
+                }
+                Thread.Sleep(200);
+            }
+        }
     }
 }
