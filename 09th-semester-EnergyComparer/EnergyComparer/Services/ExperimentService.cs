@@ -27,6 +27,7 @@ namespace EnergyComparer.Services
     public class ExperimentService : IExperimentService
     {
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
         private readonly Func<IDbConnection> _connectionFactory;
         private IHardwareMonitorService _hardwareMonitorService;
         private IAdapterService _adapter;
@@ -34,6 +35,7 @@ namespace EnergyComparer.Services
         private IHardwareHandler _energyProfilerService;
         private IWifiService _wifiService;
         private readonly bool _isProd;
+        private readonly bool _saveToDb;
         private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         
@@ -42,8 +44,10 @@ namespace EnergyComparer.Services
         public ExperimentService(ILogger logger, IConfiguration configuration, Func<IDbConnection> connectionFactory)
         {
             _logger = logger;
+            _configuration = configuration;
             _connectionFactory = connectionFactory;
             _isProd = configuration.GetValue<bool>("IsProd");
+            _saveToDb = configuration.GetValue<bool>("SaveToDb");
             _wifiAdapterName = configuration.GetValue<string>("wifiAdapterName");
 
             InitializeDependencies();
@@ -119,7 +123,7 @@ namespace EnergyComparer.Services
         {
             if (_hardwareMonitorService.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
             {
-                if (_isProd)
+                if (_saveToDb)
                 {
                     _logger.Information("Saving results");
                     await SaveResults(profiler, date, experimentId);
@@ -163,7 +167,7 @@ namespace EnergyComparer.Services
 
             var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id);
 
-            if (_isProd)
+            if (_saveToDb)
             {
                 await _dataHandler.InsertTemperatures(endTemperatures, experiment.Id, stopTime);
                 await _dataHandler.InsertTemperatures(initialTemperatures, experiment.Id, startTime);
@@ -211,7 +215,7 @@ namespace EnergyComparer.Services
         private void InitializeOfflineDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger);
+            _adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
             _energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, _adapter);
             _wifiService = new WifiService(_energyProfilerService);
         }

@@ -18,11 +18,17 @@ namespace EnergyComparer.Services
     {
         private readonly IHardwareMonitorService _hardwareMonitorService;
         private readonly ILogger _logger;
+        private readonly bool _hasBattery;
+        private readonly bool _isProd;
+        private readonly bool _shouldRestart;
 
-        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger)
+        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, IConfiguration configuration)
         {
             _hardwareMonitorService = hardwareMonitorService;
             _logger = logger;
+            _hasBattery = configuration.GetValue<bool>("HasBattery");
+            _isProd = configuration.GetValue<bool>("IsProd");
+            _shouldRestart = configuration.GetValue<bool>("ShouldRestart");
         }
 
         public void EnableWifi(string interfaceName)
@@ -68,6 +74,8 @@ namespace EnergyComparer.Services
 
         private int GetChargeRemaining()
         {
+            if (!_hasBattery) return 100;
+
             ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
 
             foreach (ManagementObject mo in mos.Get())
@@ -76,12 +84,12 @@ namespace EnergyComparer.Services
                 return int.Parse(chargeRemaning);
             }
 
-            return 100;
+            throw new NotImplementedException("Not battery found");
         }
 
-        public void Restart(bool _isProd)
+        public void Restart()
         {
-            if (_isProd)
+            if (_shouldRestart)
             {
                 Process.Start("ShutDown", "/r /t 0");
             }
@@ -112,9 +120,9 @@ namespace EnergyComparer.Services
             }
         }
 
-        public async Task WaitTillStableState(bool isProd)
+        public async Task WaitTillStableState()
         {
-            if (!isProd)
+            if (!_isProd)
             {
                 return;
             }

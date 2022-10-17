@@ -19,20 +19,22 @@ namespace EnergyComparer
     {
         private readonly ILogger _logger;
         private IExperimentService _experimentService;
+        private readonly IConfiguration _configuration;
         private readonly Func<IDbConnection> _connectionFactory;
         private IDataHandler _dataHandler;
         private IEnergyProfilerService _profilerService;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
-        private readonly bool _isProd;
 
         public Worker(ILogger logger, IExperimentService experimentService, IConfiguration configuration, Func<IDbConnection> connectionFactory)
         {
             _logger = logger;
             _experimentService = experimentService;
+            _configuration = configuration;
             _connectionFactory = connectionFactory;
-            _isProd = configuration.GetValue<bool>("IsProd");
-            _profilerService = new EnergyProfilerService(_isProd);
+            
+            var isProd = configuration.GetValue<bool>("IsProd");
+            _profilerService = new EnergyProfilerService(isProd);
             
             InitializeDependencies();
         }
@@ -48,7 +50,7 @@ namespace EnergyComparer
 
                 // TODO: Tie to one single core
 
-                await _adapterService.WaitTillStableState(_isProd);
+                await _adapterService.WaitTillStableState();
                 var isExperimentValid = true;
 
                 var programToRun = _adapterService.GetProgram(_dataHandler);
@@ -68,12 +70,17 @@ namespace EnergyComparer
                 }
 
                 await _profilerService.SaveProfilers(_dataHandler);
-                _adapterService.Restart(_isProd);
+                _adapterService.Restart();
             }
             catch (Exception e)
             {
                 _logger.Error(e, "Exception when running experiments");
                 throw;
+            }
+            finally
+            {
+                Console.WriteLine("Press enter to close...");
+                Console.ReadLine();
             }
 
         }
@@ -91,7 +98,7 @@ namespace EnergyComparer
         private void InitializeDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger);
+            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
             _dataHandler = new DataHandler(_logger, _adapterService, _connectionFactory);
             _dataHandler.InitializeConnection();
         }
