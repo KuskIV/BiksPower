@@ -14,6 +14,7 @@ namespace EnergyComparer.Services
     {
         private readonly bool _iterateOverProfilers;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
+        private IntelPowerGadget _intelPowerGadget = new IntelPowerGadget();
 
         public EnergyProfilerService(bool iterateOverProfilers)
         {
@@ -53,7 +54,7 @@ namespace EnergyComparer.Services
 
         private IEnergyProfiler GetDefaultProfiler()
         {
-            return new IntelPowerGadget();
+            return _intelPowerGadget;
         }
 
         private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(IProgram program, List<Profiler> profilers, IAdapterService adapterService)
