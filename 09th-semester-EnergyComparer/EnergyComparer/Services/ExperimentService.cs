@@ -16,6 +16,7 @@ using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
+using EnergyComparer.Utils;
 using MySqlX.XDevAPI.Common;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -27,26 +28,39 @@ namespace EnergyComparer.Services
     public class ExperimentService : IExperimentService
     {
         private readonly ILogger _logger;
-        private readonly Func<IDbConnection> _connectionFactory;
-        private IHardwareMonitorService _hardwareMonitorService;
-        private IAdapterService _adapter;
-        private IDataHandler _dataHandler;
-        private IHardwareHandler _energyProfilerService;
-        private IWifiService _wifiService;
         private readonly bool _isProd;
+        private IHardwareMonitorService _hardwareMonitorService;
+        private  IAdapterService _adapter;
+        private IDataHandler _dataHandler;
+        private  IHardwareHandler _hardwareHandler;
+        private  IWifiService _wifiService;
+        private readonly bool _saveToDb;
+        private readonly Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> _initializeOfflineDependencies;
+        private readonly Func<IDataHandler> _initializeOnlineDependencies;
+        private readonly Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> _deleteDependencies;
         private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(ILogger logger, IConfiguration configuration, Func<IDbConnection> connectionFactory)
+        public ExperimentService(ILogger logger, bool isProd, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> deleteDependencies)
         {
             _logger = logger;
-            _connectionFactory = connectionFactory;
-            _isProd = configuration.GetValue<bool>("IsProd");
-            _wifiAdapterName = configuration.GetValue<string>("wifiAdapterName");
 
+            _isProd = isProd;
+            _wifiAdapterName = wifiAdapterName;
+            _saveToDb = saveToDb;
+            
+            _initializeOfflineDependencies = initializeOfflineDependencies;
+            _initializeOnlineDependencies = initializeOnlineDependencies;
+            _deleteDependencies = deleteDependencies;
+            
             InitializeDependencies();
+        }
+
+        public List<int> GetProfilerCounters()
+        {
+            return _profilerCounter.Values.ToList();
         }
 
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
@@ -100,16 +114,16 @@ namespace EnergyComparer.Services
 
         private async Task EnableWifiAndDependencies()
         {
-            InitializeOfflineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
-            InitializeOnlineDependencies();
+            _dataHandler = _initializeOnlineDependencies();
         }
 
         private void RunGarbageCollection()
         {
-            DeleteDependencies();
+            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -119,7 +133,7 @@ namespace EnergyComparer.Services
         {
             if (_hardwareMonitorService.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
             {
-                if (_isProd)
+                if (_saveToDb)
                 {
                     _logger.Information("Saving results");
                     await SaveResults(profiler, date, experimentId);
@@ -163,7 +177,7 @@ namespace EnergyComparer.Services
 
             var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id);
 
-            if (_isProd)
+            if (_saveToDb)
             {
                 await _dataHandler.InsertTemperatures(endTemperatures, experiment.Id, stopTime);
                 await _dataHandler.InsertTemperatures(initialTemperatures, experiment.Id, startTime);
@@ -174,7 +188,7 @@ namespace EnergyComparer.Services
 
         private async Task EnableWifi()
         {
-            await _wifiService.Enable();
+            await _wifiService.Enable(_isProd);
         }
 
         private int IncrementAndGetProfilerCount(IEnergyProfiler energyProfiler)
@@ -194,40 +208,19 @@ namespace EnergyComparer.Services
             if (String.IsNullOrEmpty(_firstProfiler)) _firstProfiler = energyProfiler.GetName();
 
             _dataHandler.CloseConnection();
-            _wifiService.Disable();
+            _wifiService.Disable(_isProd);
         }
 
         private void InitializeDependencies()
         {
-            InitializeOnlineDependencies();
-            InitializeOfflineDependencies();
-        }
-
-        private void InitializeOnlineDependencies()
-        {
-            _dataHandler = new DataHandler(_logger, _adapter, _connectionFactory);
-        }
-
-        private void InitializeOfflineDependencies()
-        {
-            _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger);
-            _energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, _adapter);
-            _wifiService = new WifiService(_energyProfilerService);
-        }
-
-        private void DeleteDependencies()
-        {
-            _hardwareMonitorService = null;
-            _adapter = null;
-            _dataHandler = null;
-            _energyProfilerService = null;
-            _wifiService = null;
+            _dataHandler = _initializeOnlineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
         }
     }
 
     public interface IExperimentService
     {
+        List<int> GetProfilerCounters();
         Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram testProgram);
     }
 }

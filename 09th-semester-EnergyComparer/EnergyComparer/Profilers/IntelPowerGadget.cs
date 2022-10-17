@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -54,11 +55,11 @@ namespace EnergyComparer.Profilers
             EnsureSuccess(success);
         }
 
-        private static void EnsureSuccess(bool success)
+        private static void EnsureSuccess(bool success, [CallerMemberName] string callerName = "")
         {
             if (!success)
             {
-                throw new Exception("IntelPowerGadget failed to initialize");
+                throw new Exception($"IntelPowerGadget failed to {callerName}");
             }
         }
 

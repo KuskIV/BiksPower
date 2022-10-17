@@ -4,6 +4,7 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
 using EnergyComparer.Services;
+using EnergyComparer.Utils;
 using LibreHardwareMonitor.Hardware;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.Win32;
@@ -19,41 +20,47 @@ namespace EnergyComparer
     {
         private readonly ILogger _logger;
         private IExperimentService _experimentService;
-        private readonly Func<IDbConnection> _connectionFactory;
+        private readonly IConfiguration _configuration;
         private IDataHandler _dataHandler;
+        private int _iterationsBeforeRestart;
         private IEnergyProfilerService _profilerService;
+        private string _wifiAdapterName;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
-        private readonly bool _isProd;
 
-        public Worker(ILogger logger, IExperimentService experimentService, IConfiguration configuration, Func<IDbConnection> connectionFactory)
+        public Worker(ILogger logger, IConfiguration configuration)
         {
             _logger = logger;
-            _experimentService = experimentService;
-            _connectionFactory = connectionFactory;
-            _isProd = configuration.GetValue<bool>("IsProd");
-            _profilerService = new EnergyProfilerService(_isProd);
+            _configuration = configuration;
+            
+            var iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
+            _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
+            _profilerService = new EnergyProfilerService(iterateOverProfilers);
+            _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
+
+            var saveToDb = ConfigUtils.GetSaveToDb(configuration);
+            var isProd = ConfigUtils.GetIsProd(configuration);
+            _experimentService = new ExperimentService(_logger, isProd, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
             
             InitializeDependencies();
         }
 
-
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
+
             try
             {
                 CreateFolderIfNew();
 
                 // TODO: Tie to one single core
 
-                await _adapterService.WaitTillStableState(_isProd);
+                await _adapterService.WaitTillStableState();
                 var isExperimentValid = true;
 
                 var programToRun = _adapterService.GetProgram(_dataHandler);
 
-                while (!_adapterService.ShouldStopExperiment() && isExperimentValid)
+                while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
                 {
                     var profiler = await _profilerService.GetNext(programToRun, _dataHandler, _adapterService);
 
@@ -68,14 +75,56 @@ namespace EnergyComparer
                 }
 
                 await _profilerService.SaveProfilers(_dataHandler);
-                _adapterService.Restart(_isProd);
+                _adapterService.Restart();
             }
             catch (Exception e)
             {
                 _logger.Error(e, "Exception when running experiments");
                 throw;
             }
+            finally
+            {
+                Console.WriteLine("Press enter to close...");
+                Console.ReadLine();
+            }
 
+        }
+
+        private (IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
+        {
+            var hardwareMonitorService = new HardwareMonitorService(_logger);
+            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
+            var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
+            var wifiService = new WifiService(energyProfilerService);
+
+            return (hardwareMonitorService, adapter, energyProfilerService, wifiService);
+        }
+
+        private IDataHandler InitializeOnlineDependencies()
+        {
+            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
+        }
+
+        private (IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService) DeleteDependencies()
+        {
+            return (null, null, null, null, null);
+        }
+
+        private IDbConnection GetDbConnectionFactory()
+        {
+            var connectionString = ConfigUtils.GetConnectionString(_configuration);
+            var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+            con.Open();
+            return con;
+        }
+
+        private bool EnoughEntires()
+        {
+            var profilers = _experimentService.GetProfilerCounters();
+
+            if (profilers.Count() == 0) return false; // the first run
+
+            return profilers.All(x => x >= _iterationsBeforeRestart);
         }
 
         private void CreateFolderIfNew()
@@ -91,8 +140,8 @@ namespace EnergyComparer
         private void InitializeDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger);
-            _dataHandler = new DataHandler(_logger, _adapterService, _connectionFactory);
+            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
+            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
             _dataHandler.InitializeConnection();
         }
 
