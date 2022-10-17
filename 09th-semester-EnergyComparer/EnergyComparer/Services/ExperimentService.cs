@@ -16,6 +16,7 @@ using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
+using EnergyComparer.Utils;
 using MySqlX.XDevAPI.Common;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -43,8 +44,10 @@ namespace EnergyComparer.Services
         {
             _logger = logger;
             _connectionFactory = connectionFactory;
-            _isProd = configuration.GetValue<bool>("IsProd");
-            _wifiAdapterName = configuration.GetValue<string>("wifiAdapterName");
+            _isProd = ConfigUtils.GetIsProd(configuration);
+            _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
+
+
 
             InitializeDependencies();
         }

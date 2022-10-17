@@ -25,4 +25,10 @@
       <Name>LibreHardwareMonitorLib</Name>
     </ProjectReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EnergyLib64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

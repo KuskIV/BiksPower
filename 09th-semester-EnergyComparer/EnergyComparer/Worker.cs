@@ -4,6 +4,7 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
 using EnergyComparer.Repositories;
 using EnergyComparer.Services;
+using EnergyComparer.Utils;
 using LibreHardwareMonitor.Hardware;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.Win32;
@@ -31,7 +32,7 @@ namespace EnergyComparer
             _logger = logger;
             _experimentService = experimentService;
             _connectionFactory = connectionFactory;
-            _isProd = configuration.GetValue<bool>("IsProd");
+            _isProd = ConfigUtils.GetIsProd(configuration);
             _profilerService = new EnergyProfilerService(_isProd);
             
             InitializeDependencies();
@@ -42,6 +43,7 @@ namespace EnergyComparer
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
+
             try
             {
                 // TODO: Tie to one single core
