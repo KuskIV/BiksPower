@@ -13,6 +13,10 @@ using System.IO;
 
 //var data = intel.ParseCsv("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-09-30-12-20-15.csv", 1, DateTime.UtcNow);
 
+var e3 = new E3();
+e3.Start(DateTime.UtcNow);
+await Task.Delay(10000*6);
+e3.Stop();
 
 
 
