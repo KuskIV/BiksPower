@@ -16,15 +16,21 @@ namespace EnergyComparer.Services
             _hardwareHandler = hardwareHandler;
         }
 
-        public async Task Enable()
+        public async Task Enable(bool isProd)
         {
-            _hardwareHandler.EnableWifi();
-            await IsWifiEnabled();
+            if (isProd)
+            {
+                _hardwareHandler.EnableWifi();
+                await IsWifiEnabled();
+            }
         }
 
-        public void Disable()
+        public void Disable(bool isProd)
         {
-            _hardwareHandler.DisableWifi();
+            if (isProd)
+            {
+                _hardwareHandler.DisableWifi();
+            }
         }
 
         public bool PingGoogleSuccessfully()
@@ -56,8 +62,8 @@ namespace EnergyComparer.Services
 
     public interface IWifiService
     {
-        void Disable();
-        Task Enable();
+        void Disable(bool isProd);
+        Task Enable(bool isProd);
         bool PingGoogleSuccessfully();
     }
 }

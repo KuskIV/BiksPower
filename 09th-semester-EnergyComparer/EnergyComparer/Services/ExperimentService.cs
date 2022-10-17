@@ -30,12 +30,12 @@ namespace EnergyComparer.Services
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
         private readonly Func<IDbConnection> _connectionFactory;
+        private readonly bool _isProd;
         private IHardwareMonitorService _hardwareMonitorService;
         private IAdapterService _adapter;
         private IDataHandler _dataHandler;
         private IHardwareHandler _energyProfilerService;
         private IWifiService _wifiService;
-        private readonly bool _isProd;
         private readonly bool _saveToDb;
         private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
@@ -53,6 +53,11 @@ namespace EnergyComparer.Services
             _saveToDb = ConfigUtils.GetSaveToDb(configuration);
 
             InitializeDependencies();
+        }
+
+        public List<int> GetProfilerCounters()
+        {
+            return _profilerCounter.Values.ToList();
         }
 
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
@@ -180,7 +185,7 @@ namespace EnergyComparer.Services
 
         private async Task EnableWifi()
         {
-            await _wifiService.Enable();
+            await _wifiService.Enable(_isProd);
         }
 
         private int IncrementAndGetProfilerCount(IEnergyProfiler energyProfiler)
@@ -200,7 +205,7 @@ namespace EnergyComparer.Services
             if (String.IsNullOrEmpty(_firstProfiler)) _firstProfiler = energyProfiler.GetName();
 
             _dataHandler.CloseConnection();
-            _wifiService.Disable();
+            _wifiService.Disable(_isProd);
         }
 
         private void InitializeDependencies()
@@ -234,6 +239,7 @@ namespace EnergyComparer.Services
 
     public interface IExperimentService
     {
+        List<int> GetProfilerCounters();
         Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram testProgram);
     }
 }

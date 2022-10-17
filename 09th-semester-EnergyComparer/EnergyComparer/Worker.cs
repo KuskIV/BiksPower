@@ -23,6 +23,7 @@ namespace EnergyComparer
         private readonly IConfiguration _configuration;
         private readonly Func<IDbConnection> _connectionFactory;
         private IDataHandler _dataHandler;
+        private int _iterationsBeforeRestart;
         private IEnergyProfilerService _profilerService;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
@@ -35,6 +36,7 @@ namespace EnergyComparer
             _connectionFactory = connectionFactory;
             
             var isProd = ConfigUtils.GetIsProd(configuration);
+            _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
             _profilerService = new EnergyProfilerService(isProd);
             
             InitializeDependencies();
@@ -57,7 +59,7 @@ namespace EnergyComparer
 
                 var programToRun = _adapterService.GetProgram(_dataHandler);
 
-                while (!_adapterService.ShouldStopExperiment() && isExperimentValid)
+                while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
                 {
                     var profiler = await _profilerService.GetNext(programToRun, _dataHandler, _adapterService);
 
@@ -85,6 +87,11 @@ namespace EnergyComparer
                 Console.ReadLine();
             }
 
+        }
+
+        private bool EnoughEntires()
+        {
+            return _experimentService.GetProfilerCounters().All(x => x >= _iterationsBeforeRestart);
         }
 
         private void CreateFolderIfNew()

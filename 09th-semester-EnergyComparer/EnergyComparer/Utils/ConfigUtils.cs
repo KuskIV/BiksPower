@@ -37,6 +37,12 @@ namespace EnergyComparer.Utils
             return config.GetValue<string>("wifiAdapterName");
         }
 
+        public static int GetIterationsBeforeRestart(IConfiguration config)
+        {
+            return config.GetValue<int>("IterationsBeforeRestart");
+
+        }
+
         public static string GetConnectionString(IConfiguration config)
         {
             return config.GetValue<string>("ConnectionString");
