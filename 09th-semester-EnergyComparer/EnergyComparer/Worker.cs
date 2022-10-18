@@ -25,6 +25,7 @@ namespace EnergyComparer
         private int _iterationsBeforeRestart;
         private IEnergyProfilerService _profilerService;
         private string _wifiAdapterName;
+        private string _machineName;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
 
@@ -37,6 +38,7 @@ namespace EnergyComparer
             _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
             _profilerService = new EnergyProfilerService(iterateOverProfilers);
             _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
+            _machineName = ConfigUtils.GetMachineName(configuration);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
@@ -102,7 +104,7 @@ namespace EnergyComparer
 
         private IDataHandler InitializeOnlineDependencies()
         {
-            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
+            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName);
         }
 
         private (IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService) DeleteDependencies()
@@ -141,7 +143,7 @@ namespace EnergyComparer
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
             _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
-            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory);
+            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName);
             _dataHandler.InitializeConnection();
         }
 

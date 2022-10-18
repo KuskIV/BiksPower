@@ -56,5 +56,11 @@ namespace EnergyComparer.Utils
         {
             return config.GetValue<string>("ConnectionString");
         }
+
+        internal static string GetMachineName(IConfiguration config)
+        {
+            return config.GetValue<string>("MachineName");
+
+        }
     }
 }
