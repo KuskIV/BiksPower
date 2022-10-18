@@ -26,12 +26,15 @@ namespace EnergyComparer
 
         public static string GetFilePathForSouce(string source, DateTime date)
         {
-            string fileName = date.ToString("yyyy-MM-dd-hh-mm-ss");
+            string fileName = GetFileName(date);
             string root = GetPathForSource(source);
 
             return new StringBuilder().AppendFormat(@"{0}\{1}.csv", root, fileName).ToString();
         }
 
-
+        public static string GetFileName(DateTime date) 
+        {
+            return date.ToString("yyyy-MM-dd-hh-mm-ss");
+        }
     }
 }
