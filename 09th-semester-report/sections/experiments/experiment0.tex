@@ -1,0 +1,13 @@
+\subsection{Experiment 0}
+Experiment 0 is about addressing some of the discoveries made by the varies tools that seems to contradict what is stated in the documentation.
+Intel power Gadget, RAPL and OpenHardwareMonitor all seemed to work as intended during the testing. E3 however seems to deviate a lot from what it should do an example of this is that a claim states that each measurement is around $1-5$ minutes this is different from what can be seen in the actual measurements. The lowest duration in the measurements are $0$ sec the one after that is $1.544$ sec. The largest durations seems to be $902$ minutes. Another thing about the measurements is that E3 seems to count the same application as different measurements depending on the status of it example. Paint.Status=Focus, Paint.Status=Visible, Paint.Status=Minimized and Paint.Status=NotUnique will all be counted as different measurements in E3. While the first three seems fairly self explanatory the last one is less so, by looking at the process in it and the frequency of their repetition over a period, we have come to believe that these a background processes of windows. 
+Because of the uncertainty about how E3 functions it was deemed necessary the to conduct some experiments to determine when a process is include in the measurements and not. To carry out these experiments the following scenarios were formulated.
+\begin{itemize}
+    \item A process is started before the measurements and ended after the measurements
+    \item A process is started during the measurements and ended after the measurements
+    \item A process is started before the measurements and ended during the measurements
+    \item Several process are swapped with increasing intervals
+    \item Several process are swapped between with a fixed interval
+    \item A process opened and restarted several times during the measurements
+    \item Taking several measurements with increasing durations
+\end{itemize}

@@ -15,7 +15,7 @@ using System.IO;
 
 var e3 = new E3();
 e3.Start(DateTime.UtcNow);
-await Task.Delay(10000*6);
+await Task.Delay(10000 * 6);
 e3.Stop();
 
 
