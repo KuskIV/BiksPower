@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace EnergyComparer.Profilers
 {
@@ -38,7 +40,6 @@ namespace EnergyComparer.Profilers
         {
             dateTime = date;
             Clear();
-            Console.WriteLine("Cleared");
             StartLogging();
         }
 
@@ -79,9 +80,36 @@ namespace EnergyComparer.Profilers
             Process save = E3SaveTemp(path, "tempNew");
             save.Start();
             save.WaitForExit();
-            var Old = GetE3Data(path+"\\temp\\tempOld.csv");
+            var Old = GetE3Data(path + "\\temp\\tempOld.csv");
             var New = GetE3Data(path + "\\temp\\tempNew.csv");
+            var Temp = New.GetRange(Old.Count, New.Count - Old.Count);
+            Dictionary<string, List<E3Data>> InactivityState = new Dictionary<string, List<E3Data>>();
+            foreach (var item in Temp)
+            {
+                if (InactivityState.ContainsKey(item.InteractivityState)) 
+                {
+                    InactivityState[item.InteractivityState].Add(item);
+                }
+                else
+                {
+                    InactivityState.Add(item.InteractivityState, new List<E3Data>());
+                    InactivityState[item.InteractivityState].Add(item);
+
+                }
+            }
+            Dictionary<string, List<E3Data>> Inactive = IsolateApps(InactivityState, " NotUnique");
+            Dictionary<string, List<E3Data>> Forcus = IsolateApps(InactivityState, " Focus");
+            Dictionary<string, List<E3Data>> Visible = IsolateApps(InactivityState, " Visible");
+            Dictionary<string, List<E3Data>> Minimized = IsolateApps(InactivityState, " Minimized");
+
+
+            //foreach (var key in InactivityState.Keys) 
+            //{
+            //    InactivityState[key] = InactivityState[key].GroupBy(x=> x.AppId).Select(x => x.First()).ToList();
+            //}
+
             List<int> small = New.Select(x => int.Parse(x.TimeInMSec)).ToList();
+            
             small.Sort();
             Console.WriteLine("Done");
 
@@ -89,6 +117,36 @@ namespace EnergyComparer.Profilers
             //Process collect = E3StopProcess(path, file);
             //collect.Start();
             //collect.WaitForExit();
+        }
+        public Dictionary<string, List<E3Data>> IsolateApps(Dictionary<string, List<E3Data>> dict, string key) 
+        {
+            Dictionary<string, List<E3Data>> valuePairs = new Dictionary<string, List<E3Data>>();
+            if (dict.ContainsKey(key)) 
+            {
+                foreach (var item in dict[key])
+                {
+                    if (valuePairs.ContainsKey(item.AppId))
+                    {
+                        valuePairs[item.AppId].Add(item);
+                    }
+                    else
+                    {
+                        valuePairs.Add(item.AppId, new List<E3Data>());
+                        valuePairs[item.AppId].Add(item);
+
+                    }
+                }            
+            }
+            return valuePairs;
+        }
+        public string ToXML<T>(T obj)
+        {
+            using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                xmlSerializer.Serialize(stringWriter, obj);
+                return stringWriter.ToString();
+            }
         }
 
         private List<E3Data> GetE3Data(string path) 
