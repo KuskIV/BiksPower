@@ -28,7 +28,8 @@ Each batch will be tested on every DUT with each type of OS these being Windows 
 
 \subsection{What to Measure}
 
-The more thing to consider, is what test programs makes sense to run during the experiments. Based on what was found in \cref*{ch:related_work}, two common repositories are used, either Rosetta Code\cite*[]{rosetta_code} or the Computer Language Benchmark Game\cite*[]{benchmark_game}. Here different benchmarks are choosen to represent a varying set of benchmarks, w.r.t. different size benchmark, and benchmarks where the load is on different parts of the DUT.
+The more thing to consider, is what test programs makes sense to run during the experiments. Based on what was found in \cref*{ch:related_work}, two common repositories are used, either Rosetta Code\cite*[]{rosetta_code} or the Computer Language Benchmark Game\cite*[]{benchmark_game}. Here different benchmarks are choosen to represent a varying set of benchmarks, w.r.t. different size benchmark, and benchmarks where the load is on different parts of the DUT. In the end the choices were made based on the work by Lima et al\cite*[]{greenland2016statistical} and Koedijk et al.\cite*[]{Koedijk2022diff}, where the benchmarks tested either the CPU, memory, synchronization, IO or disk. The choies for the experiments conducted in this work, can be seen in \cref*{tab:benchmarks}.
 
+\input{tabels/benchmarks.tex}
 
 
