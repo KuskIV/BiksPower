@@ -45,7 +45,7 @@ namespace EnergyComparer.Services
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Exception occured why trying to close computer");
+                //_logger.Error(e, "Exception occured why trying to close computer");
             }
         }
 
@@ -70,8 +70,8 @@ namespace EnergyComparer.Services
                 name = defaultName + i;
             }
 
-            _logger.Information("Temperature measured for {count} cores, avg temperature: {temp}", 
-                temperatures.Count(), temperatures.Select(x => x.Value).Sum() / temperatures.Count());
+            //_logger.Information("Temperature measured for {count} cores, avg temperature: {temp}", 
+                //temperatures.Count(), temperatures.Select(x => x.Value).Sum() / temperatures.Count());
 
             return temperatures;
         }
@@ -132,6 +132,7 @@ namespace EnergyComparer.Services
 
         private float GetAverageValueForSensor(SensorType sensorType)
         {
+            Console.WriteLine("We are in GetAveageValueForSensor");
             UpdateCpuValues();
             
             if (_cpuValues.TryGetValue(sensorType, out var data))

@@ -1,6 +1,6 @@
 % How to measure the energy consumption of code
 
-\section{Measure Energy Consumption of Code}
+\section{Measure Energy Consumption of Code}\label[section]{sec:measure_energy}
 
 When measuring the energy consumption of a process, different energy profilers exist that have been used in existing work. One popular approach is model-based power consumption estimators provided by x86 microprocessors, including Intel's RAPL for intel chips, and Application Power Management (APM) for AMD.
 
@@ -20,17 +20,17 @@ When measuring the energy consumption using hardware, it can be done on either A
 
 Mancebo et al. found that there are three types of problems that occur in the domain of evaluating software's energy consumption.\cite{MANCEBO2021100558} 
 \begin{enumerate}
-    \item The first is that there are inconsistencies in the terminology, with different terms being used for the same concept or even the same term being used for different concepts. This lack of consistency hurts the understanding of the subject.
-    \item The second problem is that there is no agreed-upon methodology, which makes it difficult to compare and replicate results.
+    \item There are inconsistencies in the terminology, with different terms being used for the same concept or even the same term being used for different concepts. This lack of consistency hurts the understanding of the subject.
+    \item There is no agreed-upon methodology, which makes it difficult to compare and replicate results.
     \item Choosing the correct measuring instruments that are fitting for the particular experiment evaluation.
 \end{enumerate}
 
-To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software} (FEETINGS). FEETINGS consist of three main components which aim to solve these issues these are the Conceptual component, Methodological component and Technological component.\nytafsnit
+To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software} (FEETINGS). FEETINGS consist of three main components which aim to solve these issues these are the Conceptual component, Methodological component and Technological component.\cite{MANCEBO2021100558}\nytafsnit
 
-\input{tabels/TerminologyTable.tex}
+%\input{tabels/TerminologyTable.tex}
 \todo{Check terminology is consistent}
 
-The Conceptual component provides an extension of the work by Garcia et al. which defines Software Measurement Ontology\cite{GARCIA2006631}. This extension is called Green Software Measurement Ontology (GSMO). It provides terminology and the corresponding definitions. The extended terminology from Mancebo et al. can be seen in \cref{tab:feetTable} along with extensions from other work and new extensions useful for this report. The Methodological component is a process called Green Software Measurement Process (GSMP) which are guidelines to assist with the study design, analysis and presenting the results presented in phases. The Technological component consists of two parts. The first part is the Energy Efficiency Tester (EET) which is a hardware-based approach to measuring energy consumption. The second part is called ELLIOT, which is a software-based tool which handles the data provided by EET with the main goal of providing a visual representation that can be used to process, analyze and construct graphs and tables of the data collected by the EET.
+The Conceptual component provides an extension of the work by Garcia et al.\cite{GARCIA2006631} which defines Software Measurement Ontology. This extension is called Green Software Measurement Ontology (GSMO) and provides terminology and the corresponding definitions. The Methodological component is a process called Green Software Measurement Process (GSMP) which are guidelines to assist with the study design, analysis and presenting the results presented in phases. The Technological component consists of two parts. The first part is the Energy Efficiency Tester (EET) which is a hardware-based approach to measuring energy consumption. The second part is called ELLIOT, which is a software-based tool which handles the data provided by EET with the main goal of providing a visual representation that can be used to process, analyze and construct graphs and tables of the data collected by the EET.\cite{MANCEBO2021100558}
 
-In this report, the Conceptual components providing the terminology will be followed with some additional terminology from other work and our own as shown in \cref{tab:feetTable}\nytafsnit
+%In this work, the Conceptual components providing the terminology will be followed with some additional terminology from other work and our own as shown in \cref{tab:feetTable}\nytafsnit
 

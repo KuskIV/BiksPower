@@ -24,12 +24,14 @@ namespace EnergyComparer.Handlers
         private IGetExperimentRepository _getRepository;
         private readonly IAdapterService _adapterService;
         private readonly Func<IDbConnection> _connectionFactory;
+        private readonly string _machineName;
 
-        public DataHandler(ILogger logger, IAdapterService adapterService, Func<IDbConnection> connectionFactory)
+        public DataHandler(ILogger logger, IAdapterService adapterService, Func<IDbConnection> connectionFactory, string machineName)
         {
             _logger = logger;
             _adapterService = adapterService;
             _connectionFactory = connectionFactory;
+            _machineName = machineName;
 
             InitializeRepositories();
         }
@@ -108,8 +110,9 @@ namespace EnergyComparer.Handlers
 
         public async Task<DtoSystem> GetSystem()
         {
-            var Name = Environment.MachineName;
-            var Os = Environment.OSVersion.VersionString;
+            var Name = _machineName;
+            var Os = Environment.OSVersion.Platform.ToString();
+
 
             if (!await _getRepository.SystemExists(Os, Name))
             {
