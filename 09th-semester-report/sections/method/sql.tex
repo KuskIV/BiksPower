@@ -1,3 +1,15 @@
 \subsection{SQL}\label{subsec:sql}
 
+SQL makes a lot of sense to use when working with structured data, where it enables the user to process the data later. The structure of the data can be seen in \cref{fig:uml_diagram}, and is used for two things during the experiments. The first thing is to capture the results, where a connection to the database will be made after each run of the experiments, to upload to data. The connection is then shut down again, before the next run, in order to avoid using energy on this, which could affect the results. The relevant components for capturing results from \cref*{fig:uml_diagram} are as following:
+
+\begin{itemize}
+    \item Program:
+    \item Profiler:
+    \item System:
+    \item RawData:
+    \item Configuration
+    \item Temperature:
+    \item Experiment:
+\end{itemize}
+
 \input{figures/sql_uml_diagram.tex}
