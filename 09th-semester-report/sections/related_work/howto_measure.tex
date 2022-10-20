@@ -2,9 +2,9 @@
 
 \section{Measure Energy Consumption of Code}\label[section]{sec:measure_energy}
 
-When measuring the energy consumption of a process, different energy profilers exist that have been used in existing work. One popular approach is model-based power consumption estimators provided by x86 microprocessors, including Intel's RAPL for intel chips, and Application Power Management (APM) for AMD.
+When measuring the energy consumption of a test case, different energy profilers exist that have been used in existing work. One popular approach is model-based power consumption estimators provided by x86 microprocessors, including Intel's RAPL for intel chips, and Application Power Management (APM) for AMD.
 
-\todo{I think this sentence is weird.}Work exists for RAPL, here it is deemed a viable alternative to physical measurements, where it consistently under-estimates\cite[]{Dongarra2012, Hackenberg2013}, but it does have some limitations, as RAPL values are not physical measurements, it is rather based on modelling approach\cite[]{Hackenberg2013}. Another limitation is how RAPL returns energy data and not power data. Because of this, the average update interval is used as timestamps for each update, and this value is assumed to be accurate enough.\cite[]{Hackenberg2013}
+\todo{I think this sentence is weird.}Work exists for RAPL, by Dongarra et al.\cite*{Dongarra2012} and Hackenberg et al.\cite*{Hackenberg2013} that found that RAPL is a viable alternative to physical measurements, where it consistently under-estimates, but it does have some limitations, as RAPL values are not physical measurements, it is rather based on modelling approach\cite[]{Hackenberg2013}. Another limitation is how RAPL returns energy data and not power data. Because of this, the average update interval is used as timestamps for each update, and this value is assumed to be accurate enough.\cite[]{Hackenberg2013}
 
 When considering APM, it is reasonably accurate but suffers from for example systematic inaccuracies most likely caused by novelty of the interface.\cite[]{Hackenberg2013}
 
@@ -25,7 +25,7 @@ Mancebo et al. found that there are three types of problems that occur in the do
     \item Choosing the correct measuring instruments that are fitting for the particular experiment evaluation.
 \end{enumerate}
 
-To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software} (FEETINGS). FEETINGS consist of three main components which aim to solve these issues these are the Conceptual component, Methodological component and Technological component.\cite{MANCEBO2021100558}\nytafsnit
+To solve these problems they created \textit{Framework for Energy Efficiency Testing to Improve Environmental Goals of the Software} (FEETINGS). FEETINGS consist of three main components which aim to solve these issues. These are the Conceptual component, Methodological component and Technological component.\cite{MANCEBO2021100558}\nytafsnit
 
 %\input{tabels/TerminologyTable.tex}
 \todo{Check terminology is consistent}
