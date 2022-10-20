@@ -1,6 +1,6 @@
 \chapter{Method}\label{ch:method}
 
-Following the introduction to this work, it is now time to take a further look into how the research questions can be answered. This will be achieved by looking at the different components required in the experiments, in order to find the best fit.
+Following the introduction to this work, it is now time to take a further look into how the research questions can be answered. This will be achieved by looking at the different components required in the experiments, in order to find the best fit. This will first of all be energy profilers in \cref*{sec:energy_profilers}, hardware in \cref*{sec:hardware}, how the data is saved in \cref*{sec:save_data}  and statistical methods in \cref*{sec:stat}
 
 \section{Energy Profilers}\label{sec:energy_profilers}
 
@@ -17,6 +17,15 @@ When selecting the profilers, promising ones were chosen in different categories
 \section{Hardware}\label{sec:hardware}
 
 When measuring the energy consumption of hardware, different software measuring tools were introduced in \cref{sec:energy_profilers}. In this section the hardware these tools will measure the energy consumption on will be introduced. This will include an analysis of the different requirements the tools had, in order to find which combination of hardware will give the best result.
+
+\section{How to Save the Data}\label{sec:save_data}
+
+When measuring the energy consumption, the results needs to be saved somewhere, for later analysis. The data should therefore be saved in a structured way, where it can be easily accessed later. Another point is that the data should be collected in one place, despite coming from multiple computers, and lastly during the experiments, the solution should consume no power. For this, and SQL database was chosen. This will be discovered further now.
+
+\include{sections/method/sql.tex}
+
+
+
 
 \section{Statistical methods}\label{sec:stat}
 

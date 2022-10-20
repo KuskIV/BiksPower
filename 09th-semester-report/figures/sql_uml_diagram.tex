@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+    \begin{object}[text width=4 cm]{Program}{0 ,0}
+        \attribute{ProgramId : INT}
+        \attribute{Name : VARCHAR}
+    \end{object}
+    \begin{object}[text width=4 cm]{System}{10,0}
+        \attribute{SystemId : INT}
+        \attribute{Name : VARCHAR}
+        \attribute{OS : VARCHAR}
+        \attribute{Version : INT}
+    \end{object}
+    \begin{object}[text width=4 cm]{Run}{5,5}
+        \attribute{RunId : INT}
+        \attribute{SystemId : INT}
+        \attribute{ProgramId : INT}
+        \attribute{Value : VARCHAR}
+    \end{object}
+    \begin{object}[text width = 4 cm]{Profiler}{5,0}
+        \attribute{ProfilerId : INT}
+        \attribute{Name : VARCHAR}
+    \end{object}
+    \begin{object}{Experiment}{5,-3}
+        \attribute{ExperimentId : INT}
+        \attribute{ConfigId : INT}
+        \attribute{ProfilerId : INT}
+        \attribute{SystemId : INT}
+        \attribute{ProgramId : INT}
+        \attribute{Runs : INT}
+        \attribute{Iteration : INT}
+        \attribute{FirstProfiler : VARCHAR}
+        \attribute{Language : VARCHAR}
+        \attribute{StartTime : DATETIME(6)}
+        \attribute{EndTime : DATETIME(6)}
+    \end{object}
+    \begin{object}[text width=4 cm]{RawData}{0, -10}
+        \attribute{RawDataId : INT}
+        \attribute{ExperimentId : INT}
+        \attribute{Value : VARCHAR}
+        \attribute{Time : DATETIME(6)}
+    \end{object}
+    \begin{object}[text width = 4 cm]{Configuration}{5,-10}
+        \attribute{ConfigurationId : INT}
+        \attribute{MinTemp : INT}
+        \attribute{MaxTemp : INT}
+        \attribute{MinBetweenExperiments : INT}
+        \attribute{MinDurationOfExperiments : INT}
+        \attribute{MinBattery : INT}
+        \attribute{MaxBattery : INT}
+        \attribute{Version : INT}
+    \end{object}
+\end{tikzpicture}
+
+
+
