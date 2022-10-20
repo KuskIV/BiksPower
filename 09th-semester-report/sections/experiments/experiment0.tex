@@ -3,11 +3,20 @@ Experiment 0 is about addressing some of the discoveries made by the varies tool
 Intel power Gadget, RAPL and OpenHardwareMonitor all seemed to work as intended during the testing. E3 however seems to deviate a lot from what it should do an example of this is that a claim states that each measurement is around $1-5$ minutes this is different from what can be seen in the actual measurements. The lowest duration in the measurements are $0$ sec the one after that is $1.544$ sec. The largest durations seems to be $902$ minutes. Another thing about the measurements is that E3 seems to count the same application as different measurements depending on the status of it example. Paint.Status=Focus, Paint.Status=Visible, Paint.Status=Minimized and Paint.Status=NotUnique will all be counted as different measurements in E3. While the first three seems fairly self explanatory the last one is less so, by looking at the process in it and the frequency of their repetition over a period, we have come to believe that these a background processes of windows. 
 Because of the uncertainty about how E3 functions it was deemed necessary the to conduct some experiments to determine when a process is include in the measurements and not. To carry out these experiments the following scenarios were formulated.
 \begin{itemize}
-    \item A process is started before the measurements and ended after the measurements
-    \item A process is started during the measurements and ended after the measurements
-    \item A process is started before the measurements and ended during the measurements
-    \item Several process are swapped with increasing intervals
-    \item Several process are swapped between with a fixed interval
-    \item A process opened and restarted several times during the measurements
-    \item Taking several measurements with increasing durations
+    \item Scenario 1: A process is started before the measurements and ended after the measurements
+    \item Scenario 2: A process is started during the measurements and ended after the measurements
+    \item Scenario 3: A process is started before the measurements and ended during the measurements
+    \item Scenario 4: Several process are swapped with increasing intervals
+    \item Scenario 5: Several process are swapped between with a fixed interval
+    \item Scenario 6: Change The "state" of a single process during measurements
+    \item Scenario 7: A process opened and restarted several times during the measurements
+    \item Scenario 8: Several instances of the same application
+    \item Scenario 9: Taking several measurements with different durations
 \end{itemize}
+\paragraph {Expectations}
+The first three scenarios are designed to see when a measurements is recorded by E3. Our initial expectations is that E3 uses the start and exit timestamp for the measured process, because of this expectations are that Scenario 1 and Scenario 2 would not record a process, but that Scenario 3 would.
+The Scenarios 4 and 5 are meant to see how E3 handles changes in process state during the measurements. Scenarios 4 specifically attempts to see how granular the measurements can see the state change. While Scenarios 5 would use the lowest successful measurement found in 4 to check for consistency. The expectations are that each state change will be measured until a certain threshold where the change will not be registerer as the swapping is more frequent than E3's sampling is. Scenario 6 is designed to test something similar to Scenario 4, but instead using the same process to see how that changes the results.
+Scenario 7 is designed to see how E3 looks at multiple start and shutdowns during measurements. The expectation is that each instance will be a separate measurement. Scenario 8 is designed to see how E3 handles multiple concurrent instances of process with the same process id the expectation here is that the measurements will be merged together to one big measurement. Scenario 9 is designed to test if E3 uses a per application sampling rate of if it has a global sampling rate and exactly how frequent it is. The expectations for Scenario 9 is that measurements with durations less than $1$ minute will be inconsistent as we expect a global sampling around once every minute.
+
+\paragraph {Findings}
+Scenario 1 resulted in several measurements of the process, which is contradict the expectations for the experiment this point to that E3 instead of using the start and end times instead takes several snapshots of the process.
