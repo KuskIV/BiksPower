@@ -56,7 +56,7 @@ namespace EnergyComparer.Handlers
             _getRepository.CloseConnection();
         }
 
-        public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ISoftwareEntity program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId, long duration)
+        public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ITestCase program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId, long duration)
         {
             var experiment = new DtoExperiment()
             {
@@ -142,7 +142,7 @@ namespace EnergyComparer.Handlers
             await _insertRepository.IncrementVersion(system);
         }
 
-        public async Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ISoftwareEntity program)
+        public async Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ITestCase program)
         {
             var system = await GetSystem();
             var profilers = new List<Profiler>();
@@ -166,7 +166,7 @@ namespace EnergyComparer.Handlers
 
         }
 
-        private async Task<bool> LastRunExistsForSystem(DtoSystem system, ISoftwareEntity program)
+        private async Task<bool> LastRunExistsForSystem(DtoSystem system, ITestCase program)
         {
             return await _getRepository.RunExistsForSystem(system, program);
         }
@@ -192,9 +192,9 @@ namespace EnergyComparer.Handlers
     {
         void CloseConnection();
         Task<DtoConfiguration> GetConfiguration(int version);
-        Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ISoftwareEntity program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id, long duration);
+        Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ITestCase program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id, long duration);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
-        Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ISoftwareEntity program);
+        Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ITestCase program);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem();
         Task IncrementVersionForSystem();

@@ -21,7 +21,7 @@ namespace EnergyComparer.Services
             _iterateOverProfilers = iterateOverProfilers;
         }
 
-        public async Task<IEnergyProfiler> GetNext(ISoftwareEntity program, IDataHandler dataHandler, IAdapterService adapterService)
+        public async Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IAdapterService adapterService)
         {
             if (!_iterateOverProfilers)
             {
@@ -43,7 +43,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        private IEnergyProfiler GetCurrentProfiler(ISoftwareEntity program, List<Profiler> profilers, IAdapterService adapterService)
+        private IEnergyProfiler GetCurrentProfiler(ITestCase program, List<Profiler> profilers, IAdapterService adapterService)
         {
             var currentProfiler = GetCurrentProfiler(profilers);
 
@@ -57,7 +57,7 @@ namespace EnergyComparer.Services
             return _intelPowerGadget;
         }
 
-        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(ISoftwareEntity program, List<Profiler> profilers, IAdapterService adapterService)
+        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(ITestCase program, List<Profiler> profilers, IAdapterService adapterService)
         {
             var currentProfiler = GetCurrentProfiler(profilers);
             var currentProfilerIndex = profilers.IndexOf(currentProfiler);
@@ -71,7 +71,7 @@ namespace EnergyComparer.Services
             return adapterService.MapEnergyProfiler(currentProfiler);
         }
 
-        private void UpdateProfilers(ISoftwareEntity program, List<Profiler> profilers)
+        private void UpdateProfilers(ITestCase program, List<Profiler> profilers)
         {
             _profilers[program.GetName()] = profilers;
         }
@@ -93,7 +93,7 @@ namespace EnergyComparer.Services
             await dataHandler.UpdateProfilers(id, profilers);
         }
 
-        private async Task<List<Profiler>> InitializeProfilers(ISoftwareEntity program, IDataHandler dataHandler)
+        private async Task<List<Profiler>> InitializeProfilers(ITestCase program, IDataHandler dataHandler)
         {
             var profilers = GetProfilers(program);
 
@@ -105,7 +105,7 @@ namespace EnergyComparer.Services
             return profilers;
         }
 
-        private List<Profiler> GetProfilers(ISoftwareEntity program)
+        private List<Profiler> GetProfilers(ITestCase program)
         {
             var name = program.GetName();
 
@@ -120,7 +120,7 @@ namespace EnergyComparer.Services
 
     public interface IEnergyProfilerService
     {
-        Task<IEnergyProfiler> GetNext(ISoftwareEntity program, IDataHandler dataHandler, IAdapterService adapterService);
+        Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IAdapterService adapterService);
         Task SaveProfilers(IDataHandler dataHandler);
     }
 }

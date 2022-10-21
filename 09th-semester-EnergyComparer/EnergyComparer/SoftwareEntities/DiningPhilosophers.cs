@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace EnergyComparer.Programs
 {
-    internal class DiningPhilosophers : ISoftwareEntity
+    internal class DiningPhilosophers : ITestCase
     {
         private const int DinerCount = 5;
         private readonly string _name;

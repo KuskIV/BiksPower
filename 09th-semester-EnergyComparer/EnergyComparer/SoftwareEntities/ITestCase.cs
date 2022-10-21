@@ -3,7 +3,7 @@ using EnergyComparer.Models;
 
 namespace EnergyComparer.Programs
 {
-    public interface ISoftwareEntity
+    public interface ITestCase
     {
         DtoProgram GetProgram();
         string GetLanguage();

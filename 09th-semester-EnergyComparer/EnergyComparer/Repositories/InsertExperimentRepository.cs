@@ -144,7 +144,7 @@ namespace EnergyComparer.Repositories
 
         }
 
-        public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ISoftwareEntity program)
+        public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ITestCase program)
         {
             var systemId = system.Id;
             var programId = program.GetProgram().Id;
@@ -188,7 +188,7 @@ namespace EnergyComparer.Repositories
         Task InsertConfiguration(int version);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
-        Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ISoftwareEntity program);
+        Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ITestCase program);
         Task InsertProgram(string name);
         Task InsertRawData(DtoRawData data);
         Task InsertSystem(string name, string os, int version = 1);

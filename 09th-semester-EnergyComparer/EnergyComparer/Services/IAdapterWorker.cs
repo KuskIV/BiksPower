@@ -12,7 +12,7 @@ namespace EnergyComparer.Services
         void EnableWifi(string interfaceName);
         List<string> GetAllRequiredPaths();
         List<string> GetAllSouces();
-        ISoftwareEntity GetSoftwareEntity(IDataHandler dataHandler);
+        ITestCase GetSoftwareEntity(IDataHandler dataHandler);
         IEnergyProfiler MapEnergyProfiler(Profiler profiler);
         void Restart();
         bool ShouldStopExperiment();

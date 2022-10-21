@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Programs
 {
-    public class TestProgram : ISoftwareEntity
+    public class TestProgram : ITestCase
     {
         public TestProgram(IDataHandler dataHandler)
         {

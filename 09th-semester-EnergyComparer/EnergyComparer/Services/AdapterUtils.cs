@@ -95,7 +95,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        public ISoftwareEntity GetSoftwareEntity(IDataHandler dataHandler)
+        public ITestCase GetSoftwareEntity(IDataHandler dataHandler)
         {
             return new DiningPhilosophers(dataHandler);
         }
