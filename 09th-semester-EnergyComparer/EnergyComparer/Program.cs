@@ -26,16 +26,6 @@ builder
             .AddUserSecrets<Program>(true);
 
     })
-    .ConfigureContainer<ContainerBuilder>((host, builder) =>
-    {
-        builder.Register<Func<IDbConnection>>(f => () =>
-        {
-            var connectionString = host.Configuration.GetValue<string>("ConnectionString");
-            var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            con.Open();
-            return con;
-        });
-    })
     .UseSerilog((ctx, lc) => lc
     .WriteTo.Console());
 
