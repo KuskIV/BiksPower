@@ -172,6 +172,10 @@
 \usepackage{array}
 \usepackage{makecell}
 \usepackage{cleveref}
+\usepackage{tikz, ifthen, xstring, calc, pgfopts}
+% \usepackage{tikz-uml}
+% \usepackage[simplified]{pgf-umlcd}
+\usepackage[school]{pgf-umlcd}
 
 \renewcommand\theadalign{bc}
 \renewcommand\theadfont{\bfseries}
@@ -212,3 +216,5 @@
 \Crefname{lstlisting}{Listing}{Listings}
 \lstset{style=mystyle}
 \let\feetnote\footnote
+
+\setlength{\headheight}{13.6pt}

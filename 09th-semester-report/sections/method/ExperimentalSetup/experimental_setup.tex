@@ -1,0 +1,35 @@
+\subsection{How to Measure}
+
+When running the experiments, different types of measuring approaches will be used, based on the tool represented in \cref*{sec:hardware}. The first approach is system-level physical measurements, more specifically AC measurements, which was found in \cref*{sec:measure_energy} to be the most accurate way to measure the energy consumption of the DUT. This approach will serve as the ground truth for the experiments conducted.
+
+Another approach is the model-based interface, where on-chip sensors are used. For this, \cref*{sec:measure_energy} found that Intels RAPL is a frequently used version of this. RAPL however only works on Linux, as was covered in \cref*{subsec:rapl}, and since this work aims to find the accuracy of Windows approaches, some additional energy profilers were introduced in \cref*{sec:energy_profilers}. RAPL is however still included, as it also serves as a good benchmark in terms of what is possible when considering only software measurings. When considering the Windows energy profilers, the OpenHardwareMonitor and Intel Power Gadget are very similar to both RAPL and the physical measurements, as they find the total energy consumption of the entire system. Here E3 is different, as this profiler is able to estimate the energy consumption on a process to process level, and also claims to be able to benefit from hardware chips, if the DUT is equipped with such one. E3 however also comes with some uncertainty, which will be covered later in \todo[]{Cref to where this is covered}.
+
+Given RAPL, Intel Power Gadget, OpenHardwareMonitor and the physical measurements only provide the energy consumption of the entire system, the idle energy consumption is required for this experiment, in order to extract the energy consumption of the test program only. To solve this, dynamic energy consumption can be utilized, as presented by Fahad et al.\cite*[]{fahad2019comparative}. Dynamic energy consumption is an estimation of the applications power consumption, ans is calculated using the following formula:
+
+\begin{equation}
+    E_D = E_T -(P_S * T_E)
+\end{equation}
+
+Where $E_D$ is the dynamic energy consumption, $T_E$ is the duration of the program execution and $P_S$ is the energy consumption when the system is idle.The dynamic energy consumption will then represent the energy consumption of the test case. To do this a certain amount of control over the system is required and some precautions are necessary. The procedures that will be used are different for the DUTs and OSes, but some will be the same for all DUTs as shown here, and are a combination of procedures presented in \cref*{sec:experimental_setup} by Sestoft\cite*[]{sestoft2013microbenchmarks} and Fahad et al.\cite*[]{fahad2019comparative}:
+
+\begin{itemize}
+    \item The machines are reserved exclusively for the experiments, this is to prevent divinations in the results.
+    \item The networking will be disabled on the machines to ensure that these do not affect the results.
+    \item The processes and the temperature of the machines will be measured before and after each experiment.
+    \item After each batch, the DUT will be restarted and its setup phase is performed before continuing to the next batch.
+    \item The memory of the Test cases will not exceed the DUT's main memory to avoid memory swapping
+    \item Some baseline power usage will be established by measurements before and after the experiments
+    \item The generation of logging and debug messages can use more than 90\% of execution time, so this should be disabled
+    \item Disable power saving schemes so the CPU does not reduce its speed during benchmark runs.
+    \item Reflect on results, and if they look slow/fast something might have been overlooked.
+\end{itemize}
+
+Each batch will be tested on every DUT with each type of OS these being Windows 10 and Ubuntu 22.04. Each DUT will have a slightly different setup depending on the hardware and the OS of the system. For the Windows and Linux machines, the various unnecessary background processes will be disabled to ensure as little noise in the measurements as possible\cite*[]{sestoft2013microbenchmarks}, the specific process disabled can be seen in \todo[]{Fine out which should be shut off}. A difference between the DUTs is if wether they are desktops or laptops. On the desktop it is possible to perform system-level physical measurements, because the measurement is system wide it is important to have as little non-test case related power fluctuation as possible, this is why the fans of the system will be set to max during all the measurement times. For the laptops this is not an issue as the measurements do not include the whole system. For the laptops, some special controls are necessary for the measurements because measurement quality can become worse if the laptops are connected to the charger duration measurements\todo{check towards r3 for why no charging} \cite{E3Video}. To prevent this the charger is shut off during the experiments, and then turned on to fully recharge the DUT during the setup phase, this cycle will repeat until all of the experiments are done.
+
+\subsection{What to Measure}
+
+The more thing to consider, is what test programs makes sense to run during the experiments. Based on what was found in \cref*{ch:related_work}, two common repositories are used, either Rosetta Code\cite*[]{rosetta_code} or the Computer Language Benchmark Game\cite*[]{benchmark_game}. Here different benchmarks are choosen to represent a varying set of benchmarks, w.r.t. different size benchmark, and benchmarks where the load is on different parts of the DUT. In the end the choices were made based on the work by Lima et al\cite*[]{greenland2016statistical} and Koedijk et al.\cite*[]{Koedijk2022diff}, where the benchmarks tested either the CPU, memory, synchronization, IO or disk. The choies for the experiments conducted in this work, can be seen in \cref*{tab:benchmarks}.
+
+\input{tabels/benchmarks.tex}
+
+
