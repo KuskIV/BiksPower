@@ -2,6 +2,7 @@
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
+using Google.Protobuf.WellKnownTypes;
 using MySqlX.XDevAPI;
 using Org.BouncyCastle.Asn1.BC;
 using System;
@@ -50,8 +51,8 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId) " +
-                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration) " +
+                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration)";
 
             var count = await _connection.ExecuteAsync(query, new 
             {
@@ -65,6 +66,7 @@ namespace EnergyComparer.Repositories
                 iteration = experiment.Iteration,
                 firstprofiler = experiment.FirstProfiler,
                 configurationid = experiment.ConfigurationId,
+                duration = experiment.duration,
             });
                 
             LogCount("EXPERIMENT", count);

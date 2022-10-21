@@ -56,7 +56,7 @@ namespace EnergyComparer.Handlers
             _getRepository.CloseConnection();
         }
 
-        public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId)
+        public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId, long duration)
         {
             var experiment = new DtoExperiment()
             {
@@ -70,6 +70,7 @@ namespace EnergyComparer.Handlers
                 Iteration = profilerCount,
                 FirstProfiler = firstProfiler,
                 ConfigurationId = configurationId,
+                duration = duration
             };
 
             await _insertRepository.InsertExperiment(experiment);
@@ -191,7 +192,7 @@ namespace EnergyComparer.Handlers
     {
         void CloseConnection();
         Task<DtoConfiguration> GetConfiguration(int version);
-        Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id);
+        Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, IProgram program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id, long duration);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<List<Profiler>> GetProfilerFromLastRunOrDefault(IProgram program);
         Task<DtoProgram> GetProgram(string name);

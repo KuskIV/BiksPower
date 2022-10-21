@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -65,6 +66,7 @@ namespace EnergyComparer.Services
 
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
         {
+            var stopwatch = new Stopwatch();
             var counter = 0;
             _logger.Information("The energy profiler has started");
 
@@ -81,6 +83,8 @@ namespace EnergyComparer.Services
 
             _logger.Information("The experiment will now run untill at least {time}", DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
+
+            stopwatch.Start();
             energyProfiler.Start(startTime);
 
             while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
@@ -89,6 +93,7 @@ namespace EnergyComparer.Services
                 counter += 1;
             }
 
+            var duration = stopwatch.ElapsedMilliseconds;
             energyProfiler.Stop();
             var stopTime = DateTime.UtcNow;
 
@@ -98,7 +103,7 @@ namespace EnergyComparer.Services
 
             _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
 
-            var experimentId = await EndExperiment(program, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures);
+            var experimentId = await EndExperiment(program, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration);
 
             return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
         }
@@ -167,7 +172,7 @@ namespace EnergyComparer.Services
             return Constants.GetFilePathForSouce(profiler.GetName(), startTime);
         }
 
-        private async Task<int> EndExperiment(IProgram program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures)
+        private async Task<int> EndExperiment(IProgram program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures, long duration)
         {
             _logger.Information("The wifi was enabled, the data will now be parsed and saved");
             var system = await _dataHandler.GetSystem();
@@ -175,7 +180,7 @@ namespace EnergyComparer.Services
             var profilerCount = IncrementAndGetProfilerCount(energyProfiler);
             var configuration = await _dataHandler.GetConfiguration(system.Version);
 
-            var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id);
+            var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id, duration);
 
             if (_saveToDb)
             {
