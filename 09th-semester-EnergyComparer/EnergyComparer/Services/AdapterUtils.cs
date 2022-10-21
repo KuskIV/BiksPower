@@ -22,13 +22,13 @@ namespace EnergyComparer.Services
         private readonly bool _isProd;
         private readonly bool _shouldRestart;
 
-        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, IConfiguration configuration)
+        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, IConfiguration configuration, bool hasBattery, bool isProd, bool shouldRestart)
         {
             _hardwareMonitorService = hardwareMonitorService;
             _logger = logger;
-            _hasBattery = configuration.GetValue<bool>("HasBattery");
-            _isProd = configuration.GetValue<bool>("IsProd");
-            _shouldRestart = configuration.GetValue<bool>("ShouldRestart");
+            _hasBattery = hasBattery;
+            _isProd = isProd;
+            _shouldRestart = shouldRestart;
         }
 
         public void EnableWifi(string interfaceName)

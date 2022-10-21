@@ -26,6 +26,9 @@ namespace EnergyComparer
         private IEnergyProfilerService _profilerService;
         private string _wifiAdapterName;
         private string _machineName;
+        private readonly bool _shouldRestart;
+        private readonly bool _hasBattery;
+        private readonly bool _isProd;
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
 
@@ -39,6 +42,9 @@ namespace EnergyComparer
             _profilerService = new EnergyProfilerService(iterateOverProfilers);
             _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
             _machineName = ConfigUtils.GetMachineName(configuration);
+            _shouldRestart = ConfigUtils.GetShouldRestart(configuration);
+            _hasBattery = ConfigUtils.GetHasBattery(configuration);
+            _isProd = ConfigUtils.GetIsProd(configuration);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
@@ -95,7 +101,7 @@ namespace EnergyComparer
         private (IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
         {
             var hardwareMonitorService = new HardwareMonitorService(_logger);
-            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
+            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration, _hasBattery, _isProd, _shouldRestart);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
 

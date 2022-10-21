@@ -34,11 +34,20 @@ namespace EnergyComparer.Utils
 
         public static bool GetIterateOverProfilers(IConfiguration config)
         {
+//#if !DEBUG
+//            return true;
+//#else
+            return config.GetValue<bool>("IterateOverProfilers");
+//# endif
+        }
+
+        internal static bool GetShouldRestart(IConfiguration configuration)
+        {
 #if !DEBUG
             return true;
 #else
-            return config.GetValue<bool>("IterateOverProfilers");
-# endif
+            return configuration.GetValue<bool>("ShouldRestart");
+#endif
         }
 
         public static string GetWifiAdapterName(IConfiguration config)
@@ -62,5 +71,6 @@ namespace EnergyComparer.Utils
             return config.GetValue<string>("MachineName");
 
         }
+
     }
 }
