@@ -1,16 +1,19 @@
 from logging import exception
 from easysettings import JSONSettings, preferred_file
+from pathlib import Path
 import os
 
-SECRETS_PATH = "utils/appsettings.secrets.json"
+SECRETS_PATH = "/secrets/appsettings.secrets.json"
+ROOT_DIR = Path(__file__).parent.parent
 
 
 def _get_user_secrets():
+    print(ROOT_DIR / SECRETS_PATH)
     if os.path.exists(SECRETS_PATH):
         return JSONSettings.from_file(
             preferred_file(
                 [
-                    SECRETS_PATH,
+                    ROOT_DIR + "/" + SECRETS_PATH,
                 ]
             )
         ).__dict__["data"]
