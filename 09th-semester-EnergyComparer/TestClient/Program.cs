@@ -25,7 +25,8 @@ using TestClient.E3Experiment;
 
 E3Experiments E3Ex = new();
 //await E3Ex.Experiment1("Ex1",90);
-await E3Ex.Experiment2("Ex2", 90);
+await E3Ex.Experiment9("Ex9", 300, 10);
+Console.ReadLine();
 
 /*var service = new HardwareMonitorService(null);
 
