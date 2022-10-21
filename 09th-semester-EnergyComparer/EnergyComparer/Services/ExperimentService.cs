@@ -64,14 +64,13 @@ namespace EnergyComparer.Services
             return _profilerCounter.Values.ToList();
         }
 
-        public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram program)
+        public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ISoftwareEntity program)
         {
             var stopwatch = new Stopwatch();
             var counter = 0;
             _logger.Information("The energy profiler has started");
 
             InitializeExperiment(energyProfiler);
-
 
             _logger.Information("Measuring initial cpu temperatures");
             var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
@@ -95,8 +94,9 @@ namespace EnergyComparer.Services
 
             var duration = stopwatch.ElapsedMilliseconds;
             energyProfiler.Stop();
-            var stopTime = DateTime.UtcNow;
+            
 
+            var stopTime = DateTime.UtcNow;
             var endTemperatures = GetEndTemperatures();
             
             await EnableWifiAndDependencies();
@@ -172,7 +172,7 @@ namespace EnergyComparer.Services
             return Constants.GetFilePathForSouce(profiler.GetName(), startTime);
         }
 
-        private async Task<int> EndExperiment(IProgram program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures, long duration)
+        private async Task<int> EndExperiment(ISoftwareEntity program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures, long duration)
         {
             _logger.Information("The wifi was enabled, the data will now be parsed and saved");
             var system = await _dataHandler.GetSystem();
@@ -226,6 +226,6 @@ namespace EnergyComparer.Services
     public interface IExperimentService
     {
         List<int> GetProfilerCounters();
-        Task<bool> RunExperiment(IEnergyProfiler energyProfiler, IProgram testProgram);
+        Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ISoftwareEntity testProgram);
     }
 }

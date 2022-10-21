@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Programs
 {
-    public class TestProgram : IProgram
+    public class TestProgram : ISoftwareEntity
     {
         public TestProgram(IDataHandler dataHandler)
         {
@@ -36,11 +36,6 @@ namespace EnergyComparer.Programs
         public DtoProgram GetProgram()
         {
             return _program;
-        }
-
-        public List<DtoRawData> ParseCsv(CsvReader csv)
-        {
-            throw new NotImplementedException();
         }
 
         public void Run()

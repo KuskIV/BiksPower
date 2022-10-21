@@ -95,9 +95,9 @@ namespace EnergyComparer.Services
             }
         }
 
-        public IProgram GetProgram(IDataHandler dataHandler)
+        public ISoftwareEntity GetSoftwareEntity(IDataHandler dataHandler)
         {
-            return new TestProgram(dataHandler);
+            return new DiningPhilosophers(dataHandler);
         }
 
         public IEnergyProfiler MapEnergyProfiler(Profiler profiler)

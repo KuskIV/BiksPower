@@ -143,7 +143,7 @@ namespace EnergyComparer.Repositories
             return response == 1;
         }
 
-        public async Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, IProgram program)
+        public async Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, ISoftwareEntity program)
         {
             var systemId = system.Id;
             var programId = program.GetProgram().Id;
@@ -157,7 +157,7 @@ namespace EnergyComparer.Repositories
             return profilers;
         }
 
-        public async Task<bool> RunExistsForSystem(DtoSystem system, IProgram program)
+        public async Task<bool> RunExistsForSystem(DtoSystem system, ISoftwareEntity program)
         {
             var systemId = system.Id;
             var programId = program.GetProgram().Id;
@@ -178,14 +178,14 @@ namespace EnergyComparer.Repositories
         Task<bool> ConfigurationExists(int version);
         Task<DtoConfiguration> GetConfiguration();
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
-        Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.IProgram program);
+        Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.ISoftwareEntity program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoProgram> GetProgram(string name);
         Task<DtoSystem> GetSystem(string Os, string Name);
         void InitializeDatabase(Func<IDbConnection> _connectionFactory);
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> ProgramExists(string name);
-        Task<bool> RunExistsForSystem(DtoSystem system, Programs.IProgram program);
+        Task<bool> RunExistsForSystem(DtoSystem system, Programs.ISoftwareEntity program);
         Task<bool> SystemExists(string os, string name);
     }
 }

@@ -60,15 +60,15 @@ namespace EnergyComparer
                 await _adapterService.WaitTillStableState();
                 var isExperimentValid = true;
 
-                var programToRun = _adapterService.GetProgram(_dataHandler);
+                var currentSoftwareEntity = _adapterService.GetSoftwareEntity(_dataHandler);
 
                 while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
                 {
-                    var profiler = await _profilerService.GetNext(programToRun, _dataHandler, _adapterService);
+                    var profiler = await _profilerService.GetNext(currentSoftwareEntity, _dataHandler, _adapterService);
 
                     RemoveDependencies();
 
-                    isExperimentValid = await _experimentService.RunExperiment(profiler, programToRun);
+                    isExperimentValid = await _experimentService.RunExperiment(profiler, currentSoftwareEntity);
 
                     InitializeDependencies();
 
