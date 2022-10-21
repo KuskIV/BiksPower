@@ -34,8 +34,6 @@ namespace TestClient.E3Experiment
             fileType = ".csv";
             fileStart = "Start" + fileType;
             fileEnd = "End" + fileType;
-            openNotpad = NotepadFocus();
-            swapperIncremental = SwapperIncremental();
         }
         public async Task Experiment1(string exName, int duration)
         {

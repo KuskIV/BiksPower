@@ -21,10 +21,15 @@ namespace EnergyComparer.Profilers
         string SruDefaultPath = "C:\\Windows\\System32\\sru";
         private DateTime dateTime { get; set; }
         private readonly EWindowsProfilers _source;
-
+        private string fileType;
+        private string fileStart;
+        private string fileEnd;
         public E3() 
         {
             _source = EWindowsProfilers.E3;
+            fileType = ".csv";
+            fileStart = "Start" + fileType;
+            fileEnd = "End" + fileType;
         }
         public string GetName()
         {
@@ -43,6 +48,34 @@ namespace EnergyComparer.Profilers
             StartLogging();
         }
 
+        public async Task WaitForStart(DateTime date) 
+        {
+            dateTime = date;
+            await WaitForBlock();
+            Start(date);
+        }
+
+        private async Task WaitForBlock() 
+        {
+            string path = Constants.GetPathForSource(_source.ToString())+"\\temp";
+            var start = E3Save(path, "1");
+            var exit = E3Save(path, "2");
+
+            start.Start();
+            while (!NewBlocl(path,"1","2"))
+            {
+                await Task.Delay(1);
+                exit.Start();
+            }
+        }
+
+        private bool NewBlocl(string path, string file1, string file2)
+        { 
+            var Initial = GetE3Data(path, file1);
+            var Final = GetE3Data(path, file2);
+            return (Final.GetRange(Initial.Count, Final.Count - Initial.Count).Count < 0);  
+        }
+
         public void Stop()
         {
             CollectLogs();
@@ -51,7 +84,7 @@ namespace EnergyComparer.Profilers
         private void Clear() 
         {
             string path = Constants.GetPathForSource(_source.ToString());
-            Process save = E3SaveTemp(path, "tempOld");
+            Process save = E3Save(path, "tempOld");
             save.Start();
             save.WaitForExit();
             //Process clear = E3ClearProcces();
@@ -77,7 +110,7 @@ namespace EnergyComparer.Profilers
         private void CollectLogs() 
         {
             string path = Constants.GetPathForSource(_source.ToString());
-            Process save = E3SaveTemp(path, "tempNew");
+            Process save = E3Save(path, "tempNew");
             save.Start();
             save.WaitForExit();
             var Old = GetE3Data(path + "\\temp\\tempOld.csv");
@@ -170,16 +203,18 @@ namespace EnergyComparer.Profilers
                 }
                 
             }
-        } 
+        }
 
-        private Process E3SaveTemp(string path, string fileName) 
+        private static Process E3Save(string path, string fileName)
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "powershell.exe";
             startInfo.UseShellExecute = true;
-            startInfo.Arguments = $" /C (cd {path.Replace(" ", "` ")}\\temp); (powercfg.exe /srumutil  /output {fileName}.csv /csv);";
+            startInfo.Arguments = $" /C (cd {path.Replace(" ", "` ")}); (powercfg.exe /srumutil  /output {fileName} /csv);";
             startInfo.Verb = "runas";
+            startInfo.CreateNoWindow = true;
+            startInfo.UseShellExecute = false;
             process.StartInfo = startInfo;
             return process;
         }
@@ -229,6 +264,25 @@ namespace EnergyComparer.Profilers
             startInfo.Verb = "runas";
             process.StartInfo = startInfo;
             return process;
+        }
+
+        private static List<E3Data> GetE3Data(string path, string file)
+        {
+            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Encoding = Encoding.UTF8,
+                Delimiter = ",",
+            };
+            using (var fs = File.Open(path + "\\" + file, FileMode.Open))
+            {
+                using (var reader = new StreamReader(fs, Encoding.UTF8))
+                using (var csv = new CsvReader(reader, configuration))
+                {
+                    var data = csv.GetRecords<E3Data>();
+                    return data.ToList();
+                }
+
+            }
         }
     }
 }
