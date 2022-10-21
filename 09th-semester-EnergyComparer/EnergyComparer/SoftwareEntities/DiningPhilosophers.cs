@@ -22,7 +22,7 @@ namespace EnergyComparer.Programs
 
         public DiningPhilosophers(IDataHandler dataHandler)
         {
-            _name = "TestProgram";
+            _name = "DiningPhilosophers";
             _language = ELanguage.CSharp.ToString();
             _program = dataHandler.GetProgram(_name).Result;
         }
