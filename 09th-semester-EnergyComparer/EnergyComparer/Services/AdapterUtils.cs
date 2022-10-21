@@ -22,7 +22,7 @@ namespace EnergyComparer.Services
         private readonly bool _isProd;
         private readonly bool _shouldRestart;
 
-        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, IConfiguration configuration, bool hasBattery, bool isProd, bool shouldRestart)
+        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, bool hasBattery, bool isProd, bool shouldRestart)
         {
             _hardwareMonitorService = hardwareMonitorService;
             _logger = logger;

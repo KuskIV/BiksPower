@@ -101,7 +101,7 @@ namespace EnergyComparer
         private (IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
         {
             var hardwareMonitorService = new HardwareMonitorService(_logger);
-            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration, _hasBattery, _isProd, _shouldRestart);
+            var adapter = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _hasBattery, _isProd, _shouldRestart);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
 
@@ -148,7 +148,7 @@ namespace EnergyComparer
         private void InitializeDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _configuration);
+            _adapterService = new AdapterWindowsLaptopService(_hardwareMonitorService, _logger, _hasBattery, _isProd, _shouldRestart);
             _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName);
             _dataHandler.InitializeConnection();
         }
