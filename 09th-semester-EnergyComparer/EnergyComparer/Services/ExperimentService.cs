@@ -64,7 +64,7 @@ namespace EnergyComparer.Services
             return _profilerCounter.Values.ToList();
         }
 
-        public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ITestCase program)
+        public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ITestCase testCase)
         {
             var stopwatch = new Stopwatch();
             var counter = 0;
@@ -74,6 +74,7 @@ namespace EnergyComparer.Services
 
             _logger.Information("Measuring initial cpu temperatures");
             var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+            var initialBattery = _adapter.GetCharge();
 
             // TODO: Force garbage collection. This is however not recommended as it is expesive. but it out case it might make sense
             // https://stackoverflow.com/questions/4257372/how-to-force-garbage-collector-to-run
@@ -86,29 +87,37 @@ namespace EnergyComparer.Services
             stopwatch.Start();
             energyProfiler.Start(startTime);
 
-            while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
+            if (testCase.GetName() == EWindowsProfilers.E3.ToString())
             {
-                program.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
-                counter += 1;
+                throw new NotImplementedException("implement this");
             }
+            else
+            {
+                while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
+                {
+                    testCase.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
+                    counter += 1;
+                }
+            }
+
 
             var duration = stopwatch.ElapsedMilliseconds;
             energyProfiler.Stop();
-            
+
+            await EnableWifiAndDependencies();
 
             var stopTime = DateTime.UtcNow;
             var endTemperatures = GetEndTemperatures();
-            
-            await EnableWifiAndDependencies();
+            var endBattery = _adapter.GetCharge();
 
             _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
 
-            var experimentId = await EndExperiment(program, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration);
+            var experimentId = await EndExperiment(testCase, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration, initialBattery, endBattery);
 
             return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
         }
 
-        private List<DtoTemperature> GetEndTemperatures()
+        private List<DtoMeasurement> GetEndTemperatures()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
 
@@ -172,7 +181,7 @@ namespace EnergyComparer.Services
             return Constants.GetFilePathForSouce(profiler.GetName(), startTime);
         }
 
-        private async Task<int> EndExperiment(ITestCase program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoTemperature> initialTemperatures, List<DtoTemperature> endTemperatures, long duration)
+        private async Task<int> EndExperiment(ITestCase program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoMeasurement> initialTemperatures, List<DtoMeasurement> endTemperatures, long duration, DtoMeasurement initialBattery, DtoMeasurement endBattery)
         {
             _logger.Information("The wifi was enabled, the data will now be parsed and saved");
             var system = await _dataHandler.GetSystem();
@@ -184,8 +193,11 @@ namespace EnergyComparer.Services
 
             if (_saveToDb)
             {
-                await _dataHandler.InsertTemperatures(endTemperatures, experiment.Id, stopTime);
-                await _dataHandler.InsertTemperatures(initialTemperatures, experiment.Id, startTime);
+                var battery = new List<DtoMeasurement>() { initialBattery, endBattery };
+
+                await _dataHandler.InsertMeasurement(endTemperatures, experiment.Id, stopTime);
+                await _dataHandler.InsertMeasurement(initialTemperatures, experiment.Id, startTime);
+                await _dataHandler.InsertMeasurement(battery, experiment.Id, startTime);
             }
 
             return experiment.Id;

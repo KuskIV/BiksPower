@@ -40,18 +40,18 @@ namespace EnergyComparer.Repositories
             _connection.Close();
         }
 
-        public async Task IncrementVersion(DtoSystem system)
+        public async Task IncrementVersion(DtoDut dut)
         {
-            var query = "UPDATE System SET Version = Version + 1 WHERE Id = @id AND Name = @name AND Os = @os";
+            var query = "UPDATE Dut SET Version = Version + 1 WHERE Id = @id AND Name = @name AND Os = @os";
 
-            var count = await _connection.ExecuteAsync(query, new { id=system.Id, name=system.Name, os=system.Os });
+            var count = await _connection.ExecuteAsync(query, new { id=dut.Id, name=dut.Name, os=dut.Os });
 
-            LogCount(system.Name, count);
+            LogCount(dut.Name, count);
         }
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration) " +
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, TestCaseId, DutId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration) " +
                                     "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration)";
 
             var count = await _connection.ExecuteAsync(query, new 
@@ -59,8 +59,8 @@ namespace EnergyComparer.Repositories
                 starttime = experiment.StartTime,
                 endtime = experiment.EndTime,
                 language = experiment.Language,
-                programid = experiment.ProgramId,
-                systemid = experiment.SystemId,
+                programid = experiment.TestCaseId,
+                systemid = experiment.DutId,
                 profilerid = experiment.ProfilerId,
                 runs = experiment.Runs,
                 iteration = experiment.Iteration,
@@ -102,9 +102,9 @@ namespace EnergyComparer.Repositories
             LogCount(name, count);
         }
 
-        public async Task InsertProgram(string name)
+        public async Task InsertTestCase(string name)
         {
-            var query = "INSERT IGNORE INTO Program(Name) VALUES(@name)";
+            var query = "INSERT IGNORE INTO TestCase(Name) VALUES(@name)";
 
             var count = await _connection.ExecuteAsync(query, new { name = name });
 
@@ -112,7 +112,7 @@ namespace EnergyComparer.Repositories
 
         }
 
-        public async Task InsertSystem(string name, string os, int version=1)
+        public async Task InsertDut(string name, string os, int version=1)
         {
             var query = "INSERT IGNORE INTO System(Os, Version, Name) VALUES(@os, @version, @name)";
 
@@ -121,15 +121,16 @@ namespace EnergyComparer.Repositories
             LogCount(name, count);
         }
 
-        public async Task InsertTemperature(List<DtoTemperature> temperatures, int id)
+        public async Task InsertMeasurement(List<DtoMeasurement> temperatures, int id)
         {
-            var query = "INSERT INTO Temperature(ExperimentId, Value, Time, Name) VALUES(@id, @value, @time, @name)";
+            var query = "INSERT INTO Measurement(ExperimentId, Value, Time, Name, Type) VALUES(@id, @value, @time, @name, @type)";
 
             var count = 0;
 
             foreach (var t in temperatures)
             {
-                count += await _connection.ExecuteAsync(query, new { id = id, value = t.Value, t.Time, t.Name });
+                count += await _connection.ExecuteAsync(query, new {
+                    id = id, value = t.Value, Time = t.Time, Name = t.Name, Type = t.Type });
             }
 
             LogCount("TEMPERATURE", count);
@@ -145,13 +146,13 @@ namespace EnergyComparer.Repositories
 
         }
 
-        public async Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ITestCase program)
+        public async Task InsertProfilers(List<Profiler> profilers, DtoDut system, ITestCase program)
         {
             var systemId = system.Id;
             var programId = program.GetProgram().Id;
             var value = JsonSerializer.Serialize(profilers);
 
-            var query = "INSERT INTO Run(SystemId, ProgramId, Value) VALUES(@systemid, @programid, @value)";
+            var query = "INSERT INTO Run(DutId, TestCaseId, Value) VALUES(@systemid, @programid, @value)";
 
             var count = await _connection.ExecuteAsync(query, new { systemid = systemId, programid = programId, value= value });
 
@@ -159,7 +160,7 @@ namespace EnergyComparer.Repositories
         }
         public async Task UpdateProfilers(string systemId, string programId, string value)
         {
-            var query = "UPDATE Run SET Value = @value WHERE SystemId = @systemid AND ProgramId = @programid";
+            var query = "UPDATE Run SET Value = @value WHERE DutId = @systemid AND TestCaseId = @programid";
 
             var count = await _connection.ExecuteAsync(query, new { systemid = systemId, programid = programId, value = value });
 
@@ -184,16 +185,16 @@ namespace EnergyComparer.Repositories
     public interface IInsertExperimentRepository
     {
         void CloseConnection();
-        Task IncrementVersion(DtoSystem system);
+        Task IncrementVersion(DtoDut system);
         void InitializeDatabase(Func<IDbConnection> _connectionFactory);
         Task InsertConfiguration(int version, string env);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
-        Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ITestCase program);
-        Task InsertProgram(string name);
+        Task InsertProfilers(List<Profiler> profilers, DtoDut system, ITestCase program);
+        Task InsertTestCase(string name);
         Task InsertRawData(DtoRawData data);
-        Task InsertSystem(string name, string os, int version = 1);
-        Task InsertTemperature(List<DtoTemperature> temperatures, int id);
+        Task InsertDut(string name, string os, int version = 1);
+        Task InsertMeasurement(List<DtoMeasurement> temperatures, int id);
         Task UpdateProfilers(string systemId, string programId, string value);
     }
 }

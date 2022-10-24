@@ -13,8 +13,8 @@ namespace EnergyComparer.Models
         public DateTime EndTime { get; set; }
         public DateTime StartTime { get; set; }
         public string Language { get; set; }
-        public int ProgramId { get; set; }
-        public int SystemId { get; set; }
+        public int TestCaseId { get; set; }
+        public int DutId { get; set; }
         public int Runs { get; set; }
         public int Iteration { get; internal set; }
         public string FirstProfiler { get; internal set; }

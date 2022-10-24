@@ -66,7 +66,7 @@ CREATE TABLE RawData(
     PRIMARY KEY (Id)
 ),
 
-CREATE TABLE Temperature(
+CREATE TABLE Measurement(
     Id int not NULL AUTO_INCREMENT,
     ExperimentId int,
     Value decimal,

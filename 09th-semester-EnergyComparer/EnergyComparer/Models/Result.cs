@@ -8,11 +8,11 @@ namespace EnergyComparer.Models
 {
     public class Result
     {
-        public List<DtoTemperature> temperatures { get; set; } = new List<DtoTemperature>();
+        public List<DtoMeasurement> temperatures { get; set; } = new List<DtoMeasurement>();
         public List<DtoRawData> data { get; set; } = new List<DtoRawData>();
-        public DtoProgram program { get; set; }
+        public DtoTestCase program { get; set; }
         public DtoExperiment experiment { get; set; }
-        public DtoSystem system { get; set; }
+        public DtoDut system { get; set; }
         public DtoProfiler profiler { get; set; }
 
         internal int GetProfilerId()
