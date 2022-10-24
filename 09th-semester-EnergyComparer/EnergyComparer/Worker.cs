@@ -56,7 +56,6 @@ namespace EnergyComparer
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-
             try
             {
                 CreateFolderIfNew();
@@ -87,6 +86,7 @@ namespace EnergyComparer
             }
             catch (Exception e)
             {
+                Console.WriteLine("error");
                 _logger.Error(e, "Exception when running experiments");
                 throw;
             }
@@ -137,6 +137,7 @@ namespace EnergyComparer
 
         private void CreateFolderIfNew()
         {
+            _logger.Information("Creating non-existing folders");
             var paths = _adapterService.GetAllRequiredPaths();
 
             foreach (var p in paths)

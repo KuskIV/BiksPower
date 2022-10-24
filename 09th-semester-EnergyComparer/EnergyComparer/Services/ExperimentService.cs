@@ -26,7 +26,7 @@ using Result = EnergyComparer.Models.Result;
 
 namespace EnergyComparer.Services
 {
-    public class ExperimentService : IExperimentService
+    public class ExperimentService : IExperimentService, IDisposable
     {
         private readonly ILogger _logger;
         private readonly bool _isProd;
@@ -99,7 +99,6 @@ namespace EnergyComparer.Services
                     counter += 1;
                 }
             }
-
 
             var duration = stopwatch.ElapsedMilliseconds;
             energyProfiler.Stop();
@@ -232,6 +231,18 @@ namespace EnergyComparer.Services
         {
             _dataHandler = _initializeOnlineDependencies();
             (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
+        }
+
+        public async void Dispose()
+        {
+            if (_wifiService == null)
+            {
+                await EnableWifiAndDependencies();
+            }
+            else
+            {
+                await EnableWifi();
+            }
         }
     }
 
