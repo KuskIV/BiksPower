@@ -59,10 +59,10 @@ class EnergyProfiler(object):
             )
 
 class Configuration(object):
-    def __init__(self, min_temp, max_temp, min_battery, max_battery, duration, between, version, repository):
-        data_tuple = (min_temp, max_temp, min_battery, max_battery, between, duration, version, )
+    def __init__(self, min_temp, max_temp, min_battery, max_battery, duration, between, version, repository, env):
+        data_tuple = (min_temp, max_temp, min_battery, max_battery, between, duration, version, env, )
         data = repository.query_one("SELECT Id FROM Configuration WHERE MinTemp = %s AND MaxTemp = %s AND MinBattery = %s AND MaxBattery = %s AND " +
-                                    "MinutesBetweenExperiments = %s AND MinutesDurationOfExperiment = %s AND Version = %s", data_tuple
+                                    "MinutesBetweenExperiments = %s AND MinutesDurationOfExperiment = %s AND Version = %s AND Env = %s", data_tuple
         )
         
         if len(data)==1:
