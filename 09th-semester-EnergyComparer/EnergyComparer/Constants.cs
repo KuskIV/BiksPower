@@ -36,5 +36,14 @@ namespace EnergyComparer
         {
             return date.ToString("yyyy-MM-dd-hh-mm-ss");
         }
+
+        internal static string GetEnv()
+        {
+#if DEBUG
+            return "DEV";
+#else
+            return "PROD";
+#endif
+        }
     }
 }

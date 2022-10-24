@@ -16,5 +16,6 @@ namespace EnergyComparer.Models
         public int MinutesBetweenExperiments { get; set; }
         public int MinuteDurationOfExperiments { get; set; }
         public int Version { get; set; }
+        public string Env { get; set; }
     }
 }

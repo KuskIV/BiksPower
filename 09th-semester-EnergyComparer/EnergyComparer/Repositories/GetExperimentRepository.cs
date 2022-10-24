@@ -78,10 +78,10 @@ namespace EnergyComparer.Repositories
             return response;
         }
 
-        public async Task<DtoConfiguration> GetConfiguration()
+        public async Task<DtoConfiguration> GetConfiguration(int version, string env)
         {
             var query = "SELECT * FROM Configuration WHERE MinTemp = @mintemp AND MaxTemp = @maxtemp AND MinutesBetweenExperiments = @between AND " +
-                "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery";
+                "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery AND Version = @version AND Env = @env";
 
             var response = await _connection.QueryFirstAsync<DtoConfiguration>(query, new 
             { 
@@ -91,6 +91,8 @@ namespace EnergyComparer.Repositories
                 duration = Constants.DurationOfExperimentsInMinutes,
                 minbattery = Constants.ChargeLowerLimit,
                 maxbattery = Constants.ChargeUpperLimit,
+                version = version,
+                env = env,
             });
 
             return response;
@@ -115,10 +117,10 @@ namespace EnergyComparer.Repositories
             return response == 1;
         }
 
-        public async Task<bool> ConfigurationExists(int version)
+        public async Task<bool> ConfigurationExists(int version, string env)
         {
             var query = "SELECT * FROM Configuration WHERE MinTemp = @mintemp AND MaxTemp = @maxtemp AND MinutesBetweenExperiments = @between AND " +
-                        "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery AND Version = @version";
+                        "MinuteDurationOfExperiments = @duration AND MinBattery = @minbattery AND MaxBattery = @maxbattery AND Version = @version AND Env = @env";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new
             {
@@ -129,6 +131,7 @@ namespace EnergyComparer.Repositories
                 minbattery = Constants.ChargeLowerLimit,
                 maxbattery = Constants.ChargeUpperLimit,
                 version = version,
+                env = env
             });
 
             return response >= 1;
@@ -175,8 +178,8 @@ namespace EnergyComparer.Repositories
     public interface IGetExperimentRepository
     {
         void CloseConnection();
-        Task<bool> ConfigurationExists(int version);
-        Task<DtoConfiguration> GetConfiguration();
+        Task<bool> ConfigurationExists(int version, string env);
+        Task<DtoConfiguration> GetConfiguration(int version, string env);
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
         Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.ITestCase program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);

@@ -51,8 +51,8 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration, Version) " +
-                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration, @version)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration) " +
+                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration)";
 
             var count = await _connection.ExecuteAsync(query, new 
             {
@@ -67,16 +67,15 @@ namespace EnergyComparer.Repositories
                 firstprofiler = experiment.FirstProfiler,
                 configurationid = experiment.ConfigurationId,
                 duration = experiment.duration,
-                version=experiment.Version
             });
                 
             LogCount("EXPERIMENT", count);
         }
 
-        public async Task InsertConfiguration(int version)
+        public async Task InsertConfiguration(int version, string env)
         {
-            var query = "INSERT INTO Configuration(MinTemp, MaxTemp, MinutesBetweenExperiments, MinuteDurationOfExperiments, MinBattery, MaxBattery, Version)" +
-                "VALUES(@mintemp, @maxtemp, @minbetween, @minduration, @minbattery, @maxbattery, @version)";
+            var query = "INSERT INTO Configuration(MinTemp, MaxTemp, MinutesBetweenExperiments, MinuteDurationOfExperiments, MinBattery, MaxBattery, Version, Env)" +
+                "VALUES(@mintemp, @maxtemp, @minbetween, @minduration, @minbattery, @maxbattery, @version, @env)";
 
             var count = await _connection.ExecuteAsync(query, new
             {
@@ -87,6 +86,7 @@ namespace EnergyComparer.Repositories
                 minbattery = Constants.ChargeLowerLimit,
                 maxbattery = Constants.ChargeUpperLimit,
                 version = version,
+                env = env
             });
 
             LogCount("Configuration", count);
@@ -186,7 +186,7 @@ namespace EnergyComparer.Repositories
         void CloseConnection();
         Task IncrementVersion(DtoSystem system);
         void InitializeDatabase(Func<IDbConnection> _connectionFactory);
-        Task InsertConfiguration(int version);
+        Task InsertConfiguration(int version, string env);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);
         Task InsertProfilers(List<Profiler> profilers, DtoSystem system, ITestCase program);
