@@ -114,7 +114,6 @@ namespace EnergyComparer.Handlers
             var Name = _machineName;
             var Os = Environment.OSVersion.Platform.ToString();
 
-
             if (!await _getRepository.DutExists(Os, Name))
             {
                 await _insertRepository.InsertDut(Name, Os);

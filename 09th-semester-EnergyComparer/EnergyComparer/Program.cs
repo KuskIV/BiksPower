@@ -14,7 +14,6 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddHostedService<Worker>();
     });
 
-
 builder
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureAppConfiguration((hostingContext, config) =>

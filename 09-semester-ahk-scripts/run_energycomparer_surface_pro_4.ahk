@@ -3,6 +3,6 @@ Send, #r
 Sleep, 1000
 Send, "C
 Sleep, 1000
-Send, `:\Users\Sureface Pro 4\Documents\GitHub\BiksPower\09th-semester-EnergyComparer\EnergyComparer\bin\Debug\net6.0\EnergyComparer.exe"
+Send, `:\Users\Sureface Pro 4\Documents\GitHub\BiksPower\09th-semester-EnergyComparer\EnergyComparer\bin\Release\net6.0\EnergyComparer.exe"
 Sleep, 1000
 Send {enter}
