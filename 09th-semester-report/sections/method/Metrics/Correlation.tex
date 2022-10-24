@@ -1,7 +1,7 @@
-\subsection{Correlation}
-Correlation is a statistical measurement informing about the relationship between two samples. The correlation can be positive or negative and a measure of how correlated they are. A strong correlation does not mean that changes in one variable effects the other just that it statically seem to be the case. Commonly $0$ means there is no correlation between the two samples. A positive value, means that the two samples are positively correlated, meaning that they seems to grow together. A negative value inversely means as one shrinks the other grows.
+\subsection{Correlation}\todo{sources}
+Correlation is a statistical measurement informing about the relationship between two samples. The correlation can be positive or negative and is a measure of how correlated they are. A strong correlation does not mean that changes in one variable affect the other just that it statically seems to be the case. Commonly $0$ means there is no correlation between the two samples. A positive value means that the two samples are positively correlated, meaning that they seem to grow together. A negative value inversely means as one shrinks the other grows.
 
-\paragraph{Pearson correlation coefficient} The Pearson correlation coefficient is a frequently used method for finding the correlations in linear relationships[armstrong2019should]. The strength of the correlation spans between $-1 \dotsc 1$, were the directions is given by the polarity sign. Depending on the context, different strength are considered as strong or weak. Some Assumptions have to be true about the data for us to utilize Pearson correlation coefficient:
+\paragraph{Pearson correlation coefficient} The Pearson correlation coefficient is a frequently used method for finding correlations in linear relationships[armstrong2019should]. The strength of the correlation spans between $-1 \dotsc 1$, where the directions are given by the polarity sign. Depending on the context, different strengths are considered strong or weak. Some assumptions have to be true about the data for us to utilize the Pearson correlation coefficient:
 
 \begin{itemize}
     \item The data must be quantitative
@@ -16,16 +16,16 @@ If all of these assumptions are true for the data then the Pearson correlation c
     r=\frac{\sum{(x_i-\bar{x})(y_i-\bar{y})}}{\sqrt{\sum{(x_i-\bar{x})^2}\sum{(y_i-\bar{y})^2}}}
 \end{equation}
 
-If however the data does not follow the conditions, another method of calculating the correlation will have to be used. 
+If however, the data does not follow the conditions, another method of calculating the correlation will have to be used. 
 
 \paragraph{Kendall Tau correlation}
-There are two common choices when doing non-parametric rank correlation, which can be used on non-normally distributed data. These are the Spearman's rank correlation coefficient and Kendall Tau's correlation coefficient[han1987non]. While both can be used in the same scenarios there are some differences betweens them. Both are ranked with the same procedure that Mann-Whitney U tests are. The Spearman rank seems to be the most popular way measuring correlations, but some argue that Kendall Tau is better in most cases \cite{gilpin1993table}. Some of the big differences between the two is the effect of outliers, Spearman's rank is largely effected by a few outliers in the data while Kendall Tau in comparison seems more robust. Because of this the choice to utilize Kendall Tau seems the most natural, and is what will be continued with. The results from Kendall Tau can be interpreted the same way as from Pearson, the range is from $-1$ to $1$. The formula for kendall Tau is also straight forward:
+There are two common choices when doing non-parametric rank correlation, which can be used on non-normally distributed data. These are Spearman's rank correlation coefficient and Kendall Tau's correlation coefficient[han1987non]. While both can be used in the same scenarios there are some differences between them. Both are ranked with the same procedure that Mann-Whitney U tests are. The Spearman rank seems to be the most popular way of measuring correlations, but some argue that Kendall Tau is better in most cases \cite{gilpin1993table}. Some of the big differences between the two are the effect of outliers, Spearman's rank is largely affected by a few outliers in the data while Kendall Tau in comparison seems more robust. Because of this the choice to utilize Kendall Tau seems the most natural and is what will be continued with. The results from Kendall Tau can be interpreted the same way as from Pearson, the range is from $-1$ to $1$. The formula for Kendall Tau is:
 
 \begin{equation}
     \frac{C-D}{C+D}
 \end{equation}
 
-$C$ is Concordant pairs and $D$ is Discordant. A Concordant pairs is ordered, while Discordant is disordered pairs\cite{kendall1938new}. To evaluate the correlations the scale present by Guildford in \cite[219]{guilford1950fundamental}.
+$C$ is Concordant pairs and $D$ is Discordant. A Concordant pair is ordered, while Discordant is disordered pairs\cite{kendall1938new}. To evaluate the correlations the scale presented by Guildford in \cite[219]{guilford1950fundamental} can be used.
 \begin{itemize}
     \item $<.20$: Slight; almost negligible relationship
     \item $.20-.40$: Low correlation; definite but small relationship

@@ -1,35 +1,35 @@
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}
-        \begin{object}[text width=4 cm]{Program}{0 ,0}
-            \attribute{ProgramId : INT}
+        \begin{object}[text width=4 cm]{Test case}{0 ,0}
+            \attribute{Test caseId : INT}
             \attribute{Name : VARCHAR}
         \end{object}
-        \begin{object}[text width=4 cm]{System}{10,0}
-            \attribute{SystemId : INT}
+        \begin{object}[text width=4 cm]{DUT}{10,0}
+            \attribute{DUTId : INT}
             \attribute{Name : VARCHAR}
             \attribute{OS : VARCHAR}
             \attribute{Version : INT}
         \end{object}
         \begin{object}[text width=4 cm]{Run}{5,5}
             \attribute{RunId : INT}
-            \attribute{SystemId : INT}
-            \attribute{ProgramId : INT}
+            \attribute{DUTId : INT}
+            \attribute{Test caseId : INT}
             \attribute{Value : VARCHAR}
         \end{object}
-        \begin{object}[text width = 4 cm]{Profiler}{5,0}
-            \attribute{ProfilerId : INT}
+        \begin{object}[text width = 4 cm]{Measuring instrument}{5,0}
+            \attribute{Measuring instrumentId : INT}
             \attribute{Name : VARCHAR}
         \end{object}
         \begin{object}{Experiment}{5,-3}
             \attribute{ExperimentId : INT}
             \attribute{ConfigId : INT}
-            \attribute{ProfilerId : INT}
-            \attribute{SystemId : INT}
-            \attribute{ProgramId : INT}
+            \attribute{Measuring instrumentId : INT}
+            \attribute{DUTId : INT}
+            \attribute{Test caseId : INT}
             \attribute{Runs : INT}
             \attribute{Iteration : INT}
-            \attribute{FirstProfiler : VARCHAR}
+            \attribute{FirstMeasuring instrument : VARCHAR}
             \attribute{Language : VARCHAR}
             \attribute{StartTime : DATETIME(6)}
             \attribute{EndTime : DATETIME(6)}
@@ -58,17 +58,17 @@
             \attribute{Value : INT}
         \end{object}
         
-        \association{Run}{}{0..*}{Program}{}{1}
-        \association{Run}{}{0..*}{System}{}{1}
-        \association{Experiment}{}{0..*}{System}{}{1}
-        \association{Experiment}{}{0..*}{Profiler}{}{1}
-        \association{Experiment}{}{0..*}{System}{}{1}
+        \association{Run}{}{0..*}{Test case}{}{1}
+        \association{Run}{}{0..*}{DUT}{}{1}
+        \association{Experiment}{}{0..*}{DUT}{}{1}
+        \association{Experiment}{}{0..*}{Measuring instrument}{}{1}
+        \association{Experiment}{}{0..*}{DUT}{}{1}
         \association{Experiment}{}{0..*}{RawData}{}{1}
         \association{Experiment}{}{0..*}{Configuration}{}{1}
         \association{Experiment}{}{0..*}{Temperature}{}{1}
-        \association{Experiment}{}{0..*}{Program}{}{1}
+        \association{Experiment}{}{0..*}{Test case}{}{1}
     \end{tikzpicture}
-    \caption{An UML diagram representing the tabels in the SQL database} \label{fig:uml_diagram}
+    \caption{An UML diagram representing the tables in the SQL database} \label{fig:uml_diagram}
 \end{figure}
 
 
