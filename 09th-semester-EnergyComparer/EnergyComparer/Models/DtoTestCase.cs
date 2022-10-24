@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Models
 {
-    public class DtoProgram
+    public class DtoTestCase
     {
         public string Name { get; set; }
         public int Id { get; set; }

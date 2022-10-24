@@ -11,7 +11,7 @@ namespace EnergyComparer.Utils
 {
     public static class EnergyProfilerUtils
     {
-        internal static List<Profiler> GetDefaultProfilersForSystem(DtoSystem system, Programs.ITestCase program, List<string> sources)
+        internal static List<Profiler> GetDefaultProfilersForSystem(DtoDut system, Programs.ITestCase program, List<string> sources)
         {
             var profilers = new List<Profiler>();
 

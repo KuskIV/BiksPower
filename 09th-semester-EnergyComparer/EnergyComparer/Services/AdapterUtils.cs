@@ -72,6 +72,23 @@ namespace EnergyComparer.Services
             return GetAllSouces().Select(x => Constants.GetPathForSource(x)).ToList();
         }
 
+        public DtoMeasurement GetCharge()
+        {
+            var charge = -1;
+
+            if (_hasBattery)
+            {
+                charge = GetChargeRemaining();
+            }
+
+            return new DtoMeasurement()
+            {
+                Name = "Battery charge left",
+                Value = charge,
+                Type = EMeasurementType.BatteryChargeLeft.ToString()
+            };
+        }
+
         private int GetChargeRemaining()
         {
             if (!_hasBattery) return 100;
@@ -95,7 +112,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        public ITestCase GetSoftwareEntity(IDataHandler dataHandler)
+        public ITestCase GetTestCase(IDataHandler dataHandler)
         {
             return new DiningPhilosophers(dataHandler);
         }

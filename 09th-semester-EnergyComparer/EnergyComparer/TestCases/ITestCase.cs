@@ -5,7 +5,7 @@ namespace EnergyComparer.Programs
 {
     public interface ITestCase
     {
-        DtoProgram GetProgram();
+        DtoTestCase GetProgram();
         string GetLanguage();
         void Run();
         public string GetName();

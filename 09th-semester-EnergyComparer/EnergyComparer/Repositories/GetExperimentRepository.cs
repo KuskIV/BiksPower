@@ -38,13 +38,13 @@ namespace EnergyComparer.Repositories
 
         public async Task<DtoExperiment> GetExperiment(DtoExperiment experiment)
         {
-            var query = "SELECT * FROM Experiment WHERE Language = @language AND ProgramId = @programid AND SystemId = @systemid AND ProfilerId = @profilerid ORDER BY StartTime DESC";
+            var query = "SELECT * FROM Experiment WHERE Language = @language AND TestCaseId = @programid AND DutId = @systemid AND ProfilerId = @profilerid ORDER BY StartTime DESC";
             
             var response = await _connection.QueryFirstAsync<DtoExperiment>(query, new 
             {
                 language = experiment.Language,
-                programid = experiment.ProgramId,
-                systemid = experiment.SystemId,
+                programid = experiment.TestCaseId,
+                systemid = experiment.DutId,
                 profilerid = experiment.ProfilerId,
             });
 
@@ -60,20 +60,20 @@ namespace EnergyComparer.Repositories
             return response;
         }
 
-        public async Task<DtoProgram> GetProgram(string name)
+        public async Task<DtoTestCase> GetTestCase(string name)
         {
-            var query = "SELECT * FROM Program WHERE Name = @name";
+            var query = "SELECT * FROM TestCase WHERE Name = @name";
 
-            var response = await _connection.QueryFirstAsync<DtoProgram>(query, new { name=name });
+            var response = await _connection.QueryFirstAsync<DtoTestCase>(query, new { name=name });
 
             return response;
         }
 
-        public async Task<DtoSystem> GetSystem(string Os, string Name)
+        public async Task<DtoDut> GetDut(string Os, string Name)
         {
-            var query = "SELECT * FROM System WHERE Os = @os AND Name = @name";
+            var query = "SELECT * FROM Dut WHERE Os = @os AND Name = @name";
 
-            var response = await _connection.QueryFirstAsync<DtoSystem>(query, new { os=Os, name=Name });
+            var response = await _connection.QueryFirstAsync<DtoDut>(query, new { os=Os, name=Name });
 
             return response;
         }
@@ -108,9 +108,9 @@ namespace EnergyComparer.Repositories
             return response == 1;
         }
 
-        public async Task<bool> ProgramExists(string name)
+        public async Task<bool> TestCaseExists(string name)
         {
-            var query = "SELECT COUNT(*) FROM Program WHERE Name = @name";
+            var query = "SELECT COUNT(*) FROM TestCase WHERE Name = @name";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new { name = name });
 
@@ -137,21 +137,21 @@ namespace EnergyComparer.Repositories
             return response >= 1;
         }
 
-        public async Task<bool> SystemExists(string os, string name)
+        public async Task<bool> DutExists(string os, string name)
         {
-            var query = "SELECT COUNT(*) FROM System WHERE Os = @os AND Name = @name";
+            var query = "SELECT COUNT(*) FROM Dut WHERE Os = @os AND Name = @name";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new { os=os, name=name });
 
             return response == 1;
         }
 
-        public async Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, ITestCase program)
+        public async Task<List<Profiler>> GetLastRunForDut(DtoDut dut, ITestCase testCase)
         {
-            var systemId = system.Id;
-            var programId = program.GetProgram().Id;
+            var systemId = dut.Id;
+            var programId = testCase.GetProgram().Id;
 
-            var query = "SELECT Value FROM Run WHERE SystemId = @systemid AND programid = @programid";
+            var query = "SELECT Value FROM Run WHERE DutId = @systemid AND programid = @programid";
 
             var response = await _connection.QueryFirstAsync<string>(query, new { systemId = systemId, programId = programId });
 
@@ -160,19 +160,17 @@ namespace EnergyComparer.Repositories
             return profilers;
         }
 
-        public async Task<bool> RunExistsForSystem(DtoSystem system, ITestCase program)
+        public async Task<bool> RunExistsForDut(DtoDut dut, ITestCase testCase)
         {
-            var systemId = system.Id;
-            var programId = program.GetProgram().Id;
+            var systemId = dut.Id;
+            var programId = testCase.GetProgram().Id;
 
-            var query = "SELECT COUNT(*) FROM Run WHERE SystemId = @systemid AND ProgramId = @programid";
+            var query = "SELECT COUNT(*) FROM Run WHERE DutId = @systemid AND TestCaseId = @programid";
 
             var response = await _connection.ExecuteScalarAsync<int>(query, new { systemid = systemId, programid = programId });
 
             return response == 1;
         }
-
-
     }
 
     public interface IGetExperimentRepository
@@ -181,14 +179,14 @@ namespace EnergyComparer.Repositories
         Task<bool> ConfigurationExists(int version, string env);
         Task<DtoConfiguration> GetConfiguration(int version, string env);
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
-        Task<List<Profiler>> GetLastRunForSystem(DtoSystem system, Programs.ITestCase program);
+        Task<List<Profiler>> GetLastRunForDut(DtoDut system, Programs.ITestCase program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
-        Task<DtoProgram> GetProgram(string name);
-        Task<DtoSystem> GetSystem(string Os, string Name);
+        Task<DtoTestCase> GetTestCase(string name);
+        Task<DtoDut> GetDut(string Os, string Name);
         void InitializeDatabase(Func<IDbConnection> _connectionFactory);
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
-        Task<bool> ProgramExists(string name);
-        Task<bool> RunExistsForSystem(DtoSystem system, Programs.ITestCase program);
-        Task<bool> SystemExists(string os, string name);
+        Task<bool> TestCaseExists(string name);
+        Task<bool> RunExistsForDut(DtoDut system, Programs.ITestCase program);
+        Task<bool> DutExists(string os, string name);
     }
 }

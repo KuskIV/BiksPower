@@ -18,7 +18,7 @@ namespace EnergyComparer.Programs
             _language = ELanguage.CSharp.ToString();
             _program = dataHandler.GetProgram(_name).Result;
         }
-        public DtoProgram _program { get; set; }
+        public DtoTestCase _program { get; set; }
         public string _name { get; set; }
 
         private string _language { get; set; }
@@ -33,7 +33,7 @@ namespace EnergyComparer.Programs
             return _name;
         }
 
-        public DtoProgram GetProgram()
+        public DtoTestCase GetProgram()
         {
             return _program;
         }

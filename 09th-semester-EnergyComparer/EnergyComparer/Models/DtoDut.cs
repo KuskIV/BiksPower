@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Models
 {
-    public class DtoSystem
+    public class DtoDut
     {
         public int Version { get; set; }
         public string Os { get; set; }

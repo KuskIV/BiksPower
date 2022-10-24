@@ -15,7 +15,7 @@ namespace EnergyComparer.Programs
         private const int DinerCount = 5;
         private readonly string _name;
         private readonly string _language;
-        private readonly DtoProgram _program;
+        private readonly DtoTestCase _program;
         private static List<Diner> Diners = new List<Diner>();
         private static List<Fork> Forks = new List<Fork>();
         private static DateTime TimeToStop;
@@ -37,7 +37,7 @@ namespace EnergyComparer.Programs
             return _name;
         }
 
-        public DtoProgram GetProgram()
+        public DtoTestCase GetProgram()
         {
             return _program;
         }

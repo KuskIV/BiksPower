@@ -63,8 +63,8 @@ namespace EnergyComparer.Handlers
                 EndTime = stopTime,
                 StartTime = startTime,
                 Language = program.GetLanguage(),
-                ProgramId = programId,
-                SystemId = systemId,
+                TestCaseId = programId,
+                DutId = systemId,
                 ProfilerId = profilerId,
                 Runs = counter,
                 Iteration = profilerCount,
@@ -90,37 +90,37 @@ namespace EnergyComparer.Handlers
             return profiler;
         }
 
-        public async Task InsertTemperatures(List<DtoTemperature> temperatures, int id, DateTime date)
+        public async Task InsertMeasurement(List<DtoMeasurement> temperatures, int id, DateTime date)
         {
             temperatures.ForEach(x => x.Time = date);
 
-            await _insertRepository.InsertTemperature(temperatures, id);
+            await _insertRepository.InsertMeasurement(temperatures, id);
         }
 
-        public async Task<DtoProgram> GetProgram(string name)
+        public async Task<DtoTestCase> GetProgram(string name)
         {
-            if (!await _getRepository.ProgramExists(name))
+            if (!await _getRepository.TestCaseExists(name))
             {
-                await _insertRepository.InsertProgram(name);
+                await _insertRepository.InsertTestCase(name);
             }
 
-            var program = await _getRepository.GetProgram(name);
+            var program = await _getRepository.GetTestCase(name);
 
             return program;
         }
 
-        public async Task<DtoSystem> GetSystem()
+        public async Task<DtoDut> GetSystem()
         {
             var Name = _machineName;
             var Os = Environment.OSVersion.Platform.ToString();
 
 
-            if (!await _getRepository.SystemExists(Os, Name))
+            if (!await _getRepository.DutExists(Os, Name))
             {
-                await _insertRepository.InsertSystem(Name, Os);
+                await _insertRepository.InsertDut(Name, Os);
             }
 
-            var system = await _getRepository.GetSystem(Os, Name);
+            var system = await _getRepository.GetDut(Os, Name);
 
             return system;
         }
@@ -151,7 +151,7 @@ namespace EnergyComparer.Handlers
 
             if (await LastRunExistsForSystem(system, program))
             {
-                profilers = await _getRepository.GetLastRunForSystem(system, program);
+                profilers = await _getRepository.GetLastRunForDut(system, program);
             }
             else
             {
@@ -168,9 +168,9 @@ namespace EnergyComparer.Handlers
 
         }
 
-        private async Task<bool> LastRunExistsForSystem(DtoSystem system, ITestCase program)
+        private async Task<bool> LastRunExistsForSystem(DtoDut system, ITestCase program)
         {
-            return await _getRepository.RunExistsForSystem(system, program);
+            return await _getRepository.RunExistsForDut(system, program);
         }
 
         public async Task UpdateProfilers(string id, List<Profiler> profilers)
@@ -197,12 +197,12 @@ namespace EnergyComparer.Handlers
         Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ITestCase program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id, long duration, int version);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ITestCase program);
-        Task<DtoProgram> GetProgram(string name);
-        Task<DtoSystem> GetSystem();
+        Task<DtoTestCase> GetProgram(string name);
+        Task<DtoDut> GetSystem();
         Task IncrementVersionForSystem();
         void InitializeConnection();
         Task InsertRawData(DtoRawData data);
-        Task InsertTemperatures(List<DtoTemperature> endTemperatures, int id, DateTime date);
+        Task InsertMeasurement(List<DtoMeasurement> endTemperatures, int id, DateTime date);
         Task UpdateProfilers(string id, List<Profiler> profilers);
     }
 }
