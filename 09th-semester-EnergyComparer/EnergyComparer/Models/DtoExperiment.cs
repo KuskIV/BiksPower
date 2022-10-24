@@ -20,6 +20,5 @@ namespace EnergyComparer.Models
         public string FirstProfiler { get; internal set; }
         public int ConfigurationId { get; set; }
         public long duration { get; set; }
-        public int Version { get; set; }
     }
 }
