@@ -72,6 +72,7 @@ CREATE TABLE Measurement(
     Value decimal,
     Time DATETIME(6),
     Name VARCHAR(50),
+    Type VARCHAR(50),
 
     PRIMARY KEY (id)
 ),

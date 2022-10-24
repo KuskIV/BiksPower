@@ -3,6 +3,7 @@ using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
+using Microsoft.AspNetCore.Components.RenderTree;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -141,11 +142,40 @@ namespace EnergyComparer.Services
         {
             if (!_isProd)
             {
+                _logger.Information("Experiment is not in prod, so will not wait for stable condition");
                 return;
             }
 
-            while (GetChargeRemaining() < Constants.ChargeUpperLimit || _hardwareMonitorService.GetAverageCpuTemperature() > Constants.TemperatureLowerLimit)
+            while (!EnoughBattery() || !LowEnoughCpuTemperature())
                 await Task.Delay(TimeSpan.FromMinutes(5));
+
+            _logger.Information("Stable condition has been reached");
+        }
+
+        private bool EnoughBattery()
+        {
+            if (!_hasBattery) return true;
+
+            var battery = GetChargeRemaining();
+
+            var lowEnoughBattery = battery > Constants.ChargeLowerLimit && battery <= Constants.ChargeUpperLimit;
+
+            if (!lowEnoughBattery)
+                _logger.Warning("The battery is too low: {bat} (min: {min}, max: {max}). Checking again in 5 minutes", battery, Constants.ChargeLowerLimit, Constants.ChargeUpperLimit);
+
+            return lowEnoughBattery;
+        }
+
+        private bool LowEnoughCpuTemperature()
+        {
+            var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
+
+            var isTempLowEnough = avgTemp > Constants.TemperatureLowerLimit && avgTemp <= Constants.TemperatureUpperLimit;
+
+            if (!isTempLowEnough)
+                _logger.Warning("The temperature is too high: {temp} (min: {min}, max: {max}). Checking again in 5 minutes", avgTemp, Constants.TemperatureLowerLimit, Constants.TemperatureUpperLimit);
+
+            return isTempLowEnough;
         }
     }
 }
