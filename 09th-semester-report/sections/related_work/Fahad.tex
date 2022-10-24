@@ -1,0 +1,7 @@
+Another similar work that also aims to compare different measurement method in "A Comparative Study of Methods for Measurement of Energy of Computing"\cite{fahad2019comparative}. To do this a hardware measurements from a HCLWattsUp was used and then compared with RAPLand on-chip-sensors. To get granular measurements from the HCLWattUp they introduced the concept of Dynamic Energy consumption, which would make the results more comparable to RAPL. Dynamic energy consumption is an estimation of the applications power consumption, ans is calculated using the following formula:
+
+\begin{equation}
+    E_D = E_T -(P_S * T_E)
+\end{equation}
+
+Where $E_D$ is the dynamic energy consumption, $T_E$ is the duration of the program execution and $P_S$ is the energy consumption when the system is idle. The dynamic energy consumption will then represent the energy consumption of the test case. The hardware measurements are the ground truth in their experiments. It is found that RAPL generally under reports the energy consumption of the system. The accuracy of RAPL is also tested for different use cases to see if possible calibrations are feasible. They found that calibration for the RAPL and on-chip-sensors were generally not possible with their technics. They provide some recommendation for future works and setup which will be covered in more depth later.
