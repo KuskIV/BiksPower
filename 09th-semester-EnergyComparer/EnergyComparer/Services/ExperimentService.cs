@@ -180,7 +180,7 @@ namespace EnergyComparer.Services
             var profilerCount = IncrementAndGetProfilerCount(energyProfiler);
             var configuration = await _dataHandler.GetConfiguration(system.Version);
 
-            var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id, duration);
+            var experiment = await _dataHandler.GetExperiment(program.GetProgram().Id, system.Id, profiler.Id, program, startTime, stopTime, counter, profilerCount, _firstProfiler, configuration.Id, duration, system.Version);
 
             if (_saveToDb)
             {

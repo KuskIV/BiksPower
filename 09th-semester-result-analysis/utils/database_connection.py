@@ -34,12 +34,12 @@ class DatabaseConnection:
     def get_connector(self):
         return self.conn
 
-    def queryAll(self, query):
+    def query_all(self, query, data_tuple):
         cur = self.conn.cursor()
-        cur.execute(query)
+        cur.execute(query, data_tuple)
         return cur.fetchall()
 
-    def queryOne(self, query):
+    def query_one(self, query, data_tuple):
         cur = self.conn.cursor()
-        cur.execute(query)
+        cur.execute(query, data_tuple)
         return cur.fetchone()
