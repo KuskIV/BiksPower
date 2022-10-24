@@ -100,7 +100,6 @@ namespace EnergyComparer.Services
                 }
             }
 
-
             var duration = stopwatch.ElapsedMilliseconds;
             energyProfiler.Stop();
 
