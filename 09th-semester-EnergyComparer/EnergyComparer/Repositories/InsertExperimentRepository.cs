@@ -51,8 +51,8 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertExperiment(DtoExperiment experiment)
         {
-            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration) " +
-                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration)";
+            var query = "INSERT INTO Experiment(StartTime, EndTime, Language, ProgramId, SystemId, ProfilerId, Runs, Iteration, FirstProfiler, ConfigurationId, Duration, Version) " +
+                                    "VALUES(@starttime, @endtime, @language, @programid, @systemid, @profilerid, @runs, @iteration, @firstprofiler, @configurationid, @duration, @version)";
 
             var count = await _connection.ExecuteAsync(query, new 
             {
@@ -67,6 +67,7 @@ namespace EnergyComparer.Repositories
                 firstprofiler = experiment.FirstProfiler,
                 configurationid = experiment.ConfigurationId,
                 duration = experiment.duration,
+                version=experiment.Version
             });
                 
             LogCount("EXPERIMENT", count);

@@ -1,8 +1,10 @@
 from logging import exception
 from easysettings import JSONSettings, preferred_file
+from pathlib import Path, PurePath
 import os
 
-SECRETS_PATH = "utils/appsettings.secrets.json"
+SECRETS_PATH = "secrets/appsettings.secrets.json"
+ROOT_DIR = str(Path(__file__).parent.parent)
 
 
 def _get_user_secrets():
@@ -10,7 +12,7 @@ def _get_user_secrets():
         return JSONSettings.from_file(
             preferred_file(
                 [
-                    SECRETS_PATH,
+                    ROOT_DIR + "/" + SECRETS_PATH,
                 ]
             )
         ).__dict__["data"]
