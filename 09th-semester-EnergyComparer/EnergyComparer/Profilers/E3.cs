@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -38,14 +39,18 @@ namespace EnergyComparer.Profilers
 
         public DtoRawData ParseCsv(string path, int experimentId, DateTime startTime)
         {
-            throw new NotImplementedException();
+            DtoRawData dtoRawData = new DtoRawData();
+            dtoRawData.Value = JsonSerializer.Serialize(GetE3Data(path));
+            dtoRawData.ExperimentId = experimentId;
+            dtoRawData.Time = startTime;
+             
         }
 
-        public void Start(DateTime date)
+        private void Start(DateTime date)
         {
             dateTime = date;
-            Clear();
-            StartLogging();
+            string path = Constants.GetPathForSource(_source.ToString());
+            E3Save(path, fileStart).Start();
         }
 
         public async Task WaitForStart(DateTime date) 
@@ -53,6 +58,11 @@ namespace EnergyComparer.Profilers
             dateTime = date;
             await WaitForBlock();
             Start(date);
+        }
+        public async Task WaitForStop() 
+        {
+            await WaitForBlock();
+            Stop();
         }
 
         private async Task WaitForBlock() 
@@ -62,14 +72,14 @@ namespace EnergyComparer.Profilers
             var exit = E3Save(path, "2");
 
             start.Start();
-            while (!NewBlocl(path,"1","2"))
+            while (!NewBlock(path,"1","2"))
             {
                 await Task.Delay(1);
                 exit.Start();
             }
         }
 
-        private bool NewBlocl(string path, string file1, string file2)
+        private bool NewBlock(string path, string file1, string file2)
         { 
             var Initial = GetE3Data(path, file1);
             var Final = GetE3Data(path, file2);
@@ -100,12 +110,12 @@ namespace EnergyComparer.Profilers
             
         //}
 
-        private void StartLogging() 
-        {
-            //Process start = E3StartProcess();
-            //start.Start();
-            //start.WaitForExit();
-        }
+        //private void StartLogging() 
+        //{
+        //    Process start = E3StartProcess();
+        //    start.Start();
+        //    start.WaitForExit();
+        //}
 
         private void CollectLogs() 
         {
@@ -172,15 +182,6 @@ namespace EnergyComparer.Profilers
             }
             return valuePairs;
         }
-        public string ToXML<T>(T obj)
-        {
-            using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(stringWriter, obj);
-                return stringWriter.ToString();
-            }
-        }
 
         private List<E3Data> GetE3Data(string path) 
         {
@@ -242,29 +243,29 @@ namespace EnergyComparer.Profilers
         //    process.StartInfo = startInfo;
         //    return process;
         //}
-        private Process E3StopProcess(string path, string fileName)
-        {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "powershell.exe";
-            startInfo.UseShellExecute = true;
-            startInfo.Arguments = $" /C (cd {path.Replace(" ", "` ")}); (powercfg.exe /srumutil  /output {fileName} /csv);";
-            startInfo.Verb = "runas";
-            process.StartInfo = startInfo;
-            return process;
-        }
+        //private Process E3StopProcess(string path, string fileName)
+        //{
+        //    Process process = new Process();
+        //    ProcessStartInfo startInfo = new ProcessStartInfo();
+        //    startInfo.FileName = "powershell.exe";
+        //    startInfo.UseShellExecute = true;
+        //    startInfo.Arguments = $" /C (cd {path.Replace(" ", "` ")}); (powercfg.exe /srumutil  /output {fileName} /csv);";
+        //    startInfo.Verb = "runas";
+        //    process.StartInfo = startInfo;
+        //    return process;
+        //}
 
-        private Process AdminPowerProcces(string command) 
-        {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "powershell.exe";
-            startInfo.UseShellExecute = true;
-            startInfo.Arguments = $" /C {command}";
-            startInfo.Verb = "runas";
-            process.StartInfo = startInfo;
-            return process;
-        }
+        //private Process AdminPowerProcces(string command) 
+        //{
+        //    Process process = new Process();
+        //    ProcessStartInfo startInfo = new ProcessStartInfo();
+        //    startInfo.FileName = "powershell.exe";
+        //    startInfo.UseShellExecute = true;
+        //    startInfo.Arguments = $" /C {command}";
+        //    startInfo.Verb = "runas";
+        //    process.StartInfo = startInfo;
+        //    return process;
+        //}
 
         private static List<E3Data> GetE3Data(string path, string file)
         {
@@ -283,6 +284,11 @@ namespace EnergyComparer.Profilers
                 }
 
             }
+        }
+
+        void IEnergyProfiler.Start(DateTime date)
+        {
+            throw new NotImplementedException();
         }
     }
 }
