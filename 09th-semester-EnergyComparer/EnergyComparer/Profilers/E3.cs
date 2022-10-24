@@ -43,7 +43,8 @@ namespace EnergyComparer.Profilers
             dtoRawData.Value = JsonSerializer.Serialize(GetE3Data(path));
             dtoRawData.ExperimentId = experimentId;
             dtoRawData.Time = startTime;
-             
+
+            throw new NotImplementedException("Tell Jeppe to implement this");
         }
 
         private void Start(DateTime date)

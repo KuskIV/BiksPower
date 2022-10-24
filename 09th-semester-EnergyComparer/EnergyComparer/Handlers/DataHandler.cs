@@ -71,7 +71,6 @@ namespace EnergyComparer.Handlers
                 FirstProfiler = firstProfiler,
                 ConfigurationId = configurationId,
                 duration = duration,
-                Version = version
             };
 
             await _insertRepository.InsertExperiment(experiment);
@@ -128,12 +127,14 @@ namespace EnergyComparer.Handlers
 
         public async Task<DtoConfiguration> GetConfiguration(int version)
         {
-            if (!await _getRepository.ConfigurationExists(version))
+            var env = Constants.GetEnv();
+
+            if (!await _getRepository.ConfigurationExists(version, env))
             {
-                await _insertRepository.InsertConfiguration(version);
+                await _insertRepository.InsertConfiguration(version, env);
             }
 
-            return await _getRepository.GetConfiguration();
+            return await _getRepository.GetConfiguration(version, env);
         }
 
         public async Task IncrementVersionForSystem()
