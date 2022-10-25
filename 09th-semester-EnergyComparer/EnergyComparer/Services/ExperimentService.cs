@@ -26,7 +26,7 @@ using Result = EnergyComparer.Models.Result;
 
 namespace EnergyComparer.Services
 {
-    public class ExperimentService : IExperimentService, IDisposable
+    public class ExperimentService : IExperimentService
     {
         private readonly ILogger _logger;
         private readonly bool _isProd;
@@ -70,23 +70,47 @@ namespace EnergyComparer.Services
             var counter = 0;
             _logger.Information("The energy profiler has started");
 
-            InitializeExperiment(energyProfiler);
-
-            _logger.Information("Measuring initial cpu temperatures");
-            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var initialBattery = _adapter.GetCharge();
+            var (initialTemperatures, initialBattery) = InitializeExperiment(energyProfiler);
 
             // TODO: Force garbage collection. This is however not recommended as it is expesive. but it out case it might make sense
             // https://stackoverflow.com/questions/4257372/how-to-force-garbage-collector-to-run
+            RunGarbageCollection(); // TODO: Test if this makes a difference
 
-            RunGarbageCollection();
+            var startTime = StartTimeAndProfiler(energyProfiler, stopwatch);
 
+            counter = RunTestcase(testCase, counter, startTime);
+
+            var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
+
+            await EnableWifiAndDependencies();
+
+            var (endTemperatures, endBattery) = GetEndMeasurements();
+            var experimentId = await EndExperiment(testCase, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration, initialBattery, endBattery);
+
+            return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
+        }
+
+        private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
+        {
+            var duration = stopwatch.ElapsedMilliseconds;
+            energyProfiler.Stop();
+            var stopTime = DateTime.UtcNow;
+
+            return (stopTime, duration);
+        }
+
+        private DateTime StartTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
+        {
             _logger.Information("The experiment will now run untill at least {time}", DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
             stopwatch.Start();
             energyProfiler.Start(startTime);
+            return startTime;
+        }
 
+        private static int RunTestcase(ITestCase testCase, int counter, DateTime startTime)
+        {
             if (testCase.GetName() == EWindowsProfilers.E3.ToString())
             {
                 throw new NotImplementedException("implement this");
@@ -100,29 +124,18 @@ namespace EnergyComparer.Services
                 }
             }
 
-            var duration = stopwatch.ElapsedMilliseconds;
-            energyProfiler.Stop();
-
-            await EnableWifiAndDependencies();
-
-            var stopTime = DateTime.UtcNow;
-            var endTemperatures = GetEndTemperatures();
-            var endBattery = _adapter.GetCharge();
-
-            _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
-
-            var experimentId = await EndExperiment(testCase, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration, initialBattery, endBattery);
-
-            return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
+            return counter;
         }
 
-        private List<DtoMeasurement> GetEndTemperatures()
+        private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
             var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            return endTemperatures;
+            var endBattery = _adapter.GetCharge();
+
+            return (endTemperatures, endBattery);
         }
 
         private async Task EnableWifiAndDependencies()
@@ -182,6 +195,8 @@ namespace EnergyComparer.Services
 
         private async Task<int> EndExperiment(ITestCase program, DateTime stopTime, DateTime startTime, int counter, IEnergyProfiler energyProfiler, List<DtoMeasurement> initialTemperatures, List<DtoMeasurement> endTemperatures, long duration, DtoMeasurement initialBattery, DtoMeasurement endBattery)
         {
+            _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
+
             _logger.Information("The wifi was enabled, the data will now be parsed and saved");
             var system = await _dataHandler.GetSystem();
             var profiler = await _dataHandler.GetProfiler(energyProfiler);
@@ -192,11 +207,13 @@ namespace EnergyComparer.Services
 
             if (_saveToDb)
             {
-                var battery = new List<DtoMeasurement>() { initialBattery, endBattery };
+                var startBattery = new List<DtoMeasurement>() { initialBattery };
+                var endBatteryCharge = new List<DtoMeasurement>() { endBattery };
 
                 await _dataHandler.InsertMeasurement(endTemperatures, experiment.Id, stopTime);
                 await _dataHandler.InsertMeasurement(initialTemperatures, experiment.Id, startTime);
-                await _dataHandler.InsertMeasurement(battery, experiment.Id, startTime);
+                await _dataHandler.InsertMeasurement(startBattery, experiment.Id, startTime);
+                await _dataHandler.InsertMeasurement(endBatteryCharge, experiment.Id, stopTime);
             }
 
             return experiment.Id;
@@ -219,30 +236,24 @@ namespace EnergyComparer.Services
             return _profilerCounter[energyProfiler.GetName()];
         }
 
-        private void InitializeExperiment(IEnergyProfiler energyProfiler)
+        private (List<DtoMeasurement>, DtoMeasurement) InitializeExperiment(IEnergyProfiler energyProfiler)
         {
             if (String.IsNullOrEmpty(_firstProfiler)) _firstProfiler = energyProfiler.GetName();
 
             _dataHandler.CloseConnection();
             _wifiService.Disable(_isProd);
+
+            _logger.Information("Measuring initial cpu temperatures");
+            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
+            var initialBattery = _adapter.GetCharge();
+
+            return (initialTemperatures, initialBattery);
         }
 
         private void InitializeDependencies()
         {
             _dataHandler = _initializeOnlineDependencies();
             (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
-        }
-
-        public async void Dispose()
-        {
-            if (_wifiService == null)
-            {
-                await EnableWifiAndDependencies();
-            }
-            else
-            {
-                await EnableWifi();
-            }
         }
     }
 

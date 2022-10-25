@@ -3,6 +3,7 @@ using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
+using EnergyComparer.TestCases;
 using Microsoft.AspNetCore.Components.RenderTree;
 using System;
 using System.Collections.Generic;
@@ -115,7 +116,8 @@ namespace EnergyComparer.Services
 
         public ITestCase GetTestCase(IDataHandler dataHandler)
         {
-            return new DiningPhilosophers(dataHandler);
+            return new IdleCase(dataHandler);
+            //return new DiningPhilosophers(dataHandler);
         }
 
         public IEnergyProfiler MapEnergyProfiler(Profiler profiler)

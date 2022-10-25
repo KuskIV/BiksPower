@@ -60,9 +60,7 @@ namespace EnergyComparer
             {
                 CreateFolderIfNew();
 
-                // TODO: Tie to one single core
-
-                await _adapterService.WaitTillStableState();
+                await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
                 var isExperimentValid = true;
 
                 var currentTestCase = _adapterService.GetTestCase(_dataHandler);
@@ -77,7 +75,7 @@ namespace EnergyComparer
 
                     InitializeDependencies();
 
-                    _logger.Information("Experiment ended running at: {time}. Next experiment will run ata {time2}", DateTimeOffset.Now, DateTimeOffset.Now.AddMinutes(Constants.MinutesBetweenExperiments));
+                    _logger.Information("Experiment ended running at: {time}. Next experiment will run at {time2}", DateTimeOffset.Now, DateTimeOffset.Now.AddMinutes(Constants.MinutesBetweenExperiments));
                     await Task.Delay(TimeSpan.FromMinutes(Constants.MinutesBetweenExperiments), stoppingToken);
                 }
 
@@ -86,6 +84,7 @@ namespace EnergyComparer
             }
             catch (Exception e)
             {
+                await EnableWifi();
                 Console.WriteLine("error");
                 _logger.Error(e, "Exception when running experiments");
                 throw;
@@ -96,6 +95,13 @@ namespace EnergyComparer
                 Console.ReadLine();
             }
 
+        }
+
+        private async Task EnableWifi()
+        {
+            var (_, _, _, wifi) = InitializeOfflineDependencies();
+
+            await wifi.Enable(_isProd);
         }
 
         private (IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
