@@ -1,0 +1,10 @@
+\begin{lstlisting}[caption=The interface used to implement the entry profilers, label={lst:energy_profiler}]
+    public interface IEnergyProfiler
+    {
+        string GetName();
+        DtoRawData ParseCsv(string path, int experimentId, 
+            DateTime startTime);
+        public void Start(DateTime date);
+        public void Stop();
+    }
+\end{lstlisting}

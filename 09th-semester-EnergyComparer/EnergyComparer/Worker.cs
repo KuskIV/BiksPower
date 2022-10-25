@@ -60,6 +60,7 @@ namespace EnergyComparer
             {
                 CreateFolderIfNew();
 
+                // TODO: Kill backgroud services
                 await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
                 var isExperimentValid = true;
 
@@ -85,7 +86,6 @@ namespace EnergyComparer
             catch (Exception e)
             {
                 await EnableWifi();
-                Console.WriteLine("error");
                 _logger.Error(e, "Exception when running experiments");
                 throw;
             }
@@ -94,7 +94,6 @@ namespace EnergyComparer
                 Console.WriteLine("Press enter to close...");
                 Console.ReadLine();
             }
-
         }
 
         private async Task EnableWifi()

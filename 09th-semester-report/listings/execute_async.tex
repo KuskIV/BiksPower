@@ -1,0 +1,30 @@
+
+\begin{lstlisting}[caption=The method handeling dependencides and the validity of the results, label={lst:execute_async}]
+public async Task ExecuteAsync()
+{
+    CreateFolderIfNew();
+
+    await WaitTillStableState();
+    var isExpValid = true;
+
+    var tc = GetTestCase();
+
+    while (!ShouldStopExperiment() 
+            && isExperimentValid 
+            && !EnoughEntires())
+    {
+        var ep = GetNextProfiler();
+
+        RemoveDependencies();
+
+        isExpValid = await RunExperiment(ep, tc);
+
+        InitializeDependencies();
+
+        await Task.Delay(MinutesBetweenExperiments);
+    }
+
+    await SaveProfilers();
+    RestartComputer();
+}
+\end{lstlisting}

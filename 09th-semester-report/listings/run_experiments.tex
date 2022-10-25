@@ -1,0 +1,31 @@
+
+
+\begin{lstlisting}[caption=The method running the test case, label={lst:run_experiments}]
+public bool RunExperiment(IEnergyProfiler ep, ITestCase tc)
+{
+    var stopwatch = new Stopwatch();
+    var counter = 0;
+
+    var (inTemp, inBat) = InitializeExperiment();
+    await DisableWifi();
+
+    RunGarbageCollection();
+
+    var startTime = StartTimeAndProfiler();
+
+    while (startTime.AddMinutes(Duration) > DateTime.UtcNow)
+    {
+        tc.Run();
+        counter += 1;
+    }
+
+    var (stopTime, duration) = StopTimeAndProfiler();
+
+    await EnableWifiAndDependencies();
+
+    var (endTemp, endBat) = GetEndMeasurements();
+    var experimentId = await EndExperiment();
+
+    return await HandleResultsIfValid();
+}
+    \end{lstlisting}
