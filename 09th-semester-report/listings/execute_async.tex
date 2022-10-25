@@ -13,11 +13,11 @@ public async Task ExecuteAsync()
             && isExperimentValid 
             && !EnoughEntires())
     {
-        var ep = GetNextProfiler();
+        var mi = GetNextMeasuringInstrument();
 
         RemoveDependencies();
 
-        isExpValid = await RunExperiment(ep, tc);
+        isExpValid = await RunExperiment(mi, tc);
 
         InitializeDependencies();
 

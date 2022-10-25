@@ -197,6 +197,10 @@ class RawData(object):
             )
 
 
+class Bucket(object):
+    pass
+
+
 def GetMeasurements(experiment_id, measurement_type, repository, ordering):
     measurements = Measurements(experiment_id, measurement_type, repository)
     measurements_dates = [x.time for x in measurements.data]

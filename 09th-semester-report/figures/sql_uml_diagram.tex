@@ -1,35 +1,35 @@
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
-        \begin{object}[text width=4 cm]{Test case}{0 ,0}
-            \attribute{Test caseId : INT}
+        \begin{object}[text width=4 cm]{TestCase}{0 ,0}
+            \attribute{TestCaseId : INT}
             \attribute{Name : VARCHAR}
         \end{object}
-        \begin{object}[text width=4 cm]{DUT}{10,0}
-            \attribute{DUTId : INT}
+        \begin{object}[text width=4 cm]{Dut}{10,0}
+            \attribute{DutId : INT}
             \attribute{Name : VARCHAR}
             \attribute{OS : VARCHAR}
             \attribute{Version : INT}
         \end{object}
         \begin{object}[text width=4 cm]{Run}{5,5}
             \attribute{RunId : INT}
-            \attribute{DUTId : INT}
-            \attribute{Test caseId : INT}
+            \attribute{DutId : INT}
+            \attribute{TestCaseId : INT}
             \attribute{Value : VARCHAR}
         \end{object}
-        \begin{object}[text width = 4 cm]{Measuring instrument}{5,0}
-            \attribute{Measuring instrumentId : INT}
+        \begin{object}[text width = 4 cm]{MeasuringInstrument}{5,0}
+            \attribute{InstrumentId : INT}
             \attribute{Name : VARCHAR}
         \end{object}
         \begin{object}{Experiment}{5,-3}
             \attribute{ExperimentId : INT}
             \attribute{ConfigId : INT}
-            \attribute{Measuring instrumentId : INT}
-            \attribute{DUTId : INT}
-            \attribute{Test caseId : INT}
+            \attribute{InstrumentId : INT}
+            \attribute{DutId : INT}
+            \attribute{TestCaseId : INT}
             \attribute{Runs : INT}
             \attribute{Iteration : INT}
-            \attribute{FirstMeasuring instrument : VARCHAR}
+            \attribute{FirstMeasuring : VARCHAR}
             \attribute{Language : VARCHAR}
             \attribute{StartTime : DATETIME(6)}
             \attribute{EndTime : DATETIME(6)}
@@ -50,23 +50,24 @@
             \attribute{MaxBattery : INT}
             \attribute{Version : INT}
         \end{object}
-        \begin{object}[text width = 4 cm]{Temperature}{10, -10}
-            \attribute{TemperatureId : INT}
+        \begin{object}[text width = 4 cm]{Measurement}{10, -10}
+            \attribute{MeasurementId : INT}
             \attribute{ExperimentId : INT}
             \attribute{Time : DATETIME(6)}
             \attribute{Name : VARCHAR}
             \attribute{Value : INT}
+            \attribute{Type : VARCHAR}
         \end{object}
         
-        \association{Run}{}{0..*}{Test case}{}{1}
-        \association{Run}{}{0..*}{DUT}{}{1}
-        \association{Experiment}{}{0..*}{DUT}{}{1}
-        \association{Experiment}{}{0..*}{Measuring instrument}{}{1}
-        \association{Experiment}{}{0..*}{DUT}{}{1}
+        \association{Run}{}{0..*}{TestCase}{}{1}
+        \association{Run}{}{0..*}{Dut}{}{1}
+        \association{Experiment}{}{0..*}{Dut}{}{1}
+        \association{Experiment}{}{0..*}{MeasuringInstrument}{}{1}
+        \association{Experiment}{}{0..*}{Dut}{}{1}
         \association{Experiment}{}{0..*}{RawData}{}{1}
         \association{Experiment}{}{0..*}{Configuration}{}{1}
-        \association{Experiment}{}{0..*}{Temperature}{}{1}
-        \association{Experiment}{}{0..*}{Test case}{}{1}
+        \association{Experiment}{}{0..*}{Measurement}{}{1}
+        \association{Experiment}{}{0..*}{TestCase}{}{1}
     \end{tikzpicture}
     \caption{An UML diagram representing the tables in the SQL database} \label{fig:uml_diagram}
 \end{figure}

@@ -1,7 +1,7 @@
 
 
 \begin{lstlisting}[caption=The method running the test case, label={lst:run_experiments}]
-public bool RunExperiment(IEnergyProfiler ep, ITestCase tc)
+public bool RunExperiment(IMeasuringInstrument mi, ITestCase tc)
 {
     var stopwatch = new Stopwatch();
     var counter = 0;
