@@ -53,10 +53,14 @@ class Dut(object):
 
 
 class Measurements(object):
-    def __init__(self, experiment_id, repository):
-        data_tuple = (experiment_id,)
+    def __init__(self, experiment_id, measurement_type, repository):
+        data_tuple = (
+            experiment_id,
+            measurement_type,
+        )
         data = repository.query_all(
-            "SELECT * FROM Measurement WHERE ExperimentId = %s", data_tuple
+            "SELECT * FROM Measurement WHERE ExperimentId = %s AND Type = %s",
+            data_tuple,
         )
         self.data = []
 
@@ -173,7 +177,31 @@ class RawData(object):
             self.iteration = iteration
             self.first_profiler = first_profiler
             self.duration = duration
+            self.start_temperature = GetMeasurements(
+                experiment_id, "CpuTemperature", repository, min
+            )
+            self.stop_temperature = GetMeasurements(
+                experiment_id, "CpuTemperature", repository, max
+            )
+
+            self.start_battery = GetMeasurements(
+                experiment_id, "BatteryChargeLeft", repository, min
+            )
+            self.stop_battery = GetMeasurements(
+                experiment_id, "BatteryChargeLeft", repository, max
+            )
+
         else:
             raise Exception(
                 f"Could not find any RawData for experiment id '{experiment_id}'"
             )
+
+
+def GetMeasurements(experiment_id, measurement_type, repository, ordering):
+    measurements = Measurements(experiment_id, measurement_type, repository)
+    measurements_dates = [x.time for x in measurements.data]
+    measurements.data = [
+        x for x in measurements.data if x.time == ordering(measurements_dates)
+    ]
+
+    return measurements
