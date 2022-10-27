@@ -58,6 +58,7 @@ namespace EnergyComparer
             {
                 var profiler = await _profilerService.GetNext(currentTestCase, _dataHandler, _adapterService);
 
+                StopUnneccesaryProcesses();
                 RemoveDependencies();
 
                 isExperimentValid = await _experimentService.RunExperiment(profiler, currentTestCase);
@@ -71,6 +72,11 @@ namespace EnergyComparer
             await _profilerService.SaveProfilers(_dataHandler);
             _adapterService.Restart();
 
+        }
+
+        private void StopUnneccesaryProcesses()
+        {
+            _adapterService.StopunneccesaryProcesses();
         }
 
         public async Task EnableWifi()
