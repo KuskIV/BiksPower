@@ -1,12 +1,17 @@
-using EnergyComparer.Handlers;
-using EnergyComparer.Services;
+﻿using EnergyComparer.Services;
 using EnergyComparer.Utils;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ILogger = Serilog.ILogger;
 
-namespace EnergyComparer
+namespace EnergyComparer.Handlers
 {
-    public class Worker
+    internal class StartUpHandler
     {
         private readonly ILogger _logger;
         private IExperimentService _experimentService;
@@ -22,11 +27,11 @@ namespace EnergyComparer
         private IAdapterService _adapterService;
         private HardwareMonitorService _hardwareMonitorService;
 
-        public Worker(ILogger logger, IConfiguration configuration)
+        public StartUpHandler(ILogger? logger, IConfiguration? configuration)
         {
             _logger = logger;
             _configuration = configuration;
-            
+
             var iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
             _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
             _profilerService = new EnergyProfilerService(iterateOverProfilers);
@@ -39,41 +44,11 @@ namespace EnergyComparer
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
             _experimentService = new ExperimentService(_logger, isProd, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
-            
+
             InitializeDependencies();
         }
 
-        public async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-            CreateFolderIfNew();
-
-            // TODO: Kill backgroud services
-            await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
-            var isExperimentValid = true;
-
-            var currentTestCase = _adapterService.GetTestCase(_dataHandler);
-
-            while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
-            {
-                var profiler = await _profilerService.GetNext(currentTestCase, _dataHandler, _adapterService);
-
-                RemoveDependencies();
-
-                isExperimentValid = await _experimentService.RunExperiment(profiler, currentTestCase);
-
-                InitializeDependencies();
-
-                _logger.Information("Experiment ended running at: {time}. Next experiment will run at {time2}", DateTimeOffset.Now, DateTimeOffset.Now.AddMinutes(Constants.MinutesBetweenExperiments));
-                await Task.Delay(TimeSpan.FromMinutes(Constants.MinutesBetweenExperiments), stoppingToken);
-            }
-
-            await _profilerService.SaveProfilers(_dataHandler);
-            _adapterService.Restart();
-
-        }
-
-        public async Task EnableWifi()
+        private async Task EnableWifi()
         {
             var (_, _, _, wifi) = InitializeOfflineDependencies();
 

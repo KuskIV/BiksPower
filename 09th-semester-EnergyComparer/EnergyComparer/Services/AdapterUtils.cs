@@ -1,5 +1,4 @@
-﻿using Autofac.Core.Activators.Reflection;
-using EnergyComparer.Handlers;
+﻿using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;

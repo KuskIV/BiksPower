@@ -22,7 +22,6 @@ using MySqlX.XDevAPI.Common;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using ILogger = Serilog.ILogger;
-using Result = EnergyComparer.Models.Result;
 
 namespace EnergyComparer.Services
 {
