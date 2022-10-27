@@ -1,0 +1,10 @@
+\begin{lstlisting}[caption=The interface used to implement the measurement instruments, label={lst:measurement_instruments}]
+    public interface IMeasurementInstrument
+    {
+        string GetName();
+        DtoRawData ParseCsv(string path, int experimentId, 
+            DateTime startTime);
+        public void Start(DateTime date);
+        public void Stop();
+    }
+\end{lstlisting}

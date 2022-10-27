@@ -136,6 +136,15 @@ namespace EnergyComparer.Repositories
             LogCount("TEMPERATURE", count);
         }
 
+        public async Task InsertTimeSeriesData(DtoTimeSeries timeSeries)
+        {
+            var query = "INSERT INTO TimeSeries(ExperimentId, Value, Time) VALUES(@experimentid, @value, @time)";
+
+            var count = await _connection.ExecuteAsync(query, new { experimentid = timeSeries.ExperimentId, value = timeSeries.Value, time = timeSeries.Time });
+
+            LogCount("TIMESERIES DATA", count);
+        }
+
         public async Task InsertRawData(DtoRawData data)
         {
             var query = "INSERT INTO RawData(ExperimentId, Value, Time) VALUES(@experimentid, @value, @time)";
@@ -158,6 +167,7 @@ namespace EnergyComparer.Repositories
 
             LogCount("RUN", count);
         }
+
         public async Task UpdateProfilers(string systemId, string programId, string value)
         {
             var query = "UPDATE Run SET Value = @value WHERE DutId = @systemid AND TestCaseId = @programid";
@@ -178,8 +188,6 @@ namespace EnergyComparer.Repositories
                 _logger.Information("{name} already existed", name);
             }
         }
-
-
     }
 
     public interface IInsertExperimentRepository
@@ -196,5 +204,6 @@ namespace EnergyComparer.Repositories
         Task InsertDut(string name, string os, int version = 1);
         Task InsertMeasurement(List<DtoMeasurement> temperatures, int id);
         Task UpdateProfilers(string systemId, string programId, string value);
+        Task InsertTimeSeriesData(DtoTimeSeries timeSeries);
     }
 }

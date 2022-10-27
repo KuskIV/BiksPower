@@ -166,8 +166,6 @@ namespace EnergyComparer.Services
                 }
                 else
                 {
-                    await SaveResults(profiler, date, experimentId);
-
                     _logger.Information("Loggint results. TODO: IMPLEMENT THIS");
                 }
 
@@ -183,9 +181,10 @@ namespace EnergyComparer.Services
         public async Task SaveResults(IEnergyProfiler profiler, DateTime date, int experimentId)
         {
             var stream = GetPath(profiler, date);
-            var data = profiler.ParseCsv(stream, experimentId, date);
+            var (timeSeries, rawData) = profiler.ParseData(stream, experimentId, date);
 
-            await _dataHandler.InsertRawData(data);
+            await _dataHandler.InsertRawData(rawData);
+            await _dataHandler.InsertTimeSeriesData(timeSeries);
         }
 
         private string GetPath(IEnergyProfiler profiler, DateTime startTime)

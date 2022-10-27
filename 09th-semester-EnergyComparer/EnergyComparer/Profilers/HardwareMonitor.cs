@@ -26,11 +26,6 @@ namespace EnergyComparer.Profilers
             return EWindowsProfilers.HardwareMonitor.ToString();
         }
 
-        public DtoRawData ParseCsv(string path, int experimentId, DateTime startTime)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Start(DateTime date)
         {
             CreateXMLFILE();
@@ -88,8 +83,11 @@ namespace EnergyComparer.Profilers
                 writer.Close();
             }
             doc.Save(@"D:\test.xml");
+        }
 
-
+        public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }

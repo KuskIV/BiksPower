@@ -11,7 +11,7 @@ namespace EnergyComparer.Profilers
     public interface IEnergyProfiler
     {
         string GetName();
-        DtoRawData ParseCsv(string path, int experimentId, DateTime startTime);
+        (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime);
         public void Start(DateTime date);
         public void Stop();
     }

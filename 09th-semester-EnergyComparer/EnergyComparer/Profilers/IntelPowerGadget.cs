@@ -8,9 +8,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
+using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Services;
 using Microsoft.VisualBasic;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
+using MissingFieldException = CsvHelper.MissingFieldException;
 
 namespace EnergyComparer.Profilers
 {
@@ -21,13 +25,17 @@ namespace EnergyComparer.Profilers
         private static extern bool IntelEnergyLibInitialize();
 
         [DllImport("EnergyLib64.dll", CharSet = CharSet.Unicode)]
+        private static extern bool ReadSample();
+
+        [DllImport("EnergyLib64.dll", CharSet = CharSet.Unicode)]
         private static extern bool StartLog(string szFileName);
 
         [DllImport("EnergyLib64.dll", CharSet = CharSet.Unicode)]
         private static extern bool StopLog();
 
-
         private readonly EWindowsProfilers _source;
+        private System.Timers.Timer _timer;
+        private readonly int IntervalBetweenReadsInMiliSeconds = 100;
 
         public IntelPowerGadget()
         {
@@ -41,10 +49,15 @@ namespace EnergyComparer.Profilers
 
             var success = StartLog(path);
             EnsureSuccess(success);
+
+            _timer = new System.Timers.Timer(IntervalBetweenReadsInMiliSeconds); // 10 seconds
+            _timer.Elapsed += timer_Elapsed;
+            _timer.Enabled = true;
         }
 
         public void Stop()
         {
+            _timer.Enabled = false;
             var success = StopLog();
             EnsureSuccess(success);
         }
@@ -52,6 +65,12 @@ namespace EnergyComparer.Profilers
         public void Initialise()
         {
             var success = IntelEnergyLibInitialize();
+            EnsureSuccess(success);
+        }
+
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            var success = ReadSample();
             EnsureSuccess(success);
         }
 
@@ -68,102 +87,51 @@ namespace EnergyComparer.Profilers
             return _source.ToString();
         }
 
-        public DtoRawData ParseCsv(string path, int experimentId, DateTime startTime)
+        public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
-            var lines = System.IO.File.ReadLines(path).ToList();
+            var intelPowerGadgetTimeSeries = new List<IntelPowerGadgetTimeSeires>();
+            var intelPowerGadgetData = new IntelPowerGadgetData();
 
-            var properties = lines[1].Split(',');
-
-            var data = new IntelPowerGadgetData();
-
-            if (lines.Count > 21)
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                data = new IntelPowerGadgetData()
+                csv.Context.RegisterClassMap<IntelPowerGadgetTimeSeriesMapper>();
+
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
                 {
-                    SystemTime = DateTime.ParseExact($"01/01/0001 {properties[0]}", "MM/dd/yyyy HH:mm:ss:fff", CultureInfo.CreateSpecificCulture("da-DK")).TimeOfDay,
-                    RDTSC = Double.Parse(properties[1]),
-                    ElapsedTimesec = Double.Parse(properties[2]),
-                    CPUUtilization = Double.Parse(properties[3]),
-                    CPUFrequency_0MHz = Double.Parse(properties[4]),
-                    ProcessorPower_0Watt = Double.Parse(properties[5]),
-                    CumulativeProcessorEnergy_0Joules = Double.Parse(properties[6]),
-                    CumulativeProcessorEnergy_0mWh = Double.Parse(properties[7]),
-                    IAPower_0Watt = Double.Parse(properties[8]),
-                    CumulativeIAEnergy_0Joules = Double.Parse(properties[9]),
-                    CumulativeIAEnergy_0mWh = Double.Parse(properties[10]),
-                    PackageTemperature_0C = Double.Parse(properties[11]),
-                    PackageHot_0 = Double.Parse(properties[12]),
-                    DRAMPower_0Watt = Double.Parse(properties[13]),
-                    CumulativeDRAMEnergy_0Joules = Double.Parse(properties[14]),
-                    CumulativeDRAMEnergy_0mWh = Double.Parse(properties[15]),
-                    GTPower_0Watt = lines.Count > 21 ? Double.Parse(properties[16]) : -1,
-                    CumulativeGTEnergy_0Joules = lines.Count > 21 ? Double.Parse(properties[17]) : -1,
-                    CumulativeGTEnergy_0mWh = lines.Count > 21 ? Double.Parse(properties[18]) : -1,
-                    PackagePL1_0Watt = Double.Parse(properties[19]),
-                    PackagePL2_0Watt = Double.Parse(properties[20]),
-                    PackagePL4_0Watt = Double.Parse(properties[21]),
-                    PlatformPsysPL1_0Watt = Double.Parse(properties[22]),
-                    PlatformPsysPL2_0Watt = Double.Parse(properties[23]),
-                    GTFrequencyMHz = lines.Count > 21 ? Double.Parse(properties[24]) : -1,
-                    GTUtilization = lines.Count > 21 ? Double.Parse(properties[25]) : -1,
-                    TotalElapsedTimeInSeconds = GetValue(lines, 3),
-                    MeasuredRdtscFrequencyInGhz = GetValue(lines, 4),
-                    AverageProcessorPower0InWatt = GetValue(lines, 8),
-                    AverageIAPower0InWatt = GetValue(lines, 12),
-                    AverageDRAMPower0InWatt = GetValue(lines, 16),
-                    AverageGTPower0InWatt = lines.Count > 21 ? GetValue(lines, 20) : -1,
-                };
-            }
-            else
-            {
-                data = new IntelPowerGadgetData()
-                {
-                    SystemTime = DateTime.ParseExact($"01/01/0001 {properties[0]}", "MM/dd/yyyy HH:mm:ss:fff", CultureInfo.CreateSpecificCulture("da-DK")).TimeOfDay,
-                    RDTSC = Double.Parse(properties[1]),
-                    ElapsedTimesec = Double.Parse(properties[2]),
-                    CPUUtilization = Double.Parse(properties[3]),
-                    CPUFrequency_0MHz = Double.Parse(properties[4]),
-                    ProcessorPower_0Watt = Double.Parse(properties[5]),
-                    CumulativeProcessorEnergy_0Joules = Double.Parse(properties[6]),
-                    CumulativeProcessorEnergy_0mWh = Double.Parse(properties[7]),
-                    IAPower_0Watt = Double.Parse(properties[8]),
-                    CumulativeIAEnergy_0Joules = Double.Parse(properties[9]),
-                    CumulativeIAEnergy_0mWh = Double.Parse(properties[10]),
-                    PackageTemperature_0C = Double.Parse(properties[11]),
-                    PackageHot_0 = Double.Parse(properties[12]),
-                    DRAMPower_0Watt = Double.Parse(properties[13]),
-                    CumulativeDRAMEnergy_0Joules = Double.Parse(properties[14]),
-                    CumulativeDRAMEnergy_0mWh = Double.Parse(properties[15]),
-                    PackagePL1_0Watt = Double.Parse(properties[16]),
-                    PackagePL2_0Watt = Double.Parse(properties[17]),
-                    PackagePL4_0Watt = Double.Parse(properties[18]),
-                    PlatformPsysPL1_0Watt = Double.Parse(properties[19]),
-                    PlatformPsysPL2_0Watt = Double.Parse(properties[20]),
-                    TotalElapsedTimeInSeconds = GetValue(lines, 3),
-                    MeasuredRdtscFrequencyInGhz = GetValue(lines, 4),
-                    AverageProcessorPower0InWatt = GetValue(lines, 8),
-                    AverageIAPower0InWatt = GetValue(lines, 12),
-                    AverageDRAMPower0InWatt = GetValue(lines, 16),
-                    AverageGTPower0InWatt = -1,
-                    CumulativeGTEnergy_0Joules = -1,
-                    CumulativeGTEnergy_0mWh = -1,
-                    GTFrequencyMHz = -1,
-                    GTPower_0Watt = -1,
-                    GTUtilization = -1
-                };
+                    var row = csv.Parser.RawRecord;
+                    
+                    if (row.Contains(','))
+                    {
+                        var record = csv.GetRecord<IntelPowerGadgetTimeSeires>();
+                        intelPowerGadgetTimeSeries.Add(record!);
+                    }
+                    else
+                    {
+                        intelPowerGadgetData.AddAttributeToData(row);
+                    }
+                }
             }
 
-            return new DtoRawData()
+            var timeSeries = new DtoTimeSeries()
             {
                 ExperimentId = experimentId,
                 Time = startTime,
-                Value = JsonSerializer.Serialize(data)
+                Value = JsonSerializer.Serialize(intelPowerGadgetTimeSeries)
             };
-        }
 
-        private static float GetValue(List<string> lines, int index)
-        {
-            return float.Parse(lines[index].Split('=')[1].Trim());
+            var rawData = new DtoRawData()
+            {
+                ExperimentId = experimentId,
+                Time = startTime,
+                Value = JsonSerializer.Serialize(intelPowerGadgetData)
+            };
+
+            
+            return (timeSeries, rawData);
         }
     }
 }

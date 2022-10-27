@@ -187,6 +187,11 @@ namespace EnergyComparer.Handlers
         {
             await _insertRepository.InsertRawData(data);
         }
+
+        public async Task InsertTimeSeriesData(DtoTimeSeries timeSeries)
+        {
+            await _insertRepository.InsertTimeSeriesData(timeSeries);
+        }
     }
 
     public interface IDataHandler
@@ -203,5 +208,6 @@ namespace EnergyComparer.Handlers
         Task InsertRawData(DtoRawData data);
         Task InsertMeasurement(List<DtoMeasurement> endTemperatures, int id, DateTime date);
         Task UpdateProfilers(string id, List<Profiler> profilers);
+        Task InsertTimeSeriesData(DtoTimeSeries timeSeries);
     }
 }

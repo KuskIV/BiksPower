@@ -37,16 +37,6 @@ namespace EnergyComparer.Profilers
             return EWindowsProfilers.E3.ToString();
         }
 
-        public DtoRawData ParseCsv(string path, int experimentId, DateTime startTime)
-        {
-            DtoRawData dtoRawData = new DtoRawData();
-            dtoRawData.Value = JsonSerializer.Serialize(GetE3Data(path));
-            dtoRawData.ExperimentId = experimentId;
-            dtoRawData.Time = startTime;
-
-            throw new NotImplementedException("Tell Jeppe to implement this");
-        }
-
         private void Start(DateTime date)
         {
             dateTime = date;
@@ -290,6 +280,16 @@ namespace EnergyComparer.Profilers
         void IEnergyProfiler.Start(DateTime date)
         {
             throw new NotImplementedException();
+        }
+
+        (DtoTimeSeries, DtoRawData) IEnergyProfiler.ParseData(string path, int experimentId, DateTime startTime)
+        {
+            DtoRawData dtoRawData = new DtoRawData();
+            dtoRawData.Value = JsonSerializer.Serialize(GetE3Data(path));
+            dtoRawData.ExperimentId = experimentId;
+            dtoRawData.Time = startTime;
+
+            throw new NotImplementedException("Tell Jeppe to implement this");
         }
     }
 }
