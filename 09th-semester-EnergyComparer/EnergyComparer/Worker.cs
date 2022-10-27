@@ -1,22 +1,12 @@
 using EnergyComparer.Handlers;
-using EnergyComparer.Models;
-using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
-using EnergyComparer.Repositories;
 using EnergyComparer.Services;
 using EnergyComparer.Utils;
-using LibreHardwareMonitor.Hardware;
-using Microsoft.AspNetCore.Connections;
-using Microsoft.Win32;
-using Serilog;
-using System.ComponentModel;
 using System.Data;
-using System.Management;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer
 {
-    public class Worker : BackgroundService
+    public class Worker
     {
         private readonly ILogger _logger;
         private IExperimentService _experimentService;
@@ -53,50 +43,37 @@ namespace EnergyComparer
             InitializeDependencies();
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-            try
+            CreateFolderIfNew();
+
+            // TODO: Kill backgroud services
+            await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
+            var isExperimentValid = true;
+
+            var currentTestCase = _adapterService.GetTestCase(_dataHandler);
+
+            while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
             {
-                CreateFolderIfNew();
+                var profiler = await _profilerService.GetNext(currentTestCase, _dataHandler, _adapterService);
 
-                // TODO: Kill backgroud services
-                await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
-                var isExperimentValid = true;
+                RemoveDependencies();
 
-                var currentTestCase = _adapterService.GetTestCase(_dataHandler);
+                isExperimentValid = await _experimentService.RunExperiment(profiler, currentTestCase);
 
-                while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
-                {
-                    var profiler = await _profilerService.GetNext(currentTestCase, _dataHandler, _adapterService);
+                InitializeDependencies();
 
-                    RemoveDependencies();
-
-                    isExperimentValid = await _experimentService.RunExperiment(profiler, currentTestCase);
-
-                    InitializeDependencies();
-
-                    _logger.Information("Experiment ended running at: {time}. Next experiment will run at {time2}", DateTimeOffset.Now, DateTimeOffset.Now.AddMinutes(Constants.MinutesBetweenExperiments));
-                    await Task.Delay(TimeSpan.FromMinutes(Constants.MinutesBetweenExperiments), stoppingToken);
-                }
-
-                await _profilerService.SaveProfilers(_dataHandler);
-                _adapterService.Restart();
+                _logger.Information("Experiment ended running at: {time}. Next experiment will run at {time2}", DateTimeOffset.Now, DateTimeOffset.Now.AddMinutes(Constants.MinutesBetweenExperiments));
+                await Task.Delay(TimeSpan.FromMinutes(Constants.MinutesBetweenExperiments), stoppingToken);
             }
-            catch (Exception e)
-            {
-                await EnableWifi();
-                _logger.Error(e, "Exception when running experiments");
-                throw;
-            }
-            finally
-            {
-                Console.WriteLine("Press enter to close...");
-                Console.ReadLine();
-            }
+
+            await _profilerService.SaveProfilers(_dataHandler);
+            _adapterService.Restart();
+
         }
 
-        private async Task EnableWifi()
+        public async Task EnableWifi()
         {
             var (_, _, _, wifi) = InitializeOfflineDependencies();
 
