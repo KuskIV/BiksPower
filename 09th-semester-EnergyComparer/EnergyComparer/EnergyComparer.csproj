@@ -36,5 +36,5 @@
     <Folder Include="secrets\" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties secrets_4appsettings_1secrets_1json__JsonSchema=" " /></VisualStudio></ProjectExtensions>
 </Project>
