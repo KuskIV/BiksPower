@@ -158,26 +158,19 @@ class TimeSeries(object):
         data = repository.query_one(
             "SELECT * FROM TimeSeries WHERE ExperimentId = %s", data_tuple
         )
-        # self.time = data[3]
-        # self.id = data[0]
-        # self.experiment_id = data[1]
-        # self.data_point = []
-        a = json.loads(data[2])
-        print()
-        print(type(a))
-        print("")
-        print("")
-        print("")
-        print("")
+        self.time = data[3]
+        self.id = data[0]
+        self.experiment_id = data[1]
+        self.data_point = []
 
-        # for d in data[2]:
-        # self.data_point.append(DataPoint(d))
+        data_points = json.loads(data[2])
+        for d in data_points:
+            self.data_point.append(DataPoint(d))
 
 
 class DataPoint(object):
     def __init__(self, data):
-        # self.__dict__ = json.loads(data)
-        pass
+        self.__dict__ = data
 
 
 class RawData(object):

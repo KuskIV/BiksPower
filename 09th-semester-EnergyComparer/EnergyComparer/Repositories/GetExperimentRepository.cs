@@ -18,14 +18,9 @@ namespace EnergyComparer.Repositories
     {
         private IDbConnection _connection;
 
-        public void InitializeDatabase(Func<IDbConnection> connection)
+        public void InitializeDatabase(IDbConnection connection)
         {
-            _connection = connection();
-        }
-
-        public void CloseConnection()
-        {
-            _connection.Close();
+            _connection = connection;
         }
 
         public async Task<DtoExperiment> GetExperiment(int id)
@@ -192,7 +187,6 @@ namespace EnergyComparer.Repositories
 
     public interface IGetExperimentRepository
     {
-        void CloseConnection();
         Task<bool> ConfigurationExists(int version, string env);
         Task<DtoConfiguration> GetConfiguration(int version, string env);
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
@@ -200,7 +194,7 @@ namespace EnergyComparer.Repositories
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoTestCase> GetTestCase(string name);
         Task<DtoDut> GetDut(string Os, string Name);
-        void InitializeDatabase(Func<IDbConnection> _connectionFactory);
+        void InitializeDatabase(IDbConnection _connection);
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> TestCaseExists(string name);
         Task<bool> RunExistsForDut(DtoDut system, Programs.ITestCase program);
