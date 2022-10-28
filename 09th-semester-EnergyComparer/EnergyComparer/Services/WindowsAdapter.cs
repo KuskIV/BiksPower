@@ -117,13 +117,19 @@ namespace EnergyComparer.Services
             throw new Exception("The computer should have shut down by now.");
         }
 
-        private async Task<bool> AllProfilersExecutedEnough(IDataHandler dataHandler, DtoDut dut, ITestCase idleCase, List<DtoProfiler> dtoProfilers)
+        private async Task<bool> AllProfilersExecutedEnough(IDataHandler dataHandler, DtoDut dut, ITestCase testCase, List<DtoProfiler> dtoProfilers)
         {
             foreach (var p in dtoProfilers)
             {
-                if (_maxIterations > await dataHandler.ExperimentsRunOnCurrentSetup(idleCase.GetName(), p, dut, idleCase.GetLanguage()))
+                int experimentsRunOnSetup = await dataHandler.ExperimentsRunOnCurrentSetup(testCase.GetName(), p, dut, testCase.GetLanguage());
+                if (_maxIterations > experimentsRunOnSetup)
                 {
+                    _logger.Information("For test case {name}, profiler {p} has run {min}/{max} runs.", testCase.GetName(), p.Name, experimentsRunOnSetup, _maxIterations);
                     return false;
+                }
+                else
+                {
+                    _logger.Information("For test case {name}, profiler {p} has already run {max} ({min})", testCase.GetName(), p.Name, _maxIterations, experimentsRunOnSetup);
                 }
             }
 
