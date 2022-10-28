@@ -14,11 +14,15 @@ using System.Security.Cryptography.Xml;
 using TestClient.E3Experiment;
 
 
-var intel = new IntelPowerGadget();
+//var intel = new IntelPowerGadget();
 
-var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);
+//var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);
 
-//var e3 = new E3();
+var e3 = new E3();
+await e3.WaitForStart(DateTime.UtcNow);
+await e3.WaitForStop();
+
+
 //e3.Start(DateTime.UtcNow);
 //await Task.Delay(10000 * 6);
 //e3.Stop();
