@@ -189,8 +189,15 @@ namespace EnergyComparer.Services
 
                 foreach (var process in WindowsProcessesToStop())
                 {
-                    ps.AddCommand("Stop-Process").AddParameter("Name", process);
-                    ps.Invoke();
+                    try
+                    {
+                        ps.AddCommand("Stop-Process").AddParameter("Name", process);
+                        ps.Invoke();
+                    }
+                    catch (Exception)
+                    {
+                        _logger.Warning("Unable to stop process '{name}'. Will continue...", process);
+                    }
                 }
             }
             else
@@ -209,7 +216,8 @@ namespace EnergyComparer.Services
                 "OneDrive",
                 "GitHubDesktop",
                 "Microsoft.Photos",
-                "",
+                "SkypeApp",
+                "SkypeBackgroundHost",
             };
         }
     }
