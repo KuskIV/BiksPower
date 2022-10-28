@@ -21,7 +21,6 @@ namespace EnergyComparer.Repositories
 {
     public class InsertExperimentRepository : IInsertExperimentRepository
     {
-        private readonly Func<IDbConnection> _connectionFactory;
         private IDbConnection _connection;
         private readonly ILogger _logger;
 
@@ -30,14 +29,9 @@ namespace EnergyComparer.Repositories
             _logger = logger;
         }
 
-        public void InitializeDatabase(Func<IDbConnection> connectionFactory)
+        public void InitializeDatabase(IDbConnection connection)
         {
-            _connection = connectionFactory();
-        }
-
-        public void CloseConnection()
-        {
-            _connection.Close();
+            _connection = connection;
         }
 
         public async Task IncrementVersion(DtoDut dut)
@@ -192,9 +186,8 @@ namespace EnergyComparer.Repositories
 
     public interface IInsertExperimentRepository
     {
-        void CloseConnection();
         Task IncrementVersion(DtoDut system);
-        void InitializeDatabase(Func<IDbConnection> _connectionFactory);
+        void InitializeDatabase(IDbConnection _connection);
         Task InsertConfiguration(int version, string env);
         Task InsertExperiment(DtoExperiment experiment);
         Task InsertProfiler(IEnergyProfiler energyProfiler);

@@ -24,6 +24,7 @@ namespace EnergyComparer.Handlers
         private IGetExperimentRepository _getRepository;
         private readonly IOperatingSystemAdapter _adapterService;
         private readonly Func<IDbConnection> _connectionFactory;
+        private IDbConnection _connection;
         private readonly string _machineName;
 
         public DataHandler(ILogger logger, IOperatingSystemAdapter adapterService, Func<IDbConnection> connectionFactory, string machineName)
@@ -46,14 +47,15 @@ namespace EnergyComparer.Handlers
 
         public void InitializeConnection()
         {
-            _insertRepository.InitializeDatabase(_connectionFactory);
-            _getRepository.InitializeDatabase(_connectionFactory);
+            _connection = _connectionFactory();
+
+            _insertRepository.InitializeDatabase(_connection);
+            _getRepository.InitializeDatabase(_connection);
         }
 
         public void CloseConnection()
         {
-            _insertRepository.CloseConnection();
-            _getRepository.CloseConnection();
+            _connection.Close();
         }
 
         public async Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ITestCase program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int configurationId, long duration, int version)
