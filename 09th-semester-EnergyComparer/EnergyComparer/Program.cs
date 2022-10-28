@@ -10,15 +10,15 @@ public class Program
     private static async Task Main(string[] args)
     {
         //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-
         InitializeLogger();
         InitializeConfig();
-
+        
         var worker = new Worker(_logger, _configuration);
         var cts = new CancellationToken();
 
         try
         {
+
             await worker.ExecuteAsync(cts);
         }
         catch (Exception e)

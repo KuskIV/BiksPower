@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace EnergyComparer.Utils
 {
@@ -72,5 +73,9 @@ namespace EnergyComparer.Utils
 
         }
 
+        internal static int GetTotalIterations(IConfiguration config)
+        {
+            return config.GetValue<int>("TotalIterations");
+        }
     }
 }

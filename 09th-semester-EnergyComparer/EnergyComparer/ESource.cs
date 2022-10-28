@@ -11,4 +11,9 @@
     {
         RAPL
     }
+
+    public enum EProfilers
+    {
+        Clam
+    }
 }

@@ -1,4 +1,5 @@
-﻿using EnergyComparer.Services;
+﻿using EnergyComparer.Profilers;
+using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace EnergyComparer
         public static string DefaultFolderName = "09-experiment-data";
         public static string DatetimeFormat = "s";
         public static string DataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        public static string Os = Environment.OSVersion.Platform.ToString();
 
         public static string GetPathForSource(string source)
         {

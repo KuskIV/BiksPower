@@ -16,7 +16,7 @@ namespace EnergyComparer.Programs
         {
             _name = "TestProgram";
             _language = ELanguage.CSharp.ToString();
-            _program = dataHandler.GetProgram(_name).Result;
+            _program = dataHandler.GetTestCase(_name).Result;
         }
         public DtoTestCase _program { get; set; }
         public string _name { get; set; }

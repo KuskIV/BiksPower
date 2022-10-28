@@ -22,11 +22,11 @@ namespace EnergyComparer.Handlers
         private readonly ILogger _logger;
         private IInsertExperimentRepository _insertRepository;
         private IGetExperimentRepository _getRepository;
-        private readonly IAdapterService _adapterService;
+        private readonly IOperatingSystemAdapter _adapterService;
         private readonly Func<IDbConnection> _connectionFactory;
         private readonly string _machineName;
 
-        public DataHandler(ILogger logger, IAdapterService adapterService, Func<IDbConnection> connectionFactory, string machineName)
+        public DataHandler(ILogger logger, IOperatingSystemAdapter adapterService, Func<IDbConnection> connectionFactory, string machineName)
         {
             _logger = logger;
             _adapterService = adapterService;
@@ -97,7 +97,7 @@ namespace EnergyComparer.Handlers
             await _insertRepository.InsertMeasurement(temperatures, id);
         }
 
-        public async Task<DtoTestCase> GetProgram(string name)
+        public async Task<DtoTestCase> GetTestCase(string name)
         {
             if (!await _getRepository.TestCaseExists(name))
             {
@@ -109,10 +109,10 @@ namespace EnergyComparer.Handlers
             return program;
         }
 
-        public async Task<DtoDut> GetSystem()
+        public async Task<DtoDut> GetDut()
         {
             var Name = _machineName;
-            var Os = Environment.OSVersion.Platform.ToString();
+            var Os = Constants.Os;
 
             if (!await _getRepository.DutExists(Os, Name))
             {
@@ -138,14 +138,14 @@ namespace EnergyComparer.Handlers
 
         public async Task IncrementVersionForSystem()
         {
-            var system = await GetSystem(); 
+            var system = await GetDut(); 
 
             await _insertRepository.IncrementVersion(system);
         }
 
         public async Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ITestCase program)
         {
-            var system = await GetSystem();
+            var system = await GetDut();
             var profilers = new List<Profiler>();
 
             if (await LastRunExistsForSystem(system, program))
@@ -174,7 +174,7 @@ namespace EnergyComparer.Handlers
 
         public async Task UpdateProfilers(string id, List<Profiler> profilers)
         {
-            var system = await GetSystem();
+            var system = await GetDut();
 
             var systemId = system.Id.ToString();
             var programId = id;
@@ -192,6 +192,16 @@ namespace EnergyComparer.Handlers
         {
             await _insertRepository.InsertTimeSeriesData(timeSeries);
         }
+
+        public async Task<int> ExperimentsRunOnCurrentSetup(string testCaseName, DtoProfiler energyProfiler, DtoDut dut, string language)
+        {
+            var testCase = await GetTestCase(testCaseName);
+            var config = await GetConfiguration(dut.Version);
+
+            var count = await _getRepository.GetExperimentCountForSetup(config.Id, dut.Id, testCase.Id, language, energyProfiler.Id);
+
+            return count;
+        }
     }
 
     public interface IDataHandler
@@ -201,13 +211,14 @@ namespace EnergyComparer.Handlers
         Task<DtoExperiment> GetExperiment(int programId, int systemId, int profilerId, ITestCase program, DateTime startTime, DateTime stopTime, int counter, int profilerCount, string firstProfiler, int id, long duration, int version);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<List<Profiler>> GetProfilerFromLastRunOrDefault(ITestCase program);
-        Task<DtoTestCase> GetProgram(string name);
-        Task<DtoDut> GetSystem();
+        Task<DtoTestCase> GetTestCase(string name);
+        Task<DtoDut> GetDut();
         Task IncrementVersionForSystem();
         void InitializeConnection();
         Task InsertRawData(DtoRawData data);
         Task InsertMeasurement(List<DtoMeasurement> endTemperatures, int id, DateTime date);
         Task UpdateProfilers(string id, List<Profiler> profilers);
         Task InsertTimeSeriesData(DtoTimeSeries timeSeries);
+        Task<int> ExperimentsRunOnCurrentSetup(string testCaeName, DtoProfiler energyProfiler, DtoDut dut, string language);
     }
 }

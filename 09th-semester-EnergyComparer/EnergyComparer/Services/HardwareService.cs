@@ -14,9 +14,9 @@ namespace EnergyComparer.Services
     {
         private readonly ILogger _logger;
         private readonly string _wifiAdapterName;
-        private readonly IAdapterService _adapterService;
+        private readonly IOperatingSystemAdapter _adapterService;
 
-        public HardwareHandler(ILogger logger, string wifiAdapterName, IAdapterService adapterService)
+        public HardwareHandler(ILogger logger, string wifiAdapterName, IOperatingSystemAdapter adapterService)
         {
             _logger = logger;
             _wifiAdapterName = wifiAdapterName;

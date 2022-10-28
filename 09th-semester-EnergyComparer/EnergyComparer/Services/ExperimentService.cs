@@ -27,24 +27,26 @@ namespace EnergyComparer.Services
 {
     public class ExperimentService : IExperimentService
     {
+        private readonly IDutAdapter _dutAdapter;
         private readonly ILogger _logger;
         private readonly bool _isProd;
         private IHardwareMonitorService _hardwareMonitorService;
-        private  IAdapterService _adapter;
+        private  IOperatingSystemAdapter _adapter;
         private IDataHandler _dataHandler;
         private  IHardwareHandler _hardwareHandler;
         private  IWifiService _wifiService;
         private readonly bool _saveToDb;
-        private readonly Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> _initializeOfflineDependencies;
+        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService)> _initializeOfflineDependencies;
         private readonly Func<IDataHandler> _initializeOnlineDependencies;
-        private readonly Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> _deleteDependencies;
+        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService)> _deleteDependencies;
         private readonly string _wifiAdapterName;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(ILogger logger, bool isProd, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IAdapterService, IHardwareHandler, IWifiService)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IAdapterService, IDataHandler, IHardwareHandler, IWifiService)> deleteDependencies)
+        public ExperimentService(IDutAdapter dutAdapter, ILogger logger, bool isProd, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService)> deleteDependencies)
         {
+            _dutAdapter = dutAdapter;
             _logger = logger;
 
             _isProd = isProd;
@@ -132,7 +134,7 @@ namespace EnergyComparer.Services
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
             var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var endBattery = _adapter.GetCharge();
+            var endBattery = _dutAdapter.GetCharge();
 
             return (endTemperatures, endBattery);
         }
@@ -196,7 +198,7 @@ namespace EnergyComparer.Services
             _logger.Information("The data saved to {path}", Constants.GetPathForSource(energyProfiler.GetName()));
 
             _logger.Information("The wifi was enabled, the data will now be parsed and saved");
-            var system = await _dataHandler.GetSystem();
+            var system = await _dataHandler.GetDut();
             var profiler = await _dataHandler.GetProfiler(energyProfiler);
             var profilerCount = IncrementAndGetProfilerCount(energyProfiler);
             var configuration = await _dataHandler.GetConfiguration(system.Version);
@@ -205,13 +207,19 @@ namespace EnergyComparer.Services
 
             if (_saveToDb)
             {
-                var startBattery = new List<DtoMeasurement>() { initialBattery };
-                var endBatteryCharge = new List<DtoMeasurement>() { endBattery };
-
                 await _dataHandler.InsertMeasurement(endTemperatures, experiment.Id, stopTime);
                 await _dataHandler.InsertMeasurement(initialTemperatures, experiment.Id, startTime);
-                await _dataHandler.InsertMeasurement(startBattery, experiment.Id, startTime);
-                await _dataHandler.InsertMeasurement(endBatteryCharge, experiment.Id, stopTime);
+
+
+                if (initialBattery != null && endBattery != null)
+                {
+                    var startBattery = new List<DtoMeasurement>() { initialBattery };
+                    var endBatteryCharge = new List<DtoMeasurement>() { endBattery };
+
+                    await _dataHandler.InsertMeasurement(startBattery, experiment.Id, startTime);
+                    await _dataHandler.InsertMeasurement(endBatteryCharge, experiment.Id, stopTime);
+                }
+
             }
 
             return experiment.Id;
@@ -243,7 +251,7 @@ namespace EnergyComparer.Services
 
             _logger.Information("Measuring initial cpu temperatures");
             var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var initialBattery = _adapter.GetCharge();
+            var initialBattery = _dutAdapter.GetCharge();
 
             return (initialTemperatures, initialBattery);
         }

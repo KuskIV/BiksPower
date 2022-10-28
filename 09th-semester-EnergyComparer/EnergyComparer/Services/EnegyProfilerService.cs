@@ -13,15 +13,16 @@ namespace EnergyComparer.Services
     public class EnergyProfilerService : IEnergyProfilerService
     {
         private readonly bool _iterateOverProfilers;
+        private readonly IDutAdapter _dutAdapter;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
-        private IntelPowerGadget _intelPowerGadget = new IntelPowerGadget();
 
-        public EnergyProfilerService(bool iterateOverProfilers)
+        public EnergyProfilerService(bool iterateOverProfilers, IDutAdapter dutAdapter)
         {
             _iterateOverProfilers = iterateOverProfilers;
+            _dutAdapter = dutAdapter;
         }
 
-        public async Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IAdapterService adapterService)
+        public async Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IOperatingSystemAdapter adapterService)
         {
             if (!_iterateOverProfilers)
             {
@@ -43,21 +44,12 @@ namespace EnergyComparer.Services
             }
         }
 
-        private IEnergyProfiler GetCurrentProfiler(ITestCase program, List<Profiler> profilers, IAdapterService adapterService)
-        {
-            var currentProfiler = GetCurrentProfiler(profilers);
-
-            UpdateProfilers(program, profilers);
-
-            return adapterService.MapEnergyProfiler(currentProfiler);
-        }
-
         private IEnergyProfiler GetDefaultProfiler()
         {
-            return _intelPowerGadget;
+            return _dutAdapter.GetDefaultProfiler();
         }
 
-        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(ITestCase program, List<Profiler> profilers, IAdapterService adapterService)
+        private IEnergyProfiler GetCurrentProfilerAndUpdateIsFirst(ITestCase program, List<Profiler> profilers, IOperatingSystemAdapter adapterService)
         {
             var currentProfiler = GetCurrentProfiler(profilers);
             var currentProfilerIndex = profilers.IndexOf(currentProfiler);
@@ -107,20 +99,20 @@ namespace EnergyComparer.Services
 
         private List<Profiler> GetProfilers(ITestCase program)
         {
-            var name = program.GetName();
+            var testCaseName = program.GetName();
 
-            if (!_profilers.ContainsKey(name))
+            if (!_profilers.ContainsKey(testCaseName))
             {
-                _profilers.Add(name, new List<Profiler>());
+                _profilers.Add(testCaseName, new List<Profiler>());
             }
 
-            return _profilers[name];
+            return _profilers[testCaseName];
         }
     }
 
     public interface IEnergyProfilerService
     {
-        Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IAdapterService adapterService);
+        Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IOperatingSystemAdapter adapterService);
         Task SaveProfilers(IDataHandler dataHandler);
     }
 }

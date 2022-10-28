@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace EnergyComparer.Repositories
 {
@@ -32,6 +33,22 @@ namespace EnergyComparer.Repositories
             var query = "SELECT * FROM Experiment WHERE Id = @id ";
 
             var response = await _connection.QueryFirstAsync<DtoExperiment>(query, new { id=id });
+
+            return response;
+        }
+
+        public async Task<int> GetExperimentCountForSetup(int configId, int dutId, int testCaseId, string language, int profilerId)
+        {
+            var query = "SELECT COUNT(*) FROM Experiment WHERE ConfigurationId = @configid AND DutId = @dutid AND TestCaseId = @testcaseid AND Language = @language AND ProfilerId = @profilerid";
+
+            var response = await _connection.ExecuteScalarAsync<int>(query, new
+            {
+                configid = configId,
+                dutid = dutId,
+                testcaseid = testCaseId,
+                language = language,
+                profilerid = profilerId
+            });
 
             return response;
         }
@@ -188,5 +205,6 @@ namespace EnergyComparer.Repositories
         Task<bool> TestCaseExists(string name);
         Task<bool> RunExistsForDut(DtoDut system, Programs.ITestCase program);
         Task<bool> DutExists(string os, string name);
+        Task<int> GetExperimentCountForSetup(int configId, int dutId, int testCaseId, string language, int profilerId);
     }
 }

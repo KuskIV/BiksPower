@@ -19,7 +19,7 @@ namespace EnergyComparer.TestCases
         {
             _name = "IdleCase";
             _language = ELanguage.CSharp.ToString();
-            _program = dataHandler.GetProgram(_name).Result;
+            _program = dataHandler.GetTestCase(_name).Result;
         }
 
 

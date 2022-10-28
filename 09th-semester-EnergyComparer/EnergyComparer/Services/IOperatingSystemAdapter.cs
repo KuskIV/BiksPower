@@ -5,18 +5,18 @@ using EnergyComparer.Programs;
 
 namespace EnergyComparer.Services
 {
-    public interface IAdapterService
+    public interface IOperatingSystemAdapter
     {
         void CreateFolder(string folder);
         void DisableWifi(string interfaceName);
         void EnableWifi(string interfaceName);
         List<string> GetAllRequiredPaths();
         List<string> GetAllSouces();
-        DtoMeasurement GetCharge();
-        ITestCase GetTestCase(IDataHandler dataHandler);
+        Task<ITestCase> GetTestCase(IDataHandler dataHandler);
         IEnergyProfiler MapEnergyProfiler(Profiler profiler);
         void Restart();
         bool ShouldStopExperiment();
+        void Shutdowm();
         void StopunneccesaryProcesses();
         Task WaitTillStableState();
     }

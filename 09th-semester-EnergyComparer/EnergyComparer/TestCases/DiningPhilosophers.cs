@@ -24,7 +24,7 @@ namespace EnergyComparer.Programs
         {
             _name = "DiningPhilosophers";
             _language = ELanguage.CSharp.ToString();
-            _program = dataHandler.GetProgram(_name).Result;
+            _program = dataHandler.GetTestCase(_name).Result;
         }
 
         public string GetLanguage()

@@ -16,21 +16,25 @@ using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
 {
-    public class AdapterWindowsLaptopService : IAdapterService
+    public class WindowsAdapter : IOperatingSystemAdapter
     {
+        private readonly IDutAdapter _dutAdapter;
         private readonly IHardwareMonitorService _hardwareMonitorService;
         private readonly ILogger _logger;
         private readonly bool _hasBattery;
         private readonly bool _isProd;
         private readonly bool _shouldRestart;
+        private readonly int _maxIterations;
 
-        public AdapterWindowsLaptopService(IHardwareMonitorService hardwareMonitorService, ILogger logger, bool hasBattery, bool isProd, bool shouldRestart)
+        public WindowsAdapter(IDutAdapter dutAdapter, IHardwareMonitorService hardwareMonitorService, ILogger logger, bool hasBattery, bool isProd, bool shouldRestart, int maxIterations)
         {
+            _dutAdapter = dutAdapter;
             _hardwareMonitorService = hardwareMonitorService;
             _logger = logger;
             _hasBattery = hasBattery;
             _isProd = isProd;
             _shouldRestart = shouldRestart;
+            _maxIterations = maxIterations;
         }
 
         public void EnableWifi(string interfaceName)
@@ -64,7 +68,7 @@ namespace EnergyComparer.Services
 
         public bool ShouldStopExperiment()
         {
-            var chargeRemaining = GetChargeRemaining();
+            var chargeRemaining = _dutAdapter.GetChargeRemaining();
             
             return chargeRemaining < Constants.ChargeLowerLimit;
         }
@@ -72,38 +76,6 @@ namespace EnergyComparer.Services
         public List<string> GetAllRequiredPaths()
         {
             return GetAllSouces().Select(x => Constants.GetPathForSource(x)).ToList();
-        }
-
-        public DtoMeasurement GetCharge()
-        {
-            var charge = -1;
-
-            if (_hasBattery)
-            {
-                charge = GetChargeRemaining();
-            }
-
-            return new DtoMeasurement()
-            {
-                Name = "Battery charge left",
-                Value = charge,
-                Type = EMeasurementType.BatteryChargeLeft.ToString()
-            };
-        }
-
-        private int GetChargeRemaining()
-        {
-            if (!_hasBattery) return 100;
-
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
-
-            foreach (ManagementObject mo in mos.Get())
-            {
-                var chargeRemaning = mo["EstimatedChargeRemaining"].ToString();
-                return int.Parse(chargeRemaning);
-            }
-
-            throw new NotImplementedException("Not battery found");
         }
 
         public void Restart()
@@ -114,30 +86,84 @@ namespace EnergyComparer.Services
             }
         }
 
-        public ITestCase GetTestCase(IDataHandler dataHandler)
+        public void Shutdowm()
         {
-            return new IdleCase(dataHandler);
-            //return new DiningPhilosophers(dataHandler);
+            if (_isProd)
+            {
+                Process.Start("ShutDown", "/s /t 0");
+            }
+        }
+
+        public async Task<ITestCase> GetTestCase(IDataHandler dataHandler)
+        {
+            var profilers = _dutAdapter.GetProfilers().ToList();
+            var dtoProfilers = await GetDtoProfilers(profilers, dataHandler);
+            var dut = await dataHandler.GetDut();
+            _logger.Information("The profiler(s) for the experiment are as following: {profilers}", string.Join(',', profilers.Select(x => x.GetName())));
+
+            if (!_isProd)
+            {
+                return new IdleCase(dataHandler);
+            }
+
+            var idleCase = new IdleCase(dataHandler);
+            if (!await AllProfilersExecutedEnough(dataHandler, dut, idleCase, dtoProfilers))
+                return idleCase;
+            var diningPhilosiphers = new DiningPhilosophers(dataHandler);
+            if (!await AllProfilersExecutedEnough(dataHandler, dut, diningPhilosiphers, dtoProfilers))
+                return diningPhilosiphers;
+
+            Shutdowm();
+            throw new Exception("The computer should have shut down by now.");
+        }
+
+        private async Task<bool> AllProfilersExecutedEnough(IDataHandler dataHandler, DtoDut dut, ITestCase idleCase, List<DtoProfiler> dtoProfilers)
+        {
+            foreach (var p in dtoProfilers)
+            {
+                if (_maxIterations > await dataHandler.ExperimentsRunOnCurrentSetup(idleCase.GetName(), p, dut, idleCase.GetLanguage()))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<List<DtoProfiler>> GetDtoProfilers(List<IEnergyProfiler> profilers, IDataHandler dataHandler)
+        {
+            var dtoProfilers = new List<DtoProfiler>();
+
+            foreach (var p in profilers)
+                dtoProfilers.Add(await dataHandler.GetProfiler(p));
+
+            return dtoProfilers;
         }
 
         public IEnergyProfiler MapEnergyProfiler(Profiler profiler)
         {
-            if (profiler.Name == EWindowsProfilers.IntelPowerGadget.ToString())
-            {
-                return new IntelPowerGadget();
-            }
-            else if (profiler.Name == EWindowsProfilers.E3.ToString())
-            {
-                return new E3();
-            }
-            else if (profiler.Name == EWindowsProfilers.HardwareMonitor.ToString())
-            {
-                throw new NotImplementedException("HardwareMonitor has not been implemented");
-            }
-            else
-            {
-                throw new NotImplementedException($"{profiler.Name} has not been implemented");
-            }
+            return _dutAdapter.GetProfilers(profiler.Name);
+
+            //if (profiler.Name == EWindowsProfilers.IntelPowerGadget.ToString())
+            //{
+            //    return new IntelPowerGadget();
+            //}
+            //else if (profiler.Name == EWindowsProfilers.E3.ToString())
+            //{
+            //    return new E3();
+            //}
+            //else if (profiler.Name == EWindowsProfilers.HardwareMonitor.ToString())
+            //{
+            //    return new HardwareMonitor();
+            //}
+            //else if (profiler.Name == EProfilers.Clam.ToString())
+            //{
+            //    return new Clam();
+            //}
+            //else
+            //{
+            //    throw new NotImplementedException($"{profiler.Name} has not been implemented");
+            //}
         }
 
         public async Task WaitTillStableState()
@@ -148,24 +174,10 @@ namespace EnergyComparer.Services
                 return;
             }
 
-            while (!EnoughBattery() || !LowEnoughCpuTemperature())
+            while (!_dutAdapter.EnoughBattery() || !LowEnoughCpuTemperature())
                 await Task.Delay(TimeSpan.FromMinutes(5));
 
             _logger.Information("Stable condition has been reached");
-        }
-
-        private bool EnoughBattery()
-        {
-            if (!_hasBattery) return true;
-
-            var battery = GetChargeRemaining();
-
-            var lowEnoughBattery = battery > Constants.ChargeLowerLimit && battery <= Constants.ChargeUpperLimit;
-
-            if (!lowEnoughBattery)
-                _logger.Warning("The battery is too low: {bat} (min: {min}, max: {max}). Checking again in 5 minutes", battery, Constants.ChargeLowerLimit, Constants.ChargeUpperLimit);
-
-            return lowEnoughBattery;
         }
 
         private bool LowEnoughCpuTemperature()
