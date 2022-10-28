@@ -1,5 +1,4 @@
-﻿using Autofac.Core.Activators.Reflection;
-using EnergyComparer.Handlers;
+﻿using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using ILogger = Serilog.ILogger;
@@ -178,6 +178,39 @@ namespace EnergyComparer.Services
                 _logger.Warning("The temperature is too high: {temp} (min: {min}, max: {max}). Checking again in 5 minutes", avgTemp, Constants.TemperatureLowerLimit, Constants.TemperatureUpperLimit);
 
             return isTempLowEnough;
+        }
+
+        public void StopunneccesaryProcesses()
+        {
+            if (_isProd)
+            {
+                _logger.Information("About to disable background processes");
+                var ps = PowerShell.Create();
+
+                foreach (var process in WindowsProcessesToStop())
+                {
+                    ps.AddCommand("Stop-Process").AddParameter("Name", process);
+                    ps.Invoke();
+                }
+            }
+            else
+            {
+                _logger.Information("No background processes will be disabled as it is dev");
+            }
+        }
+
+        public static List<string> WindowsProcessesToStop()
+        {
+            return new List<string>()
+            {
+                "AsusUpdateCheck",
+                "AsusDownLoadLicense",
+                "msedge",
+                "OneDrive",
+                "GitHubDesktop",
+                "Microsoft.Photos",
+                "",
+            };
         }
     }
 }

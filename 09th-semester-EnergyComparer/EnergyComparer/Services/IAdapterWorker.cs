@@ -17,6 +17,7 @@ namespace EnergyComparer.Services
         IEnergyProfiler MapEnergyProfiler(Profiler profiler);
         void Restart();
         bool ShouldStopExperiment();
+        void StopunneccesaryProcesses();
         Task WaitTillStableState();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CsvHelper.Configuration.Attributes;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,37 +10,62 @@ namespace EnergyComparer.Models
 {
     public class IntelPowerGadgetData
     {
-        public TimeSpan SystemTime { get; set; }
-        public double RDTSC { get; set; }
-        public double ElapsedTimesec { get; set; }
-        public double CPUUtilization { get; set; }
-        public double CPUFrequency_0MHz { get; set; }
-        public double ProcessorPower_0Watt { get; set; }
-        public double CumulativeProcessorEnergy_0Joules { get; set; }
-        public double CumulativeProcessorEnergy_0mWh { get; set; }
-        public double IAPower_0Watt { get; set; }
-        public double CumulativeIAEnergy_0Joules { get; set; }
-        public double CumulativeIAEnergy_0mWh { get; set; }
-        public double PackageTemperature_0C { get; set; }
-        public double PackageHot_0 { get; set; }
-        public double DRAMPower_0Watt { get; set; }
-        public double CumulativeDRAMEnergy_0Joules { get; set; }
-        public double CumulativeDRAMEnergy_0mWh { get; set; }
-        public double GTPower_0Watt { get; set; }
-        public double CumulativeGTEnergy_0Joules { get; set; }
-        public double CumulativeGTEnergy_0mWh { get; set; }
-        public double PackagePL1_0Watt { get; set; }
-        public double PackagePL2_0Watt { get; set; }
-        public double PackagePL4_0Watt { get; set; }
-        public double PlatformPsysPL1_0Watt { get; set; }
-        public double PlatformPsysPL2_0Watt { get; set; }
-        public double GTFrequencyMHz { get; set; }
-        public double GTUtilization { get; set; }
-        public double TotalElapsedTimeInSeconds { get; set; }
-        public double MeasuredRdtscFrequencyInGhz { get; set; }
-        public double AverageProcessorPower0InWatt { get; set; }
-        public double AverageIAPower0InWatt { get; set; }
-        public double AverageDRAMPower0InWatt { get; set; }
-        public double AverageGTPower0InWatt { get; set; }
+        public float TotalElapsedTimeInSeconds { get; set; } = -1;
+        public float MeasuredRdtscFrequencyInGhz { get; private set; } = -1;
+        public float CumulativeProcessorEnergyInJoules { get; private set; } = -1;
+        public float CumulativeProcessorEnergyInMwh { get; private set; } = -1;
+        public float AverageProcessorPowerWatt { get; private set; } = -1;
+        public float CumulativeIaEnergyInJoules { get; private set; } = -1;
+        public float CumulativeIaEnergyInMwh { get; private set; } = -1;
+        public float AverageIaPowerInWatt { get; private set; } = -1;
+        public float CumulativeDramEnergyInJoules { get; private set; } = -1;
+        public float CumulativeDramEnergyInMwh { get; private set; } = -1;
+        public float AverageDramPowerInWatt { get; private set; } = -1;
+        public float CumulativeGtEnergyInJoules { get; private set; } = -1;
+        public float CumulativeGtEnergyInMwh { get; private set; } = -1;
+        public float AverageGtPowerInWatt { get; private set; } = -1;
+
+        internal void AddAttributeToData(string row)
+        {
+            if (!row.Contains('='))
+            {
+                throw new NotImplementedException();
+            }
+
+            var value = row.Split('=')[1].Trim();
+
+            if (row.Contains("Total Elapsed Time (sec)"))
+                TotalElapsedTimeInSeconds = float.Parse(value);
+            else if (row.Contains("Measured RDTSC Frequency (GHz)"))
+                MeasuredRdtscFrequencyInGhz = float.Parse(value);
+            else if (row.Contains("Cumulative Processor Energy_0 (Joules)"))
+                CumulativeProcessorEnergyInJoules = float.Parse(value);
+            else if (row.Contains("Cumulative Processor Energy_0 (mWh)"))
+                CumulativeProcessorEnergyInMwh = float.Parse(value);
+            else if (row.Contains("Average Processor Power_0 (Watt)"))
+                AverageProcessorPowerWatt = float.Parse(value);
+            else if (row.Contains("Average Processor Power_0 (Watt)"))
+                AverageProcessorPowerWatt = float.Parse(value);
+            else if (row.Contains("Cumulative IA Energy_0 (Joules)"))
+                CumulativeIaEnergyInJoules = float.Parse(value);
+            else if (row.Contains("Cumulative IA Energy_0 (mWh)"))
+                CumulativeIaEnergyInMwh = float.Parse(value);
+            else if (row.Contains("Average IA Power_0 (Watt)"))
+                AverageIaPowerInWatt = float.Parse(value);
+            else if (row.Contains("Cumulative DRAM Energy_0 (Joules)"))
+                CumulativeDramEnergyInJoules = float.Parse(value);
+            else if (row.Contains("Cumulative DRAM Energy_0 (mWh)"))
+                CumulativeDramEnergyInMwh = float.Parse(value);
+            else if (row.Contains("Average DRAM Power_0 (Watt)"))
+                AverageDramPowerInWatt = float.Parse(value);
+            else if (row.Contains("Cumulative GT Energy_0 (Joules)"))
+                CumulativeGtEnergyInJoules = float.Parse(value);
+            else if (row.Contains("Cumulative GT Energy_0 (mWh)"))
+                CumulativeGtEnergyInMwh = float.Parse(value);
+            else if (row.Contains("Average GT Power_0 (Watt)"))
+                AverageGtPowerInWatt = float.Parse(value);
+            else
+                throw new NotImplementedException($"Row '{row}' does not include any known property");
+        }
     }
 }

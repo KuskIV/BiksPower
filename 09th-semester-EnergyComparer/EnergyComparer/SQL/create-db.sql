@@ -66,6 +66,15 @@ CREATE TABLE RawData(
     PRIMARY KEY (Id)
 ),
 
+CREATE TABLE TimeSeries(
+    Id int not NULL AUTO_INCREMENT,
+    ExperimentId int,
+    Value varchar(50000),
+    Time DATETIME(6),
+
+    PRIMARY KEY (Id)
+),
+
 CREATE TABLE Measurement(
     Id int not NULL AUTO_INCREMENT,
     ExperimentId int,
