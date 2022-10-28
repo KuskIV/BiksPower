@@ -114,7 +114,7 @@ namespace EnergyComparer.Repositories
 
         public async Task InsertDut(string name, string os, int version=1)
         {
-            var query = "INSERT IGNORE INTO System(Os, Version, Name) VALUES(@os, @version, @name)";
+            var query = "INSERT IGNORE INTO Dut(Os, Version, Name) VALUES(@os, @version, @name)";
 
             var count = await _connection.ExecuteAsync(query, new { os=os, version=version, name=name });
 
