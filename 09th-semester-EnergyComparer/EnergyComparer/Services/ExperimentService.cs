@@ -67,7 +67,6 @@ namespace EnergyComparer.Services
         {
             var stopwatch = new Stopwatch();
             var counter = 0;
-            _logger.Information("The energy profiler has started");
 
             var (initialTemperatures, initialBattery) = InitializeExperiment(energyProfiler);
 
@@ -75,6 +74,8 @@ namespace EnergyComparer.Services
             // https://stackoverflow.com/questions/4257372/how-to-force-garbage-collector-to-run
             RunGarbageCollection(); // TODO: Test if this makes a difference
 
+            _logger.Information("The energy profiler has started");
+            _logger.Information("The test case {testcase} will now run untill at least {time}", testCase.GetName(), DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = StartTimeAndProfiler(energyProfiler, stopwatch);
 
             counter = RunTestcase(testCase, counter, startTime);
@@ -100,7 +101,6 @@ namespace EnergyComparer.Services
 
         private DateTime StartTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
-            _logger.Information("The experiment will now run untill at least {time}", DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
             stopwatch.Start();

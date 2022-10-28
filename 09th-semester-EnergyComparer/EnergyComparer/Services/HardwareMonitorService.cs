@@ -133,7 +133,6 @@ namespace EnergyComparer.Services
 
         private float GetAverageValueForSensor(SensorType sensorType)
         {
-            Console.WriteLine("We are in GetAveageValueForSensor");
             UpdateCpuValues();
             
             if (_cpuValues.TryGetValue(sensorType, out var data))
