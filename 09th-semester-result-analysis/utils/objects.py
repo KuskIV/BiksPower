@@ -1,4 +1,5 @@
 import json
+from re import A
 
 
 class Experiment(object):
@@ -26,7 +27,7 @@ class Experiment(object):
                         d[0],
                         d[5],
                         d[6],
-                        d[0],
+                        d[8],
                         d[9],
                         d[10],
                         d[11],
@@ -151,6 +152,34 @@ class TestCase(object):
             raise Exception(f"Could not find any test case for '{test_case_name}'")
 
 
+class TimeSeries(object):
+    def __init__(self, experiment_id, repository):
+        data_tuple = (experiment_id,)
+        data = repository.query_one(
+            "SELECT * FROM TimeSeries WHERE ExperimentId = %s", data_tuple
+        )
+        # self.time = data[3]
+        # self.id = data[0]
+        # self.experiment_id = data[1]
+        # self.data_point = []
+        a = json.loads(data[2])
+        print()
+        print(type(a))
+        print("")
+        print("")
+        print("")
+        print("")
+
+        # for d in data[2]:
+        # self.data_point.append(DataPoint(d))
+
+
+class DataPoint(object):
+    def __init__(self, data):
+        # self.__dict__ = json.loads(data)
+        pass
+
+
 class RawData(object):
     def __init__(
         self,
@@ -177,6 +206,9 @@ class RawData(object):
             self.iteration = iteration
             self.first_profiler = first_profiler
             self.duration = duration
+
+            self.time_series = TimeSeries(experiment_id, repository)
+
             self.start_temperature = GetMeasurements(
                 experiment_id, "CpuTemperature", repository, min
             )

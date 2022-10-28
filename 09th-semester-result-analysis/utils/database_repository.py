@@ -10,3 +10,6 @@ class DataRepository:
 
     def query_one(self, query, data_tuple=()):
         return self.conn.query_one(query, data_tuple)
+
+    def close(self):
+        self.conn.close()
