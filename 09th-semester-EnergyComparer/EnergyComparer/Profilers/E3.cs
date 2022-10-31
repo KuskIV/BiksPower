@@ -138,7 +138,7 @@ namespace EnergyComparer.Profilers
         {
             string path = Constants.GetPathForSource(_source.ToString())+"\\temp\\";
             var Final = GetE3Data(path, "2");
-            var Result = Final.Where(x => GetTimeStamp(x).CompareTo(PrevMeasure) > 0).ToList();
+            result = Final.Where(x => GetTimeStamp(x).CompareTo(PrevMeasure) > 0).ToList();
             Console.WriteLine("Done");
         }
 
