@@ -20,7 +20,7 @@ namespace EnergyComparer.Models
             var data = _data.Where(x => x.Key.Contains("CPU Core"));
 
             if (data.Count() == 0)
-                throw new Exception("Unable to tage average, as no values were found.");
+                throw new Exception("Unable to take average, as no values were found.");
 
             return data.Average(x => x.Value);
         }

@@ -32,13 +32,12 @@ await e3.WaitForStop();
 //await E3Ex.Experiment9("Ex9", 300, 10);
 //Console.ReadLine();
 
-/*var service = new HardwareMonitorService(null);
 
-service.GetCoreTemperatures();
+var hwm = new HardwareMonitor();
 
 hwm.Start(DateTime.UtcNow);
 
-await Task.Delay(TimeSpan.FromSeconds(20));
+await Task.Delay(TimeSpan.FromSeconds(10));
 Console.WriteLine("retrying");
 hwm.Stop();
 
@@ -47,4 +46,4 @@ while (true)
     await Task.Delay(1000);
 }
 
-Console.WriteLine("Hello, World!");*/
+Console.WriteLine("Hello, World!");

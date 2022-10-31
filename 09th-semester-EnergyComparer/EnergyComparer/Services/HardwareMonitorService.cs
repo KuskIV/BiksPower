@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -13,12 +14,13 @@ namespace EnergyComparer.Services
 {
     public interface IHardwareMonitorService
     {
-        float GetAverageCpuLoad();
-        float GetAverageCpuTemperature();
+        float GetAverageCpuLoad(bool update = true);
+        float GetAverageCpuTemperature(bool update = true);
         List<DtoMeasurement> GetCoreTemperatures();
-        float GetCpuMemory();
-        float GetMaxTemperature();
-        float GetTotalLoad();
+        float GetCpuPowerMemory(bool update = true);
+        float GetMaxTemperature(bool update = true);
+        float GetTotalLoad(bool update = true);
+        void UpdateCpuValues();
     }
 
     public class HardwareMonitorService : IHardwareMonitorService, IDisposable
@@ -77,30 +79,176 @@ namespace EnergyComparer.Services
             return temperatures;
         }
 
-        public float GetAverageCpuTemperature()
+        // CPU LOAD
+        public float GetAverageCpuLoad(bool update = true)
         {
-            return GetAverageValueForSensor(SensorType.Temperature);
+            return GetAverageValueForSensor(SensorType.Load, update);
+        }
+        public float GetTotalLoad(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Total", update);
+        }
+        public float GetCpuCore1T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #1 Thread #1", update);
+        }
+        public float GetCpuCore1T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #1 Thread #2", update);
+        }
+        public float GetCpuCore2T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #2 Thread #1", update);
+        }
+        public float GetCpuCore2T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #2 Thread #2", update);
+        }
+        public float GetCpuCore3T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #3 Thread #1", update);
+        }
+        public float GetCpuCore3T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #3 Thread #2", update);
+        }
+        public float GetCpuCore4T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #4 Thread #1", update);
+        }
+        public float GetCpuCore4T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #4 Thread #2", update);
+        }
+        public float GetCpuCore5T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #5 Thread #1", update);
+        }
+        public float GetCpuCore5T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #5 Thread #2", update);
+        }
+        public float GetCpuCore6T1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #6 Thread #1", update);
+        }
+        public float GetCpuCore6T2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Load, "CPU Core #6 Thread #2", update);
         }
 
-        public float GetAverageCpuLoad()
+        // CPU core Temperatures
+        public float GetMaxTemperature(bool update = true)
         {
-            return GetAverageValueForSensor(SensorType.Load);
+            return GetValueForSensor(SensorType.Temperature, "Core Max", update);
+        }
+        public float GetAverageCpuTemperature(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "Core Average", update);
+        }
+        public float GetCpuPackageTemp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "Core Package", update);
+        }
+        public float GetCpuCore1Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #1", update);
+        }
+        public float GetCpuCore2Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #2", update);
+        }
+        public float GetCpuCore3Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #3", update);
+        }
+        public float GetCpuCore4Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #4", update);
+        }
+        public float GetCpuCore5Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #5", update);
+        }
+        public float GetCpuCore6Temp(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Temperature, "CPU Core #6", update);
+        }
+        
+        // CPU Core clock
+        public float GetCpuClockC1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #1", update);
+        }
+        public float GetCpuClockC2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #2", update);
+        }
+        public float GetCpuClockC3(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #3", update);
+        }
+        public float GetCpuClockC4(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #4", update);
+        }
+        public float GetCpuClockC5(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #5", update);
+        }
+        public float GetCpuClockC6(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "CPU Core #6", update);
+        }
+        public float GetCpuBusSpeed(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Clock, "Bus Speed", update);
+        }
+        
+        // Power
+        public float GetCpuPowerPacket(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Power, "CPU Package", update);
+        }
+        public float GetCpuPowerCores(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Power, "CPU Cores", update);
+        }
+        public float GetCpuPowerMemory(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Power, "CPU Memory", update);
         }
 
-        public float GetTotalLoad()
+        // Voltage
+        public float GetCpuVoltage(bool update = true)
         {
-            return GetValueForSensor(SensorType.Load, "CPU Total");
+            return GetValueForSensor(SensorType.Voltage, "CPU Core", update);
+        }
+        public float GetCpuVoltageC1(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #1", update);
+        }
+        public float GetCpuVoltageC2(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #2", update); 
+        }
+        public float GetCpuVoltageC3(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #3", update);
+        }
+        public float GetCpuVoltageC4(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #4", update);
+        }
+        public float GetCpuVoltageC5(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #5", update);
+        }
+        public float GetCpuVoltageC6(bool update = true)
+        {
+            return GetValueForSensor(SensorType.Voltage, "CPU Core #6", update);
         }
 
-        public float GetMaxTemperature()
-        {
-            return GetValueForSensor(SensorType.Temperature, "Core Max");
-        }
-
-        public float GetCpuMemory()
-        {
-            return GetValueForSensor(SensorType.Power, "CPU Memory");
-        }
 
         private bool TryGetValueForSensor(SensorType sensorType, string key, out float value)
         {
@@ -117,9 +265,12 @@ namespace EnergyComparer.Services
             }
         }
 
-        private float GetValueForSensor(SensorType sensorType, string key)
+        private float GetValueForSensor(SensorType sensorType, string key, bool update = true)
         {
-            UpdateCpuValues();
+            if (update)
+            {
+                UpdateCpuValues();
+            }
 
             if (_cpuValues.TryGetValue(sensorType, out var data) && data.TryGetValue(key, out var value))
             {
@@ -131,9 +282,12 @@ namespace EnergyComparer.Services
             }
         }
 
-        private float GetAverageValueForSensor(SensorType sensorType)
+        private float GetAverageValueForSensor(SensorType sensorType, bool update = true)
         {
-            UpdateCpuValues();
+            if (update)
+            {
+                UpdateCpuValues();
+            }
             
             if (_cpuValues.TryGetValue(sensorType, out var data))
             {
@@ -147,7 +301,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        private void UpdateCpuValues()
+        public void UpdateCpuValues()
         {
             _cpuValues = ResetCpuValues();
 
@@ -156,11 +310,19 @@ namespace EnergyComparer.Services
                 hardware.Update();
                 foreach (var sensor in hardware.Sensors)
                 {
-                    if (sensor.Value.HasValue && _cpuValues.TryGetValue(sensor.SensorType, out var value))
-                        value.AddValue(sensor.Name, sensor.Value);
+                    try
+                    {
+                        if (sensor.Value.HasValue && _cpuValues.TryGetValue(sensor.SensorType, out var value))
+                            value.AddValue(sensor.Name, sensor.Value);
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
                 }
             }
-        }
+        } // Break point bro
 
         private List<SensorType> GetAllSensorTypes()
         {
