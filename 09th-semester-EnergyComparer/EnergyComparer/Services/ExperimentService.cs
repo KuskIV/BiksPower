@@ -68,7 +68,6 @@ namespace EnergyComparer.Services
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ITestCase testCase)
         {
             var stopwatch = new Stopwatch();
-            var counter = 0;
 
             var (initialTemperatures, initialBattery) = InitializeExperiment(energyProfiler);
 
@@ -80,7 +79,7 @@ namespace EnergyComparer.Services
             _logger.Information("The test case {testcase} will now run untill at least {time}", testCase.GetName(), DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
             var startTime = StartTimeAndProfiler(energyProfiler, stopwatch);
 
-            counter = RunTestcase(testCase, counter, startTime);
+            var counter = RunTestcase(testCase, startTime);
 
             var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
 
@@ -110,22 +109,45 @@ namespace EnergyComparer.Services
             return startTime;
         }
 
-        private static int RunTestcase(ITestCase testCase, int counter, DateTime startTime)
+        private int RunTestcase(ITestCase testCase, DateTime startTime)
         {
-            if (testCase.GetName() == EWindowsProfilers.E3.ToString())
+            var output = "";
+
+            var basePath = GetTestCaseBasePath();
+
+            using (var p = new Process())
             {
-                throw new NotImplementedException("implement this");
-            }
-            else
-            {
-                while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
-                {
-                    testCase.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
-                    counter += 1;
-                }
+                p.StartInfo = new ProcessStartInfo(testCase.GetExecutablePath(basePath), Constants.DurationOfExperimentsInMinutes.ToString());
+
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.Start();
+                output = p.StandardOutput.ReadToEnd();
+
+                p.WaitForExit();
             }
 
-            return counter;
+            //var counter = 0;
+            //if (testCase.GetName() == EWindowsProfilers.E3.ToString())
+            //{
+            //}
+            //else
+            //{
+            //    while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
+            //    {
+            //        testCase.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
+            //        counter += 1;
+            //    }
+            //}
+            var counter = output.Trim().Split('\n').Last();
+            return int.Parse(counter); ;
+        }
+
+        private static DirectoryInfo GetTestCaseBasePath()
+        {
+            var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
+            //basePath.MoveTo("09th-semester-test-cases");
+            return basePath;
         }
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
