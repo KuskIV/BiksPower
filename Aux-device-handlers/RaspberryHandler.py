@@ -1,3 +1,4 @@
+import requests
 import http.client
 import json
 from re import M
@@ -26,14 +27,14 @@ GPIO.setup(Plug_Pins[Plug_SurfacePro], GPIO.OUT)
 GPIO.setup(Plug_Pins[Plug_SurfaceBook], GPIO.OUT)
 
 def PingServer():
-    conn = http.client.HTTPSConnection("localhost", 7166)
-    payload = ''
-    headers = {}
-    conn.request("GET",  "/api/RaspberryPi", payload, headers)
-    res = conn.getresponse()
-    data = res.read()
-    print(data.decode("utf-8"))
-    return json.loads(data)
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.26',
+    }
+
+    response = requests.get('http://www.stemlevelup.com/api/RaspberryPi', headers=headers, verify=False)
+    print(response)
+    return json.loads(response)
 
 def Switch(measures):
     for measure in measures:
