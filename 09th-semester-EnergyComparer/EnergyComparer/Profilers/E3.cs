@@ -53,21 +53,6 @@ namespace EnergyComparer.Profilers
         public async Task WaitForStart(DateTime date) 
         {
             dateTime = date;
-            //var clear = E3ClearProccesOld();
-            //clear.Start();
-            //string error = "";
-            //Console.WriteLine($"Clearing of old data starting attempts at {DateTime.UtcNow}");
-            //do
-            //{
-            //    error = clear.StandardError.ReadToEnd();
-            //    if (error.Length > 0) 
-            //    {
-            //        Console.WriteLine($"Error orrcurred at clearing trying again Time: {DateTime.UtcNow}");
-            //    }
-            //}
-            //while (error.Length > 0);
-            //Console.WriteLine($"Clearing completed at: {DateTime.UtcNow}");
-            //await clear.WaitForExitAsync();
             PrevMeasure = await WaitForBlock();
             Start(date);
         }
