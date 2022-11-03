@@ -1,6 +1,8 @@
+using EnergyComparer.DUTs;
 using EnergyComparer.Handlers;
 using EnergyComparer.Services;
 using EnergyComparer.Utils;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Data;
 using ILogger = Serilog.ILogger;
 
@@ -14,38 +16,41 @@ namespace EnergyComparer
         private IDataHandler _dataHandler;
         private int _iterationsBeforeRestart;
         private IEnergyProfilerService _profilerService;
+        private ExperimentHandler _experimentHandler;
         private string _wifiAdapterName;
         private string _machineName;
         private readonly bool _shouldRestart;
         private readonly bool _hasBattery;
         private readonly bool _isProd;
         private readonly bool _iterateOverProfilers;
-        private readonly int _totalIterations;
+        private readonly int _maxIterations;
         private readonly IDutAdapter _dutAdapter;
         private IOperatingSystemAdapter _adapterService;
-        private HardwareMonitorService _hardwareMonitorService;
+        private IHardwareMonitorService _hardwareMonitorService;
 
         public Worker(ILogger logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
-            
+
             _iterationsBeforeRestart = ConfigUtils.GetIterationsBeforeRestart(configuration);
+            _iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
+            _maxIterations = ConfigUtils.GetTotalIterations(configuration);
             _wifiAdapterName = ConfigUtils.GetWifiAdapterName(configuration);
-            _machineName = ConfigUtils.GetMachineName(configuration);
             _shouldRestart = ConfigUtils.GetShouldRestart(configuration);
+            _machineName = ConfigUtils.GetMachineName(configuration);
             _hasBattery = ConfigUtils.GetHasBattery(configuration);
             _isProd = ConfigUtils.GetIsProd(configuration);
-            _iterateOverProfilers = ConfigUtils.GetIterateOverProfilers(configuration);
-            _totalIterations = ConfigUtils.GetTotalIterations(configuration);
+            
             _dutAdapter = GetDutAdapter();
             _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
-            _experimentService = new ExperimentService(_dutAdapter, _logger, isProd, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
             
             InitializeDependencies();
+
+            _experimentService = new ExperimentService(_dutAdapter, _logger, isProd, _hasBattery, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
         }
 
 
@@ -55,13 +60,12 @@ namespace EnergyComparer
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
             CreateFolderIfNew();
 
-            // TODO: Kill backgroud services
-            await _adapterService.WaitTillStableState(); // TODO: Tie to one single core
+            await _experimentHandler.WaitTillStableState(); // TODO: Tie to one single core
             var isExperimentValid = true;
 
-            var currentTestCase = await _adapterService.GetTestCase(_dataHandler);
+            var currentTestCase = await _experimentHandler.GetTestCase(_dataHandler);
 
-            while (!_adapterService.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
+            while (!_experimentHandler.ShouldStopExperiment() && isExperimentValid && !EnoughEntires())
             {
                 var profiler = await _profilerService.GetNext(currentTestCase, _dataHandler, _adapterService);
 
@@ -88,31 +92,32 @@ namespace EnergyComparer
 
         public async Task EnableWifi()
         {
-            var (_, _, _, wifi) = InitializeOfflineDependencies();
+            var (_, _, _, wifi, _) = InitializeOfflineDependencies();
 
             await wifi.Enable(_isProd);
         }
 
-        private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService) InitializeOfflineDependencies()
+        private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler) InitializeOfflineDependencies()
         {
 
 
             var hardwareMonitorService = new HardwareMonitorService(_logger);
-            var adapter = new WindowsAdapter(_dutAdapter, _hardwareMonitorService, _logger, _hasBattery, _isProd, _shouldRestart, _totalIterations);
+            var adapter = new WindowsAdapter(_logger, _isProd, _shouldRestart);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
+            var experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, adapter, hardwareMonitorService);
 
-            return (hardwareMonitorService, adapter, energyProfilerService, wifiService);
+            return (hardwareMonitorService, adapter, energyProfilerService, wifiService, experimentHandler);
         }
 
         private IDataHandler InitializeOnlineDependencies()
         {
-            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName);
+            return new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
         }
 
-        private (IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService) DeleteDependencies()
+        private (IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler) DeleteDependencies()
         {
-            return (null, null, null, null, null);
+            return (null, null, null, null, null, null);
         }
 
         private IDbConnection GetDbConnectionFactory()
@@ -135,11 +140,11 @@ namespace EnergyComparer
         private void CreateFolderIfNew()
         {
             _logger.Information("Creating non-existing folders");
-            var paths = _adapterService.GetAllRequiredPaths();
+            var paths = _experimentHandler.GetAllRequiredPaths();
 
             foreach (var p in paths)
             {
-                _adapterService.CreateFolder(p);
+                _experimentHandler.CreateFolder(p);
             }
         }
 
@@ -149,23 +154,52 @@ namespace EnergyComparer
             {
                 if (_hasBattery)
                 {
+                    _logger.Information("The DUT is and '{dut}'", "WindowsLaptopAdapter");
                     return new WindowsLaptopAdapter(_iterateOverProfilers, _logger);
                 }
                 else
                 {
+                    _logger.Information("The DUT is and '{dut}'", "WindowsDesktopAdapter");
                     return new WindowsDesktopAdapter(_iterateOverProfilers, _logger);
                 }
             }
-
-            throw new NotImplementedException("Linux has not been implemented");
+            else
+            {
+                if (_hasBattery)
+                {
+                    _logger.Information("The DUT is and '{dut}'", "LinuxLaptopAdapter");
+                    return new LinuxLaptopAdapter();
+                }
+                else
+                {
+                    _logger.Information("The DUT is and '{dut}'", "LinuxDesktopAdapter");
+                    return new LinuxDesktopAdapter();
+                }
+            }
         }
 
         private void InitializeDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapterService = new WindowsAdapter(_dutAdapter, _hardwareMonitorService, _logger, _hasBattery, _isProd, _shouldRestart, _totalIterations);
-            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName);
+            _adapterService = InitializeAdapterService();
+            _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
+            _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService, _hardwareMonitorService);
             _dataHandler.InitializeConnection();
+        }
+
+        private IOperatingSystemAdapter InitializeAdapterService()
+        {
+            if (Constants.Os == "Win32NT")
+            {
+                _logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "WindowsAdapter");
+                return new WindowsAdapter(_logger, _isProd, _shouldRestart);
+            }
+            else
+            {
+                _logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "LinuxAdapter");
+                return new LinuxAdapter();
+            }
+
         }
 
         private void RemoveDependencies()

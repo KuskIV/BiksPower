@@ -1,12 +1,11 @@
 ﻿using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 
-namespace EnergyComparer.Services
+namespace EnergyComparer.DUTs
 {
     public interface IDutAdapter
     {
-        bool EnoughBattery();
-        DtoMeasurement GetCharge();
+        List<string> GetAllSoucres();
         int GetChargeRemaining();
         IEnergyProfiler GetDefaultProfiler();
         List<IEnergyProfiler> GetProfilers();

@@ -1,4 +1,5 @@
-﻿using EnergyComparer.Handlers;
+﻿using EnergyComparer.DUTs;
+using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
@@ -60,7 +61,7 @@ namespace EnergyComparer.Services
 
             UpdateProfilers(program, profilers);
 
-            return adapterService.MapEnergyProfiler(currentProfiler);
+            return _dutAdapter.GetProfilers(currentProfiler.Name);
         }
 
         private void UpdateProfilers(ITestCase program, List<Profiler> profilers)

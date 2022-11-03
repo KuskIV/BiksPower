@@ -35,7 +35,6 @@ namespace EnergyComparer.Profilers
 
         private readonly EWindowsProfilers _source;
         private System.Timers.Timer _timer;
-        private readonly int IntervalBetweenReadsInMiliSeconds = 100;
 
         public IntelPowerGadget()
         {
@@ -50,7 +49,7 @@ namespace EnergyComparer.Profilers
             var success = StartLog(path);
             EnsureSuccess(success);
 
-            _timer = new System.Timers.Timer(IntervalBetweenReadsInMiliSeconds); // 10 seconds
+            _timer = new System.Timers.Timer(Constants.IntervalBetweenReadsInMiliSeconds); // 10 seconds
             _timer.Elapsed += timer_Elapsed;
             _timer.Enabled = true;
         }

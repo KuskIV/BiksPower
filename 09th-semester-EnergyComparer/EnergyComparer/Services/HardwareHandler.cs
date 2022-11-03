@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EnergyComparer.DUTs;
 using Microsoft.AspNetCore.Hosting.Server;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -21,17 +22,6 @@ namespace EnergyComparer.Services
             _logger = logger;
             _wifiAdapterName = wifiAdapterName;
             _adapterService = adapterService;
-        }
-
-        public void EnsurePathsExists()
-        {
-            foreach (var path in _adapterService.GetAllRequiredPaths())
-            {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-            }
         }
 
         public void DisableWifi()
@@ -65,6 +55,5 @@ namespace EnergyComparer.Services
     {
         void DisableWifi();
         void EnableWifi();
-        void EnsurePathsExists();
     }
 }
