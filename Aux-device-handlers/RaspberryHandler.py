@@ -1,5 +1,4 @@
 import requests
-import http.client
 import json
 from re import M
 import RPI.GPIO as GPIO
@@ -10,6 +9,7 @@ CLAMP = "CLAMP"
 Plug_SurfacePro = "Plug_SurfacePro"
 Plug_SurfaceBook = "Plug_SurfaceBook"
 
+Toggle_detection = False
 HW_start = ""
 HW_end = ""
 
@@ -56,10 +56,17 @@ def Update():
     else:
         GPIO.output(Plug_Pins[Plug_SurfacePro], GPIO.LOW)
 
-    if(Active_measures[CLAMP]):
+    if(Active_measures[CLAMP] and not Toggle_detection):
+        Toggle_detection = True
         HW_start = datetime.now()
-    else:
-        HW_end = datetime.now() 
+    elif(Toggle_detection and not Active_measures[CLAMP]):
+        Toggle_detection = False
+        HW_end = datetime.now()
+        ExportMeasures(HW_start, HW_end)
+
+def ExportMeasures(fromDate, toDate):
+    
+    return 0
 
 while(True):
     measures = PingServer()
