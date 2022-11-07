@@ -43,18 +43,20 @@ namespace EnergyComparer.Profilers
             return EWindowsProfilers.E3.ToString();
         }
 
-        private void Start(DateTime date)
+        public void Start(DateTime date)
         {
+            _ = WaitForStart(date).Result;
             dateTime = date;
             string path = Constants.GetPathForSource(_source.ToString());
             E3Save(path, fileStart).Start();
         }
 
-        public async Task WaitForStart(DateTime date) 
+        public async Task<bool> WaitForStart(DateTime date) 
         {
             dateTime = date;
             PrevMeasure = await WaitForBlock();
-            Start(date);
+            //Start(date);
+            return true;
         }
         public async Task WaitForStop() 
         {
@@ -97,6 +99,7 @@ namespace EnergyComparer.Profilers
 
         public void Stop()
         {
+            _ = WaitForStop();
             CollectLogs();
         }
 
@@ -195,19 +198,14 @@ namespace EnergyComparer.Profilers
             }
         }
 
-        void IEnergyProfiler.Start(DateTime date)
+        public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
-            throw new NotImplementedException();
-        }
-
-        (DtoTimeSeries, DtoRawData) IEnergyProfiler.ParseData(string path, int experimentId, DateTime startTime)
-        {
-            DtoRawData dtoRawData = new DtoRawData();
+            DtoRawData dtoRawData = new();
             dtoRawData.Value = JsonSerializer.Serialize(result);
             dtoRawData.ExperimentId = experimentId;
             dtoRawData.Time = startTime;
 
-            DtoTimeSeries dtoTimeSeries = new DtoTimeSeries();
+            var dtoTimeSeries = new DtoTimeSeries();
             dtoTimeSeries.Value = "{}";
             dtoTimeSeries.ExperimentId = experimentId;
             dtoTimeSeries.Time = startTime;

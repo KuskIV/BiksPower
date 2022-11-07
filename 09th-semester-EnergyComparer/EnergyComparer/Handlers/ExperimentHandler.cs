@@ -68,12 +68,12 @@ namespace EnergyComparer.Handlers
 
             var battery = _dutAdapter.GetChargeRemaining();
 
-            var lowEnoughBattery = battery > Constants.ChargeLowerLimit && battery <= Constants.ChargeUpperLimit;
+            var enoughBattery = battery > Constants.ChargeLowerLimit;// && battery <= Constants.ChargeUpperLimit;
 
-            if (!lowEnoughBattery)
+            if (!enoughBattery)
                 _logger.Warning("The battery is too low: {bat} (min: {min}, max: {max}). Checking again in 5 minutes", battery, Constants.ChargeLowerLimit, Constants.ChargeUpperLimit);
 
-            return lowEnoughBattery;
+            return enoughBattery;
         }
 
         public List<string> GetAllRequiredPaths()
@@ -102,8 +102,15 @@ namespace EnergyComparer.Handlers
                 return;
             }
 
+            _logger.Information("Waiting for stable condition");
+
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
+            {
+                _logger.Information("Waiting for battery to be above {upperBattery} ({currentBattery}) and temperature to be below {upperTemperature} ({currentTemperature})",
+                    Constants.ChargeUpperLimit, GetCharge().Value, Constants.TemperatureUpperLimit, _hardwareMonitorService.GetAverageCpuTemperature());
+                _logger.Information("retrying in 5 minutes");
                 await Task.Delay(TimeSpan.FromMinutes(5));
+            }
 
             _logger.Information("Stable condition has been reached");
         }

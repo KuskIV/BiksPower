@@ -66,7 +66,7 @@ namespace EnergyComparer.Services
             
             var startTime = StartTimeAndProfiler(energyProfiler, stopwatch, testCase);
 
-            var counter = RunTestcase(testCase, startTime);
+            var counter = RunTestcase(testCase, startTime, energyProfiler);
 
             var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
 
@@ -80,8 +80,10 @@ namespace EnergyComparer.Services
 
         private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
+            if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString())
+                energyProfiler.Stop();
+
             var duration = stopwatch.ElapsedMilliseconds;
-            energyProfiler.Stop();
             var stopTime = DateTime.UtcNow;
 
             return (stopTime, duration);
@@ -94,12 +96,12 @@ namespace EnergyComparer.Services
 
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
+            energyProfiler.Start(startTime);    
             stopwatch.Start();
-            energyProfiler.Start(startTime);
             return startTime;
         }
 
-        private int RunTestcase(ITestCase testCase, DateTime startTime)
+        private int RunTestcase(ITestCase testCase, DateTime startTime, IEnergyProfiler energyProfiler)
         {
             var output = "";
 
@@ -113,9 +115,15 @@ namespace EnergyComparer.Services
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.Start();
+                
+                if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
+                    energyProfiler.Stop();
+                
                 output = p.StandardOutput.ReadToEnd();
 
+
                 p.WaitForExit();
+
             }
 
             //var counter = 0;
@@ -129,10 +137,19 @@ namespace EnergyComparer.Services
             return int.Parse(counter); ;
         }
 
-        private static DirectoryInfo GetTestCaseBasePath()
+        private DirectoryInfo GetTestCaseBasePath()
         {
-            var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
-            return basePath;
+            if (_isProd)
+            {
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.Parent;
+                return basePath;
+            }
+            else
+            {
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
+                return basePath;
+            }
+
         }
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
