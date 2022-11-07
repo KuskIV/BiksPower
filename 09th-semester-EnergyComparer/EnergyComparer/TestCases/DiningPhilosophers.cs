@@ -132,6 +132,11 @@ namespace EnergyComparer.Programs
         {
             return Diners.Single(d => d.CurrentlyHeldForks.Contains(fork)).ID;
         }
+
+        public string GetExecutablePath(DirectoryInfo path)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class Diner : IDisposable

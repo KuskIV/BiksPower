@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ILogger = Serilog.ILogger;
 
-namespace EnergyComparer.Services
+namespace EnergyComparer.DUTs
 {
     public class WindowsLaptopAdapter : IDutAdapter
     {
@@ -25,49 +25,18 @@ namespace EnergyComparer.Services
 
         public IEnergyProfiler GetDefaultProfiler()
         {
+            //return new RAPL();
             return _intelPowerGadget;
-        }
-
-        public DtoMeasurement GetCharge()
-        {
-            var charge = GetChargeRemaining();
-            return new DtoMeasurement()
-            {
-                Name = "Battery charge left",
-                Value = charge,
-                Type = EMeasurementType.BatteryChargeLeft.ToString()
-            };
-        }
-
-        public bool EnoughBattery()
-        {
-            var battery = GetChargeRemaining();
-
-            var lowEnoughBattery = battery > Constants.ChargeLowerLimit && battery <= Constants.ChargeUpperLimit;
-
-            if (!lowEnoughBattery)
-                _logger.Warning("The battery is too low: {bat} (min: {min}, max: {max}). Checking again in 5 minutes", battery, Constants.ChargeLowerLimit, Constants.ChargeUpperLimit);
-
-            return lowEnoughBattery;
         }
 
         public List<IEnergyProfiler> GetProfilers()
         {
             var profilers = new List<IEnergyProfiler>();
 
-            if (!_iterateOverProfilers)
-            {
-                profilers.Add(_intelPowerGadget);
-            }
-            else
-            {
-                profilers.Add(_intelPowerGadget);
-                profilers.Add(new E3());
-                profilers.Add(new HardwareMonitor());
-            }
-
-
-
+            profilers.Add(_intelPowerGadget);
+            profilers.Add(new E3());
+            profilers.Add(new HardwareMonitor());
+            
             return profilers;
         }
 
@@ -104,6 +73,11 @@ namespace EnergyComparer.Services
                 throw new NotImplementedException($"Profiler '{name}' is not valid for system");
             }
 
+        }
+
+        public List<string> GetAllSoucres()
+        {
+            return Enum.GetNames(typeof(EWindowsProfilers)).ToList();
         }
     }
 }

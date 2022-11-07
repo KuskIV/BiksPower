@@ -1,26 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper;
+using EnergyComparer.DUTs;
 using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
-using EnergyComparer.Repositories;
-using EnergyComparer.Utils;
-using MySqlX.XDevAPI.Common;
-using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
@@ -36,20 +20,23 @@ namespace EnergyComparer.Services
         private  IHardwareHandler _hardwareHandler;
         private  IWifiService _wifiService;
         private readonly bool _saveToDb;
-        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService)> _initializeOfflineDependencies;
+        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler)> _initializeOfflineDependencies;
         private readonly Func<IDataHandler> _initializeOnlineDependencies;
-        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService)> _deleteDependencies;
+        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler)> _deleteDependencies;
         private readonly string _wifiAdapterName;
+        private readonly bool _hasBattery;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
-        
+        private IExperimentHandler _experimentHalder;
+
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(IDutAdapter dutAdapter, ILogger logger, bool isProd, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService)> deleteDependencies)
+        public ExperimentService(IDutAdapter dutAdapter, ILogger logger, bool isProd, bool hasBattery, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler)> deleteDependencies)
         {
             _dutAdapter = dutAdapter;
             _logger = logger;
 
             _isProd = isProd;
+            _hasBattery = hasBattery;
             _wifiAdapterName = wifiAdapterName;
             _saveToDb = saveToDb;
             
@@ -60,6 +47,8 @@ namespace EnergyComparer.Services
             InitializeDependencies();
         }
 
+        
+
         public List<int> GetProfilerCounters()
         {
             return _profilerCounter.Values.ToList();
@@ -68,19 +57,16 @@ namespace EnergyComparer.Services
         public async Task<bool> RunExperiment(IEnergyProfiler energyProfiler, ITestCase testCase)
         {
             var stopwatch = new Stopwatch();
-            var counter = 0;
 
             var (initialTemperatures, initialBattery) = InitializeExperiment(energyProfiler);
 
             // TODO: Force garbage collection. This is however not recommended as it is expesive. but it out case it might make sense
             // https://stackoverflow.com/questions/4257372/how-to-force-garbage-collector-to-run
             RunGarbageCollection(); // TODO: Test if this makes a difference
+            
+            var startTime = StartTimeAndProfiler(energyProfiler, stopwatch, testCase);
 
-            _logger.Information("The energy profiler has started");
-            _logger.Information("The test case {testcase} will now run untill at least {time}", testCase.GetName(), DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
-            var startTime = StartTimeAndProfiler(energyProfiler, stopwatch);
-
-            counter = RunTestcase(testCase, counter, startTime);
+            var counter = RunTestcase(testCase, startTime, energyProfiler);
 
             var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
 
@@ -94,38 +80,76 @@ namespace EnergyComparer.Services
 
         private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
+            if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString())
+                energyProfiler.Stop();
+
             var duration = stopwatch.ElapsedMilliseconds;
-            energyProfiler.Stop();
             var stopTime = DateTime.UtcNow;
 
             return (stopTime, duration);
         }
 
-        private DateTime StartTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
+        private DateTime StartTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch, ITestCase testCase)
         {
+            _logger.Information("The energy profiler {name} has started", energyProfiler.GetName());
+            _logger.Information("The test case {testcase} will now run untill at least {time}", testCase.GetName(), DateTime.UtcNow.AddMinutes(Constants.DurationOfExperimentsInMinutes));
+
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
+            energyProfiler.Start(startTime);    
             stopwatch.Start();
-            energyProfiler.Start(startTime);
             return startTime;
         }
 
-        private static int RunTestcase(ITestCase testCase, int counter, DateTime startTime)
+        private int RunTestcase(ITestCase testCase, DateTime startTime, IEnergyProfiler energyProfiler)
         {
-            if (testCase.GetName() == EWindowsProfilers.E3.ToString())
+            var output = "";
+
+            var basePath = GetTestCaseBasePath();
+            var testCasePath = testCase.GetExecutablePath(basePath);
+
+            using (var p = new Process())
             {
-                throw new NotImplementedException("implement this");
+                p.StartInfo = new ProcessStartInfo(testCasePath, Constants.DurationOfExperimentsInMinutes.ToString());
+
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.Start();
+                
+                if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
+                    energyProfiler.Stop();
+                
+                output = p.StandardOutput.ReadToEnd();
+
+
+                p.WaitForExit();
+
+            }
+
+            //var counter = 0;
+            //    while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
+            //    {
+            //        testCase.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
+            //        counter += 1;
+            //    }
+
+            var counter = output.Trim().Split('\n').Last();
+            return int.Parse(counter); ;
+        }
+
+        private DirectoryInfo GetTestCaseBasePath()
+        {
+            if (_isProd)
+            {
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.Parent;
+                return basePath;
             }
             else
             {
-                while (startTime.AddMinutes(Constants.DurationOfExperimentsInMinutes) > DateTime.UtcNow)
-                {
-                    testCase.Run(); // TODO: Perhaps the run should return something, and use this for something (sestoft)
-                    counter += 1;
-                }
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
+                return basePath;
             }
 
-            return counter;
         }
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
@@ -134,14 +158,14 @@ namespace EnergyComparer.Services
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
             var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var endBattery = _dutAdapter.GetCharge();
+            var endBattery = _experimentHalder.GetCharge();
 
             return (endTemperatures, endBattery);
         }
 
         private async Task EnableWifiAndDependencies()
         {
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
@@ -150,7 +174,7 @@ namespace EnergyComparer.Services
 
         private void RunGarbageCollection()
         {
-            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService) = _deleteDependencies();
+            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHalder) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -251,7 +275,7 @@ namespace EnergyComparer.Services
 
             _logger.Information("Measuring initial cpu temperatures");
             var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var initialBattery = _dutAdapter.GetCharge();
+            var initialBattery =  _experimentHalder.GetCharge();
 
             return (initialTemperatures, initialBattery);
         }
@@ -259,7 +283,7 @@ namespace EnergyComparer.Services
         private void InitializeDependencies()
         {
             _dataHandler = _initializeOnlineDependencies();
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
         }
     }
 

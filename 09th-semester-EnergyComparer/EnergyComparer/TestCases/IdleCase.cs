@@ -22,6 +22,12 @@ namespace EnergyComparer.TestCases
             _program = dataHandler.GetTestCase(_name).Result;
         }
 
+        public string GetExecutablePath(DirectoryInfo path)
+        {
+            var fullPath = path.FullName + "\\09th-semester-test-cases\\TestCaseIdle\\TestCaseIdle\\bin\\Release\\net6.0\\TestCaseIdle.exe";
+
+            return fullPath;
+        }
 
         public string GetLanguage()
         {

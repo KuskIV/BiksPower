@@ -23,6 +23,11 @@ namespace EnergyComparer.Programs
 
         private string _language { get; set; }
 
+        public string GetExecutablePath(DirectoryInfo path)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetLanguage()
         {
             return _language;
