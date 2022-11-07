@@ -47,7 +47,7 @@ namespace EnergyComparer.Services
             }
             catch (Exception e)
             {
-                //_logger.Error(e, "Exception occured why trying to close computer");
+                _logger.Error(e, "Exception occured why trying to close computer");
             }
         }
 

@@ -41,8 +41,13 @@ namespace EnergyComparer
             _machineName = ConfigUtils.GetMachineName(configuration);
             _hasBattery = ConfigUtils.GetHasBattery(configuration);
             _isProd = ConfigUtils.GetIsProd(configuration);
+
+            if (_isProd && !SystemUtils.IsValidNameForProd(_machineName))
+            {
+                throw new Exception($"The machine name '{_machineName}' is not valid for prod");
+            }
             
-            _dutAdapter = GetDutAdapter();
+            _dutAdapter = SystemUtils.GetDutAdapter(_logger, _hasBattery, _iterateOverProfilers);
             _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
@@ -99,8 +104,6 @@ namespace EnergyComparer
 
         private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler) InitializeOfflineDependencies()
         {
-
-
             var hardwareMonitorService = new HardwareMonitorService(_logger);
             var adapter = new WindowsAdapter(_logger, _isProd, _shouldRestart);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
@@ -148,58 +151,13 @@ namespace EnergyComparer
             }
         }
 
-        private IDutAdapter GetDutAdapter()
-        {
-            if (Constants.Os == "Win32NT")
-            {
-                if (_hasBattery)
-                {
-                    _logger.Information("The DUT is and '{dut}'", "WindowsLaptopAdapter");
-                    return new WindowsLaptopAdapter(_iterateOverProfilers, _logger);
-                }
-                else
-                {
-                    _logger.Information("The DUT is and '{dut}'", "WindowsDesktopAdapter");
-                    return new WindowsDesktopAdapter(_iterateOverProfilers, _logger);
-                }
-            }
-            else
-            {
-                if (_hasBattery)
-                {
-                    _logger.Information("The DUT is and '{dut}'", "LinuxLaptopAdapter");
-                    return new LinuxLaptopAdapter();
-                }
-                else
-                {
-                    _logger.Information("The DUT is and '{dut}'", "LinuxDesktopAdapter");
-                    return new LinuxDesktopAdapter();
-                }
-            }
-        }
-
         private void InitializeDependencies()
         {
             _hardwareMonitorService = new HardwareMonitorService(_logger);
-            _adapterService = InitializeAdapterService();
+            _adapterService = SystemUtils.InitializeAdapterService(_logger, _isProd, _shouldRestart);
             _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
             _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService, _hardwareMonitorService);
             _dataHandler.InitializeConnection();
-        }
-
-        private IOperatingSystemAdapter InitializeAdapterService()
-        {
-            if (Constants.Os == "Win32NT")
-            {
-                _logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "WindowsAdapter");
-                return new WindowsAdapter(_logger, _isProd, _shouldRestart);
-            }
-            else
-            {
-                _logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "LinuxAdapter");
-                return new LinuxAdapter();
-            }
-
         }
 
         private void RemoveDependencies()
