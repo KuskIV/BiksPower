@@ -1,0 +1,36 @@
+// Welcome
+/*From the script objects behind the user interface can be accessed.
+The Script tool is intended to automate some operations to extend the GUI features. There is no need to setup all the interface from Script as the Script is saved together with other instruments in workspace. What can be done in the GUI, is easier to do there, like: setup channels, naming, static configuration. Then, use the Script to adjust parameters that need to be changed, such as changing PWM duty based on some scope measurements.
+
+See available objects/methods and examples in the Help tab.
+Use Ctrl+Space for auto completion and to reveal available functions. */1
+clear() // clear the output window
+open("Logger")
+Logger.Samples.value = 0.1
+Logger.History.value = 10 //Change to 2 hours
+while(true)
+{
+    Logger.single()
+    Logger.wait()
+    print("Done")
+    var data1 = Logger.Loggers.C1TrueRMS.data
+    var data2 = Logger.Loggers.C1ACRMS.data
+    var now = new Date();
+    var timetext = now.getYear()+"-"+ now.getMonth()+"-"+now.getDate()+"-"+now.getHours()+"-"+now.getMinutes()+"-"+now.getSeconds()+"-"+ now.getMilliseconds(); 
+    print(timetext)
+    var newfile = File("~/Desktop/Scope/measure_"+timetext+".csv")
+    newfile.append("C1TrueRMS ,")
+    newfile.appendLine("C1ACRMS")
+    for(i = 0; data1.length > i; i++)
+    {
+        newfile.append(data1[i]+" ,")
+        newfile.appendLine(data2[i])
+    }
+    Logger.Export(newfile, szView = "C1TrueRMS,C1ACRMS", fComments = true, fHeader = true, fLabel = true, fHeaderAsComment = false, szNotes = "")
+
+
+    //Logger.Export(newfile)
+    break
+}
+
+print("done")
