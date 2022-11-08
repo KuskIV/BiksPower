@@ -25,7 +25,6 @@ namespace EnergyComparer.Profilers
 
     // Try keeping the values in memory. Write to a list with all the objects and append to that list keeping it in memory by not saving
     // to a file. 
-    // Clear the list before appending again.
     public class HardwareMonitor : IEnergyProfiler
     {
         private string _path;
@@ -55,19 +54,14 @@ namespace EnergyComparer.Profilers
             _timer = new System.Timers.Timer(IntervalBetweenReadsInMiliSeconds);
             _timer.Elapsed += timer_Elapsed;
             _timer.Enabled = true;
-            Console.WriteLine("Timer has started");
         }
 
         public void Stop()
         {
             _timer.Enabled = false;
-            Console.WriteLine("Timer has stopped");
-            //GetListAsString(_DataList);
-            addJoulesMeasurements();
-          
         }
 
-    
+
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -173,31 +167,19 @@ namespace EnergyComparer.Profilers
                 cpuVoltageC4 = cpuVoltageC4,
                 cpuVoltageC5 = cpuVoltageC5,
                 cpuVoltageC6 = cpuVoltageC6,
-
-
-
             };
-            //AddRecordToXML(data);
-            //AddObjecttoXmlfile(data);
             getList(data);
         }
         public void getList(HardwareMonitorTimeSeries hmts)
         {
-           _DataList.Add(hmts);
+            _DataList.Add(hmts);
         }
 
-        public void getListAsString(List<HardwareMonitorTimeSeries> _DataList)
-        {
-            foreach (HardwareMonitorTimeSeries l in _DataList) Console.WriteLine("Cpu power pacjet: " + l.cpuPowerPacket);
-        }
-       
 
         // return DtoTimeSeries for each second. Reutrn DtoRawData with some kind of summazation over how much power we use.
         public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
-            //var serializedTimeSeriesData = System.Text.Json.JsonSerializer.Serialize(_DataList);
 
-            // Pass in the xml as a string to value
             var timeSeries = new DtoTimeSeries()
             {
                 ExperimentId = experimentId,
@@ -205,47 +187,45 @@ namespace EnergyComparer.Profilers
                 Value = JsonSerializer.Serialize(_DataList),
             };
 
-            addJoulesMeasurements();
-
             var rawData = new DtoRawData()
             {
                 ExperimentId = experimentId,
                 Time = startTime,
-                Value = JsonSerializer.Serialize(_DataList),
+                Value = JsonSerializer.Serialize(GetRawData()),
             };
-
             return (timeSeries, rawData);
         }
 
         /// <summary>
+        /// Calculate the total and average energy consumption in joules from watts.
         ///  W * (IntervalBetweenReadsInMiliSeconds/1000) + W * (IntervalBetweenReadsInMiliSeconds/1000) + .... 
         /// </summary>
         public (double, double) GetEnergyTotalJoules(List<float> floats, int interval)
         {
             double totalJoule = 0;
             int nRecords = 0;
-            double periodOfWatt = (double)interval/1000;
+            double periodOfWatt = (double)interval / 1000;
             foreach (var f in floats)
             {
                 totalJoule += (f * periodOfWatt);
                 nRecords++;
-                //Console.WriteLine(" totalJoule: " + totalJoule + " nRecords: " + nRecords);
             }
             double averageJoule = totalJoule / nRecords;
-            //Console.WriteLine("AverageJoule: " + averageJoule);
-            return(totalJoule, averageJoule);
-
+            return (totalJoule, averageJoule);
         }
-        public void addJoulesMeasurements()
+        
+        public List<HardwareMonitorData> GetRawData()
         {
             (double cpuPowerPacketTotalJ, double cpuPowerPacketAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerPacket).ToList(), IntervalBetweenReadsInMiliSeconds);
             (double cpuPowerCoresTotalJ, double cpuPowerCoresAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerCores).ToList(), IntervalBetweenReadsInMiliSeconds);
             (double cpuPowerMemoryTotalJ, double cpuPowerMemoryAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerMemory).ToList(), IntervalBetweenReadsInMiliSeconds);
-
-            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerPacketTotalJ = cpuPowerPacketTotalJ, cpuPowerPacketAverageJ = cpuPowerPacketAverageJ });
-            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerCoresTotalJ = cpuPowerCoresTotalJ, cpuPowerCoresAverageJ = cpuPowerCoresAverageJ });
-            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerMemoryTotalJ = cpuPowerMemoryTotalJ, cpuPowerMemoryAverageJ = cpuPowerMemoryAverageJ });
+            List<HardwareMonitorData> OHWrawData = new List<HardwareMonitorData>
+            {
+                new HardwareMonitorData { cpuPowerPacketTotalJ = cpuPowerPacketTotalJ, cpuPowerPacketAverageJ = cpuPowerPacketAverageJ, 
+                    cpuPowerCoresTotalJ = cpuPowerCoresTotalJ, cpuPowerCoresAverageJ = cpuPowerCoresAverageJ,
+                    cpuPowerMemoryTotalJ = cpuPowerMemoryTotalJ, cpuPowerMemoryAverageJ = cpuPowerMemoryAverageJ}
+            };
+            return OHWrawData;
         }
-
     }
 }
