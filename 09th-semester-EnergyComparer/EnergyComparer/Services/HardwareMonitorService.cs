@@ -14,10 +14,46 @@ namespace EnergyComparer.Services
 {
     public interface IHardwareMonitorService
     {
+        void Dispose();
         float GetAverageCpuLoad(bool update = true);
         float GetAverageCpuTemperature(bool update = true);
         List<DtoMeasurement> GetCoreTemperatures();
+        float GetCpuBusSpeed(bool update = true);
+        float GetCpuClockC1(bool update = true);
+        float GetCpuClockC2(bool update = true);
+        float GetCpuClockC3(bool update = true);
+        float GetCpuClockC4(bool update = true);
+        float GetCpuClockC5(bool update = true);
+        float GetCpuClockC6(bool update = true);
+        float GetCpuCore1T1(bool update = true);
+        float GetCpuCore1T2(bool update = true);
+        float GetCpuCore1Temp(bool update = true);
+        float GetCpuCore2T1(bool update = true);
+        float GetCpuCore2T2(bool update = true);
+        float GetCpuCore2Temp(bool update = true);
+        float GetCpuCore3T1(bool update = true);
+        float GetCpuCore3T2(bool update = true);
+        float GetCpuCore3Temp(bool update = true);
+        float GetCpuCore4T1(bool update = true);
+        float GetCpuCore4T2(bool update = true);
+        float GetCpuCore4Temp(bool update = true);
+        float GetCpuCore5T1(bool update = true);
+        float GetCpuCore5T2(bool update = true);
+        float GetCpuCore5Temp(bool update = true);
+        float GetCpuCore6T1(bool update = true);
+        float GetCpuCore6T2(bool update = true);
+        float GetCpuCore6Temp(bool update = true);
+        float GetCpuPackageTemp(bool update = true);
+        float GetCpuPowerCores(bool update = true);
         float GetCpuPowerMemory(bool update = true);
+        float GetCpuPowerPacket(bool update = true);
+        float GetCpuVoltage(bool update = true);
+        float GetCpuVoltageC1(bool update = true);
+        float GetCpuVoltageC2(bool update = true);
+        float GetCpuVoltageC3(bool update = true);
+        float GetCpuVoltageC4(bool update = true);
+        float GetCpuVoltageC5(bool update = true);
+        float GetCpuVoltageC6(bool update = true);
         float GetMaxTemperature(bool update = true);
         float GetTotalLoad(bool update = true);
         void UpdateCpuValues();

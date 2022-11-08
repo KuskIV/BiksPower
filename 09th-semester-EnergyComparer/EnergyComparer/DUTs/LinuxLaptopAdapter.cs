@@ -23,8 +23,9 @@ namespace EnergyComparer.DUTs
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "/bin/bash",
-                    Arguments = "cat /sys/class/power_supply/BAT1/capacity",
+                    //FileName = "/bin/bash",
+                    FileName = "/bin/cat",
+                    Arguments = "/sys/class/power_supply/BAT1/capacity",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true
@@ -34,10 +35,12 @@ namespace EnergyComparer.DUTs
             var output = "";
 
             proc.Start();
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                output += proc.StandardOutput.ReadLine();
-            }
+
+            var reader = proc.StandardOutput;
+
+            output = reader.ReadToEnd();
+
+            proc.WaitForExit();
 
             return int.Parse(output.Trim());
         }

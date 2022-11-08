@@ -29,14 +29,19 @@ namespace EnergyComparer.Profilers
     {
         private string _path;
         private System.Timers.Timer _timer;
-        private HardwareMonitorService _hardwareMonitorService;
-        private List<HardwareMonitorTimeSeries> _DataList = new();
+        private IHardwareMonitorService _hardwareMonitorService;
         private readonly int IntervalBetweenReadsInMiliSeconds = 500;
+        private List<HardwareMonitorTimeSeries> _DataList = new();
 
-        public HardwareMonitor()
+        public HardwareMonitor(IHardwareMonitorService hardwareMonitorService)
         {
-            _hardwareMonitorService = new HardwareMonitorService(null);
+            _hardwareMonitorService = hardwareMonitorService;
         }
+
+        //public HardwareMonitor()
+        //{
+        //    _hardwareMonitorService = new HardwareMonitorService(null);
+        //}
 
         public string GetName()
         {

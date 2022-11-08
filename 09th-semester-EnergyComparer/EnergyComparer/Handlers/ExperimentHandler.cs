@@ -88,6 +88,7 @@ namespace EnergyComparer.Handlers
 
         public void CreateFolder(string folder)
         {
+            _logger.Information("About to create folder {folder}", folder);
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);

@@ -24,7 +24,7 @@ namespace EnergyComparer
 
         public static string GetPathForSource(string source)
         {
-            return DataFolderPath + "\\" + DefaultFolderName + "\\" + source;
+            return DataFolderPath + "/" + DefaultFolderName + "/" + source;
         }
 
         public static string GetFilePathForSouce(string source, DateTime date)

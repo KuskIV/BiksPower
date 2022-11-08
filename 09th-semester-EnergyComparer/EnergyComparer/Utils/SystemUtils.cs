@@ -1,4 +1,5 @@
 ﻿using EnergyComparer.DUTs;
+using EnergyComparer.Services;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -25,19 +26,19 @@ namespace EnergyComparer.Utils
             }
         }
 
-        public static IDutAdapter GetDutAdapter(ILogger logger, bool hasBattery, bool iterateOverProfilers)
+        public static IDutAdapter GetDutAdapter(ILogger logger, bool hasBattery, bool iterateOverProfilers, IHardwareMonitorService hardwareMonitorService)
         {
             if (Constants.Os == "Win32NT")
             {
                 if (hasBattery)
                 {
                     logger.Information("The DUT is and '{dut}'", "WindowsLaptopAdapter");
-                    return new WindowsLaptopAdapter(iterateOverProfilers, logger);
+                    return new WindowsLaptopAdapter(iterateOverProfilers, logger, hardwareMonitorService);
                 }
                 else
                 {
                     logger.Information("The DUT is and '{dut}'", "WindowsDesktopAdapter");
-                    return new WindowsDesktopAdapter(iterateOverProfilers, logger);
+                    return new WindowsDesktopAdapter(iterateOverProfilers, logger, hardwareMonitorService);
                 }
             }
             else
@@ -53,6 +54,16 @@ namespace EnergyComparer.Utils
                     return new LinuxDesktopAdapter();
                 }
             }
+        }
+
+        public static IHardwareMonitorService GetHardwareMonitorService(ILogger logger)
+        {
+            if (Constants.Os == "Win32NT")
+            {
+                return new HardwareMonitorService(logger);
+            }
+
+            return null;
         }
 
         internal static bool IsValidNameForProd(string machineName)
