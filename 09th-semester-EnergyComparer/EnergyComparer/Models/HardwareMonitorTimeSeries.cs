@@ -73,14 +73,7 @@ namespace EnergyComparer.Models
         public float cpuVoltageC4 { get; set; }
         public float cpuVoltageC5 { get; set; }
         public float cpuVoltageC6 { get; set; }
-
-        public double cpuPowerPacketTotalJ { get; set; }
-        public double cpuPowerCoresTotalJ { get; set; }
-        public double cpuPowerMemoryTotalJ { get; set; }
-        public double cpuPowerPacketAverageJ { get; set; }
-        public double cpuPowerCoresAverageJ { get; set; }
-        public double cpuPowerMemoryAverageJ { get; set; }
-
+                
      }
 
 

@@ -25,8 +25,9 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
+            return new HardwareMonitor();
             //return new RAPL();
-            return _intelPowerGadget;
+            //return _intelPowerGadget;
         }
 
         public List<IEnergyProfiler> GetProfilers()
