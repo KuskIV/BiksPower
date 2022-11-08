@@ -183,7 +183,7 @@ namespace EnergyComparer.Services
 
         private async Task<bool> HandleResultsIfValid(IEnergyProfiler profiler, DateTime date, int experimentId)
         {
-            if (_hardwareMonitorService.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
+            if (_operatingSystemAdapter.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
             {
                 if (_saveToDb)
                 {

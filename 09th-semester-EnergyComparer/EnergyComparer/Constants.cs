@@ -27,6 +27,11 @@ namespace EnergyComparer
             return DataFolderPath + "/" + DefaultFolderName + "/" + source;
         }
 
+        public static bool IsWindows()
+        {
+            return Os == "Win32NT";
+        }
+
         public static string GetFilePathForSouce(string source, DateTime date)
         {
             string fileName = GetFileName(date);
