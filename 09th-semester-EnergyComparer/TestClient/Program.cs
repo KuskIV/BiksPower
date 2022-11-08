@@ -18,9 +18,9 @@ using TestClient.E3Experiment;
 
 //var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);
 
-var e3 = new E3();
+/*var e3 = new E3();
 await e3.WaitForStart(DateTime.UtcNow);
-await e3.WaitForStop();
+await e3.WaitForStop();*/
 
 
 //e3.Start(DateTime.UtcNow);
@@ -37,13 +37,5 @@ var hwm = new HardwareMonitor();
 
 hwm.Start(DateTime.UtcNow);
 
-await Task.Delay(TimeSpan.FromSeconds(10));
-Console.WriteLine("retrying");
+await Task.Delay(TimeSpan.FromSeconds(5));
 hwm.Stop();
-
-while (true)
-{
-    await Task.Delay(1000);
-}
-
-Console.WriteLine("Hello, World!");

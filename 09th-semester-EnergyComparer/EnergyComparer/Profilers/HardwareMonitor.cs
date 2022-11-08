@@ -1,22 +1,38 @@
 ﻿using EnergyComparer.Models;
 using EnergyComparer.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MySqlX.XDevAPI.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Management.Automation.Host;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Xml.XPath;
+using Serilog;
+using System.Text.Json;
 
 namespace EnergyComparer.Profilers
 {
+
+    // Try keeping the values in memory. Write to a list with all the objects and append to that list keeping it in memory by not saving
+    // to a file. 
+    // Clear the list before appending again.
     public class HardwareMonitor : IEnergyProfiler
     {
+        private string _path;
         private System.Timers.Timer _timer;
         private IHardwareMonitorService _hardwareMonitorService;
-        private readonly int IntervalBetweenReadsInSeconds = 1;
+        private readonly int IntervalBetweenReadsInMiliSeconds = 500;
+        private List<HardwareMonitorTimeSeries> _DataList = new();
 
         public HardwareMonitor(IHardwareMonitorService hardwareMonitorService)
         {
@@ -35,9 +51,8 @@ namespace EnergyComparer.Profilers
 
         public void Start(DateTime date)
         {
-            var path = Constants.GetFilePathForSouce(EWindowsProfilers.HardwareMonitor.ToString(), date);
-            CreateXMLFILE();
-            _timer = new System.Timers.Timer(1000 * IntervalBetweenReadsInSeconds); // 10 seconds
+            _path = Constants.GetFilePathForSouce(EWindowsProfilers.HardwareMonitor.ToString(), date);
+            _timer = new System.Timers.Timer(IntervalBetweenReadsInMiliSeconds);
             _timer.Elapsed += timer_Elapsed;
             _timer.Enabled = true;
             Console.WriteLine("Timer has started");
@@ -46,8 +61,13 @@ namespace EnergyComparer.Profilers
         public void Stop()
         {
             _timer.Enabled = false;
-            Console.WriteLine("Stopped");
+            Console.WriteLine("Timer has stopped");
+            //GetListAsString(_DataList);
+            addJoulesMeasurements();
+          
         }
+
+    
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -102,7 +122,7 @@ namespace EnergyComparer.Profilers
             var cpuVoltageC5 = _hardwareMonitorService.GetCpuVoltageC5(false);
             var cpuVoltageC6 = _hardwareMonitorService.GetCpuVoltageC6(false);
 
-            var data = new HardwareMonitorData()
+            var data = new HardwareMonitorTimeSeries()
             {
                 time = time,
                 // Load
@@ -157,45 +177,75 @@ namespace EnergyComparer.Profilers
 
 
             };
-
-            AddRecordToXML(data);
+            //AddRecordToXML(data);
+            //AddObjecttoXmlfile(data);
+            getList(data);
         }
-
-        public void CreateXMLFILE()
+        public void getList(HardwareMonitorTimeSeries hmts)
         {
-            XmlDocument doc = new XmlDocument();
-            Console.WriteLine("XML file created");
-            XmlElement root = doc.CreateElement("Sample");
-            doc.AppendChild(root);
-            doc.Save(@"D:\test.xml");
-            Console.WriteLine("New XML file saved");
+           _DataList.Add(hmts);
         }
 
-        // Implement that XML stays open until done.
-        public void AddRecordToXML(HardwareMonitorData hwmd)
+        public void getListAsString(List<HardwareMonitorTimeSeries> _DataList)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(@"D:\test.xml");
-            //Console.WriteLine("XML opened");
-            var rootNode = doc.GetElementsByTagName("Sample")[0];
-            var nav = rootNode.CreateNavigator();
-            var emptyNamepsaces = new XmlSerializerNamespaces(new[] {
-            XmlQualifiedName.Empty
-            });
-
-            using (var writer = nav.AppendChild())
-            {
-                var serializer = new XmlSerializer(hwmd.GetType());
-                writer.WriteWhitespace("");
-                serializer.Serialize(writer, hwmd, emptyNamepsaces);
-                writer.Close();
-            }
-            doc.Save(@"D:\test.xml");
+            foreach (HardwareMonitorTimeSeries l in _DataList) Console.WriteLine("Cpu power pacjet: " + l.cpuPowerPacket);
         }
+       
 
+        // return DtoTimeSeries for each second. Reutrn DtoRawData with some kind of summazation over how much power we use.
         public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
-            throw new NotImplementedException();
+            //var serializedTimeSeriesData = System.Text.Json.JsonSerializer.Serialize(_DataList);
+
+            // Pass in the xml as a string to value
+            var timeSeries = new DtoTimeSeries()
+            {
+                ExperimentId = experimentId,
+                Time = startTime,
+                Value = JsonSerializer.Serialize(_DataList),
+            };
+
+            addJoulesMeasurements();
+
+            var rawData = new DtoRawData()
+            {
+                ExperimentId = experimentId,
+                Time = startTime,
+                Value = JsonSerializer.Serialize(_DataList),
+            };
+
+            return (timeSeries, rawData);
         }
+
+        /// <summary>
+        ///  W * (IntervalBetweenReadsInMiliSeconds/1000) + W * (IntervalBetweenReadsInMiliSeconds/1000) + .... 
+        /// </summary>
+        public (double, double) GetEnergyTotalJoules(List<float> floats, int interval)
+        {
+            double totalJoule = 0;
+            int nRecords = 0;
+            double periodOfWatt = (double)interval/1000;
+            foreach (var f in floats)
+            {
+                totalJoule += (f * periodOfWatt);
+                nRecords++;
+                //Console.WriteLine(" totalJoule: " + totalJoule + " nRecords: " + nRecords);
+            }
+            double averageJoule = totalJoule / nRecords;
+            //Console.WriteLine("AverageJoule: " + averageJoule);
+            return(totalJoule, averageJoule);
+
+        }
+        public void addJoulesMeasurements()
+        {
+            (double cpuPowerPacketTotalJ, double cpuPowerPacketAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerPacket).ToList(), IntervalBetweenReadsInMiliSeconds);
+            (double cpuPowerCoresTotalJ, double cpuPowerCoresAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerCores).ToList(), IntervalBetweenReadsInMiliSeconds);
+            (double cpuPowerMemoryTotalJ, double cpuPowerMemoryAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerMemory).ToList(), IntervalBetweenReadsInMiliSeconds);
+
+            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerPacketTotalJ = cpuPowerPacketTotalJ, cpuPowerPacketAverageJ = cpuPowerPacketAverageJ });
+            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerCoresTotalJ = cpuPowerCoresTotalJ, cpuPowerCoresAverageJ = cpuPowerCoresAverageJ });
+            _DataList.Add(new HardwareMonitorTimeSeries { cpuPowerMemoryTotalJ = cpuPowerMemoryTotalJ, cpuPowerMemoryAverageJ = cpuPowerMemoryAverageJ });
+        }
+
     }
 }
