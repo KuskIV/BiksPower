@@ -22,12 +22,14 @@ namespace EnergyComparer.DUTs
         private readonly ILogger _logger;
         private readonly bool _isProd;
         private readonly bool _shouldRestart;
+        private readonly IHardwareMonitorService _hardwareMonitorService;
 
-        public WindowsAdapter(ILogger logger, bool isProd, bool shouldRestart)
+        public WindowsAdapter(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorService)
         {
             _logger = logger;
             _isProd = isProd;
             _shouldRestart = shouldRestart;
+            _hardwareMonitorService = hardwareMonitorService;
         }
 
         public void EnableWifi(string interfaceName)
@@ -101,6 +103,16 @@ namespace EnergyComparer.DUTs
                 "SkypeApp",
                 "SkypeBackgroundHost",
             };
+        }
+
+        public float GetAverageCpuTemperature()
+        {
+            return _hardwareMonitorService.GetAverageCpuTemperature();
+        }
+
+        public List<DtoMeasurement> GetCoreTemperatures()
+        {
+            return _hardwareMonitorService.GetCoreTemperatures();
         }
     }
 }
