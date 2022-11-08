@@ -5,6 +5,7 @@ using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
+using EnergyComparer.Utils;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
@@ -154,7 +155,7 @@ namespace EnergyComparer.Services
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
         {
-            _hardwareMonitorService = new HardwareMonitorService(_logger);
+            _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
             var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();

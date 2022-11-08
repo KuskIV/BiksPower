@@ -15,13 +15,18 @@ namespace EnergyComparer.Profilers
     public class HardwareMonitor : IEnergyProfiler
     {
         private System.Timers.Timer _timer;
-        private HardwareMonitorService _hardwareMonitorService;
+        private IHardwareMonitorService _hardwareMonitorService;
         private readonly int IntervalBetweenReadsInSeconds = 1;
 
-        public HardwareMonitor()
+        public HardwareMonitor(IHardwareMonitorService hardwareMonitorService)
         {
-            _hardwareMonitorService = new HardwareMonitorService(null);
+            _hardwareMonitorService = hardwareMonitorService;
         }
+
+        //public HardwareMonitor()
+        //{
+        //    _hardwareMonitorService = new HardwareMonitorService(null);
+        //}
 
         public string GetName()
         {

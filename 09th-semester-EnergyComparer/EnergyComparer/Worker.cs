@@ -46,8 +46,9 @@ namespace EnergyComparer
             {
                 throw new Exception($"The machine name '{_machineName}' is not valid for prod");
             }
-            
-            _dutAdapter = SystemUtils.GetDutAdapter(_logger, _hasBattery, _iterateOverProfilers);
+
+            _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(logger);
+            _dutAdapter = SystemUtils.GetDutAdapter(_logger, _hasBattery, _iterateOverProfilers, _hardwareMonitorService);
             _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
@@ -87,7 +88,7 @@ namespace EnergyComparer
 
             await _profilerService.SaveProfilers(_dataHandler);
             _adapterService.Restart();
-
+           
         }
 
         private void StopUnneccesaryProcesses()
@@ -104,8 +105,8 @@ namespace EnergyComparer
 
         private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler) InitializeOfflineDependencies()
         {
-            var hardwareMonitorService = new HardwareMonitorService(_logger);
-            var adapter = new WindowsAdapter(_logger, _isProd, _shouldRestart);
+            var hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
+            var adapter = SystemUtils.InitializeAdapterService(_logger, _isProd,  _shouldRestart);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
             var experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, adapter, hardwareMonitorService);
@@ -153,7 +154,7 @@ namespace EnergyComparer
 
         private void InitializeDependencies()
         {
-            _hardwareMonitorService = new HardwareMonitorService(_logger);
+            _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
             _adapterService = SystemUtils.InitializeAdapterService(_logger, _isProd, _shouldRestart);
             _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
             _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService, _hardwareMonitorService);
