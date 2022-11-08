@@ -12,17 +12,17 @@ namespace EnergyComparer.Utils
 {
     public class SystemUtils
     {
-        public static IOperatingSystemAdapter InitializeAdapterService(ILogger logger, bool isProd, bool shouldRestart)
+        public static IOperatingSystemAdapter InitializeAdapterService(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorServic)
         {
             if (Constants.Os == "Win32NT")
             {
                 logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "WindowsAdapter");
-                return new WindowsAdapter(logger, isProd, shouldRestart);
+                return new WindowsAdapter(logger, isProd, shouldRestart, hardwareMonitorServic);
             }
             else
             {
                 logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "LinuxAdapter");
-                return new LinuxAdapter();
+                return new LinuxAdapter(logger);
             }
         }
 

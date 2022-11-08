@@ -1,5 +1,6 @@
 ﻿using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,30 +20,7 @@ namespace EnergyComparer.DUTs
 
         public int GetChargeRemaining()
         {
-            var proc = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    //FileName = "/bin/bash",
-                    FileName = "/bin/cat",
-                    Arguments = "/sys/class/power_supply/BAT1/capacity",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
-            };
-
-            var output = "";
-
-            proc.Start();
-
-            var reader = proc.StandardOutput;
-
-            output = reader.ReadToEnd();
-
-            proc.WaitForExit();
-
-            return int.Parse(output.Trim());
+            return LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/power_supply/BAT1/capacity");
         }
 
         public IEnergyProfiler GetDefaultProfiler()
