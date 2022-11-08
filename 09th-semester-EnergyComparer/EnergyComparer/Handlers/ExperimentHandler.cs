@@ -21,10 +21,9 @@ namespace EnergyComparer.Handlers
         private readonly ILogger _logger;
         private readonly IDutAdapter _dutAdapter;
         private readonly IOperatingSystemAdapter _operatingSystemAdapter;
-        private readonly IHardwareMonitorService _hardwareMonitorService;
         private bool _hasBattery;
 
-        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter, IHardwareMonitorService hardwareMonitorService)
+        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter)
         {
             _isProd = isProd;
             _maxIterations = maxIterations;
@@ -33,7 +32,6 @@ namespace EnergyComparer.Handlers
             _logger = logger;
             _dutAdapter = dutAdapter;
             _operatingSystemAdapter = operatingSystemAdapter;
-            _hardwareMonitorService = hardwareMonitorService;
         }
 
         public DtoMeasurement GetCharge()
@@ -108,7 +106,7 @@ namespace EnergyComparer.Handlers
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
             {
                 _logger.Information("Waiting for battery to be above {upperBattery} ({currentBattery}) and temperature to be below {upperTemperature} ({currentTemperature})",
-                    Constants.ChargeUpperLimit, GetCharge().Value, Constants.TemperatureUpperLimit, _hardwareMonitorService.GetAverageCpuTemperature());
+                    Constants.ChargeUpperLimit, GetCharge().Value, Constants.TemperatureUpperLimit, _operatingSystemAdapter.GetAverageCpuTemperature());
                 _logger.Information("retrying in 5 minutes");
                 await Task.Delay(TimeSpan.FromMinutes(5));
             }
@@ -155,7 +153,7 @@ namespace EnergyComparer.Handlers
 
         private bool LowEnoughCpuTemperature()
         {
-            var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
+            var avgTemp = _operatingSystemAdapter.GetAverageCpuTemperature();
 
             var isTempLowEnough = avgTemp > Constants.TemperatureLowerLimit && avgTemp <= Constants.TemperatureUpperLimit;
 

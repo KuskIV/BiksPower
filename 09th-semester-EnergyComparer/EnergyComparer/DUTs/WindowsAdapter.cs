@@ -107,7 +107,7 @@ namespace EnergyComparer.DUTs
 
         public float GetAverageCpuTemperature()
         {
-            return _hardwareMonitorService.GetAverageCpuTemperature();
+            return _hardwareMonitorService.GetAverageCpuTemperature(update:true);
         }
 
         public List<DtoMeasurement> GetCoreTemperatures()

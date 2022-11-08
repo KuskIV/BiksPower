@@ -16,7 +16,7 @@ namespace EnergyComparer.Services
         private readonly ILogger _logger;
         private readonly bool _isProd;
         private IHardwareMonitorService _hardwareMonitorService;
-        private  IOperatingSystemAdapter _adapter;
+        private  IOperatingSystemAdapter _operatingSystemAdapter;
         private IDataHandler _dataHandler;
         private  IHardwareHandler _hardwareHandler;
         private  IWifiService _wifiService;
@@ -27,7 +27,7 @@ namespace EnergyComparer.Services
         private readonly string _wifiAdapterName;
         private readonly bool _hasBattery;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
-        private IExperimentHandler _experimentHalder;
+        private IExperimentHandler _experimentHandler;
 
         private string _firstProfiler { get; set; } = "";
 
@@ -158,15 +158,15 @@ namespace EnergyComparer.Services
             _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
-            var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var endBattery = _experimentHalder.GetCharge();
+            var endTemperatures = _operatingSystemAdapter.GetCoreTemperatures();
+            var endBattery = _experimentHandler.GetCharge();
 
             return (endTemperatures, endBattery);
         }
 
         private async Task EnableWifiAndDependencies()
         {
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
@@ -175,7 +175,7 @@ namespace EnergyComparer.Services
 
         private void RunGarbageCollection()
         {
-            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHalder) = _deleteDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHandler) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -275,8 +275,8 @@ namespace EnergyComparer.Services
             _wifiService.Disable(_isProd);
 
             _logger.Information("Measuring initial cpu temperatures");
-            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var initialBattery =  _experimentHalder.GetCharge();
+            var initialTemperatures = _operatingSystemAdapter.GetCoreTemperatures();
+            var initialBattery =  _experimentHandler.GetCharge();
 
             return (initialTemperatures, initialBattery);
         }
@@ -284,7 +284,7 @@ namespace EnergyComparer.Services
         private void InitializeDependencies()
         {
             _dataHandler = _initializeOnlineDependencies();
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
         }
     }
 

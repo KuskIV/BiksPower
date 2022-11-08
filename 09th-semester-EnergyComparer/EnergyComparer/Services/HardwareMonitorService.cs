@@ -89,6 +89,8 @@ namespace EnergyComparer.Services
 
         public List<DtoMeasurement> GetCoreTemperatures()
         {
+            UpdateCpuValues();
+
             var temperatures = new List<DtoMeasurement>();
             var defaultName = "CPU Core #";
 
