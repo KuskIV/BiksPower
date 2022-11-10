@@ -35,7 +35,25 @@ namespace EnergyComparer.Utils
 
             return long.Parse(output.Trim());
         }
-        
+
+        public static void ExecuteCommandAsSudo(string command, string argument)
+        {
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash", //"/bin/cat",
+                    Arguments = string.Format("-c \"sudo {0} {1}\"", command, argument), //argument, //"/sys/class/power_supply/BAT1/capacity",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            proc.WaitForExit();
+        }
+
         public static int ExecuteCommandGetOutput(string filename, string argument)
         {
             var proc = new Process

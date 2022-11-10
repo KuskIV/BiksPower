@@ -39,14 +39,14 @@ namespace EnergyComparer.DUTs
         {
             //var command = "sudo reboot";
 
-            LinuxUtils.ExecuteCommand("/sbin/reboot", "");
+            LinuxUtils.ExecuteCommandAsSudo("reboot", "");
 
             //ExecuteCommand(command);
         }
 
         public void Shutdowm()
         {
-            LinuxUtils.ExecuteCommand("/sbin/shutdown", "-n now");
+            LinuxUtils.ExecuteCommandAsSudo("shutdown", "-n now");
 
             //var command = "sudo shutdown -n now";
 
@@ -56,13 +56,6 @@ namespace EnergyComparer.DUTs
         public void StopunneccesaryProcesses()
         {
             _logger.Warning("LINUX stop background processes is yet to be implemented");
-        }
-
-        private static void ExecuteCommand(string command)
-        {
-            var startInfo = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = command, };
-            var proc = new Process() { StartInfo = startInfo, };
-            proc.Start();
         }
 
         public float GetAverageCpuTemperature()
