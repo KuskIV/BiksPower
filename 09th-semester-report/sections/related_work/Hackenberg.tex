@@ -1,4 +1,4 @@
-
+\todo{Fix comments from Lone from 27/10}
 In this study by Hackenberg et al.\cite{hackenberg2013} the accuracies of several different measuring instruments are tested. Here they compare several different hardware measurement approaches to RAPL for intel and APM for AMD CPUs. There is a focus on the granularity of the measurements with respect to the impact of the granularity on the results. For AC measurements it is found that sampling down to 50ms yields more accurate information. This is contrary to common beliefs that large capacitors in PSUs level out the consumption, at least from PSUs in 2013. They also show that a granularity of $1-20$ samples per second is necessary to analyse the consumption of the different phases of an application. This is also close to the granularity provided by RAPL and APM though with some worse accuracies.
 
 They conduct AC measurement with a ZES ZIMMER LMG450, IPMI and PDU from the outlet leading into the power supply, and DC measurement using a custom setup using a Hall sensor where they only measure the CPU, RAM and the motherboard excluding the fans and disk from the measurements.
