@@ -32,7 +32,14 @@ namespace EnergyComparer.Models
 
         public void AddValue(string key, float? value)
         {
-            _data.Add(key, value!.Value);
+            if (!_data.ContainsKey(key))
+            {
+                _data.Add(key, value!.Value);
+            }
+            else
+            {
+                Console.WriteLine($"{key} already existed with value {value} ({_data[key]})");
+            }
         }
     }
 }

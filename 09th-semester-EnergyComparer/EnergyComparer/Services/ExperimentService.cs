@@ -5,6 +5,7 @@ using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Programs;
+using EnergyComparer.Utils;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
@@ -15,7 +16,7 @@ namespace EnergyComparer.Services
         private readonly ILogger _logger;
         private readonly bool _isProd;
         private IHardwareMonitorService _hardwareMonitorService;
-        private  IOperatingSystemAdapter _adapter;
+        private  IOperatingSystemAdapter _operatingSystemAdapter;
         private IDataHandler _dataHandler;
         private  IHardwareHandler _hardwareHandler;
         private  IWifiService _wifiService;
@@ -26,7 +27,7 @@ namespace EnergyComparer.Services
         private readonly string _wifiAdapterName;
         private readonly bool _hasBattery;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
-        private IExperimentHandler _experimentHalder;
+        private IExperimentHandler _experimentHandler;
 
         private string _firstProfiler { get; set; } = "";
 
@@ -66,7 +67,7 @@ namespace EnergyComparer.Services
             
             var startTime = StartTimeAndProfiler(energyProfiler, stopwatch, testCase);
 
-            var counter = RunTestcase(testCase, startTime);
+            var counter = RunTestcase(testCase, startTime, energyProfiler);
 
             var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
 
@@ -80,8 +81,10 @@ namespace EnergyComparer.Services
 
         private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
+            if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString())
+                energyProfiler.Stop();
+
             var duration = stopwatch.ElapsedMilliseconds;
-            energyProfiler.Stop();
             var stopTime = DateTime.UtcNow;
 
             return (stopTime, duration);
@@ -94,12 +97,12 @@ namespace EnergyComparer.Services
 
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
+            energyProfiler.Start(startTime);    
             stopwatch.Start();
-            energyProfiler.Start(startTime);
             return startTime;
         }
 
-        private int RunTestcase(ITestCase testCase, DateTime startTime)
+        private int RunTestcase(ITestCase testCase, DateTime startTime, IEnergyProfiler energyProfiler)
         {
             var output = "";
 
@@ -113,9 +116,15 @@ namespace EnergyComparer.Services
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.Start();
+                
+                if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
+                    energyProfiler.Stop();
+                
                 output = p.StandardOutput.ReadToEnd();
 
+
                 p.WaitForExit();
+
             }
 
             //var counter = 0;
@@ -129,26 +138,35 @@ namespace EnergyComparer.Services
             return int.Parse(counter); ;
         }
 
-        private static DirectoryInfo GetTestCaseBasePath()
+        private DirectoryInfo GetTestCaseBasePath()
         {
-            var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
-            return basePath;
+            if (_isProd)
+            {
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.Parent;
+                return basePath;
+            }
+            else
+            {
+                var basePath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent;
+                return basePath;
+            }
+
         }
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
         {
-            _hardwareMonitorService = new HardwareMonitorService(_logger);
+            _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
-            var endTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var endBattery = _experimentHalder.GetCharge();
+            var endTemperatures = _operatingSystemAdapter.GetCoreTemperatures();
+            var endBattery = _experimentHandler.GetCharge();
 
             return (endTemperatures, endBattery);
         }
 
         private async Task EnableWifiAndDependencies()
         {
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
@@ -157,7 +175,7 @@ namespace EnergyComparer.Services
 
         private void RunGarbageCollection()
         {
-            (_hardwareMonitorService, _adapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHalder) = _deleteDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHandler) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -165,7 +183,7 @@ namespace EnergyComparer.Services
 
         private async Task<bool> HandleResultsIfValid(IEnergyProfiler profiler, DateTime date, int experimentId)
         {
-            if (_hardwareMonitorService.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
+            if (_operatingSystemAdapter.GetAverageCpuTemperature() < Constants.TemperatureUpperLimit)
             {
                 if (_saveToDb)
                 {
@@ -257,8 +275,8 @@ namespace EnergyComparer.Services
             _wifiService.Disable(_isProd);
 
             _logger.Information("Measuring initial cpu temperatures");
-            var initialTemperatures = _hardwareMonitorService.GetCoreTemperatures();
-            var initialBattery =  _experimentHalder.GetCharge();
+            var initialTemperatures = _operatingSystemAdapter.GetCoreTemperatures();
+            var initialBattery =  _experimentHandler.GetCharge();
 
             return (initialTemperatures, initialBattery);
         }
@@ -266,7 +284,7 @@ namespace EnergyComparer.Services
         private void InitializeDependencies()
         {
             _dataHandler = _initializeOnlineDependencies();
-            (_hardwareMonitorService, _adapter, _hardwareHandler, _wifiService, _experimentHalder) = _initializeOfflineDependencies();
+            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
         }
     }
 

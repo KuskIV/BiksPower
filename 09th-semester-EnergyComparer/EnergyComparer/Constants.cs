@@ -24,7 +24,12 @@ namespace EnergyComparer
 
         public static string GetPathForSource(string source)
         {
-            return DataFolderPath + "\\" + DefaultFolderName + "\\" + source;
+            return DataFolderPath + "/" + DefaultFolderName + "/" + source;
+        }
+
+        public static bool IsWindows()
+        {
+            return Os == "Win32NT";
         }
 
         public static string GetFilePathForSouce(string source, DateTime date)
@@ -32,7 +37,7 @@ namespace EnergyComparer
             string fileName = GetFileName(date);
             string root = GetPathForSource(source);
 
-            return new StringBuilder().AppendFormat(@"{0}\{1}.csv", root, fileName).ToString();
+            return new StringBuilder().AppendFormat(@"{0}/{1}.csv", root, fileName).ToString();
         }
 
         public static string GetFileName(DateTime date) 

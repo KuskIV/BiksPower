@@ -12,5 +12,7 @@ namespace EnergyComparer.DUTs
         void Restart();
         void Shutdowm();
         void StopunneccesaryProcesses();
+        float GetAverageCpuTemperature();
+        List<DtoMeasurement> GetCoreTemperatures();
     }
 }

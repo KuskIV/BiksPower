@@ -1,5 +1,6 @@
 ﻿using EnergyComparer.Models;
 using EnergyComparer.Profilers;
+using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,20 @@ namespace EnergyComparer.DUTs
     {
         private readonly bool _iterateOverProfilers;
         private readonly ILogger _logger;
+        private readonly IHardwareMonitorService _hardwareMonitorService;
         private IntelPowerGadget _intelPowerGadget = new IntelPowerGadget();
 
 
-        public WindowsLaptopAdapter(bool iterateOverProfilers, ILogger logger)
+        public WindowsLaptopAdapter(bool iterateOverProfilers, ILogger logger, IHardwareMonitorService hardwareMonitorService)
         {
             _iterateOverProfilers = iterateOverProfilers;
             _logger = logger;
+            _hardwareMonitorService = hardwareMonitorService;
         }
 
         public IEnergyProfiler GetDefaultProfiler()
         {
+            //return new HardwareMonitor(_hardwareMonitorService);
             //return new RAPL();
             return _intelPowerGadget;
         }
@@ -35,7 +39,7 @@ namespace EnergyComparer.DUTs
 
             profilers.Add(_intelPowerGadget);
             profilers.Add(new E3());
-            profilers.Add(new HardwareMonitor());
+            profilers.Add(new HardwareMonitor(_hardwareMonitorService));
             
             return profilers;
         }
@@ -62,7 +66,7 @@ namespace EnergyComparer.DUTs
             }
             else if (name == EWindowsProfilers.HardwareMonitor.ToString())
             {
-                return new HardwareMonitor();
+                return new HardwareMonitor(_hardwareMonitorService);
             }
             else if (name == EWindowsProfilers.E3.ToString())
             {

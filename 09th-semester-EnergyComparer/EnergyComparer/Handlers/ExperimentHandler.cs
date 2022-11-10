@@ -21,10 +21,9 @@ namespace EnergyComparer.Handlers
         private readonly ILogger _logger;
         private readonly IDutAdapter _dutAdapter;
         private readonly IOperatingSystemAdapter _operatingSystemAdapter;
-        private readonly IHardwareMonitorService _hardwareMonitorService;
         private bool _hasBattery;
 
-        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter, IHardwareMonitorService hardwareMonitorService)
+        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter)
         {
             _isProd = isProd;
             _maxIterations = maxIterations;
@@ -33,7 +32,6 @@ namespace EnergyComparer.Handlers
             _logger = logger;
             _dutAdapter = dutAdapter;
             _operatingSystemAdapter = operatingSystemAdapter;
-            _hardwareMonitorService = hardwareMonitorService;
         }
 
         public DtoMeasurement GetCharge()
@@ -68,12 +66,12 @@ namespace EnergyComparer.Handlers
 
             var battery = _dutAdapter.GetChargeRemaining();
 
-            var lowEnoughBattery = battery > Constants.ChargeLowerLimit && battery <= Constants.ChargeUpperLimit;
+            var enoughBattery = battery > Constants.ChargeLowerLimit;// && battery <= Constants.ChargeUpperLimit;
 
-            if (!lowEnoughBattery)
+            if (!enoughBattery)
                 _logger.Warning("The battery is too low: {bat} (min: {min}, max: {max}). Checking again in 5 minutes", battery, Constants.ChargeLowerLimit, Constants.ChargeUpperLimit);
 
-            return lowEnoughBattery;
+            return enoughBattery;
         }
 
         public List<string> GetAllRequiredPaths()
@@ -88,6 +86,7 @@ namespace EnergyComparer.Handlers
 
         public void CreateFolder(string folder)
         {
+            _logger.Information("About to create folder {folder}", folder);
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
@@ -102,8 +101,15 @@ namespace EnergyComparer.Handlers
                 return;
             }
 
+            _logger.Information("Waiting for stable condition");
+
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
+            {
+                _logger.Information("Waiting for battery to be above {upperBattery} ({currentBattery}) and temperature to be below {upperTemperature} ({currentTemperature})",
+                    Constants.ChargeUpperLimit, GetCharge().Value, Constants.TemperatureUpperLimit, _operatingSystemAdapter.GetAverageCpuTemperature());
+                _logger.Information("retrying in 5 minutes");
                 await Task.Delay(TimeSpan.FromMinutes(5));
+            }
 
             _logger.Information("Stable condition has been reached");
         }
@@ -147,7 +153,7 @@ namespace EnergyComparer.Handlers
 
         private bool LowEnoughCpuTemperature()
         {
-            var avgTemp = _hardwareMonitorService.GetAverageCpuTemperature();
+            var avgTemp = _operatingSystemAdapter.GetAverageCpuTemperature();
 
             var isTempLowEnough = avgTemp > Constants.TemperatureLowerLimit && avgTemp <= Constants.TemperatureUpperLimit;
 

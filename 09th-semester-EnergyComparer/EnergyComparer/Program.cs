@@ -18,7 +18,6 @@ public class Program
 
         try
         {
-
             await worker.ExecuteAsync(cts);
         }
         catch (Exception e)
