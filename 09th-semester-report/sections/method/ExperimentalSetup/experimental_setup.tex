@@ -19,7 +19,7 @@ Where $E_D$ is the dynamic energy consumption, $T_E$ is the duration of the prog
     \item After each batch, the DUT will be restarted and its setup phase is performed before continuing to the next batch.
     \item The memory of the Test cases will not exceed the DUT's main memory to avoid memory swapping
     \item Some baseline power usage will be established by measurements before and after the experiments
-    \item The generation of logging and debug messages can use more than 90\% of execution time, so this should be disabled
+    \item The generation of logging and debug messages can use more than 90\% of execution time, so this has to be disabled
     \item Disable power saving schemes so the CPU does not reduce its speed during benchmark runs.
     \item Reflect on results, and if they look slow/fast something might have been overlooked.
 \end{itemize}
@@ -28,7 +28,7 @@ Each batch will be tested on every DUT with each type of OS these being Windows 
 
 \subsection{What to Measure}
 
-The more thing to consider, is what test programs makes sense to run during the experiments. Based on what was found in \cref*{ch:related_work}, two common repositories are used, either Rosetta Code\cite*[]{rosetta_code} or the Computer Language Benchmark Game\cite*[]{benchmark_game}. Here different benchmarks are choosen to represent a varying set of benchmarks, w.r.t. different size benchmark, and benchmarks where the load is on different parts of the DUT. In the end the choices were made based on the work by Lima et al\cite*[]{greenland2016statistical} and Koedijk et al.\cite*[]{Koedijk2022diff}, where the benchmarks tested either the CPU, memory, synchronization, IO or disk. The choies for the experiments conducted in this work, can be seen in \cref*{tab:benchmarks}.
+The more thing to consider, is what test programs makes sense to run during the experiments. Based on what was found in \cref*{ch:related_work}, two common repositories are used, either Rosetta Code\cite*[]{rosetta_code} or the Computer Language Benchmark Game\cite*[]{benchmark_game}. Here different benchmarks are chosen to represent a varying set of benchmarks, w.r.t. different size benchmark, and benchmarks where the load is on different parts of the DUT. In the end the choices were made based on the work by Lima et al\cite*[]{greenland2016statistical} and Koedijk et al.\cite*[]{Koedijk2022diff}, where the benchmarks tested either the CPU, memory, synchronization, IO or disk. The choices for the experiments conducted in this work, can be seen in \cref*{tab:benchmarks}.
 
 \input{tabels/benchmarks.tex}
 

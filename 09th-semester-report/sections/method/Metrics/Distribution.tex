@@ -2,7 +2,7 @@
 Here the methods for statistically comparing the distribution of the different measurements will be elaborated on and explained.
 
 \paragraph{Shapiro-Wilk}
-One of the most common preconditions for statistical tests is that the data should be a normal distribution for the results to work optimally. To test if a distribution is a normal distribution a normalcy test can be used. While there are many different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
+One of the most common preconditions for statistical tests is that the data has to be in a normal distribution for the results to work optimally. To test if a distribution is a normal distribution a normalcy test can be used. While there are many different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
 
 \begin{equation}
     W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}
@@ -24,7 +24,7 @@ If the $H_0$ for the Shapiro-Wilk test could not be rejected it is assumed that 
 In the case of a normal distribution, a student's t-test can be utilized to check if there is a statistically significant difference between the two samples. There are a couple of conditions when using a t-test these are:
 
 \begin{itemize}
-    \item Both samples should follow a normal Distribution.
+    \item Both samples have to follow a normal Distribution.
     \item The samples are independent of each other.
     \item Both the samples should also have approximately the same variance.
 \end{itemize}

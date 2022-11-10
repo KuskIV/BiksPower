@@ -8,8 +8,8 @@ A majority of these studies have been conducted on Linux devices as they utilize
 
 Windows has been the most commonly used operating system for personal computers for many years. This is still true at the time of writing, and it is therefore hugely relevant how energy is consumed on these devices as they make up a large percent of computers world-wide\cite{OSShare}. To monitor energy consumption on windows other programs with similar functionality to Intel RAPL exist, but the actual reliability of these solutions are, to our knowledge, yet to be verified in the literature.
 
-The aim of this work is therefore to compare different measuring instruments. To explore how the solutions for windows perform. 
-In order to verify these results, hardware based measuring instruments will be utilized and the results will also be compared to Intel RAPL.
+The aim of this work is therefore to compare different measuring instruments and to explore how the solutions for windows perform. 
+In order to verify these results, a hardware based measuring instrument will be utilized and the results will also be compared to Intel RAPL.
 
 In order to conduct this study, four different research questions are formulated. The overall idea is to compare different measuring instruments on the same Device Under Test(DUT), but as some measuring instruments require specific hardware or claims to perform better on certain hardware, this will also be explored. This means several measuring instruments will measure the energy consumption on several different DUTs in order to see how well they perform compared to Intel RAPL and a hardware based measuring instrument.
 
@@ -21,7 +21,7 @@ In order to conduct this study, four different research questions are formulated
     \item \textbf{RQ4:} How does the test case measurement compare between different DUTs?
 \end{itemize}
 
-\textbf{RQ1} signifies that several DUTs should be tested and a way method to compare the results is required, so that the different measuring instruments can be compared in \textbf{RQ2}. Based on \textbf{RQ2}, an analysis will be made comparing the measuring instruments with each other based on performance on Linux and Windows (\textbf{RQ3}) and different DUTs with different hardware components (\textbf{RQ4}).
+\textbf{RQ1} signifies that several DUTs have to be tested and a method to compare the results is required, so that the different measuring instruments can be compared in \textbf{RQ2}. Based on \textbf{RQ2}, an analysis will be made comparing the measuring instruments with each other based on performance on Linux and Windows (\textbf{RQ3}) and different DUTs with different hardware components (\textbf{RQ4}).
 
 This work is motivated by how most research today mainly uses Intel RAPL on Linux\cite[]{Rasmussen2021,Pereira2017,Theilmann2022,Lindholt2022}, and those who do not, have the disclaimer of not knowing how accurate their results actually are\cite[]{Bruce2015ReducingEC, Ozturk2019, Unlu2021}. This is despite claims from Microsoft how their tool (Enegy Esimation Engine (E3)) can perform with 98\% accuracy in certain cases\cite[]{E3WinHec}. The main contribution of this work is to create an independent source of how accurate different measuring instruments are.
 
