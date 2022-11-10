@@ -1,9 +1,9 @@
 \subsection{E3 Experiments}
 
-The following experiments with E3 is therefore about addressing some of the discoveries made about E3 in our initial testing with it, that seems to contradict what is stated in the available sources\cite[]{E3Doc,E3Video,E3WinHec}. 
+The following experiments with E3 is therefore about addressing some of the discoveries made in our initial testing with E3, which  contradict what is stated in the available sources\cite[]{E3Doc,E3Video,E3WinHec}. 
 
-This experiment was conducted based on observations made, which did not match with the sources, with respect to the log file. This is because, in the output log file for E3, each row represents the measurement of one application in a given state. For this, it is claimed that an application needs to run for $1-5$ minutes before it is added to the file. Based on observations this is not entirely true, as the lowest measurements were observed to be as low as either $0$ or $1.554$ seconds. The largest durations found in the test is $902$ minutes, neither of which matches the claim. Another thing about the measurements is that E3 counts the same application as different measurements depending on its status.
-Example \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique} will all be counted as different measurements in E3. While the first three seem fairly self-explanatory the last one is less so. By looking at the processes in it and the frequency of their repetition over a period, we have concluded that these are background processes of windows. 
+This experiment was conducted based on observations made, which did not match with the sources, with respect to the log file. This is because, in the output log file for E3, each row represents the measurement of one application in a given state. For this, it is claimed that an application needs to run for $1-5$ minutes before it is added to the file. Based on observations this is not entirely true, as the lowest measurements were observed to be as low as either $0$ or $1.554$ seconds. The largest durations found in the test is $902$ minutes, which does not match the claim. Another aspect about the measurements is that E3 counts the same application as different measurements depending on its status.
+Example \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique} will all be counted as different measurements in E3. While the first three seem fairly self-explanatory the last one is less so. By looking at the processes in it and the frequency of their repetition over a period, we have concluded that these are background processes which do not have an user interface. 
 Because of the uncertainty about how E3 functions it was deemed necessary to conduct some experiments to determine when a process is included in the measurements and when it is not. To carry out these experiments different scenarios were formulated, which will be covered now.
 
 % \begin{itemize}
@@ -42,7 +42,7 @@ Because of the uncertainty about how E3 functions it was deemed necessary to con
 The first three scenarios are designed to see when measurements are recorded by E3. The initial expectation is that E3 uses the start and exit timestamp for the measured process. Because of this, expectations are that scenarios 1 and 2 would not record a process, but that scenario 3 would.
 
 \paragraph{Findings}
-Scenario 1 resulted in several measurements of the process, which contradicts the expectations for the experiment. Similar results were obtained from scenario 2, which again was contrary to our expectations. These results point to that E3 instead of using the start and end times instead take several snapshots of the process over some time period. Exactly how frequent these snapshots are will be tested later. 
+Scenario 1 resulted in several measurements of the process, which contradicts the expectations for the experiment. Similar results were obtained from scenario 2, which again was contrary to our expectations. In scenario 3 the process is not found at all which is contrary to our expectation. These results point to that E3 instead of using the start and end times instead take several snapshots of the process over some time period. Exactly how frequent these snapshots are will be tested later. 
 
 \paragraph{State Change}
 
@@ -82,16 +82,16 @@ Scenario 9 is designed to test if E3 uses a per-application sampling rate or if 
 Scenario 9 confirmed our understanding of E3 as it showed that a new snapshot was taken exactly at the start of a minute.
 
 \paragraph {Recommended usage}
-From the experiments, several aspects of E3 has been uncovered, and an understanding of its inner working has become deep enough to utilize for further experimentation. The important part that was learned:
+From the experiments, several aspects of E3 has been uncovered, and an understanding of its inner working has become deep enough to utilize for further experimentation. The important aspects that was learned is summarized below:
 
 %% 
 
 \begin{itemize}
     \item E3 takes the measurements in snapshots, which contain every active process on the system
-    \item If a program is active during the snapshot it will be included, unaffected by process start or exit
-    \item Change state will only be recorded once every block\todo{What is a block? eli5}
+    \item If a program is active during the snapshot it will be included, unaffected by process start, but it has to be active at the end of the snapshot
+    \item Change state will only be recorded once every snapshot
     \item The separate measures of the same instance in different states are linked
     \item Each snapshot is taken at the start of every minute
 \end{itemize} 
 
-Taking these findings into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usage to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that $2$ minutes would be adequate for isolating the measurements.    
+Taking these discoveries into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usage to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that $2$ minutes is adequate for isolating the measurements.    
