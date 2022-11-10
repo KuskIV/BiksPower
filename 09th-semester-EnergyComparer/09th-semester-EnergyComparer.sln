@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnergyComparer", "EnergyCom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreHardwareMonitorLib", "LibreHardwareMonitor\LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj", "{32DF6396-4686-4D5E-93CA-28301F70B56B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{B94B4A49-E3B0-4363-8D84-0CFF8F87B371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestClient", "TestClient\TestClient.csproj", "{B94B4A49-E3B0-4363-8D84-0CFF8F87B371}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyComparer.UnitTests", "EnergyComparer.UnitTests\EnergyComparer.UnitTests.csproj", "{5E037770-B254-4B35-8012-A9576852C4E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B94B4A49-E3B0-4363-8D84-0CFF8F87B371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B94B4A49-E3B0-4363-8D84-0CFF8F87B371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B94B4A49-E3B0-4363-8D84-0CFF8F87B371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E037770-B254-4B35-8012-A9576852C4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E037770-B254-4B35-8012-A9576852C4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E037770-B254-4B35-8012-A9576852C4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E037770-B254-4B35-8012-A9576852C4E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

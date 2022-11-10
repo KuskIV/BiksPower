@@ -171,10 +171,16 @@ namespace EnergyComparer.Profilers
             var path = "/" + _raplBasePath + "intel-rapl" + folderName + "/energy_uj";
             var currentValue = LinuxUtils.ExecuteCommandGetOutputAsSudo("cat", path);
 
+            return GetMeasurementFromValue(folderName, currentValue);
+        }
+
+        public (decimal, decimal) GetMeasurementFromValue(string folderName, long currentValue)
+        {
             long initialValue;
             if (!_initialValues.TryGetValue(folderName, out initialValue))
             {
                 _initialValues.Add(folderName, currentValue);
+                initialValue = currentValue;
             }
 
             long previousValue;

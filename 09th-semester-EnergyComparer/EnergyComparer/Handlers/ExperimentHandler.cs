@@ -16,6 +16,7 @@ namespace EnergyComparer.Handlers
     public class ExperimentHandler : IExperimentHandler
     {
         private readonly bool _isProd;
+        private readonly string _machineName;
         private readonly int _maxIterations;
         private readonly bool _iterateOverProfilers;
         private readonly ILogger _logger;
@@ -23,9 +24,10 @@ namespace EnergyComparer.Handlers
         private readonly IOperatingSystemAdapter _operatingSystemAdapter;
         private bool _hasBattery;
 
-        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter)
+        public ExperimentHandler(bool isProd, int maxIterations, bool hasBattery, bool iterateOverProfilers, ILogger logger, IDutAdapter dutAdapter, IOperatingSystemAdapter operatingSystemAdapter, string machineName)
         {
             _isProd = isProd;
+            _machineName = machineName;
             _maxIterations = maxIterations;
             _hasBattery = hasBattery;
             _iterateOverProfilers = iterateOverProfilers;
@@ -103,6 +105,8 @@ namespace EnergyComparer.Handlers
 
             _logger.Information("Waiting for stable condition");
 
+            EnablePlug();
+
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
             {
                 _logger.Information("Waiting for battery to be above {upperBattery} ({currentBattery}) and temperature to be below {upperTemperature} ({currentTemperature})",
@@ -111,7 +115,53 @@ namespace EnergyComparer.Handlers
                 await Task.Delay(TimeSpan.FromMinutes(5));
             }
 
+            DisablePlug();
+
             _logger.Information("Stable condition has been reached");
+        }
+
+        private void DisablePlug()
+        {
+            if (_machineName == Constants.SurfaceBook)
+            {
+                _logger.Information("Disabling plug for {name}", _machineName);
+                PlugHandlers.DisableSurfaceBook();
+            }
+            else if (_machineName == Constants.SurfacePro)
+            {
+                _logger.Information("Disabling plug for {name}", _machineName);
+                PlugHandlers.DisableSurfacePro();
+            }
+            else if (_machineName == Constants.PowerKomplett)
+            {
+                _logger.Information("Plug cannot be disabled for {name}", _machineName);
+            }
+            else
+            {
+                throw new NotImplementedException($"Machine with name {_machineName} is not implemented");
+            }
+        }
+
+        private void EnablePlug()
+        {
+            if (_machineName == Constants.SurfaceBook)
+            {
+                _logger.Information("Enabling plug for {name}", _machineName);
+                PlugHandlers.EnableSurfaceBook();
+            }
+            else if (_machineName == Constants.SurfacePro)
+            {
+                _logger.Information("Enabling plug for {name}", _machineName);
+                PlugHandlers.EnableSurfacePro();
+            }
+            else if (_machineName == Constants.PowerKomplett)
+            {
+                _logger.Information("Plug cannot be enabelled for {name}", _machineName);
+            }
+            else
+            {
+                throw new NotImplementedException($"Machine with name {_machineName} is not implemented");
+            }
         }
 
         public async Task<ITestCase> GetTestCase(IDataHandler dataHandler)

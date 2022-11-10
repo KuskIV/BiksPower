@@ -109,7 +109,7 @@ namespace EnergyComparer
             var adapter = SystemUtils.InitializeAdapterService(_logger, _isProd,  _shouldRestart, hardwareMonitorService);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
-            var experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, adapter);
+            var experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, adapter, _machineName);
 
             return (hardwareMonitorService, adapter, energyProfilerService, wifiService, experimentHandler);
         }
@@ -157,7 +157,7 @@ namespace EnergyComparer
             _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
             _adapterService = SystemUtils.InitializeAdapterService(_logger, _isProd, _shouldRestart, _hardwareMonitorService);
             _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
-            _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService);
+            _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService, _machineName);
             _dataHandler.InitializeConnection();
         }
 

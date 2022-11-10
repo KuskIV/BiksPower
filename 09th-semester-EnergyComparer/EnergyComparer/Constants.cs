@@ -21,6 +21,9 @@ namespace EnergyComparer
         public static string DatetimeFormat = "s";
         public static string DataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         public static string Os = Environment.OSVersion.Platform.ToString();
+        public static string SurfacePro = "Surface4Pro";
+        public static string SurfaceBook = "SurfaceBook";
+        public static string PowerKomplett = "PowerKomplett";
 
         public static string GetPathForSource(string source)
         {
