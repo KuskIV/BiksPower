@@ -167,11 +167,19 @@ namespace EnergyComparer.Profilers
             var path = "/" + _raplBasePath + "intel-rapl" + folderName + "/energy_uj";
             var currentValue = LinuxUtils.ExecuteCommandGetOutputAsSudo("cat", path);
 
+            Console.WriteLine($"---------------\n{folderName}");
+
             long initialValue;
             if (!_initialValues.TryGetValue(folderName, out initialValue))
             {
+                Console.WriteLine($"Initial value set to {currentValue}");
                 _initialValues.Add(folderName, currentValue);
                 initialValue = currentValue;
+            }
+            else
+            {
+                Console.WriteLine($"Initial value fetched as {initialValue}");
+
             }
 
             long previousValue;
@@ -179,11 +187,17 @@ namespace EnergyComparer.Profilers
             {
                 previousValue = 0;
                 _previousValues.Add(folderName, previousValue);
+                Console.WriteLine($"previous value set to {previousValue}");
+
+            }
+            {
+                Console.WriteLine($"previous value fetched as {initialValue}");
             }
 
             var value = currentValue - initialValue - previousValue;
 
             _previousValues[folderName] = value;
+            Console.WriteLine($"previous value updated to {value}");
 
             return (value / 1000000, currentValue / 1000000);
         }
