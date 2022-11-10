@@ -30,7 +30,7 @@ namespace EnergyComparer.TestCases
             }
             else
             {
-                return path.FullName +
+                return path.Parent.FullName +
                        "/09th-semester-test-cases/TestCaseIdle/TestCaseIdle/bin/Release/net6.0/linux-x64/TestCaseIdle";
             }
         }
