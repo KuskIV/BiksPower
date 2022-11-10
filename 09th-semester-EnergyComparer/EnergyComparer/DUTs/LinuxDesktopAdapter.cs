@@ -30,7 +30,7 @@ namespace EnergyComparer.DUTs
             var profilers = new List<IEnergyProfiler>();
 
             profilers.Add(new RAPL());
-            profilers.Add(new Clam());
+            profilers.Add(new Clamp());
 
             return profilers;
         }
@@ -41,9 +41,9 @@ namespace EnergyComparer.DUTs
             {
                 return new RAPL();
             }
-            else if (name == EProfilers.Clam.ToString())
+            else if (name == EProfilers.Clamp.ToString())
             {
-                return new Clam();
+                return new Clamp();
             }
             else
             {

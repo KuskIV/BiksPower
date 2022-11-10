@@ -5,6 +5,7 @@ using CsvHelper;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.Services;
+using EnergyComparer.Handlers;
 using Microsoft.AspNetCore.Routing;
 using Serilog.Core;
 using System.Formats.Asn1;
@@ -14,15 +15,23 @@ using System.Security.Cryptography.Xml;
 using TestClient.E3Experiment;
 
 
+HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
+await Task.Delay(1000 * 30);
+HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+await HardwareMeasurementHandler.GetHardwareState();
+
+
+//PlugHandlers PlugHandlers = new PlugHandlers();
+//PlugHandlers.GetPlugs()["SurfacePro"].TurnOff();
+//await Task.Delay(1000 * 10);
+//PlugHandlers.GetPlugs()["SurfacePro"].TurnOn();
 //var intel = new IntelPowerGadget();
 
 //var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);
 
-/*var e3 = new E3();
-await e3.WaitForStart(DateTime.UtcNow);
-await e3.WaitForStop();*/
-
-
+//var e3 = new E3();
+//await e3.WaitForStart(DateTime.UtcNow);
+//await e3.WaitForStop();
 //e3.Start(DateTime.UtcNow);
 //await Task.Delay(10000 * 6);
 //e3.Stop();
@@ -37,5 +46,13 @@ await e3.WaitForStop();*/
 
 //hwm.Start(DateTime.UtcNow);
 
-//await Task.Delay(TimeSpan.FromSeconds(5));
+//await Task.Delay(TimeSpan.FromSeconds(10));
+//Console.WriteLine("retrying");
 //hwm.Stop();
+
+//while (true)
+//{
+//    await Task.Delay(1000);
+//}
+
+//Console.WriteLine("Hello, World!");

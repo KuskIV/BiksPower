@@ -14,7 +14,7 @@ namespace EnergyComparer
         public static int DurationOfExperimentsInMinutes = 1;
         public static int IntervalBetweenReadsInMiliSeconds = 100;
         public static int ChargeLowerLimit = 1;
-        public static int ChargeUpperLimit = 100;
+        public static int ChargeUpperLimit = 80;
         public static int TemperatureLowerLimit = 0;
         public static int TemperatureUpperLimit = 200;
         public static string DefaultFolderName = "09-experiment-data";
@@ -37,7 +37,7 @@ namespace EnergyComparer
             string fileName = GetFileName(date);
             string root = GetPathForSource(source);
 
-            return new StringBuilder().AppendFormat(@"{0}\{1}.csv", root, fileName).ToString();
+            return new StringBuilder().AppendFormat(@"{0}/{1}.csv", root, fileName).ToString();
         }
 
         public static string GetFileName(DateTime date) 
