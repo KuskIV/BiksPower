@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EnergyComparer.Utils;
 
 namespace EnergyComparer.Profilers
 {
@@ -84,49 +85,50 @@ namespace EnergyComparer.Profilers
             AppendToFile(data);
         }
 
-        private int GetUncoreMeasurement()
+        private long GetUncoreMeasurement()
         {
             var folderName = ":0:1";
 
             return GetMeasurement(folderName);
         }
 
-        private int GetPsysMeasurement()
+        private long GetPsysMeasurement()
         {
             var folderName = ":0:1";
 
             return GetMeasurement(folderName);
         }
 
-        private int GetPackageZeroMeasurement()
+        private long GetPackageZeroMeasurement()
         {
             var folderName = ":0";
 
             return GetMeasurement(folderName);
         }
 
-        private int GetDramMeasurement()
+        private long GetDramMeasurement()
         {
             var folderName = ":0:2";
 
             return GetMeasurement(folderName);
         }
 
-        private int GetCoreMeasurement()
+        private long GetCoreMeasurement()
         {
             var folderName = ":0:0";
 
             return GetMeasurement(folderName);
         }
 
-        private int GetMeasurement(string folderName)
+        private long GetMeasurement(string folderName)
         {
-            return 1;
 
-            //var path = _filePath + "intel-rapl" + folderName + "/energy_uj";
+            var path = "/" + _raplBasePath + "intel-rapl" + folderName + "/energy_uj";
             //var value = File.ReadAllText(path);
 
-            //return Convert.ToInt32(value);
+            var value = LinuxUtils.ExecuteCommandGetOutputAsSudo("cat", path);
+
+            return value;
         }
 
         private void AppendToFile(RaplDataPoint data)

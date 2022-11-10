@@ -37,7 +37,7 @@ namespace EnergyComparer
             string fileName = GetFileName(date);
             string root = GetPathForSource(source);
 
-            return new StringBuilder().AppendFormat(@"{0}\{1}.csv", root, fileName).ToString();
+            return new StringBuilder().AppendFormat(@"{0}/{1}.csv", root, fileName).ToString();
         }
 
         public static string GetFileName(DateTime date) 
