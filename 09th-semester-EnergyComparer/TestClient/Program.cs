@@ -33,9 +33,9 @@ await e3.WaitForStop();*/
 //Console.ReadLine();
 
 
-var hwm = new HardwareMonitor();
+//var hwm = new HardwareMonitor();
 
-hwm.Start(DateTime.UtcNow);
+//hwm.Start(DateTime.UtcNow);
 
-await Task.Delay(TimeSpan.FromSeconds(5));
-hwm.Stop();
+//await Task.Delay(TimeSpan.FromSeconds(5));
+//hwm.Stop();
