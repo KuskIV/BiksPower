@@ -9,15 +9,15 @@ namespace EnergyComparer.Models
     public class RaplDataPoint
     {
         public DateTime Time { get; set; }
-        public double PSys { get; set; }
-        public double PSysTotal { get; set; }
-        public double Core { get; set; }
-        public double CoreTotal { get; set; }
-        public double Dram { get; set; }
-        public double DramTotal { get; set; }
-        public double Uncore { get; set; }
-        public double UncoreTotal { get; set; }
-        public double PackageZero { get; set; }
-        public double PackageZeroTotal { get; set; }
+        public decimal PSys { get; set; }
+        public decimal PSysTotal { get; set; }
+        public decimal Core { get; set; }
+        public decimal CoreTotal { get; set; }
+        public decimal Dram { get; set; }
+        public decimal DramTotal { get; set; }
+        public decimal Uncore { get; set; }
+        public decimal UncoreTotal { get; set; }
+        public decimal PackageZero { get; set; }
+        public decimal PackageZeroTotal { get; set; }
     }
 }

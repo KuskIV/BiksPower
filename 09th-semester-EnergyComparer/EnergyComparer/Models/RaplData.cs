@@ -8,15 +8,15 @@ namespace EnergyComparer.Models
 {
     public class RaplData
     {
-        public double PSysStartInJoules { get; set; }
-        public double PSysStopInJoules { get; set; }
-        public double CoreStartInJoules { get; set; }
-        public double CoreStopInJoules { get; set; }
-        public double DramStartInJoules { get; set; }
-        public double DramStopInJoules { get; set; }
-        public double UncoreStartInJoules { get; set; }
-        public double UncoreStopInJoules { get; set; }
-        public double PackageZeroStartInJoules { get; set; }
-        public double PackageZeroStopInJoules { get; set; }
+        public decimal PSysStartInJoules { get; set; }
+        public decimal PSysStopInJoules { get; set; }
+        public decimal CoreStartInJoules { get; set; }
+        public decimal CoreStopInJoules { get; set; }
+        public decimal DramStartInJoules { get; set; }
+        public decimal DramStopInJoules { get; set; }
+        public decimal UncoreStartInJoules { get; set; }
+        public decimal UncoreStopInJoules { get; set; }
+        public decimal PackageZeroStartInJoules { get; set; }
+        public decimal PackageZeroStopInJoules { get; set; }
     }
 }
