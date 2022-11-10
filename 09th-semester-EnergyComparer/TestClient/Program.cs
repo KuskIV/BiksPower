@@ -15,16 +15,16 @@ using System.Security.Cryptography.Xml;
 using TestClient.E3Experiment;
 
 
-//HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
-//await Task.Delay(1000 * 30);
-//HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
-//await HardwareMeasurementHandler.GetHardwareState();
+HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
+await Task.Delay(1000 * 30);
+HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+await HardwareMeasurementHandler.GetHardwareState();
 
 
-PlugHandlers PlugHandlers = new PlugHandlers();
-PlugHandlers.GetPlugs()["SurfacePro"].TurnOff();
-await Task.Delay(1000 * 10);
-PlugHandlers.GetPlugs()["SurfacePro"].TurnOn();
+//PlugHandlers PlugHandlers = new PlugHandlers();
+//PlugHandlers.GetPlugs()["SurfacePro"].TurnOff();
+//await Task.Delay(1000 * 10);
+//PlugHandlers.GetPlugs()["SurfacePro"].TurnOn();
 //var intel = new IntelPowerGadget();
 
 //var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);

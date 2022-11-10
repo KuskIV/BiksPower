@@ -40,7 +40,7 @@ namespace EnergyComparer.DUTs
 
             profilers.Add(_intelPowerGadget);
             profilers.Add(new E3());
-            profilers.Add(new HardwareMonitor());
+            profilers.Add(new HardwareMonitor(_hardwareMonitorService));
             profilers.Add(new Clamp());
 
             return profilers;
