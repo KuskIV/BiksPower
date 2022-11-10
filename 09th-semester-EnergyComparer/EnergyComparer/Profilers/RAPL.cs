@@ -11,8 +11,15 @@ namespace EnergyComparer.Profilers
 {
     public class RAPL : IEnergyProfiler
     {
+        private const string UncoreFolder = ":0:1";
+        private const string PsysFolder = ":0:1";
+        private const string PackageZeroFolder = ":0";
+        private const string DramFolder = ":0:2";
+        private const string CoreFolder = ":0:0";
         private readonly ELinuxProfilers _source;
         private readonly string _raplBasePath = "sys/class/powercap/";
+        private Dictionary<string, long> _initialValues = new Dictionary<string, long>();
+        private Dictionary<string, long> _previousValues = new Dictionary<string, long>();
         private string _filePath;
         private System.Timers.Timer _timer;
 
@@ -42,7 +49,7 @@ namespace EnergyComparer.Profilers
             {
                 ExperimentId = experimentId,
                 Time = startTime,
-                Value = SumTimeSeries(data),
+                Value = SumTimeSeries(),
             };
 
             return (timeSeries, rawData);
@@ -65,70 +72,120 @@ namespace EnergyComparer.Profilers
 
         }
 
-        private string SumTimeSeries(RaplTimeSeries data)
+        private string SumTimeSeries()
         {
-            throw new NotImplementedException();
+            var data = new RaplData()
+            {
+                CoreStartInJoules = GetStartValue(CoreFolder),
+                CoreStopInJoules = GetStopValue(CoreFolder),
+                DramStartInJoules= GetStartValue(DramFolder),
+                DramStopInJoules = GetStopValue(DramFolder),
+                PackageZeroStartInJoules = GetStartValue(PackageZeroFolder),
+                PackageZeroStopInJoules = GetStopValue(PackageZeroFolder),
+                PSysStartInJoules = GetStartValue(PsysFolder),
+                PSysStopInJoules = GetStopValue(PsysFolder),
+                UncoreStartInJoules = GetStartValue(UncoreFolder),
+                UncoreStopInJoules = GetStopValue(UncoreFolder),
+            };
+
+            return System.Text.Json.JsonSerializer.Serialize(data);
+        }
+
+        private double GetStopValue(string coreFolder)
+        {
+            return _previousValues[CoreFolder] / 1000000;
+        }
+
+        private double GetStartValue(string coreFolder)
+        {
+            return _initialValues[coreFolder] / 1000000;
         }
 
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            var (core, coreTotal) = GetCoreMeasurement();
+            var (dram, dramTotal) = GetDramMeasurement();
+            var (packageZero, packageZeroTotal) = GetPackageZeroMeasurement();
+            var (psys, psysTotal) = GetPsysMeasurement();
+            var (uncore, uncoreTotal) = GetUncoreMeasurement();
+
             var data = new RaplDataPoint()
             {
-                Core = GetCoreMeasurement(),
-                Dram = GetDramMeasurement(),
-                PackageZero = GetPackageZeroMeasurement(),
-                PSys = GetPsysMeasurement(),
+                Core = core,
+                CoreTotal = coreTotal,
+                Dram = dram,
+                DramTotal = dramTotal,
+                PackageZero = packageZero,
+                PackageZeroTotal = packageZeroTotal,
+                Uncore = uncore,
+                UncoreTotal = uncoreTotal,
+                PSys = psys,
+                PSysTotal = psysTotal,
                 Time = DateTime.UtcNow,
-                Uncore = GetUncoreMeasurement(),
             };
 
             AppendToFile(data);
         }
 
-        private long GetUncoreMeasurement()
+        private (double, double) GetUncoreMeasurement()
         {
-            var folderName = ":0:1";
+            var folderName = UncoreFolder;
 
             return GetMeasurement(folderName);
         }
 
-        private long GetPsysMeasurement()
+        private (double, double) GetPsysMeasurement()
         {
-            var folderName = ":0:1";
+            var folderName = PsysFolder;
 
             return GetMeasurement(folderName);
         }
 
-        private long GetPackageZeroMeasurement()
+        private (double, double) GetPackageZeroMeasurement()
         {
-            var folderName = ":0";
+            var folderName = PackageZeroFolder;
 
             return GetMeasurement(folderName);
         }
 
-        private long GetDramMeasurement()
+        private (double, double) GetDramMeasurement()
         {
-            var folderName = ":0:2";
+            var folderName = DramFolder;
 
             return GetMeasurement(folderName);
         }
 
-        private long GetCoreMeasurement()
+        private (double, double) GetCoreMeasurement()
         {
-            var folderName = ":0:0";
+            var folderName = CoreFolder;
 
             return GetMeasurement(folderName);
         }
 
-        private long GetMeasurement(string folderName)
+        private (double, double) GetMeasurement(string folderName)
         {
-
             var path = "/" + _raplBasePath + "intel-rapl" + folderName + "/energy_uj";
-            //var value = File.ReadAllText(path);
+            var currentValue = LinuxUtils.ExecuteCommandGetOutputAsSudo("cat", path);
 
-            var value = LinuxUtils.ExecuteCommandGetOutputAsSudo("cat", path);
+            long initialValue;
+            if (!_initialValues.TryGetValue(folderName, out initialValue))
+            {
+                _initialValues.Add(folderName, currentValue);
+                initialValue = currentValue;
+            }
 
-            return value;
+            long previousValue;
+            if (!_previousValues.TryGetValue(folderName, out previousValue))
+            {
+                previousValue = 0;
+                _previousValues.Add(folderName, previousValue);
+            }
+
+            var value = currentValue - initialValue - previousValue;
+
+            _previousValues[folderName] = value;
+
+            return (value / 1000000, currentValue / 1000000);
         }
 
         private void AppendToFile(RaplDataPoint data)
