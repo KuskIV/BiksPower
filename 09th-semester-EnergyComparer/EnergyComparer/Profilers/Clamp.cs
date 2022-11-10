@@ -8,16 +8,23 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.Profilers
 {
-    internal class Clam : IEnergyProfiler
+    internal class Clamp : IEnergyProfiler
     {
+        private readonly EProfilers _source;
+
+        public Clamp() 
+        {
+            _source = EProfilers.Clamp;
+        }
         public string GetName()
         {
-            return EProfilers.Clam.ToString();
+            return EProfilers.Clamp.ToString();
         }
 
         public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
-            throw new NotImplementedException();
+
+            return (null,null);
         }
 
         public void Start(DateTime date)

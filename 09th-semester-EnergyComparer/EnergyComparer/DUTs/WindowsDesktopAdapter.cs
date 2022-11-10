@@ -38,7 +38,7 @@ namespace EnergyComparer.DUTs
             profilers.Add(_intelPowerGadget);
             profilers.Add(new E3());
             profilers.Add(new HardwareMonitor());
-            profilers.Add(new Clam());
+            profilers.Add(new Clamp());
 
             return profilers;
         }
@@ -57,9 +57,9 @@ namespace EnergyComparer.DUTs
             {
                 return new E3();
             }
-            else if (name == EProfilers.Clam.ToString())
+            else if (name == EProfilers.Clamp.ToString())
             {
-                return new Clam();
+                return new Clamp();
             }
             else
             {
