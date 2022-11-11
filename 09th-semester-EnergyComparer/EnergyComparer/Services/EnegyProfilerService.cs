@@ -2,7 +2,7 @@
 using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
+using EnergyComparer.TestCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;

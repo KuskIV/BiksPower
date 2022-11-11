@@ -1,7 +1,6 @@
 ﻿using EnergyComparer.Handlers;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
 using EnergyComparer.Services;
 using EnergyComparer.TestCases;
 using Microsoft.AspNetCore.Components.RenderTree;

@@ -1,7 +1,6 @@
 ﻿using EnergyComparer.DUTs;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
 using EnergyComparer.Services;
 using EnergyComparer.TestCases;
 using System;
@@ -173,16 +172,14 @@ namespace EnergyComparer.Handlers
 
             if (!_isProd)
             {
-                return new IdleCase(dataHandler);
+                return Constants.GetTestCases(dataHandler).First();
             }
 
-            var idleCase = new IdleCase(dataHandler);
-            if (!await AllProfilersExecutedEnough(dataHandler, dut, idleCase, dtoProfilers))
-                return idleCase;
-            
-            var diningPhilosiphers = new DiningPhilosophers(dataHandler);
-            if (!await AllProfilersExecutedEnough(dataHandler, dut, diningPhilosiphers, dtoProfilers))
-                return diningPhilosiphers;
+            foreach (var testCase in Constants.GetTestCases(dataHandler))
+            {
+                if (!await AllProfilersExecutedEnough(dataHandler, dut, testCase, dtoProfilers))
+                    return testCase;
+            }
 
             _operatingSystemAdapter.Shutdowm();
             throw new Exception("The computer should have shut down by now.");

@@ -1,5 +1,5 @@
 ﻿using EnergyComparer.Models;
-using EnergyComparer.Programs;
+using EnergyComparer.TestCases;
 
 namespace EnergyComparer.Handlers
 {
