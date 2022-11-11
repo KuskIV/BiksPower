@@ -195,6 +195,7 @@ namespace EnergyComparer.Profilers
             _previousValues[folderName] = currentValue;
 
             return (value / OneMilion, currentValue / OneMilion);
+        
         }
 
         private void AppendToFile(RaplDataPoint data)

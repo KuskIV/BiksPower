@@ -12,33 +12,25 @@ namespace EnergyComparer.Services
 {
     public class ExperimentService : IExperimentService
     {
-        private readonly IDutAdapter _dutAdapter;
         private readonly ILogger _logger;
         private readonly bool _isProd;
-        private IHardwareMonitorService _hardwareMonitorService;
         private  IOperatingSystemAdapter _operatingSystemAdapter;
         private IDataHandler _dataHandler;
-        private  IHardwareHandler _hardwareHandler;
         private  IWifiService _wifiService;
         private readonly bool _saveToDb;
         private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler)> _initializeOfflineDependencies;
         private readonly Func<IDataHandler> _initializeOnlineDependencies;
-        private readonly Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler)> _deleteDependencies;
-        private readonly string _wifiAdapterName;
-        private readonly bool _hasBattery;
+        private readonly Func<(IOperatingSystemAdapter, IDataHandler, IWifiService, IExperimentHandler)> _deleteDependencies;
         private Dictionary<string, int> _profilerCounter = new Dictionary<string, int>();
         private IExperimentHandler _experimentHandler;
 
         private string _firstProfiler { get; set; } = "";
 
-        public ExperimentService(IDutAdapter dutAdapter, ILogger logger, bool isProd, bool hasBattery, string wifiAdapterName, bool saveToDb, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler)> deleteDependencies)
+        public ExperimentService(ILogger logger, bool isProd, bool saveToDb, Func<(IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler)> initializeOfflineDependencies, Func<IDataHandler> initializeOnlineDependencies, Func<(IOperatingSystemAdapter, IDataHandler, IWifiService, IExperimentHandler)> deleteDependencies)
         {
-            _dutAdapter = dutAdapter;
             _logger = logger;
 
             _isProd = isProd;
-            _hasBattery = hasBattery;
-            _wifiAdapterName = wifiAdapterName;
             _saveToDb = saveToDb;
             
             _initializeOfflineDependencies = initializeOfflineDependencies;
@@ -155,7 +147,7 @@ namespace EnergyComparer.Services
 
         private (List<DtoMeasurement>, DtoMeasurement) GetEndMeasurements()
         {
-            _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
+            //_hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
 
             _logger.Information("The experiment is done. The end temperatures will be measured.");
             var endTemperatures = _operatingSystemAdapter.GetCoreTemperatures();
@@ -166,7 +158,7 @@ namespace EnergyComparer.Services
 
         private async Task EnableWifiAndDependencies()
         {
-            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
+            (_, _operatingSystemAdapter, _, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
             _logger.Information("The wifi will be enabled");
             await EnableWifi();
 
@@ -175,7 +167,7 @@ namespace EnergyComparer.Services
 
         private void RunGarbageCollection()
         {
-            (_hardwareMonitorService, _operatingSystemAdapter, _dataHandler, _hardwareHandler, _wifiService, _experimentHandler) = _deleteDependencies();
+            (_operatingSystemAdapter, _dataHandler, _wifiService, _experimentHandler) = _deleteDependencies();
             _logger.Information("Running garbage collector");
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -284,7 +276,7 @@ namespace EnergyComparer.Services
         private void InitializeDependencies()
         {
             _dataHandler = _initializeOnlineDependencies();
-            (_hardwareMonitorService, _operatingSystemAdapter, _hardwareHandler, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
+            (_, _operatingSystemAdapter, _, _wifiService, _experimentHandler) = _initializeOfflineDependencies();
         }
     }
 
