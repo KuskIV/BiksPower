@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
+using EnergyComparer.TestCases;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -190,14 +190,14 @@ namespace EnergyComparer.Repositories
         Task<bool> ConfigurationExists(int version, string env);
         Task<DtoConfiguration> GetConfiguration(int version, string env);
         Task<DtoExperiment> GetExperiment(DtoExperiment experiment);
-        Task<List<Profiler>> GetLastRunForDut(DtoDut system, Programs.ITestCase program);
+        Task<List<Profiler>> GetLastRunForDut(DtoDut system, ITestCase program);
         Task<DtoProfiler> GetProfiler(IEnergyProfiler energyProfiler);
         Task<DtoTestCase> GetTestCase(string name);
         Task<DtoDut> GetDut(string Os, string Name);
         void InitializeDatabase(IDbConnection _connection);
         Task<bool> ProfilerExists(IEnergyProfiler energyProfiler);
         Task<bool> TestCaseExists(string name);
-        Task<bool> RunExistsForDut(DtoDut system, Programs.ITestCase program);
+        Task<bool> RunExistsForDut(DtoDut system, ITestCase program);
         Task<bool> DutExists(string os, string name);
         Task<int> GetExperimentCountForSetup(int configId, int dutId, int testCaseId, string language, int profilerId);
     }
