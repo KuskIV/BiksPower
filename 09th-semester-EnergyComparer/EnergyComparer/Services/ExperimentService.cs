@@ -74,7 +74,10 @@ namespace EnergyComparer.Services
         private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
             if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString())
+            {
                 energyProfiler.Stop();
+                Console.WriteLine("late stop");
+            }
 
             var duration = stopwatch.ElapsedMilliseconds;
             var stopTime = DateTime.UtcNow;
@@ -110,7 +113,10 @@ namespace EnergyComparer.Services
                 p.Start();
                 
                 if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
+                {
                     energyProfiler.Stop();
+                    Console.WriteLine("early stop");
+                }
                 
                 output = p.StandardOutput.ReadToEnd();
 

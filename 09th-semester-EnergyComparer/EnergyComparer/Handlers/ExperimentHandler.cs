@@ -104,7 +104,7 @@ namespace EnergyComparer.Handlers
 
             _logger.Information("Waiting for stable condition");
 
-            EnablePlug();
+            EnableCharger();
 
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
             {
@@ -114,12 +114,12 @@ namespace EnergyComparer.Handlers
                 await Task.Delay(TimeSpan.FromMinutes(5));
             }
 
-            DisablePlug();
+            DisableCharger();
 
             _logger.Information("Stable condition has been reached");
         }
 
-        private void DisablePlug()
+        private void EnableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
@@ -141,7 +141,7 @@ namespace EnergyComparer.Handlers
             }
         }
 
-        private void EnablePlug()
+        private void DisableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
