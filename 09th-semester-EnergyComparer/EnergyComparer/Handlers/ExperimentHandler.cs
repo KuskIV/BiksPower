@@ -104,7 +104,7 @@ namespace EnergyComparer.Handlers
 
             _logger.Information("Waiting for stable condition");
 
-            EnablePlug();
+            EnableCharger();
 
             while (!HasMaxBattery() || !LowEnoughCpuTemperature())
             {
@@ -114,12 +114,12 @@ namespace EnergyComparer.Handlers
                 await Task.Delay(TimeSpan.FromMinutes(5));
             }
 
-            DisablePlug();
+            DisableCharger();
 
             _logger.Information("Stable condition has been reached");
         }
 
-        private void DisablePlug()
+        private void DisableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
@@ -141,7 +141,7 @@ namespace EnergyComparer.Handlers
             }
         }
 
-        private void EnablePlug()
+        private void EnableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
@@ -165,7 +165,7 @@ namespace EnergyComparer.Handlers
 
         public async Task<ITestCase> GetTestCase(IDataHandler dataHandler)
         {
-            List<IEnergyProfiler> profilers = GetEnergyProfilers();
+            var profilers = GetEnergyProfilers();
             var dtoProfilers = await GetDtoProfilers(profilers, dataHandler);
             var dut = await dataHandler.GetDut();
             _logger.Information("The profiler(s) for the experiment are as following: {profilers}", string.Join(',', profilers.Select(x => x.GetName())));
@@ -189,12 +189,14 @@ namespace EnergyComparer.Handlers
         {
             if (!_iterateOverProfilers)
             {
+                _logger.Information("Only the default profiler is used in this experiment");
                 return new List<IEnergyProfiler>()
                 {
                     _dutAdapter.GetDefaultProfiler(),
                 };
             }
 
+            _logger.Information("All profilers is used in this experiment");
             return _dutAdapter.GetProfilers().ToList();
         }
 

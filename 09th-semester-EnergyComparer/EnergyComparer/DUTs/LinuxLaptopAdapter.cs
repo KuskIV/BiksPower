@@ -22,7 +22,7 @@ namespace EnergyComparer.DUTs
         {
             return LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/power_supply/BAT1/capacity");
         }
-        
+
         public float GetTemperature()
         {
             var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
@@ -52,18 +52,6 @@ namespace EnergyComparer.DUTs
             profilers.Add(new RAPL());
 
             return profilers;
-        }
-
-        public IEnergyProfiler GetProfilers(string name)
-        {
-            if (name == ELinuxProfilers.RAPL.ToString())
-            {
-                return new RAPL();
-            }
-            else
-            {
-                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
-            }
         }
     }
 }

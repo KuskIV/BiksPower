@@ -61,7 +61,7 @@ namespace EnergyComparer.Profilers
         public async Task WaitForStop() 
         {
             _ = await WaitForBlock();
-            Stop();
+            //Stop();
         }
 
         private async Task<DateTime> WaitForBlock() 
@@ -79,7 +79,6 @@ namespace EnergyComparer.Profilers
                 await exit.WaitForExitAsync();
             }
             while (!NewBlock(path, "1", "2"));
-            Console.WriteLine("New-Block encountered");
             return GetMostRecentTimstamp(GetE3Data(path,"1"));
         }
 
@@ -127,7 +126,6 @@ namespace EnergyComparer.Profilers
             string path = Constants.GetPathForSource(_source.ToString())+"\\temp\\";
             var Final = GetE3Data(path, "2");
             result = Final.Where(x => GetTimeStamp(x).CompareTo(PrevMeasure) > 0).ToList();
-            Console.WriteLine("Done");
         }
 
         private List<E3Data> GetE3Data(string path) 

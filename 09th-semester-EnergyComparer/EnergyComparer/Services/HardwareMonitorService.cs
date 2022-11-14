@@ -316,8 +316,12 @@ namespace EnergyComparer.Services
             }
             else
             {
-                throw new NotImplementedException($"The sensor {sensorType} wiht key {key} is not available in the CPU");
+                return -1;
             }
+            //else
+            //{
+            //    throw new NotImplementedException($"The sensor {sensorType} wiht key {key} is not available in the CPU");
+            //}
         }
 
         private float GetAverageValueForSensor(SensorType sensorType, bool update = true)

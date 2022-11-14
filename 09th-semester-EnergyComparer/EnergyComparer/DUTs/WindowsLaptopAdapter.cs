@@ -29,9 +29,9 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            //return new HardwareMonitor(_hardwareMonitorService);
+            return new HardwareMonitor(_hardwareMonitorService);
             //return new RAPL();
-            return _intelPowerGadget;
+            //return _intelPowerGadget;
         }
 
         public List<IEnergyProfiler> GetProfilers()
@@ -48,11 +48,17 @@ namespace EnergyComparer.DUTs
         public int GetChargeRemaining()
         {
             var mos = new ManagementObjectSearcher("select * from Win32_Battery");
+            var batteries = new List<int>();
 
             foreach (ManagementObject mo in mos.Get())
             {
                 var chargeRemaning = mo["EstimatedChargeRemaining"].ToString();
-                return int.Parse(chargeRemaning);
+                batteries.Add(int.Parse(chargeRemaning));
+            }
+
+            if (batteries.Count() > 0)
+            {
+                return batteries.Sum() / batteries.Count();
             }
 
             throw new NotImplementedException("Not battery found");

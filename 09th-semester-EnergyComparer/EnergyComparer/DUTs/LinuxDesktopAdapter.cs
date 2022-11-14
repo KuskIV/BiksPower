@@ -20,7 +20,7 @@ namespace EnergyComparer.DUTs
         {
             return 100;
         }
-
+        
         public float GetTemperature()
         {
             var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone1/temp");
@@ -51,22 +51,6 @@ namespace EnergyComparer.DUTs
             profilers.Add(new Clamp());
 
             return profilers;
-        }
-
-        public IEnergyProfiler GetProfilers(string name)
-        {
-            if (name == ELinuxProfilers.RAPL.ToString())
-            {
-                return new RAPL();
-            }
-            else if (name == EProfilers.Clamp.ToString())
-            {
-                return new Clamp();
-            }
-            else
-            {
-                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
-            }
         }
     }
 }

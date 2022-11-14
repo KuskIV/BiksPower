@@ -163,7 +163,7 @@ namespace EnergyComparer.Repositories
             var systemId = dut.Id;
             var programId = testCase.GetProgram().Id;
 
-            var query = "SELECT Value FROM Run WHERE DutId = @systemid AND programid = @programid";
+            var query = "SELECT Value FROM Run WHERE DutId = @systemid AND TestCaseId = @programid";
 
             var response = await _connection.QueryFirstAsync<string>(query, new { systemId = systemId, programId = programId });
 
