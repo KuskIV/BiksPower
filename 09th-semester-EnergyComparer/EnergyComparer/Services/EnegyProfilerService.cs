@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
 {
@@ -16,14 +15,12 @@ namespace EnergyComparer.Services
     {
         private readonly bool _iterateOverProfilers;
         private readonly IDutAdapter _dutAdapter;
-        private readonly ILogger _logger;
         private Dictionary<string, List<Profiler>> _profilers = new Dictionary<string, List<Profiler>>();
 
-        public EnergyProfilerService(bool iterateOverProfilers, IDutAdapter dutAdapter, ILogger logger)
+        public EnergyProfilerService(bool iterateOverProfilers, IDutAdapter dutAdapter)
         {
             _iterateOverProfilers = iterateOverProfilers;
             _dutAdapter = dutAdapter;
-            _logger = logger;
         }
 
         public async Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IOperatingSystemAdapter adapterService)
@@ -64,19 +61,7 @@ namespace EnergyComparer.Services
 
             UpdateProfilers(program, profilers);
 
-            var profiler = _dutAdapter.GetProfilers().FirstOrDefault(x => x.GetName() == currentProfiler.Name, null);
-
-            if (profiler != null)
-            {
-                _logger.Information("Profiler {name} found.", profiler.GetName());
-                return profiler;
-            }
-            else
-            {
-                _logger.Warning("Profiler {name} is not available. Moving on to next.", currentProfiler.Name);
-                return GetCurrentProfilerAndUpdateIsFirst(program, profilers, adapterService);
-            }
-            //return _dutAdapter.GetProfilers(currentProfiler.Name);
+            return _dutAdapter.GetProfilers(currentProfiler.Name);
         }
 
         private void UpdateProfilers(ITestCase program, List<Profiler> profilers)

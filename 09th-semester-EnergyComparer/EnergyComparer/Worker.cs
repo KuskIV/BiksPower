@@ -49,7 +49,7 @@ namespace EnergyComparer
 
             _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(logger);
             _dutAdapter = SystemUtils.GetDutAdapter(_logger, _hasBattery, _iterateOverProfilers, _hardwareMonitorService);
-            _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter, logger);
+            _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
@@ -64,8 +64,6 @@ namespace EnergyComparer
         public async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-            await EnableWifi();
-            
             CreateFolderIfNew();
 
             await _experimentHandler.WaitTillStableState(); // TODO: Tie to one single core

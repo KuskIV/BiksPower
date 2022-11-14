@@ -97,5 +97,6 @@ namespace EnergyComparer.DUTs
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList().Concat(Enum.GetNames(typeof(EProfilers)).ToList()).ToList();
 
         }
+        
     }
 }

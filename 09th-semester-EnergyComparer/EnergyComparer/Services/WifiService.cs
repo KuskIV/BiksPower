@@ -18,8 +18,11 @@ namespace EnergyComparer.Services
 
         public async Task Enable(bool isProd)
         {
-            _hardwareHandler.EnableWifi();
-            await IsWifiEnabled();
+            if (isProd)
+            {
+                _hardwareHandler.EnableWifi();
+                await IsWifiEnabled();
+            }
         }
 
         public void Disable(bool isProd)
@@ -48,6 +51,8 @@ namespace EnergyComparer.Services
 
         private async Task IsWifiEnabled()
         {
+            await Task.Delay(TimeSpan.FromSeconds(15));
+
             while (!PingGoogleSuccessfully())
             {
                 await Task.Delay(TimeSpan.FromSeconds(3));
