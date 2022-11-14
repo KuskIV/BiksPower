@@ -219,16 +219,11 @@ namespace EnergyComparer.Profilers
             (double cpuPowerPacketTotalJ, double cpuPowerPacketAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerPacket).ToList(), IntervalBetweenReadsInMiliSeconds);
             (double cpuPowerCoresTotalJ, double cpuPowerCoresAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerCores).ToList(), IntervalBetweenReadsInMiliSeconds);
             (double cpuPowerMemoryTotalJ, double cpuPowerMemoryAverageJ) = GetEnergyTotalJoules(_DataList.Select(x => x.cpuPowerMemory).ToList(), IntervalBetweenReadsInMiliSeconds);
-            
             List<HardwareMonitorData> OHWrawData = new List<HardwareMonitorData>
             {
-                new HardwareMonitorData { 
-                    cpuPowerPacketTotalJ = cpuPowerPacketTotalJ, 
-                    cpuPowerPacketAverageJ = cpuPowerPacketAverageJ, 
-                    cpuPowerCoresTotalJ = cpuPowerCoresTotalJ, 
-                    cpuPowerCoresAverageJ = cpuPowerCoresAverageJ,
-                    cpuPowerMemoryTotalJ = cpuPowerMemoryTotalJ, 
-                    cpuPowerMemoryAverageJ = cpuPowerMemoryAverageJ}
+                new HardwareMonitorData { cpuPowerPacketTotalJ = cpuPowerPacketTotalJ, cpuPowerPacketAverageJ = cpuPowerPacketAverageJ, 
+                    cpuPowerCoresTotalJ = cpuPowerCoresTotalJ, cpuPowerCoresAverageJ = cpuPowerCoresAverageJ,
+                    cpuPowerMemoryTotalJ = cpuPowerMemoryTotalJ, cpuPowerMemoryAverageJ = cpuPowerMemoryAverageJ}
             };
             return OHWrawData;
         }

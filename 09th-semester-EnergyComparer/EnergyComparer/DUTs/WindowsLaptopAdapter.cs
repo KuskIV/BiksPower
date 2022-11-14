@@ -28,9 +28,9 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            return new HardwareMonitor(_hardwareMonitorService);
+            //return new HardwareMonitor(_hardwareMonitorService);
             //return new RAPL();
-            //return _intelPowerGadget;
+            return _intelPowerGadget;
         }
 
         public List<IEnergyProfiler> GetProfilers()
@@ -55,6 +55,28 @@ namespace EnergyComparer.DUTs
             }
 
             throw new NotImplementedException("Not battery found");
+        }
+
+        public IEnergyProfiler GetProfilers(string name)
+        {
+
+            if (name == EWindowsProfilers.IntelPowerGadget.ToString())
+            {
+                return _intelPowerGadget;
+            }
+            else if (name == EWindowsProfilers.HardwareMonitor.ToString())
+            {
+                return new HardwareMonitor(_hardwareMonitorService);
+            }
+            else if (name == EWindowsProfilers.E3.ToString())
+            {
+                return new E3();
+            }
+            else
+            {
+                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
+            }
+
         }
 
         public List<string> GetAllSoucres()

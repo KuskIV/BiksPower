@@ -16,7 +16,7 @@ using TestClient.E3Experiment;
 
 
 HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
-await Task.Delay(1000 * 30);
+await Task.Delay(1000 * 5);
 HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
 await HardwareMeasurementHandler.GetHardwareState();
 

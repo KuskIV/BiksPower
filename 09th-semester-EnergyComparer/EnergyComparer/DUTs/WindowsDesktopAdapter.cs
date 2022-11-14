@@ -46,6 +46,30 @@ namespace EnergyComparer.DUTs
             return profilers;
         }
 
+        public IEnergyProfiler GetProfilers(string name)
+        {
+            if (name == EWindowsProfilers.IntelPowerGadget.ToString())
+            {
+                return _intelPowerGadget;
+            }
+            else if (name == EWindowsProfilers.HardwareMonitor.ToString())
+            {
+                return new HardwareMonitor(_hardwareMonitorService);
+            }
+            else if (name == EWindowsProfilers.E3.ToString())
+            {
+                return new E3();
+            }
+            else if (name == EProfilers.Clamp.ToString())
+            {
+                return new Clamp();
+            }
+            else
+            {
+                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
+            }
+        }
+
         public List<string> GetAllSoucres()
         {
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList().Concat(Enum.GetNames(typeof(EProfilers)).ToList()).ToList();
