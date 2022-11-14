@@ -49,7 +49,7 @@ namespace EnergyComparer
 
             _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(logger);
             _dutAdapter = SystemUtils.GetDutAdapter(_logger, _hasBattery, _iterateOverProfilers, _hardwareMonitorService);
-            _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter);
+            _profilerService = new EnergyProfilerService(_iterateOverProfilers, _dutAdapter, logger);
 
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
