@@ -46,11 +46,13 @@ class Dut(object):
             "SELECT * FROM Dut WHERE Name = %s AND OS = %s", data_tuple
         )
 
-        if len(data) == 4:
+        if not data is None and len(data) == 4:
             self.dut_name = dut_name
             self.dut_os = dut_os
             self.id = data[0]
             self.version = data[3]
+        else:
+            self.dut_id = -1
 
 
 class Measurements(object):
@@ -65,7 +67,7 @@ class Measurements(object):
         )
         self.data = []
 
-        if len(data) > 0:
+        if data is not None and len(data) > 0:
             for d in data:
                 self.data.append(Measuring(d[0], d[2], d[3], d[4], d[5]))
 
@@ -86,13 +88,11 @@ class EnergyProfiler(object):
             "SELECT * FROM Profiler Where Name = %s", data_tuple
         )
 
-        if len(data) == 2:
+        if data is not None and len(data) == 2:
             self.energy_profiler_name = energy_profiler_name
             self.id = data[0]
         else:
-            raise Exception(
-                f"Data of incorrect format, should have two properties. Data was {data} for name {name}."
-            )
+            self.id = -1
 
 
 class Configuration(object):
@@ -135,7 +135,9 @@ class Configuration(object):
             self.id = data[0]
             self.env = data[1]
         else:
-            raise Exception(f"Could not find any configuration for setup.")
+            self.id = -1
+        # else:
+        #     raise Exception(f"Could not find any configuration for setup.")
 
 
 class TestCase(object):
@@ -191,6 +193,9 @@ class RawData(object):
         )
 
         if len(data) == 1:
+            print(data)
+            print(data[0])
+            print("\n\n\n-------------")
             self.__dict__ = json.loads(data[0])
             self.id = experiment_id
             self.start_time = start_time
