@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EnergyComparer.Utils;
 
 namespace EnergyComparer.DUTs
 {
@@ -33,6 +34,39 @@ namespace EnergyComparer.DUTs
             profilers.Add(new Clamp());
 
             return profilers;
+        }
+
+        public IEnergyProfiler GetProfilers(string name)
+        {
+            if (name == ELinuxProfilers.RAPL.ToString())
+            {
+                return new RAPL();
+            }
+            else if (name == EProfilers.Clamp.ToString())
+            {
+                return new Clamp();
+            }
+            else
+            {
+                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
+            }
+        }
+
+        public float GetTemperature()
+        {
+            var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone1/temp");
+
+            return temperature / 1000;
+        }
+
+        public void DisableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommand("/sbin/ifconfig", "eno1 down");
+        }
+
+        public void EnableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommand("/sbin/ifconfig", "eno1 up");
         }
     }
 }

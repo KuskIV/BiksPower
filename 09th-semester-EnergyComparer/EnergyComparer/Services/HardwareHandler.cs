@@ -27,13 +27,13 @@ namespace EnergyComparer.Services
         public void DisableWifi()
         {
             _logger.Information("About to disable wifi...");
-            _adapterService.DisableWifi(_wifiAdapterName);
+            _adapterService.DisableNetworking(_wifiAdapterName);
         }
 
         public void EnableWifi()
         {
             _logger.Information("About to enable wifi...");
-            _adapterService.EnableWifi(_wifiAdapterName);
+            _adapterService.EnableNetworking(_wifiAdapterName);
         }
 
         public void Dispose()
@@ -41,7 +41,7 @@ namespace EnergyComparer.Services
             try
             {
                 _logger.Information("Re-enbeling wifi upon shutdown.");
-                _adapterService.EnableWifi(_wifiAdapterName);
+                _adapterService.EnableNetworking(_wifiAdapterName);
 
             }
             catch (Exception e)

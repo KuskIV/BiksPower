@@ -3,6 +3,7 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,51 @@ namespace EnergyComparer.DUTs
             profilers.Add(new Clamp());
 
             return profilers;
+        }
+
+        public IEnergyProfiler GetProfilers(string name)
+        {
+            if (name == EWindowsProfilers.IntelPowerGadget.ToString())
+            {
+                return _intelPowerGadget;
+            }
+            else if (name == EWindowsProfilers.HardwareMonitor.ToString())
+            {
+                return new HardwareMonitor(_hardwareMonitorService);
+            }
+            else if (name == EWindowsProfilers.E3.ToString())
+            {
+                return new E3();
+            }
+            else if (name == EProfilers.Clamp.ToString())
+            {
+                return new Clamp();
+            }
+            else
+            {
+                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
+            }
+        }
+
+        public float GetTemperature()
+        {
+            return  _hardwareMonitorService.GetAverageCpuTemperature(update:true);
+        }
+        
+        public void DisableNetworking(string interfaceName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" enable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
+        }
+
+        public void EnableNetworking(string interfaceName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
         }
 
         public List<string> GetAllSoucres()
