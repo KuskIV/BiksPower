@@ -1,12 +1,18 @@
 ﻿using EnergyComparer.Handlers;
+using EnergyComparer.Profilers;
+using EnergyComparer.Services;
 using EnergyComparer.TestCases;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EnergyComparer
 {
     public static class Constants
     {
-        public static int MinutesBetweenExperiments = 2;
+        public static int MinutesBetweenExperiments = 0;
         public static int DurationOfExperimentsInMinutes = 1;
         public static int IntervalBetweenReadsInMiliSeconds = 100;
         public static int ChargeLowerLimit = 3;
@@ -30,7 +36,7 @@ namespace EnergyComparer
 
             testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
             testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
-            //testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
+            testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
             testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
             testCases.Add(new TestCase(dataHandler, "Nbody", language));
             testCases.Add(new TestCase(dataHandler, "Fasta", language));

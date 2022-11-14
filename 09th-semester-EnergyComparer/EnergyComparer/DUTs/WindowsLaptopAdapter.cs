@@ -28,9 +28,9 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            return new HardwareMonitor(_hardwareMonitorService);
+            //return new HardwareMonitor(_hardwareMonitorService);
             //return new RAPL();
-            //return _intelPowerGadget;
+            return _intelPowerGadget;
         }
 
         public List<IEnergyProfiler> GetProfilers()
@@ -47,20 +47,36 @@ namespace EnergyComparer.DUTs
         public int GetChargeRemaining()
         {
             var mos = new ManagementObjectSearcher("select * from Win32_Battery");
-            var batteries = new List<int>();
 
             foreach (ManagementObject mo in mos.Get())
             {
                 var chargeRemaning = mo["EstimatedChargeRemaining"].ToString();
-                batteries.Add(int.Parse(chargeRemaning));
-            }
-
-            if (batteries.Count() > 0)
-            {
-                return batteries.Sum() / batteries.Count();
+                return int.Parse(chargeRemaning);
             }
 
             throw new NotImplementedException("Not battery found");
+        }
+
+        public IEnergyProfiler GetProfilers(string name)
+        {
+
+            if (name == EWindowsProfilers.IntelPowerGadget.ToString())
+            {
+                return _intelPowerGadget;
+            }
+            else if (name == EWindowsProfilers.HardwareMonitor.ToString())
+            {
+                return new HardwareMonitor(_hardwareMonitorService);
+            }
+            else if (name == EWindowsProfilers.E3.ToString())
+            {
+                return new E3();
+            }
+            else
+            {
+                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
+            }
+
         }
 
         public List<string> GetAllSoucres()
