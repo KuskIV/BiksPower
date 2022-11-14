@@ -193,10 +193,31 @@ class RawData(object):
         )
 
         if len(data) == 1:
-            print(data)
-            print(data[0])
-            print("\n\n\n-------------")
-            self.__dict__ = json.loads(data[0])
+            json_data = json.loads(data[0])
+
+            if type(json_data) == dict:
+                self.__dict__ = json_data
+            elif len(json_data) > 0:
+                self.__dict__ = json_data[0]
+            else:
+                self.__dict__ = {}
+
+            # print(type(json_data))
+
+            # if len(json_data) == 1:
+            #     self.__dict__ = json.loads(json_data[0])
+            # elif len(json_data) == 0:
+            #     self.__dict__ = {}
+            # elif "AppId" in json_data:
+            #     correct_app = [
+            #         x for x in json_data if "09th-semester-test-cases" in x.AppId
+            #     ]
+            #     print(correct_app)
+            #     if len(correct_app.keys()) == 0:
+            #         self.__dict__ = {}
+            #     else:
+            #         self.__dict__ = correct_app[-1]
+
             self.id = experiment_id
             self.start_time = start_time
             self.end_time = end_time
