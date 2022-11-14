@@ -1,12 +1,6 @@
 ﻿using EnergyComparer.Handlers;
-using EnergyComparer.Profilers;
-using EnergyComparer.Services;
 using EnergyComparer.TestCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EnergyComparer
 {
