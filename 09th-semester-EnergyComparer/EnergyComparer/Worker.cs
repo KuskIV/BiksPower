@@ -56,7 +56,7 @@ namespace EnergyComparer
             
             InitializeDependencies();
 
-            _experimentService = new ExperimentService(_dutAdapter, _logger, isProd, _hasBattery, _wifiAdapterName, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
+            _experimentService = new ExperimentService(_logger, isProd, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
         }
 
 
@@ -119,9 +119,9 @@ namespace EnergyComparer
             return new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
         }
 
-        private (IHardwareMonitorService, IOperatingSystemAdapter, IDataHandler, IHardwareHandler, IWifiService, IExperimentHandler) DeleteDependencies()
+        private (IOperatingSystemAdapter, IDataHandler, IWifiService, IExperimentHandler) DeleteDependencies()
         {
-            return (null, null, null, null, null, null);
+            return (null, null, null, null);
         }
 
         private IDbConnection GetDbConnectionFactory()

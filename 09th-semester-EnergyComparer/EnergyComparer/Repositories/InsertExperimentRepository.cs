@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using EnergyComparer.Models;
 using EnergyComparer.Profilers;
-using EnergyComparer.Programs;
+using EnergyComparer.TestCases;
 using Google.Protobuf.WellKnownTypes;
 using MySqlX.XDevAPI;
 using Org.BouncyCastle.Asn1.BC;

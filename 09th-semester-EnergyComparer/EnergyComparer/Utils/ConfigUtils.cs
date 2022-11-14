@@ -35,11 +35,11 @@ namespace EnergyComparer.Utils
 
         public static bool GetIterateOverProfilers(IConfiguration config)
         {
-//#if !DEBUG
-//            return true;
-//#else
+#if !DEBUG
+            return true;
+#else
             return config.GetValue<bool>("IterateOverProfilers");
-//# endif
+# endif
         }
 
         internal static bool GetShouldRestart(IConfiguration configuration)

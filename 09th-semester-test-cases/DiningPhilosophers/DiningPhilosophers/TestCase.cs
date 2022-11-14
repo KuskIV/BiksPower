@@ -1,46 +1,20 @@
-﻿using CsvHelper;
-using EnergyComparer.Handlers;
-using EnergyComparer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace EnergyComparer.Programs
+// This is from RosettaCode.org
+
+namespace DiningPhilosophers
 {
-    internal class DiningPhilosophers : ITestCase
+    public class TestCase
     {
         private const int DinerCount = 5;
-        private readonly string _name;
-        private readonly string _language;
-        private readonly DtoTestCase _program;
         private static List<Diner> Diners = new List<Diner>();
         private static List<Fork> Forks = new List<Fork>();
         private static DateTime TimeToStop;
-
-        public DiningPhilosophers(IDataHandler dataHandler)
-        {
-            _name = "DiningPhilosophers";
-            _language = ELanguage.CSharp.ToString();
-            _program = dataHandler.GetTestCase(_name).Result;
-        }
-
-        public string GetLanguage()
-        {
-            return _language;
-        }
-
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public DtoTestCase GetProgram()
-        {
-            return _program;
-        }
 
         public void Run()
         {
@@ -131,11 +105,6 @@ namespace EnergyComparer.Programs
         private static int GetForkHolder(Fork fork)
         {
             return Diners.Single(d => d.CurrentlyHeldForks.Contains(fork)).ID;
-        }
-
-        public string GetExecutablePath(DirectoryInfo path)
-        {
-            throw new NotImplementedException();
         }
     }
 

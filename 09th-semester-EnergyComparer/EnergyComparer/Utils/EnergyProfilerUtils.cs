@@ -1,5 +1,6 @@
 ﻿using EnergyComparer.Models;
 using EnergyComparer.Services;
+using EnergyComparer.TestCases;
 using Org.BouncyCastle.Asn1.Crmf;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace EnergyComparer.Utils
 {
     public static class EnergyProfilerUtils
     {
-        internal static List<Profiler> GetDefaultProfilersForSystem(DtoDut system, Programs.ITestCase program, List<string> sources)
+        internal static List<Profiler> GetDefaultProfilersForSystem(DtoDut system, ITestCase program, List<string> sources)
         {
             var profilers = new List<Profiler>();
 

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Serilog;
 using ILogger = Serilog.ILogger;
-using EnergyComparer.Programs;
 using EnergyComparer.Profilers;
 using Ubiety.Dns.Core.Records.NotUsed;
 using EnergyComparer.Utils;
@@ -15,6 +14,7 @@ using System.Text.Json;
 using System.Data;
 using EnergyComparer.DUTs;
 using System.Data.Common;
+using EnergyComparer.TestCases;
 
 namespace EnergyComparer.Handlers
 {

@@ -8,27 +8,25 @@ using System.Threading.Tasks;
 
 namespace EnergyComparer.TestCases
 {
-    public class IdleCase : ITestCase
+    public class TestCase : ITestCase
     {
-        private readonly string _name;
-        private readonly string _language;
-        private readonly DtoTestCase _program;
+        public string _name;
+        public string _language;
+        public DtoTestCase _program;
 
-        public IdleCase(IDataHandler dataHandler)
+        public TestCase(IDataHandler dataHandler, string name, string language)
         {
-            _name = "IdleCase";
-            _language = ELanguage.CSharp.ToString();
+            _name = name;
+            _language = language;
             _program = dataHandler.GetTestCase(_name).Result;
         }
 
+
         public string GetExecutablePath(DirectoryInfo path)
         {
-            var name = "TestCaseIdle";
-
+            var name = _name;
             return Constants.GetExecutablePathForOs(path, name);
         }
-
-
 
         public string GetLanguage()
         {
@@ -44,10 +42,13 @@ namespace EnergyComparer.TestCases
         {
             return _program;
         }
+    }
 
-        public void Run()
-        {
-            Thread.Sleep(TimeSpan.FromSeconds(30));
-        }
+    public interface ITestCase
+    {
+        string GetExecutablePath(DirectoryInfo path);
+        string GetLanguage();
+        string GetName();
+        DtoTestCase GetProgram();
     }
 }

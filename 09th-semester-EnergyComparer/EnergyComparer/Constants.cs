@@ -1,5 +1,7 @@
-﻿using EnergyComparer.Profilers;
+﻿using EnergyComparer.Handlers;
+using EnergyComparer.Profilers;
 using EnergyComparer.Services;
+using EnergyComparer.TestCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,11 @@ namespace EnergyComparer
 {
     public static class Constants
     {
-        public static int MinutesBetweenExperiments = 0;
+        public static int MinutesBetweenExperiments = 2;
         public static int DurationOfExperimentsInMinutes = 1;
         public static int IntervalBetweenReadsInMiliSeconds = 100;
-        public static int ChargeLowerLimit = 1;
-        public static int ChargeUpperLimit = 80;
+        public static int ChargeLowerLimit = 3;
+        public static int ChargeUpperLimit = 100;
         public static int TemperatureLowerLimit = 0;
         public static int TemperatureUpperLimit = 200;
         public static string DefaultFolderName = "09-experiment-data";
@@ -25,9 +27,52 @@ namespace EnergyComparer
         public static string SurfaceBook = "SurfaceBook";
         public static string PowerKomplett = "PowerKomplett";
 
+
+        public static List<TestCase> GetTestCases(IDataHandler dataHandler)
+        {
+            var language = ELanguage.CSharp.ToString();
+
+            var testCases = new List<TestCase>();
+
+            testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
+            testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
+            //testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
+            testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
+            testCases.Add(new TestCase(dataHandler, "Nbody", language));
+            testCases.Add(new TestCase(dataHandler, "Fasta", language));
+            testCases.Add(new TestCase(dataHandler, "DiningPhilosophers", language));
+
+            return testCases;
+        }
         public static string GetPathForSource(string source)
         {
             return DataFolderPath + "/" + DefaultFolderName + "/" + source;
+        }
+
+        public static string GetExecutablePathForOs(DirectoryInfo path, string name)
+        {
+            if (Constants.IsWindows())
+            {
+                return Constants.GetWindowsExecutablePath(path, name);
+            }
+            else
+            {
+#if !DEBUG
+                return path.Parent.FullName + Constants.GetLinuxExecutablePath(name);;
+#else
+                return path.FullName + Constants.GetLinuxExecutablePath(name);
+#endif
+            }
+        }
+
+        public static string GetWindowsExecutablePath(DirectoryInfo path, string name)
+        {
+            return path.FullName + $"\\09th-semester-test-cases\\{name}\\{name}\\bin\\Release\\net6.0\\{name}.exe";
+        }
+
+        public static string GetLinuxExecutablePath(string name)
+        {
+            return $"/09th-semester-test-cases/{name}/{name}/bin/Release/net6.0/linux-x64/{name}";
         }
 
         public static bool IsWindows()

@@ -1,4 +1,5 @@
-﻿using EnergyComparer.Models;
+﻿using EnergyComparer.Handlers;
+using EnergyComparer.Models;
 using Microsoft.AspNetCore.Components.RenderTree;
 using System;
 using System.Collections.Generic;
@@ -23,18 +24,31 @@ namespace EnergyComparer.Profilers
 
         public (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime)
         {
+            var results = HardwareMeasurementHandler.GetResults().Result;
+            DtoTimeSeries dtoTimeSeries = new DtoTimeSeries()
+            {
+                Time = startTime,
+                Value = results.TimeSeries,
+                ExperimentId = experimentId
+            };
+            DtoRawData dtoRawData = new DtoRawData()
+            {
+                Time = startTime,
+                Value = results.Raw,
+                ExperimentId = experimentId
 
-            return (null,null);
+            };
+            return (dtoTimeSeries,dtoRawData);
         }
 
         public void Start(DateTime date)
         {
-            throw new NotImplementedException();
+            HardwareMeasurementHandler.StartMeasurement(date.ToString());
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
         }
     }
 }
