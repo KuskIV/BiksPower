@@ -119,7 +119,7 @@ namespace EnergyComparer.Handlers
             _logger.Information("Stable condition has been reached");
         }
 
-        private void DisableCharger()
+        private void EnableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
@@ -141,7 +141,7 @@ namespace EnergyComparer.Handlers
             }
         }
 
-        private void EnableCharger()
+        private void DisableCharger()
         {
             if (_machineName == Constants.SurfaceBook)
             {
