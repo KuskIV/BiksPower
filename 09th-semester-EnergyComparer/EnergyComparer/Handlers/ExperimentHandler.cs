@@ -165,7 +165,7 @@ namespace EnergyComparer.Handlers
 
         public async Task<ITestCase> GetTestCase(IDataHandler dataHandler)
         {
-            List<IEnergyProfiler> profilers = GetEnergyProfilers();
+            var profilers = GetEnergyProfilers();
             var dtoProfilers = await GetDtoProfilers(profilers, dataHandler);
             var dut = await dataHandler.GetDut();
             _logger.Information("The profiler(s) for the experiment are as following: {profilers}", string.Join(',', profilers.Select(x => x.GetName())));
@@ -189,12 +189,14 @@ namespace EnergyComparer.Handlers
         {
             if (!_iterateOverProfilers)
             {
+                _logger.Information("Only the default profiler is used in this experiment");
                 return new List<IEnergyProfiler>()
                 {
                     _dutAdapter.GetDefaultProfiler(),
                 };
             }
 
+            _logger.Information("All profilers is used in this experiment");
             return _dutAdapter.GetProfilers().ToList();
         }
 

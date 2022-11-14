@@ -36,17 +36,5 @@ namespace EnergyComparer.DUTs
 
             return profilers;
         }
-
-        public IEnergyProfiler GetProfilers(string name)
-        {
-            if (name == ELinuxProfilers.RAPL.ToString())
-            {
-                return new RAPL();
-            }
-            else
-            {
-                throw new NotImplementedException($"Profiler '{name}' is not valid for system");
-            }
-        }
     }
 }
