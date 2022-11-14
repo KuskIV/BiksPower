@@ -64,6 +64,8 @@ namespace EnergyComparer
         public async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
+            await EnableWifi();
+            
             CreateFolderIfNew();
 
             await _experimentHandler.WaitTillStableState(); // TODO: Tie to one single core
