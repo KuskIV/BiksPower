@@ -17,7 +17,11 @@ namespace EnergyComparer
         public static int IntervalBetweenReadsInMiliSeconds = 100;
         public static int ChargeLowerLimit = 3;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static int ChargeUpperLimit = 100;
+=======
+        public static int ChargeUpperLimit = 95;
+>>>>>>> dffabfb3b5a746964dc2fe4b1316d21e8141b9ee
 =======
         public static int ChargeUpperLimit = 95;
 >>>>>>> dffabfb3b5a746964dc2fe4b1316d21e8141b9ee
