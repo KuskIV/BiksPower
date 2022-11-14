@@ -112,17 +112,16 @@ namespace EnergyComparer.Services
                 p.StartInfo.RedirectStandardOutput = true;
                 p.Start();
                 
+                
+                output = p.StandardOutput.ReadToEnd();
+
+                p.WaitForExit();
+
                 if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
                 {
                     energyProfiler.Stop();
                     Console.WriteLine("early stop");
                 }
-                
-                output = p.StandardOutput.ReadToEnd();
-
-
-                p.WaitForExit();
-
             }
 
             //var counter = 0;

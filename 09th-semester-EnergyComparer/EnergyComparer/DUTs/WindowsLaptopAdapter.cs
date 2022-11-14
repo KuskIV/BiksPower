@@ -28,9 +28,10 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            return new HardwareMonitor(_hardwareMonitorService);
+            //return new HardwareMonitor(_hardwareMonitorService);
             //return new RAPL();
             //return _intelPowerGadget;
+            return new E3();
         }
 
         public List<IEnergyProfiler> GetProfilers()
