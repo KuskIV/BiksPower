@@ -22,25 +22,29 @@ namespace EnergyComparer.DUTs
         private readonly bool _isProd;
         private readonly bool _shouldRestart;
         private readonly IHardwareMonitorService _hardwareMonitorService;
-        private readonly IDutAdapter _dutAdapter;
 
-        public WindowsAdapter(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorService, IDutAdapter dutAdapter)
+        public WindowsAdapter(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorService)
         {
             _logger = logger;
             _isProd = isProd;
             _shouldRestart = shouldRestart;
             _hardwareMonitorService = hardwareMonitorService;
-            _dutAdapter = dutAdapter;
         }
 
-        public void EnableNetworking(string interfaceName)
+        public void EnableWifi(string interfaceName)
         {
-            _dutAdapter.EnableNetworking(interfaceName);
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" enable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
         }
 
-        public void DisableNetworking(string interfaceName)
+        public void DisableWifi(string interfaceName)
         {
-            _dutAdapter.DisableNetworking(interfaceName);
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
         }
 
         public void Restart()
@@ -102,7 +106,7 @@ namespace EnergyComparer.DUTs
 
         public float GetAverageCpuTemperature()
         {
-            return _dutAdapter.GetTemperature();
+            return _hardwareMonitorService.GetAverageCpuTemperature(update:true);
         }
 
         public List<DtoMeasurement> GetCoreTemperatures()

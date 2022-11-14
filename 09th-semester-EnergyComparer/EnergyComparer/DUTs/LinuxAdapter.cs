@@ -11,22 +11,30 @@ namespace EnergyComparer.DUTs
     internal class LinuxAdapter : IOperatingSystemAdapter
     {
         private readonly ILogger _logger;
-        private readonly IDutAdapter _dutAdapter;
 
-        public LinuxAdapter(ILogger logger, IDutAdapter dutAdapter)
+        public LinuxAdapter(ILogger logger)
         {
             _logger = logger;
-            _dutAdapter = dutAdapter;
         }
-        public void DisableNetworking(string interfaceName)
+        public void DisableWifi(string interfaceName)
         {
-            _dutAdapter.DisableNetworking(interfaceName);
+            //var command = "nmcli radio wifi off";
+            LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi off");
+
+
+            //ExecuteCommand(command);
         }
 
-        public void EnableNetworking(string interfaceName)
+        public void EnableWifi(string interfaceName)
         {
-            _dutAdapter.EnableNetworking(interfaceName);
+            //var command = "nmcli radio wifi on";
+
+            LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi on");
+
+
+            //ExecuteCommand(command);
         }
+
         public void Restart()
         {
             //var command = "sudo reboot";
@@ -52,12 +60,19 @@ namespace EnergyComparer.DUTs
 
         public float GetAverageCpuTemperature()
         {
-            return _dutAdapter.GetTemperature();
+            return GetTemperature();
+        }
+
+        private static float GetTemperature()
+        {
+            var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+
+            return temperature / 1000;
         }
 
         public List<DtoMeasurement> GetCoreTemperatures()
         {
-            var temp = _dutAdapter.GetTemperature();
+            var temp = GetTemperature();
 
             return new List<DtoMeasurement>()
             {

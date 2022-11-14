@@ -12,6 +12,7 @@ public class Program
         //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
         InitializeLogger();
         InitializeConfig();
+        
         var worker = new Worker(_logger, _configuration);
         var cts = new CancellationToken();
 

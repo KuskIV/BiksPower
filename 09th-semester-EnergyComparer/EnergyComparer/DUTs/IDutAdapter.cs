@@ -10,8 +10,5 @@ namespace EnergyComparer.DUTs
         IEnergyProfiler GetDefaultProfiler();
         List<IEnergyProfiler> GetProfilers();
         IEnergyProfiler GetProfilers(string name);
-        float GetTemperature();
-        void DisableNetworking(string interfaceName);
-        void EnableNetworking(string interfaceName);
     }
 }

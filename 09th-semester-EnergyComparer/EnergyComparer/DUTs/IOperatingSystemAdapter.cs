@@ -6,8 +6,8 @@ namespace EnergyComparer.DUTs
 {
     public interface IOperatingSystemAdapter
     {
-        void DisableNetworking(string interfaceName);
-        void EnableNetworking(string interfaceName);
+        void DisableWifi(string interfaceName);
+        void EnableWifi(string interfaceName);
         void Restart();
         void Shutdowm();
         void StopunneccesaryProcesses();

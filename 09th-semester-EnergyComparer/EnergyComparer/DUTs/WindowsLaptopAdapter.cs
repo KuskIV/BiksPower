@@ -3,7 +3,6 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -78,37 +77,6 @@ namespace EnergyComparer.DUTs
                 throw new NotImplementedException($"Profiler '{name}' is not valid for system");
             }
 
-        }
-
-        public float GetTemperature()
-        {
-            return _hardwareMonitorService.GetAverageCpuTemperature(update:true);
-        }
-
-        public void DisableNetworking(string interfaceName)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
-            Process p = new Process();
-            p.StartInfo = psi;
-            p.Start();
-        }
-
-        public void EnableNetworking(string interfaceName)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
-            Process p = new Process();
-            p.StartInfo = psi;
-            p.Start();
-        }
-
-        public void DisableNetworking()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EnableNetworking()
-        {
-            throw new NotImplementedException();
         }
 
         public List<string> GetAllSoucres()
