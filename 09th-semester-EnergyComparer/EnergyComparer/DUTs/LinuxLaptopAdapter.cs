@@ -22,6 +22,23 @@ namespace EnergyComparer.DUTs
         {
             return LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/power_supply/BAT1/capacity");
         }
+        
+        public float GetTemperature()
+        {
+            var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+
+            return temperature / 1000;
+        }
+
+        public void DisableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi off");
+        }
+
+        public void EnableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi on");
+        }
 
         public IEnergyProfiler GetDefaultProfiler()
         {

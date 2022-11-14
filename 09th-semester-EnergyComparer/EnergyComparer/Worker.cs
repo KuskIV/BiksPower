@@ -106,7 +106,7 @@ namespace EnergyComparer
         private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler) InitializeOfflineDependencies()
         {
             var hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
-            var adapter = SystemUtils.InitializeAdapterService(_logger, _isProd,  _shouldRestart, hardwareMonitorService);
+            var adapter = SystemUtils.InitializeAdapterService(_logger, _isProd,  _shouldRestart, hardwareMonitorService, _dutAdapter);
             var energyProfilerService = new HardwareHandler(_logger, _wifiAdapterName, adapter);
             var wifiService = new WifiService(energyProfilerService);
             var experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, adapter, _machineName);
@@ -155,7 +155,7 @@ namespace EnergyComparer
         private void InitializeDependencies()
         {
             _hardwareMonitorService = SystemUtils.GetHardwareMonitorService(_logger);
-            _adapterService = SystemUtils.InitializeAdapterService(_logger, _isProd, _shouldRestart, _hardwareMonitorService);
+            _adapterService = SystemUtils.InitializeAdapterService(_logger, _isProd, _shouldRestart, _hardwareMonitorService, _dutAdapter);
             _dataHandler = new DataHandler(_logger, _adapterService, GetDbConnectionFactory, _machineName, _dutAdapter);
             _experimentHandler = new ExperimentHandler(_isProd, _maxIterations, _hasBattery, _iterateOverProfilers, _logger, _dutAdapter, _adapterService, _machineName);
             _dataHandler.InitializeConnection();

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EnergyComparer.Utils;
 
 namespace EnergyComparer.DUTs
 {
@@ -18,6 +19,23 @@ namespace EnergyComparer.DUTs
         public int GetChargeRemaining()
         {
             return 100;
+        }
+
+        public float GetTemperature()
+        {
+            var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone1/temp");
+
+            return temperature / 1000;
+        }
+
+        public void DisableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig","eno1 down");
+        }
+
+        public void EnableNetworking(string interfaceName)
+        {
+            LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "eno1 up");
         }
 
         public IEnergyProfiler GetDefaultProfiler()

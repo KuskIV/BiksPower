@@ -72,7 +72,7 @@ namespace EnergyComparer
 
         public static string GetLinuxExecutablePath(string name)
         {
-            return $"/09th-semester-test-cases/{name}/{name}/bin/Release/net6.0/linux-x64/{name}";
+            return $"/09th-semester-test-cases/{name}/{name}/bin/Release/net6.0/{name}";
         }
 
         public static bool IsWindows()

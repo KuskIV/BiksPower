@@ -3,6 +3,7 @@ using EnergyComparer.Profilers;
 using EnergyComparer.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,10 +71,32 @@ namespace EnergyComparer.DUTs
             }
         }
 
+        public float GetTemperature()
+        {
+            return _hardwareMonitorService.GetAverageCpuTemperature(update:true);
+        }
+        
+        public void DisableNetworking(string interfaceName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
+        }
+
+        public void EnableNetworking(string interfaceName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", "interface set interface \"" + interfaceName + "\" disable");
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.Start();
+        }
+
         public List<string> GetAllSoucres()
         {
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList().Concat(Enum.GetNames(typeof(EProfilers)).ToList()).ToList();
 
         }
+        
     }
 }
