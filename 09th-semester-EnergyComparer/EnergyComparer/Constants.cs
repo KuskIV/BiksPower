@@ -15,8 +15,8 @@ namespace EnergyComparer
         public static int MinutesBetweenExperiments = 2;
         public static int DurationOfExperimentsInMinutes = 2;
         public static int IntervalBetweenReadsInMiliSeconds = 100;
-        public static int ChargeLowerLimit = 3;
-        public static int ChargeUpperLimit = 95;
+        public static int ChargeLowerLimit = 10;
+        public static int ChargeUpperLimit = 80;
         public static int TemperatureLowerLimit = 0;
         public static int TemperatureUpperLimit = 200;
         public static string DefaultFolderName = "09-experiment-data";
