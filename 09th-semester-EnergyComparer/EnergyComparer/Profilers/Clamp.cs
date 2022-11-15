@@ -48,7 +48,7 @@ namespace EnergyComparer.Profilers
             HardwareMeasurementHandler.StartMeasurement(date.ToString());
         }
 
-        public void Stop()
+        public void Stop(DateTime stopTime)
         {
             HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
         }

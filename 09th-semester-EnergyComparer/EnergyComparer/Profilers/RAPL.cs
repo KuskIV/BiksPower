@@ -70,7 +70,7 @@ namespace EnergyComparer.Profilers
             _timer.Enabled = true;
         }
 
-        public void Stop()
+        public void Stop(DateTime stopTime)
         {
             _timer.Enabled = false;
 

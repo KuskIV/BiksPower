@@ -65,17 +65,28 @@ namespace EnergyComparer.Services
 
             await EnableWifiAndDependencies();
 
+            HandleClampProfiler(startTime, stopTime, energyProfiler);
+
             var (endTemperatures, endBattery) = GetEndMeasurements();
             var experimentId = await EndExperiment(testCase, stopTime, startTime, counter, energyProfiler, initialTemperatures, endTemperatures, duration, initialBattery, endBattery);
 
             return await HandleResultsIfValid(energyProfiler, startTime, experimentId);
         }
 
+        private void HandleClampProfiler(DateTime startTime, DateTime stopTime, IEnergyProfiler energyProfiler)
+        {
+            if (energyProfiler.GetName() == EProfilers.Clamp.ToString())
+            {
+                energyProfiler.Start(startTime);
+                energyProfiler.Stop(stopTime);
+            }
+        }
+
         private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
-            if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString())
+            if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString() && energyProfiler.GetName() != EProfilers.Clamp.ToString())
             {
-                energyProfiler.Stop();
+                energyProfiler.Stop(DateTime.MinValue);
                 Console.WriteLine("late stop");
             }
 
@@ -92,8 +103,13 @@ namespace EnergyComparer.Services
 
             var startTime = DateTime.UtcNow; // TODO: order of time and start profiler
 
-            energyProfiler.Start(startTime);    
+            if (energyProfiler.GetName() != EProfilers.Clamp.ToString())
+            {
+                energyProfiler.Start(startTime);   
+            }
+
             stopwatch.Start();
+            
             return startTime;
         }
 
@@ -119,7 +135,7 @@ namespace EnergyComparer.Services
 
                 if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
                 {
-                    energyProfiler.Stop();
+                    energyProfiler.Stop(DateTime.MinValue);
                     Console.WriteLine("early stop");
                 }
             }
@@ -266,6 +282,11 @@ namespace EnergyComparer.Services
 
         private (List<DtoMeasurement>, DtoMeasurement) InitializeExperiment(IEnergyProfiler energyProfiler)
         {
+            if (energyProfiler.GetName() == EProfilers.Clamp.ToString())
+            {
+                energyProfiler.Start(DateTime.UtcNow);
+            }
+
             if (String.IsNullOrEmpty(_firstProfiler)) _firstProfiler = energyProfiler.GetName();
 
             _dataHandler.CloseConnection();

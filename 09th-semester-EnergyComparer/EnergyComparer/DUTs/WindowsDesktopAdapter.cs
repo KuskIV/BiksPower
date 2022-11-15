@@ -26,7 +26,7 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            return _intelPowerGadget;
+            return new  Clamp();
         }
 
         public int GetChargeRemaining()

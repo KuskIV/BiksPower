@@ -13,6 +13,6 @@ namespace EnergyComparer.Profilers
         string GetName();
         (DtoTimeSeries, DtoRawData) ParseData(string path, int experimentId, DateTime startTime);
         public void Start(DateTime date);
-        public void Stop();
+        public void Stop(DateTime stopTime);
     }
 }
