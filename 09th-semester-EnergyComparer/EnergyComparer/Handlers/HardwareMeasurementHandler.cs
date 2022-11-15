@@ -85,21 +85,41 @@ namespace EnergyComparer.Handlers
         public static async Task<HardwareResults> GetResults() 
         {
             var url = "http://stemlevelup.com/api/RaspberryPi/Results";
-            HardwareResults hr = new HardwareResults("", "");
+            HardwareResults hr = new HardwareResults();
             do
             {
                 var client = new RestClient(url);
                 var request = new RestRequest(url, Method.Get);
                 RestResponse response = await client.ExecuteAsync(request);
-                hr = JsonSerializer.Deserialize<HardwareResults>(response.Content!)!;
-            } while (hr.TimeSeries.Equals("") || hr.Raw.Equals("") );
+                string DirtyJson = response.Content;
+                string CleanerJson = DirtyJson.Replace("\\u0022", "\u0022");
+                string EvenCleaner = CleanerJson.Replace("\\\"","\"");
+                string Cleanest1 = EvenCleaner.Replace("\"[", "[");
+                string Cleanest2 = Cleanest1.Replace("]\"", "]");
+                string Cleanest3 = Cleanest2.Replace("\"{", "{");
+                string Cleanest4 = Cleanest3.Replace("}\"", "}");
+                if (!Cleanest4.Equals("{\"TimeSeries\":\"\",\"Raw\":\"test\"}")) 
+                {
+                    hr = JsonSerializer.Deserialize<HardwareResults>(Cleanest4)!;
+                    break;
+                }
+            } while (true);
+            hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
+            double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
+            double C1ACRMSRAW = hr.TimeSeries.Sum(x => x.C1ACRMSPower.Value);
+            hr.Raw = JsonSerializer.Serialize(new HardwareRaw(C1TrueRMSRAW, C1ACRMSRAW));
             ResetResults();
             return hr;
         }
 
+        private static bool ContainsNull(TimeSeries timeSeries) 
+        {
+            return !(timeSeries.C1TrueRMSPower.HasValue && timeSeries.C1TrueRMS.HasValue && timeSeries.C1ACRMSPower.HasValue && timeSeries.C1ACRMSPower.HasValue);
+        }
+
         private static void ResetResults() 
         {
-            string empty = "";
+            string empty = "test";
             var url = "http://stemlevelup.com/api/RaspberryPi/Results?rawJson="+empty;
             var options = new RestClientOptions(url)
             {
