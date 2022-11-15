@@ -20,6 +20,8 @@ await Task.Delay(1000 * 30);
 HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
 await HardwareMeasurementHandler.GetHardwareState();
 
+await HardwareMeasurementHandler.GetResults();
+
 
 //PlugHandlers PlugHandlers = new PlugHandlers();
 //PlugHandlers.GetPlugs()["SurfacePro"].TurnOff();

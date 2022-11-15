@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EnergyComparer.Profilers
@@ -28,9 +29,10 @@ namespace EnergyComparer.Profilers
             DtoTimeSeries dtoTimeSeries = new DtoTimeSeries()
             {
                 Time = startTime,
-                Value = results.TimeSeries,
+                Value = JsonSerializer.Serialize(results.TimeSeries),
                 ExperimentId = experimentId
             };
+
             DtoRawData dtoRawData = new DtoRawData()
             {
                 Time = startTime,
@@ -38,7 +40,7 @@ namespace EnergyComparer.Profilers
                 ExperimentId = experimentId
 
             };
-            return (dtoTimeSeries,dtoRawData);
+            return (dtoTimeSeries, dtoRawData);
         }
 
         public void Start(DateTime date)

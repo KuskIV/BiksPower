@@ -55,7 +55,6 @@ namespace EnergyComparer.Profilers
         {
             dateTime = date;
             PrevMeasure = await WaitForBlock();
-            //Start(date);
             return true;
         }
         public async Task WaitForStop() 
