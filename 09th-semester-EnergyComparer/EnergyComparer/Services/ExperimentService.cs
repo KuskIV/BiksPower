@@ -40,8 +40,6 @@ namespace EnergyComparer.Services
             InitializeDependencies();
         }
 
-        
-
         public List<int> GetProfilerCounters()
         {
             return _profilerCounter.Values.ToList();

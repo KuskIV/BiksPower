@@ -1,5 +1,6 @@
 using EnergyComparer;
 using Serilog;
+using System.Runtime.CompilerServices;
 using ILogger = Serilog.ILogger;
 
 public class Program
@@ -9,16 +10,25 @@ public class Program
 
     private static async Task Main(string[] args)
     {
+        var worker = new Worker(_logger, _configuration);
+        var cts = new CancellationToken();
+
+        await worker.EnableWifi();
+
         //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
         InitializeLogger();
         InitializeConfig();
         
-        var worker = new Worker(_logger, _configuration);
-        var cts = new CancellationToken();
 
         try
         {
             await worker.ExecuteAsync(cts);
+        }
+        catch (RuntimeWrappedException e)
+        {
+            await worker.EnableWifi();
+            _logger.Error(e, "C++ exception");
+            throw;
         }
         catch (Exception e)
         {
