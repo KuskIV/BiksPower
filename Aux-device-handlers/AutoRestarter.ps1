@@ -1,5 +1,5 @@
 Start-Sleep (60*10)
-while (false)
+while ($true)
 {
     Start-Sleep (60*10)
     $energy = Get-Process EnergyComparer -ErrorAction SilentlyContinue
