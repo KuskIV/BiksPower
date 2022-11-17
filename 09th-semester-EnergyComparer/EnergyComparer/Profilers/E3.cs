@@ -95,7 +95,7 @@ namespace EnergyComparer.Profilers
             }
         }
 
-        public void Stop()
+        public void Stop(DateTime stopTime)
         {
             _ = WaitForStop();
             CollectLogs();

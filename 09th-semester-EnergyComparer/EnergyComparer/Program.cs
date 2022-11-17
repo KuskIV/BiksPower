@@ -1,5 +1,6 @@
 using EnergyComparer;
 using Serilog;
+using System.Runtime.CompilerServices;
 using ILogger = Serilog.ILogger;
 
 public class Program
@@ -9,6 +10,7 @@ public class Program
 
     private static async Task Main(string[] args)
     {
+
         //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
         InitializeLogger();
         InitializeConfig();
@@ -20,10 +22,22 @@ public class Program
         {
             await worker.ExecuteAsync(cts);
         }
+        catch (RuntimeWrappedException e)
+        {
+            await worker.EnableWifi();
+            _logger.Error(e, "C++ exception");
+            throw;
+        }
         catch (Exception e)
         {
             await worker.EnableWifi();
             _logger.Error(e, "Exception when running experiments");
+            throw;
+        }
+        catch
+        {
+            await worker.EnableWifi();
+            _logger.Error("C++ exception without exception");
             throw;
         }
         finally

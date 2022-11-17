@@ -197,8 +197,17 @@ class RawData(object):
 
             if type(json_data) == dict:
                 self.__dict__ = json_data
-            elif len(json_data) > 0:
-                self.__dict__ = json_data[0]
+            elif type(json_data) == list and len(json_data) > 0:
+                if "AppId" in json_data[0]:
+                    correct_app = [
+                        x for x in json_data if "09th-semester-test-cases" in x["AppId"]
+                    ]
+                    if len(correct_app) == 0:
+                        self.__dict__ = {}
+                    else:
+                        self.__dict__ = correct_app[-1]
+                else:
+                    self.__dict__ = json_data[0]
             else:
                 self.__dict__ = {}
 

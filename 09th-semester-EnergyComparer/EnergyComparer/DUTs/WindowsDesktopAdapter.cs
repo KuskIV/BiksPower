@@ -26,7 +26,7 @@ namespace EnergyComparer.DUTs
 
         public IEnergyProfiler GetDefaultProfiler()
         {
-            return _intelPowerGadget;
+            return new  Clamp();
         }
 
         public int GetChargeRemaining()
@@ -39,7 +39,7 @@ namespace EnergyComparer.DUTs
             var profilers = new List<IEnergyProfiler>();
 
             profilers.Add(_intelPowerGadget);
-            profilers.Add(new E3());
+            //profilers.Add(new E3());
             profilers.Add(new HardwareMonitor(_hardwareMonitorService));
             profilers.Add(new Clamp());
 
@@ -49,7 +49,6 @@ namespace EnergyComparer.DUTs
         public List<string> GetAllSoucres()
         {
             return Enum.GetNames(typeof(EWindowsProfilers)).ToList().Concat(Enum.GetNames(typeof(EProfilers)).ToList()).ToList();
-
         }
     }
 }

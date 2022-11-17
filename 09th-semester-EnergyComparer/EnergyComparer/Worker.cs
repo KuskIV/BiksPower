@@ -30,6 +30,8 @@ namespace EnergyComparer
 
         public Worker(ILogger logger, IConfiguration configuration)
         {
+
+
             _logger = logger;
             _configuration = configuration;
 
@@ -54,18 +56,16 @@ namespace EnergyComparer
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
             
+            _ = EnableWifi().Result;
             InitializeDependencies();
+
 
             _experimentService = new ExperimentService(_logger, isProd, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
         }
 
-
-
         public async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //await _dataHandler.IncrementVersionForSystem(); // TODO: increment for all systems, not just the current one
-            await EnableWifi();
-            
             CreateFolderIfNew();
 
             await _experimentHandler.WaitTillStableState(); // TODO: Tie to one single core
@@ -98,11 +98,13 @@ namespace EnergyComparer
             _adapterService.StopunneccesaryProcesses();
         }
 
-        public async Task EnableWifi()
+        public async Task<bool> EnableWifi()
         {
             var (_, _, _, wifi, _) = InitializeOfflineDependencies();
 
             await wifi.Enable(_isProd);
+
+            return true;
         }
 
         private (IHardwareMonitorService, IOperatingSystemAdapter, IHardwareHandler, IWifiService, IExperimentHandler) InitializeOfflineDependencies()
