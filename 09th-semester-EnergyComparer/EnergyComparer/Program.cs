@@ -36,6 +36,12 @@ public class Program
             _logger.Error(e, "Exception when running experiments");
             throw;
         }
+        catch
+        {
+            await worker.EnableWifi();
+            _logger.Error("C++ exception without exception");
+            throw;
+        }
         finally
         {
             Console.WriteLine("Press enter to close...");
