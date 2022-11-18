@@ -30,6 +30,8 @@ namespace EnergyComparer
 
         public Worker(ILogger logger, IConfiguration configuration)
         {
+
+
             _logger = logger;
             _configuration = configuration;
 
@@ -54,7 +56,9 @@ namespace EnergyComparer
             var saveToDb = ConfigUtils.GetSaveToDb(configuration);
             var isProd = ConfigUtils.GetIsProd(configuration);
             
+            _ = EnableWifi().Result;
             InitializeDependencies();
+
 
             _experimentService = new ExperimentService(_logger, isProd, saveToDb, InitializeOfflineDependencies, InitializeOnlineDependencies, DeleteDependencies);
         }

@@ -18,8 +18,6 @@ public class Program
         var worker = new Worker(_logger, _configuration);
         var cts = new CancellationToken();
 
-        await worker.EnableWifi();
-
         try
         {
             await worker.ExecuteAsync(cts);
