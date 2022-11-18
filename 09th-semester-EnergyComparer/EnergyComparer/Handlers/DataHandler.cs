@@ -184,8 +184,11 @@ namespace EnergyComparer.Handlers
                 await _policy.ExecuteAsync(async () => await _insertRepository.InsertProfilers(profilers, system, program));
             }
 
-            foreach (var p in profilers.Where(x => x.IsFirst == true))
-                p.IsCurrent = true;
+            foreach (var p in profilers)
+            {
+                if (p.IsFirst) p.IsCurrent = true;
+                if (!p.IsFirst) p.IsCurrent = false;
+            }
 
             return profilers;
 
@@ -199,9 +202,10 @@ namespace EnergyComparer.Handlers
         public async Task UpdateProfilers(string id, List<Profiler> profilers)
         {
             var system = await GetDut();
+            var program = await GetTestCase(id);
 
             var systemId = system.Id.ToString();
-            var programId = id;
+            var programId = program.Id.ToString();
             var value = JsonSerializer.Serialize(profilers);
 
             await _policy.ExecuteAsync(async () => await _insertRepository.UpdateProfilers(systemId, programId, value));
