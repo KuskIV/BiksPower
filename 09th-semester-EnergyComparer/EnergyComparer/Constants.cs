@@ -15,7 +15,7 @@ namespace EnergyComparer
         public static int MinutesBetweenExperiments = 0;
         public static int DurationOfExperimentsInMinutes = 1;
         public static int IntervalBetweenReadsInMiliSeconds = 100;
-        public static int ChargeLowerLimit = 10;
+        public static int ChargeLowerLimit = 40;
         public static int ChargeUpperLimit = 80;
         public static int TemperatureLowerLimit = 0;
         public static int TemperatureUpperLimit = 200;

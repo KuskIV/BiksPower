@@ -33,6 +33,7 @@ namespace EnergyComparer.Services
                 return GetDefaultProfiler();
             }
 
+
             var profilers = await InitializeProfilers(program, dataHandler);
 
             return GetCurrentProfilerAndUpdateIsFirst(program, profilers, adapterService);
@@ -91,6 +92,13 @@ namespace EnergyComparer.Services
 
         private async Task UpdateIsFirstProfiler(string id, List<Profiler> profilers, IDataHandler dataHandler)
         {
+            profilers = MoveToNextIsFirstProfiler(profilers);
+
+            await dataHandler.UpdateProfilers(id, profilers);
+        }
+
+        public List<Profiler> MoveToNextIsFirstProfiler(List<Profiler> profilers)
+        {
             var currentProfiler = profilers.Where(x => x.IsFirst == true).First();
             var currentProfilerIndex = profilers.IndexOf(currentProfiler);
             var nextIndex = currentProfilerIndex == profilers.Count - 1 ? 0 : currentProfilerIndex + 1;
@@ -98,7 +106,7 @@ namespace EnergyComparer.Services
             profilers[currentProfilerIndex].IsFirst = false;
             profilers[nextIndex].IsFirst = true;
 
-            await dataHandler.UpdateProfilers(id, profilers);
+            return profilers;
         }
 
         private async Task<List<Profiler>> InitializeProfilers(ITestCase program, IDataHandler dataHandler)
@@ -129,6 +137,7 @@ namespace EnergyComparer.Services
     public interface IEnergyProfilerService
     {
         Task<IEnergyProfiler> GetNext(ITestCase program, IDataHandler dataHandler, IOperatingSystemAdapter adapterService);
+        List<Profiler> MoveToNextIsFirstProfiler(List<Profiler> profilers);
         Task SaveProfilers(IDataHandler dataHandler);
     }
 }
