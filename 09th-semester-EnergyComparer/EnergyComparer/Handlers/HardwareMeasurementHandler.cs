@@ -86,6 +86,8 @@ namespace EnergyComparer.Handlers
         {
             var url = "http://stemlevelup.com/api/RaspberryPi/Results";
             HardwareResults hr = new HardwareResults();
+            DateTime start = DateTime.Now;
+            double min = 0;
             do
             {
                 var client = new RestClient(url);
@@ -103,11 +105,22 @@ namespace EnergyComparer.Handlers
                     hr = JsonSerializer.Deserialize<HardwareResults>(Cleanest4)!;
                     break;
                 }
+                DateTime end = DateTime.Now;
+                min = (end - start).TotalMinutes;
+                if (min > 5)
+                {
+                    hr = HardwareResults.Empty();
+                    break;
+                }
+
             } while (true);
-            hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
-            double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
-            double C1ACRMSRAW = hr.TimeSeries.Sum(x => x.C1ACRMSPower.Value);
-            hr.Raw = JsonSerializer.Serialize(new HardwareRaw(C1TrueRMSRAW, C1ACRMSRAW));
+            if (min > 5) 
+            {
+                hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
+                double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
+                double C1ACRMSRAW = hr.TimeSeries.Sum(x => x.C1ACRMSPower.Value);
+                hr.Raw = JsonSerializer.Serialize(new HardwareRaw(C1TrueRMSRAW, C1ACRMSRAW));            
+            }
             ResetResults();
             return hr;
         }
