@@ -33,6 +33,7 @@ namespace EnergyComparer.Services
                 return GetDefaultProfiler();
             }
 
+
             var profilers = await InitializeProfilers(program, dataHandler);
 
             return GetCurrentProfilerAndUpdateIsFirst(program, profilers, adapterService);

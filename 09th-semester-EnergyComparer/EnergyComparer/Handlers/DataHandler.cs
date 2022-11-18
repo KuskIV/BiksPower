@@ -178,8 +178,9 @@ namespace EnergyComparer.Handlers
             }
             else
             {
-                var sources = _dutAdapter.GetAllSoucres();
-                profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program, sources);
+                
+                var dutProfilers = _dutAdapter.GetProfilers();
+                profilers =  EnergyProfilerUtils.GetDefaultProfilersForSystem(system, program, dutProfilers);
 
                 await _policy.ExecuteAsync(async () => await _insertRepository.InsertProfilers(profilers, system, program));
             }
