@@ -20,6 +20,7 @@ namespace EnergyComparer.Handlers
     {
         public static void StartMeasurement(string message) 
         {
+            ResetResults();
             var url = "http://stemlevelup.com/api/RaspberryPi/StartHW";
             var options = new RestClientOptions(url)
             {
@@ -107,20 +108,13 @@ namespace EnergyComparer.Handlers
                 }
                 DateTime end = DateTime.Now;
                 min = (end - start).TotalMinutes;
-                if (min > 5)
-                {
-                    hr = HardwareResults.Empty();
-                    break;
-                }
-
+                hr = HardwareResults.Empty();
+                break;
             } while (true);
-            if (min > 5) 
-            {
-                hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
-                double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
-                double C1ACRMSRAW = hr.TimeSeries.Sum(x => x.C1ACRMSPower.Value);
-                hr.Raw = JsonSerializer.Serialize(new HardwareRaw(C1TrueRMSRAW, C1ACRMSRAW));            
-            }
+            hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
+            double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
+            double C1ACRMSRAW = hr.TimeSeries.Sum(x => x.C1ACRMSPower.Value);
+            hr.Raw = JsonSerializer.Serialize(new HardwareRaw(C1TrueRMSRAW, C1ACRMSRAW));            
             ResetResults();
             return hr;
         }
