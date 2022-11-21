@@ -42,13 +42,13 @@ Because of the uncertainty about how E3 functions it was deemed necessary to con
 The first three scenarios are designed to see when measurements are recorded by E3. The initial expectation is that E3 uses the start and exit timestamp for the measured process. Because of this, expectations are that scenarios 1 and 2 would not record a process but that scenario 3 would.
 
 \paragraph{Findings}
-Scenario 1 and 2 were both contraty to our expectations, where scenario 1 resulted in several measurements of the process, similar results, were obtained from scenario 2. In scenario 3, the process is not found, which is also contrary to our expectations. These results point to E3 instead of using the start and end times instead take several snapshots of the process over some time. Exactly how frequent these snapshots are will be tested later. 
+Scenarios 1 and 2 were both contrary to our expectations, where scenario 1 resulted in several measurements of the process, and similar results were obtained from scenario 2. In scenario 3, the process is not found, which is also contrary to our expectations. These results point to E3 instead of using the start and end times instead take several snapshots of the process over some time. Exactly how frequent these snapshots are will be tested later. 
 
 \paragraph{State Change}
 
 \begin{itemize}
-    \item Scenario 4: Several process "state" are swapped between with increasing intervals
-    \item Scenario 5: Several process "state" are swapped between with a fixed interval
+    \item Scenario 4: Several process "states" are swapped between with increasing intervals
+    \item Scenario 5: Several process "states" are swapped between with a fixed interval
     \item Scenario 6: Change The "state" of a single process during measurements
 \end{itemize}
 
@@ -82,7 +82,7 @@ Scenario 9 is designed to test if E3 uses a per-application sampling rate or if 
 Scenario 9 confirmed our understanding of E3 as it showed that a new snapshot was taken exactly at the start of a minute.
 
 \paragraph {Recommended usage}
-From the experiments, several aspects of E3 has been uncovered, and an understanding of its inner working has become deep enough to utilize for further experimentation. The important aspects that was learned is summarized below:
+From the experiments, several aspects of E3 has been uncovered, and an understanding of its inner working has become deep enough to utilize for further experimentation. The important aspects that were learned are summarized below:
 
 %% 
 
@@ -94,4 +94,4 @@ From the experiments, several aspects of E3 has been uncovered, and an understan
     \item Each snapshot is taken at the start of every minute
 \end{itemize} 
 
-Taking these discoveries into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usage to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that $2$ minutes is adequate for isolating the measurements.    
+Taking these discoveries into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usages to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that $2$ minutes is adequate for isolating the measurements.    

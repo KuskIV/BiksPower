@@ -2,7 +2,7 @@
 Here the methods for statistically comparing the distribution of the different measurements will be elaborated on and explained.
 
 \paragraph{Shapiro-Wilk}
-One of the most common preconditions for statistical tests is that the data has to be in a normal distribution for the results to work optimally. To test if a distribution is a normal distribution a normalcy test can be used. While there are many different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
+One of the most common preconditions for statistical tests is that the data has to be in a normal distribution for the results to work optimally. To test if a distribution is normally distributed a normalcy test can be used. While there are multiple different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
 
 \begin{equation}
     W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}
@@ -75,7 +75,7 @@ The smallest of these two will then be used in the test as $U=min(U_1,U_2)$. The
     \sigma U = \sqrt{\frac{n_1*n_2*(n_1+n_2+1)}{12}}
 \end{equation}
 
-Then to calculate the value $z$.
+Then calculate the value $z$.
 
 \begin{equation}
     z = \frac{U-\varphi U}{\sigma U}
@@ -87,9 +87,9 @@ using z to find the p-value to check if $H_0$ can be rejected, again the alpha i
 Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1) it tests how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same population as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same population. To calculate the KS2 the following series of calculations are needed.
 $$D_{n,m} = max(|F_1(x)-F_2(x)|)$$
 where:
-$$F_1 = cdf(sample1,x)$$
-$$F_2 = cdf(sample2,x)$$
-where cdf (cumulative distribution function) assuming a sorted list of observations counts the number of observations below x and then divides with the total number of samples. The KS2 depends on a parameter $en$, which can be calculated using the following formula:
+$$F_1 = CDF(sample1,x)$$
+$$F_2 = CDF(sample2,x)$$
+where CDF (cumulative distribution function) assuming a sorted list of observations counts the number of observations below x and then divides with the total number of samples. The KS2 depends on a parameter $en$, which can be calculated using the following formula:
 $$en=\frac{(m*n)}{(m+n)}$$
 where $n$ is the size of sample 1 and $m$ is the size of sample 2.
 The $H_0$ for KS2: \textit{The two samples are from the same distribution}.
