@@ -28,7 +28,7 @@ namespace EnergyComparer.Models
 
     public class HardwareRaw 
     {
-        public HardwareRaw(double aCRMSRAW, double trueRMS)
+        public HardwareRaw(double trueRMS,double aCRMSRAW)
         {
             ACRMSRAW = aCRMSRAW;
             TrueRMS = trueRMS;
