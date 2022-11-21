@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,35 +36,35 @@ namespace EnergyComparer.Models
             var value = row.Split('=')[1].Trim();
 
             if (row.Contains("Total Elapsed Time (sec)"))
-                TotalElapsedTimeInSeconds = float.Parse(value);
+                TotalElapsedTimeInSeconds = float.Parse(value,CultureInfo.InvariantCulture);
             else if (row.Contains("Measured RDTSC Frequency (GHz)"))
-                MeasuredRdtscFrequencyInGhz = float.Parse(value);
+                MeasuredRdtscFrequencyInGhz = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative Processor Energy_0 (Joules)"))
-                CumulativeProcessorEnergyInJoules = float.Parse(value);
+                CumulativeProcessorEnergyInJoules = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative Processor Energy_0 (mWh)"))
-                CumulativeProcessorEnergyInMwh = float.Parse(value);
+                CumulativeProcessorEnergyInMwh = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Average Processor Power_0 (Watt)"))
-                AverageProcessorPowerWatt = float.Parse(value);
+                AverageProcessorPowerWatt = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Average Processor Power_0 (Watt)"))
-                AverageProcessorPowerWatt = float.Parse(value);
+                AverageProcessorPowerWatt = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative IA Energy_0 (Joules)"))
-                CumulativeIaEnergyInJoules = float.Parse(value);
+                CumulativeIaEnergyInJoules = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative IA Energy_0 (mWh)"))
-                CumulativeIaEnergyInMwh = float.Parse(value);
+                CumulativeIaEnergyInMwh = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Average IA Power_0 (Watt)"))
-                AverageIaPowerInWatt = float.Parse(value);
+                AverageIaPowerInWatt = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative DRAM Energy_0 (Joules)"))
-                CumulativeDramEnergyInJoules = float.Parse(value);
+                CumulativeDramEnergyInJoules = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative DRAM Energy_0 (mWh)"))
-                CumulativeDramEnergyInMwh = float.Parse(value);
+                CumulativeDramEnergyInMwh = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Average DRAM Power_0 (Watt)"))
-                AverageDramPowerInWatt = float.Parse(value);
+                AverageDramPowerInWatt = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative GT Energy_0 (Joules)"))
-                CumulativeGtEnergyInJoules = float.Parse(value);
+                CumulativeGtEnergyInJoules = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Cumulative GT Energy_0 (mWh)"))
-                CumulativeGtEnergyInMwh = float.Parse(value);
+                CumulativeGtEnergyInMwh = float.Parse(value, CultureInfo.InvariantCulture);
             else if (row.Contains("Average GT Power_0 (Watt)"))
-                AverageGtPowerInWatt = float.Parse(value);
+                AverageGtPowerInWatt = float.Parse(value, CultureInfo.InvariantCulture);
             else
                 throw new NotImplementedException($"Row '{row}' does not include any known property");
         }

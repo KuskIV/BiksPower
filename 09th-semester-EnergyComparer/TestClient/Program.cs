@@ -13,14 +13,20 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography.Xml;
 using TestClient.E3Experiment;
+using System.Data.Common;
+using TestClient.Fixers;
 
 
-HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
-await Task.Delay(1000 * 30);
-HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
-await HardwareMeasurementHandler.GetHardwareState();
+//HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
+//await Task.Delay(1000 * 60);
+//HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+//await HardwareMeasurementHandler.GetHardwareState();
 
 await HardwareMeasurementHandler.GetResults();
+ClampFixer ClampFixer = new ClampFixer();
+ClampFixer.InitializeDatabase();
+await ClampFixer.GetTimeseries();
+Console.WriteLine("yeet");
 
 
 //PlugHandlers PlugHandlers = new PlugHandlers();

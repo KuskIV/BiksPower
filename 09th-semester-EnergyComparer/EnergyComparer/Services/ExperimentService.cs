@@ -125,9 +125,21 @@ namespace EnergyComparer.Services
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.Start();
-                
-                
-                output = p.StandardOutput.ReadToEnd();
+
+
+                while (true)
+                {
+                    var newLine = p.StandardOutput.ReadLine();
+
+                    if (newLine == null)
+                    {
+                        break;
+                    }
+
+                    output = newLine;
+                }
+
+                //output = p.StandardOutput.ReadLine();
 
                 p.WaitForExit();
 

@@ -1,7 +1,7 @@
 \subsection{Anomalies}
 Anomaly detection is important when using the data as it will influence the results from the experiments. When an anomaly is detected it will be removed from the data to avoid corrupting the results.
 \paragraph{DBScan}
-To find and remove these anomalies the DBScan algorithm will be used. The DBScan algorithm is a clustering algorithm used to cluster data into groups, but it can also be used for density-based abnormality detection. The pseudo code for the DBScan algorithm is from Ester et al.\cite{ester1996density} and is shown here:
+To find and remove these anomalies the DBScan algorithm will be used. The DBScan algorithm is a clustering algorithm used to cluster data into groups, but it can also be used for density-based abnormality detection. The pseudocode for the DBScan algorithm is from Ester et al.\cite{ester1996density} and is shown here:
 \begin{lstlisting}
 DBSCAN(D(*@\feetnote{D is the dataset}@*), eps(*@\feetnote{esp is a radius around a point}@*), MinPts(*@\feetnote{MinPts is the minimum amount of points found in the radius of a point to be a core point}@*))
 {
@@ -46,6 +46,6 @@ regionQuery(P, esp)
 }
 \end{lstlisting}
 
-The algorithm iterates through each point and counts how many points are located within some radius of the point, where if this count exceeds the threshold (\texttt{MinPts}), it will be labelled as a core point. Points not exceeding the limit, but are still located inside the radius of a core point, are instead labelled border points. The points with no label are outliers or anomalies. The variable assignment of \texttt{esp} and \texttt{MinPts} will be done via the following procedures. According to Ester et al\cite[]{ester1996density} a good \texttt{MinPts} value for 2 dimensional data is 4. For the \texttt{esp} it can be calculated by finding the distance to the nearest \texttt{MinPts} are found. These distances are then sorted and plotted on a graph, where the line breaks would be a good value of \texttt{esp}.
+The algorithm iterates through each point and counts how many points are located within some radius of the point, where if this count exceeds the threshold (\texttt{MinPts}), it will be labelled as a core point. Points not exceeding the limit, but are still located inside the radius of a core point, are instead labelled border points. The points with no label are outliers or anomalies. The variable assignment of \texttt{esp} and \texttt{MinPts} will be done via the following procedures. According to Ester et al\cite[]{ester1996density} a good \texttt{MinPts} value for 2-dimensional data is 4. For the \texttt{esp} it can be calculated by finding the distance to the nearest \texttt{MinPts} are found. These distances are then sorted and plotted on a graph, where the line breaks would be a good value of \texttt{esp}.
 
 

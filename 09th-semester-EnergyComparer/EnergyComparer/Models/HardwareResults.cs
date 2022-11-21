@@ -11,6 +11,10 @@ namespace EnergyComparer.Models
     {
         public List<TimeSeries> TimeSeries { get; set; }
         public string Raw { get; set; }
+        public static HardwareResults Empty() 
+        {
+            return new HardwareResults() { TimeSeries = new List<TimeSeries>(), Raw = "" };
+        }
     }
 
     public class TimeSeries
@@ -24,7 +28,7 @@ namespace EnergyComparer.Models
 
     public class HardwareRaw 
     {
-        public HardwareRaw(double aCRMSRAW, double trueRMS)
+        public HardwareRaw(double trueRMS,double aCRMSRAW)
         {
             ACRMSRAW = aCRMSRAW;
             TrueRMS = trueRMS;
