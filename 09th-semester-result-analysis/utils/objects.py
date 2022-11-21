@@ -4,12 +4,19 @@ from re import A
 
 class Experiment(object):
     def __init__(
-        self, config_id, dut_id, test_case_id, language, repository, count=200
+        self,
+        config_id,
+        dut_id,
+        test_case_id,
+        profiler_id,
+        language,
+        repository,
+        count=200,
     ):
-        data_tuple = (config_id, dut_id, test_case_id, language, count)
+        data_tuple = (config_id, dut_id, test_case_id, language, profiler_id, count)
         data = repository.query_all(
             "SELECT * FROM Experiment Where ConfigurationId = %s AND DutId = %s AND TestCaseId = %s AND Language = %s "
-            + "ORDER BY StartTime DESC  LIMIT %s",
+            + " and ProfilerId = %s ORDER BY StartTime DESC  LIMIT %s",
             data_tuple,
         )
 
@@ -22,8 +29,8 @@ class Experiment(object):
             self.count = count
 
             for d in data:
-                self.experiments.append(
-                    RawData(
+                if not d is None:
+                    raw_data = RawData(
                         d[0],
                         d[5],
                         d[6],
@@ -33,7 +40,8 @@ class Experiment(object):
                         d[11],
                         repository,
                     )
-                )
+                    if raw_data.is_valid == True:
+                        self.experiments.append(raw_data)
 
 
 class Dut(object):
@@ -193,6 +201,10 @@ class RawData(object):
         )
 
         if len(data) == 1:
+            if data[0] == "string2":
+                self.is_valid = False
+                return
+
             json_data = json.loads(data[0])
 
             if type(json_data) == dict:
@@ -210,6 +222,8 @@ class RawData(object):
                     self.__dict__ = json_data[0]
             else:
                 self.__dict__ = {}
+
+            self.is_valid = True
 
             # print(type(json_data))
 
