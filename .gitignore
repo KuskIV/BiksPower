@@ -586,3 +586,5 @@ cython_debug/
 #.idea/
 09th-semester-EnergyComparer/EnergyComparer/EnergyLib64.dll
 Aux-device-handlers/script.sh
+*.xml
+*.xml

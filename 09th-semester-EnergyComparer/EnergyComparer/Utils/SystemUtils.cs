@@ -12,7 +12,7 @@ namespace EnergyComparer.Utils
 {
     public class SystemUtils
     {
-        public static IOperatingSystemAdapter InitializeAdapterService(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorServic)
+        public static IOperatingSystemAdapter InitializeAdapterService(ILogger logger, bool isProd, bool shouldRestart, IHardwareMonitorService hardwareMonitorServic, string machineName)
         {
             if (Constants.Os == "Win32NT")
             {
@@ -22,7 +22,7 @@ namespace EnergyComparer.Utils
             else
             {
                 logger.Information("Executing on a {os} machine, the {name} is used.", Constants.Os, "LinuxAdapter");
-                return new LinuxAdapter(logger);
+                return new LinuxAdapter(logger, machineName);
             }
         }
 

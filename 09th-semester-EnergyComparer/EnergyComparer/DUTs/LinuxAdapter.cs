@@ -11,10 +11,12 @@ namespace EnergyComparer.DUTs
     internal class LinuxAdapter : IOperatingSystemAdapter
     {
         private readonly ILogger _logger;
+        private readonly string _machineName;
 
-        public LinuxAdapter(ILogger logger)
+        public LinuxAdapter(ILogger logger, string machineName)
         {
             _logger = logger;
+            _machineName = machineName;
         }
         public void DisableWifi(string interfaceName)
         {
@@ -63,9 +65,24 @@ namespace EnergyComparer.DUTs
             return GetTemperature();
         }
 
-        private static float GetTemperature()
+        private float GetTemperature()
         {
-            var temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+            float temperature = 0;
+            if (_machineName.Equals(Constants.PowerKomplett))
+            {
+                temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+            }else if (_machineName.Equals(Constants.SurfaceBook))
+            {
+                temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone8/temp");
+
+            }else if (_machineName.Equals(Constants.SurfacePro))
+            {
+                temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+            }
+            else
+            {
+                throw new NotImplementedException($"Machine name does not exsist {_machineName}");
+            }
 
             return temperature / 1000;
         }
