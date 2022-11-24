@@ -1,9 +1,19 @@
-\subsection{Hardware current measurements} \label{sec:clampIntro}
-This section will cover the tool used to conduct hardware measurements and how to use it. For the measurements, an AC clamp was used specifically the MN60 created by Chauvin Arnoux. The current clamp is an analogue device meaning it does not use a digital signal but instead outputs an analogue signal which has a direct relation to the measurements. To read the signal the current clamp has to be connected to an oscilloscope, and the clamp itself is connected to the electrical phase of the wire leading to the power supply for the computer. An illustration of the proposed usage of the current clamp together with an oscilloscope can be seen in \cref{fig:clampSetup}
-\begin{figure}[h!]
-    \centering
-    \includegraphics*[scale=0.4]{figures/CLAMP.png}
-    \caption{Here the MN60 current clamp can be seen connected onto the phase of the wire into the computer}
-    \label{fig:clampSetup}
-\end{figure}
-The output from the current is in mv that then has a specific conversion rate to a current root mean square (RMS) value which together with the wall socket specification, this being 230 volts in the EU, can be used to calculate the exact amount of joules flowing through the wire at any point in time. The sampling frequency of the current clamps is depended on the oscilloscope used, the accuracy of the clamp is claimed to be $<1\%$ \cite{ClampDoc}, which is within the expected range for hardware measurements used in other studies such as the HCLWattsUp with an accuracy of $<1.5\%$, but our setups potential in terms of measurement frequency is higher.
+\subsection{Hardware measurements} \label{sec:clampIntro}
+Hardware measurements are from the literature seen as the most accurate way to measure the energy consumption of a system, it is sometimes used to compare the software measurements to access their accuracy as seen in \cite{fahad2019comparative}. The hardware measurements are usually using some electrical probe, but the exact make and type are not consistent in the literature, \cite{Pereira2017} and \cite{fahad2019comparative} uses the WattsUpPro, while \cite{hackenberg2013} utilizes the ZES ZIMMER LMG45. For what would be best for this project certain criteria and priorities for the chosen measurement instrument would have to be made, by looking at the instruments used in similar studies.
+\begin{itemize}
+    \item Availability, should be easy to purchase and receive to promote reproducibility.
+    \item Price, high end power measurement instruments can quickly become very expensive.
+    \item Accuracy, the measurements should be accurate.
+    \item Frequency, the measurements should be taken several times a second.
+    \item Safety, as the measurements could involved high voltages safety should be a concern.
+    \item Ease of use, it should not be difficult to setup or obtain logging from the device.
+\end{itemize}
+
+% This section will cover the tool used to conduct hardware measurements and how to use it. For the measurements, an AC clamp was used specifically the MN60 created by Chauvin Arnoux. The current clamp is an analogue device meaning it does not use a digital signal but instead outputs an analogue signal which has a direct relation to the measurements. To read the signal the current clamp has to be connected to an oscilloscope, and the clamp itself is connected to the electrical phase of the wire leading to the power supply for the computer. An illustration of the proposed usage of the current clamp together with an oscilloscope can be seen in \cref{fig:clampSetup}
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics*[scale=0.4]{figures/CLAMP.png}
+%     \caption{Here the MN60 current clamp can be seen connected onto the phase of the wire into the computer}
+%     \label{fig:clampSetup}
+% \end{figure}
+% The output from the current is in mv that then has a specific conversion rate to a current root mean square (RMS) value which together with the wall socket specification, this being 230 volts in the EU, can be used to calculate the exact amount of joules flowing through the wire at any point in time. The sampling frequency of the current clamps is depended on the oscilloscope used, the accuracy of the clamp is claimed to be $<1\%$ \cite{ClampDoc}, which is within the expected range for hardware measurements used in other studies such as the HCLWattsUp with an accuracy of $<1.5\%$, but our setups potential in terms of measurement frequency is higher.
