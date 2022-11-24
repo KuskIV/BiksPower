@@ -109,7 +109,6 @@ namespace EnergyComparer.Handlers
                 DateTime end = DateTime.Now;
                 min = (end - start).TotalMinutes;
                 hr = HardwareResults.Empty();
-                break;
             } while (true);
             hr.TimeSeries = hr.TimeSeries.Where(x => !ContainsNull(x)).ToList();
             double C1TrueRMSRAW = hr.TimeSeries.Sum(x => x.C1TrueRMSPower.Value);
