@@ -1,6 +1,6 @@
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| p{0.48\linewidth} | p{0.15\linewidth}|}
+    \begin{tabular}{| l | c |}
     \hline
     \textbf{Hardware Based Measuring Instrument}  & \textbf{Occurrences}                    \\ \hline
     Watts Up Pro        & 2      \\ \hline
