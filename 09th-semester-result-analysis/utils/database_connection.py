@@ -43,3 +43,8 @@ class DatabaseConnection:
         cur = self.conn.cursor()
         cur.execute(query, data_tuple)
         return cur.fetchone()
+
+    def execute_one(self, query, data_tuple):
+        cur = self.conn.cursor()
+        cur.execute(query, data_tuple)
+        self.conn.commit()
