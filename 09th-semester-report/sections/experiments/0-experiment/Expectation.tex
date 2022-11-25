@@ -1,0 +1,20 @@
+\subsection{Expectation}
+In this section the some expectations about the energy consumption of each of the system will be covered, this is largely based on components in the DUT, some experiments will also be conducted to support the estimations. The exact values and calculation steps as well as the rational behind will be covered below. This will involve looking at the expected usage of each of the DUTs components energy usage and the range of usage, this will then provide a lower and upper limit for the consumption of the machine.
+
+\paragraph{Terminology}
+Certain Terminology is commonplace when referencing pc components, here these will be covered and explained as well as how these are used in the calculations.
+\begin{itemize}
+    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nontheless it can define some bounds for the values.
+\end{itemize}
+
+\paragraph{Workstation}
+Here the work stations expected energy consumption will be calculated.
+The CPU is an Intel i7-8700 has a TDP of 65 watt $AvgCpu = 65$, meaning that the maximum power consumption can be expected to be around $MaxCpu=97.5=AvgCpu*1.5 watt$, while the minimum at idle would be around $MinCpu=10 watt$
+
+The Disk is an Samsung SSD 970 EVO Plus 1TB the rated power consume for this ssd is $AvgSdd = 6 watt$, $MaxSdd = 9 watt$ and the idle ssd uses $MinSsd = 20 miliWatt$.
+
+https://www.buildcomputers.net/power-consumption-of-pc-components.html
+
+\paragraph{Surface Book 1}
+
+\paragraph{Surface Pro 4}
