@@ -66,6 +66,16 @@ CREATE TABLE RawData(
     PRIMARY KEY (Id)
 ),
 
+CREATE TABLE OutlierHyperParameters(
+    Id int NOT NULL AUTO_INCREMENT,
+    Dut VARCHAR(40),
+    OS VARCHAR(40),
+    TestCase VARCHAR(40),
+    Version INT,
+    K INT,
+    LookBack INT
+),
+
 CREATE TABLE TimeSeries(
     Id int not NULL AUTO_INCREMENT,
     ExperimentId int,
