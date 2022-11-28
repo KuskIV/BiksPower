@@ -4,7 +4,7 @@ In this section the some expectations about the energy consumption of each of th
 \paragraph{Terminology}
 Certain Terminology is commonplace when referencing pc components, here these will be covered and explained as well as how these are used in the calculations.
 \begin{itemize}
-    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nontheless it can define some bounds for the values.
+    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nonetheless it can define some bounds for the values.
 \end{itemize}
 
 \paragraph{Workstation}
@@ -13,6 +13,11 @@ The CPU is an Intel i7-8700 has a TDP of 65 watt $AvgCpu = 65$, meaning that the
 
 The Disk is an Samsung SSD 970 EVO Plus 1TB the rated power consume for this ssd is $AvgSdd = 6 watt$, $MaxSdd = 9 watt$ and the idle ssd uses $MinSsd = 20 miliWatt$.
 
+Memory is DDR4 16Gb, the consumption for a single DDR4 stick of ram is $MinRam=1.5 watt$ and $MaxRam=3 watt$\feetnote{https://www.tomshardware.com/reviews/intel-core-i7-5960x-haswell-e-cpu,3918-13.html}. The average consumption would then be between this two values $AvgRam=2.25 watt=(MinRam+MaxRam)/2$.
+
+The TUF B360M-PLUS GAMING energy consumption is, $MinBoard = 15 watts$, $MaxBoard = 60 watts$ and $AvgBoard = 37.5 watt= (MinBoard+MaxBoard)/2$
+
+Power supply does not really have a energy 
 https://www.buildcomputers.net/power-consumption-of-pc-components.html
 
 \paragraph{Surface Book 1}
