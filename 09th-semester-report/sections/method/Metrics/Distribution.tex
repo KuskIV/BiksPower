@@ -14,8 +14,7 @@ The null hypnosis $H_0$ for the test is:
     \textit{The sample comes from a normally-distributed population}
 \end{quotation}
 
-\todo[]{Confidence level the same in both cochran and stats}
-To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is the probability of achieving the same results under $H_0$ of a statistical test. Alpha represents the statistical significance, a common threshold is $0.05$. If the $p_{Value}$ is less than alpha, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing[greenland2016statistical], and it is also used for the rest of the tests in this section and unless specified otherwise all tests are conducted with an alpha of $0.05$.
+To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is the probability of achieving the same results under $H_0$ of a statistical test. $\alpha$ represents the statistical significance, a common threshold is $0.05$. If the $p_{Value}$ is less than $\alpha$, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing\cite{greenland2016statistical}, and it is also used for the rest of the tests in this section and unless specified otherwise all tests are conducted with an $\alpha$ of $0.05$.
 
 \paragraph{T-Test}
 
@@ -81,7 +80,7 @@ Then calculate the value $z$.
     z = \frac{U-\varphi U}{\sigma U}
 \end{equation}
 
-using z to find the p-value to check if $H_0$ can be rejected, again the alpha is set to $0.05$. 
+using z to find the p-value to check if $H_0$ can be rejected, again the $\alpha$ is set to $0.05$. 
 
 \paragraph{Kolmogorov-Smirnov test}
 Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1) it tests how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same population as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same population. To calculate the KS2 the following series of calculations are needed.
