@@ -1,5 +1,6 @@
 from utils.database_connection import DatabaseConnection
 from utils.objects import *
+from utils.constants import *
 
 
 class DataRepository:
@@ -66,12 +67,18 @@ class DataRepository:
                         data[d][o][t][p] = {}
                         data[d][o][t][p]["contains_data"] = False
 
+                        # if o == WINDOWS_OS and p == CLAMP:
+                        #     used_between = 1
+                        # else:
+
                         profiler = EnergyProfiler(p, self)
 
+                        version = dut_version[d][o]
+
                         if o in special_between and p in special_between[o]:
-                            version = special_between[o][p]
+                            used_between = special_between[o][p]
                         else:
-                            version = dut_version[d][o]
+                            used_between = between
 
                         config = Configuration(
                             min_temp,
@@ -79,7 +86,7 @@ class DataRepository:
                             min_battery,
                             max_battery,
                             duration,
-                            between,
+                            used_between,
                             version,
                             self,
                             env,

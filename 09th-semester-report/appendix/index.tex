@@ -2,3 +2,209 @@
 
 Here is the first appendix
 \input{tabels/TerminologyTable.tex}
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}[]
+%         \begin{axis}[ymax=1.6,
+%         % axis x line=middle,
+%         % axis y line=middle,
+%         xlabel={x label},
+%         ylabel={y label},
+%         ]
+%         \addplot[color=blue, mark=square,] coordinates { %% AVG value
+%         (0, 1)(0.2, 1)(0.4, 0.8)(0.6, 0.5)(0.8, 0.6)(1, 0.6)
+%         };
+%         \addplot[color=blue, mark=square,name path=A] coordinates { %% MAX value
+%         (0, 1.5)(0.2, 1.1)(0.4, 1.2)(0.6, 1.2)(0.8, 1.3)(1, 1.1)
+%         };
+%         \addplot[color=blue, mark=square,name path=B] coordinates { %% MIN value
+%         (0, 0.9)(0.2, 0.8)(0.4, 0.5)(0.6, 0.4)(0.8, 0.2)(1,0.1)
+%         };
+%         \addplot [pattern=north east lines,pattern color=red] 
+%         fill between [
+%             of=A and B,soft clip={domain=-1.5:1.5},
+%         ];
+%         \end{axis}
+% \end{tikzpicture}
+% \caption{Graph showing average energy consumption during a run of the experiments} \label{fig:LABEL}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%             xlabel={x label},
+%             ylabel={y label},
+%         ]
+%             \addplot [mark=none, thick, red]  coordinates {
+%             (-1.5, 1)(-1, 1)(0, 1)(1, 1)(1.5, 1)
+%             };
+%             \addlegendentry{eh}
+%             \addplot [mark=none, thick, blue] coordinates {
+%             (-1.5, 2)(-1, 3)(0, 4)(1, 1)(1.5, -1)
+%             };
+%             \addlegendentry{oi}
+%         \end{axis}
+%     \end{tikzpicture} 
+% \caption{Graph showing average energy consumption during a run of the experiments} \label{fig:LABEL}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}[]
+%         \begin{axis}[xlabel={Score}, title={Average performance comparision}, ytick={1,2,3,4},
+%         yticklabels={
+%             Attentive students,
+%             Inattentive students, 
+%             Normal students, 
+%             Highly participating students
+%             },
+%             ]
+%         \addplot+ [boxplot prepared={
+%             lower whisker=25, %%  lower whisker
+%             lower quartile=37, %% 25th percentile
+%             median=65,  %% a median for the distribution
+%             upper quartile=72, %% 75th percentile
+%             upper whisker=81}, %%  upper whisker
+%             ] table[row sep=\\,y index=0] {1\\ 92\\ 95\\};
+%         \addplot+ [boxplot prepared={
+%             lower whisker=12, 
+%             lower quartile=17, 
+%             median=25,
+%             upper quartile=52, 
+%             upper whisker=61
+%             },] table[row sep=\\,y index=0] {\\};
+%         \addplot+ [boxplot prepared={
+%             lower whisker=12, 
+%             lower quartile=25, 
+%             median=50,
+%             upper quartile=75, 
+%             upper whisker=87},] table[row sep=\\,y index=0] {\\};
+%         \addplot+ [boxplot prepared={
+%             lower whisker=62, 
+%             lower quartile=64, 
+%             median=70,
+%             upper quartile=72, 
+%             upper whisker=81
+%             },] table[row sep=\\,y index=0] {\\};
+%         \end{axis}
+%     \end{tikzpicture}
+% \caption{Graph comparing performance of different duts and test cases} \label{fig:LABEL01}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}[]
+%         \begin{axis}[xlabel={XLABEL}, title={TITLE}, ytick={1,2,3,4},
+%         yticklabels={
+%             Attentive students,
+%             },
+%             ]
+%         \addplot+ [boxplot prepared={
+%             lower whisker=25, %%  lower whisker
+%             lower quartile=37, %% 25th percentile
+%             median=65,  %% a median for the distribution
+%             upper quartile=72, %% 75th percentile
+%             upper whisker=81}, %%  upper whisker
+%             ] table[row sep=\\,y index=0] {1\\ 92\\ 95\\};
+%         \end{axis}
+%     \end{tikzpicture}
+% \caption{CAPTION} \label{fig:LABEL}
+% \end{figure}
+
+
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}[]
+%         \begin{axis}[xlabel={xlabel}, title={title}, ytick={1},
+%         yticklabels={
+%             ytick label
+%             },
+%             ]
+%         \addplot+ [boxplot prepared={
+%                 lower whisker=25, %%  lower whisker
+%                 lower quartile=37, %% 25th percentile
+%                 median=65,  %% a median for the distribution
+%                 upper quartile=72, %% 75th percentile
+%                 upper whisker=81}, %%  upper whisker
+%         ] table[row sep=\\,y index=0] {\\};
+%         \end{axis}
+%     \end{tikzpicture}
+% \caption{caption} \label{fig:label}
+% \end{figure}
+
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{axis}[%
+%         scatter/classes={%
+%             a={mark=o,draw=black},
+%             b={mark=o,draw=red}}]
+%         \addplot[scatter,only marks,%
+%             scatter src=explicit symbolic]%
+%         table[meta=label] {
+%         x y label
+%         1 4.3 a
+%         2 5.1 a
+%         3 5.7 a
+%         4 6.3 a
+%         5 6.8 a
+%         6 7.1 b
+%         7 7.2 b
+%         8 7.2 a
+%         9 7.2 a
+%         10 7.2 a
+%         11 7.5 a
+%         12 7.8 a
+%             };
+%         \end{axis}
+%     \end{tikzpicture}
+% \caption{Graph showing outliers} \label{fig:LABEL02}
+% \end{figure}
+
+\section*{Comparison of the measurement instruments}
+\input{tabels/experiment_results/comparison/Cores/BinaryTrees.tex}
+\input{tabels/experiment_results/comparison/Cores/FannkuchRedux.tex}
+\input{tabels/experiment_results/comparison/Cores/Fasta.tex}
+\input{tabels/experiment_results/comparison/Cores/Nbody.tex}
+
+% \input{tabels/experiment_results/comparison/Dram/BinaryTrees.tex}
+% \input{tabels/experiment_results/comparison/Dram/FannkuchRedux.tex}
+% \input{tabels/experiment_results/comparison/Dram/Fasta.tex}
+% \input{tabels/experiment_results/comparison/Dram/Nbody.tex}
+
+\section*{Comparison of the effect of restarts}
+\input{tabels/experiment_results/graphs/iteration/Cores/BinaryTrees.tex}
+\input{tabels/experiment_results/graphs/iteration/Cores/FannkuchRedux.tex}
+\input{tabels/experiment_results/graphs/iteration/Cores/Fasta.tex}
+\input{tabels/experiment_results/graphs/iteration/Cores/Nbody.tex}
+
+\section*{Comparison of the effect of battery charge}
+\input{tabels/experiment_results/graphs/charge/Cores/BinaryTrees.tex}
+\input{tabels/experiment_results/graphs/charge/Cores/FannkuchRedux.tex}
+\input{tabels/experiment_results/graphs/charge/Cores/Fasta.tex}
+\input{tabels/experiment_results/graphs/charge/Cores/Nbody.tex}
+
+\section*{Comparison of the effect of temperature}
+
+\input{tabels/experiment_results/graphs/temperature/Cores/BinaryTrees.tex}
+\input{tabels/experiment_results/graphs/temperature/Cores/FannkuchRedux.tex}
+\input{tabels/experiment_results/graphs/temperature/Cores/Fasta.tex}
+\input{tabels/experiment_results/graphs/temperature/Cores/Nbody.tex}
+
+% \input{tabels/experiment_results/graphs/iteration/Dram/BinaryTrees.tex}
+% \input{tabels/experiment_results/graphs/iteration/Dram/FannkuchRedux.tex}
+% \input{tabels/experiment_results/graphs/iteration/Dram/Fasta.tex}
+% \input{tabels/experiment_results/graphs/iteration/Dram/Nbody.tex}
+
+
+
+
+% \begin{tikzpicture}[]
+%     \pgfplotsset{%
+%         width=.8\textwidth,
+%         height=1.5\textwidth
+%     }

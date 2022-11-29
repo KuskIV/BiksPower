@@ -1,0 +1,108 @@
+
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[]
+                \pgfplotsset{%
+                    width=.8\textwidth,
+                    height=1.3\textwidth
+                }
+                \begin{axis}[xlabel={Average Energy Consumption (Watts)}, title={Dram - FannkuchRedux}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+                yticklabels={
+                    Surface4Pro - IntelPowerGadget, Surface4Pro - HardwareMonitor, Surface4Pro - RAPL, SurfaceBook - IntelPowerGadget, SurfaceBook - HardwareMonitor, SurfaceBook - RAPL, workstation - IntelPowerGadget, workstation - HardwareMonitor, workstation - Clamp (win), workstation - RAPL, workstation - Clamp (lin)
+                    },
+                    xmin=0,xmax=100,
+                    ]
+                
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.007928926594636565,
+                    lower quartile=0.030024565534240488,
+                    median=0.0840041850768884,
+                    upper quartile=0.1155749127004263,
+                    upper whisker=0.15670939099634423},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.006510917917937564,
+                    lower quartile=0.02838210908911598,
+                    median=0.057550121984537406,
+                    upper quartile=0.10365933254176582,
+                    upper whisker=0.15271954155482903},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=-60.56302109911099,
+                    lower quartile=21.287777063868393,
+                    median=107.333837803798,
+                    upper quartile=188.6251619575798,
+                    upper whisker=275.85797917777455},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.20510477828539508,
+                    lower quartile=0.21727127488826706,
+                    median=0.22142398388007917,
+                    upper quartile=0.22665467334359005,
+                    upper whisker=0.2573778260774693},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.18382041586848957,
+                    lower quartile=0.21266825350093982,
+                    median=0.2179442854632498,
+                    upper quartile=0.2222420226655441,
+                    upper whisker=0.2489552394727162},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=-36.593350779771875,
+                    lower quartile=-3.1672785698024732,
+                    median=36.9854081504783,
+                    upper quartile=73.70176762650573,
+                    upper whisker=116.66637239362811},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.17088263873387888,
+                    lower quartile=0.17838013816028933,
+                    median=0.18079112363235522,
+                    upper quartile=0.18543366048592314,
+                    upper whisker=0.21682714852787877},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.17580323769729955,
+                    lower quartile=0.18286040571502443,
+                    median=0.18534020014780678,
+                    upper quartile=0.18982711149816775,
+                    upper whisker=0.22283887976850636},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.0,
+                    lower quartile=0.0,
+                    median=0.0,
+                    upper quartile=0.0,
+                    upper whisker=0.0},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=8.945649581757237,
+                    lower quartile=753.6423980816071,
+                    median=1497.8332580649599,
+                    upper quartile=2247.687836430237,
+                    upper whisker=2988.779586972481},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                    \addplot+ [boxplot prepared={
+                    lower whisker=0.0,
+                    lower quartile=0.0,
+                    median=0.0,
+                    upper quartile=0.0,
+                    upper whisker=0.0},
+                    ] table[row sep=\\,y index=0] {\\};
+                    
+                \end{axis}
+            \end{tikzpicture}
+        \caption{Dram average dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's} \label{fig:FannkuchRedux_Dram_comparison_avg_watts}
+        \end{figure}
+        

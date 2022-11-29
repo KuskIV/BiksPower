@@ -276,11 +276,14 @@ class RawData(object):
             self.first_profiler = first_profiler
             self.duration = duration
 
-            if take_time_series or random.randint(0, 20) == 1:
-                self.time_series = TimeSeries(experiment_id, repository)
-                self.has_time_series = True
-            else:
-                self.has_time_series = False
+            self.time_series = TimeSeries(experiment_id, repository)
+            self.has_time_series = True
+
+            # if take_time_series or random.randint(0, 20) == 1:
+            #     self.time_series = TimeSeries(experiment_id, repository)
+            #     self.has_time_series = True
+            # else:
+            #     self.has_time_series = False
 
             self.start_temperature = GetMeasurements(
                 experiment_id, "CpuTemperature", repository, min

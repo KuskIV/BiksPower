@@ -1,0 +1,73 @@
+
+            \begin{figure}
+                \centering
+                \begin{tikzpicture}
+                    \pgfplotsset{%
+                        width=1\textwidth,
+                        height=0.5\textheight
+                    }
+                    \begin{axis}[
+                        xlabel={Start temperature},
+                        ylabel={Average dynamic energy (watt)},
+                    ]
+                    
+                        \addplot [mark=none, red, thick]  coordinates {
+                        (35, 0.2512117296006635)(50, 0.19897926552210798)(55, 0.16313560965196705)(60, 0.13842901171089972)(65, 0.15629372789541968)
+                        };
+                        \addlegendentry{Surface4Pro - IntelPowerGadget}
+                        
+                        \addplot [mark=none, red, dotted]  coordinates {
+                        (35, 0.2615341336488079)(45, 0.06970429209907403)(50, 0.23258010521791242)(55, 0.19853317834051942)(60, 0.18763733584689557)(65, 0.06312399550156356)
+                        };
+                        \addlegendentry{Surface4Pro - HardwareMonitor}
+                        
+                        \addplot [mark=none, red, dashed]  coordinates {
+                        (35, -58.33975762045278)(45, -43.74761256434011)(50, -30.24883961001613)(55, 5.199636917139971)(60, 164.92233563497908)
+                        };
+                        \addlegendentry{Surface4Pro - RAPL}
+                        
+                        \addplot [mark=none, blue, thick]  coordinates {
+                        (25, 0.3159235983356261)(30, 0.38142248985282934)(35, 0.36373797191687224)(40, 0.38354509822242927)(45, 0.39182129929230014)
+                        };
+                        \addlegendentry{SurfaceBook - IntelPowerGadget}
+                        
+                        \addplot [mark=none, blue, dotted]  coordinates {
+                        (30, 0.3571391297837273)(35, 0.36534708990471937)(40, 0.3693363751914093)
+                        };
+                        \addlegendentry{SurfaceBook - HardwareMonitor}
+                        
+                        \addplot [mark=none, blue, dashed]  coordinates {
+                        (30, -35.911976006799165)(35, -36.048305612302165)(45, -27.433887910332157)(50, -19.54093058502163)(55, -4.2168887436765665)(60, 33.90612958821226)(65, 86.04843288382973)
+                        };
+                        \addlegendentry{SurfaceBook - RAPL}
+                        
+                        \addplot [mark=none, green, thick]  coordinates {
+                        (25, 0.07576155367657468)(30, 0.07238003295697507)
+                        };
+                        \addlegendentry{workstation - IntelPowerGadget}
+                        
+                        \addplot [mark=none, green, dotted]  coordinates {
+                        (30, 0.07009612218470487)(35, 0.06873175239999257)(40, 0.07514888383454797)(45, 0.053829225003447445)(50, 0.07394038514029067)
+                        };
+                        \addlegendentry{workstation - HardwareMonitor}
+                        
+                        \addplot [mark=none, green, dashdotdotted]  coordinates {
+                        (25, 0.0)(30, 0.0)(40, 0.0)(45, 0.0)(70, 0.0)
+                        };
+                        \addlegendentry{workstation - Clamp (win)}
+                        
+                        \addplot [mark=none, green, dashed]  coordinates {
+                        (25, 16.528791945436396)(30, 1742.6797508940413)(35, 1812.5706882844702)
+                        };
+                        \addlegendentry{workstation - RAPL}
+                        
+                        \addplot [mark=none, green, dashdotdotted]  coordinates {
+                        (25, 0.0)(35, 0.0)(40, 0.0)
+                        };
+                        \addlegendentry{workstation - Clamp (lin)}
+                        
+                    \end{axis}
+                \end{tikzpicture} 
+            \caption{A graph illustrating the energy consumption of Dram for test case BinaryTrees with regards to the temperature of the DUT} \label{fig:BinaryTrees_Dram}
+            \end{figure}
+            
