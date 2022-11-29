@@ -1,10 +1,8 @@
 \section{Key takeaways}\label[section]{sec:rw_key_takeaways}
 
-%Eventuelt Split op i fysisk måling eller software related works så det ikke bliver en så langt.
+In this section, The major aspects of the related works covered in \cref{sec:rw_energy_consumption_diff_lang,sec:rw_diff_measuring_instruments,sec:rw_measureing_methodology_setup} are presented. 
 
-In this section, the key takeaways from the knowledge gathered in the \cref{sec:rw_energy_consumption_diff_lang,sec:rw_diff_measuring_instruments,sec:rw_measureing_methodology_setup} are presented. These are the major aspects of the covered related works that are considered. 
-
-In \cref{sec:rw_diff_measuring_instruments} the idea of comparing different measuring instruments as Japgroep et al.\cite*{Jagroep2015} did was presented. However, only two measuring instruments could be set up to conduct measurements. Those were Joulemeter and Energy Consumption Tools (EC Tools). Joulemeter was last updated in 2011\cite*{Joulemeter} . EC Tools was last updated 22-05-2013\cite*{ECTools}. Since the last updates are many years ago we decided that they would not bed used. However, the idea of comparing different measuring instruments is the essence of our work as well. A measuring instrument used in multiple related works is Intel's RAPL\cite*{RAPL_in_action,hackenberg2013,fahad2019comparative} and is as such relevant to include. However, as shown by Khan et al.\cite*{RAPL_in_action} Intel's RAPL performs differently on different Intel CPU architectures, but deems it to be a viable alternative to hardware-based measurements in many cases. However, Fahad et al.\cite*{fahad2019comparative} and Hackenberg et al.\cite*{hackenberg2013} showed that in some cases, it was not very accurate compared to the hardware-based measuring instrument. Therefore a hardware-based measuring instrument to be used as a ground truth is also essential, however one still has to be chosen. In the related works there are a variety of hardware based measuring instruments used, their number of occurrences are shown in \cref*{tab:Hardware_based_Measuring_instruments}. These are considered when choosing the method to utilize in our work. 
+In \cref{sec:rw_diff_measuring_instruments} the idea of comparing different measuring instruments as Japgroep et al.\cite{Jagroep2015} did was presented. However, only two measuring instruments could be set up to conduct measurements. Those were Joulemeter and Energy Consumption Tools (EC Tools). Joulemeter was last updated in 2011\cite{Joulemeter} and EC Tools was last updated in 2013\cite{ECTools}. Since the last updates are many years ago it was decided against using them as they could be assumed to be discontinued. However, the idea of comparing different measuring instruments is the essence of our work as well. A measuring instrument used in multiple related works is RAPL\cite{RAPL_in_action,hackenberg2013,fahad2019comparative} and is as such relevant to include. However, as shown by Khan et al.\cite{RAPL_in_action} RAPL performs differently on different Intel CPU architectures, but still deems it to be a viable alternative to hardware-based measurements in many cases. However, Fahad et al.\cite{fahad2019comparative} and Hackenberg et al.\cite{hackenberg2013} showed that in some cases, it was not very accurate compared to the hardware-based measuring instruments. A hardware-based measuring instrument will therefore be used as a ground truth. In \cref{sec:rw_energy_consumption_diff_lang,sec:rw_diff_measuring_instruments,sec:rw_measureing_methodology_setup} different approaches are used, their number of occurences are shown in \cref{tab:Hardware_based_Measuring_instruments}. These are considered when choosing the hardware-based approach to utilize in our work. 
 \input{tabels/HB_MI}
 
 %   Watts  Up? PRO Jagroep
@@ -12,25 +10,23 @@ In \cref{sec:rw_diff_measuring_instruments} the idea of comparing different meas
 % ZES ZIMMER LMG450 Hackenberg
 % Watt up Pro Fahad
 % Custom setup Mancebo
-% 
 
-Furthermore, Hackenberg et al.\cite*{hackenberg2013} provide insight to be considered regarding optimal sample rate depending on the type of measurements.
+Furthermore, Hackenberg et al.\cite{hackenberg2013} provide insight to be considered regarding optimal sample rate depending on the type of measurements.
 
-Another aspect presented by Fahad et al.\cite*{fahad2019comparative} is the concept of dynamic energy consumption. This is also implemented in to enable comparison between the hardware-based measurements and software-based measurements, which are choosen in our work.\newline
+Another aspect presented by Fahad et al.\cite{fahad2019comparative} is the concept of dynamic energy consumption. This enabels a comparison between the hardware-based measurements and software-based measurements, chosen in our work.\newline
 
 % Fahad
 % Hackenberg
 % Khan
 
 % Add terminology alert
-In \cref{sec:rw_measureing_methodology_setup} different frameworks and other aspects of methodology were presented. First of all, some of the contributions from Mancebo et al. \cite*{GarciaFEETINGS} are also incorporated to some extent. Specifically, some of the terminology defined in the GSMO. However, some aspects are irrelevant to our use case and will not be used. Furthermore, some additional terminology is also needed. The terminology can be seen in \cref{tab:TerminologyAlert}. The two other components are the methodological component and the technological components, both of which are not used.
+In \cref{sec:rw_measureing_methodology_setup} different frameworks and other aspects of methodology were presented. First of all, some of the contributions from Mancebo et al. \cite{GarciaFEETINGS} are also incorporated to some extent. Specifically, some of the terminology defined in the GSMO. However, some aspects in the GSMO are deemed irrelevant to our use case and will not be used. Furthermore, some additional terminology is also needed. The terminology can be seen in \cref{tab:TerminologyAlert}. The two other components are the methodological component and the technological components, both of which are not used. The methodological component which are guidelines to assist with the study design are not explicitly followed, since we were not aware of it in the initial phase of our work, however a similar processes is used. The technological component consisting of a custom hardware-based measuring instrument and a software tool is not available to the public and can therefore not be used.
 
-Sestoft\cite*{sestoft2013microbenchmarks} presents several things to consider when running benchmarks are presented. For example how the JIT compilation can affect the execution time of benchmarks and how garbage collection can also be an uncontrollable factor. Furthermore, a list of potential pitfalls is presented, which are considered when implementing the framework used in our work. \todo{ved I hvilket? eller hvor finder i ud af det?}
+Sestoft\cite{sestoft2013microbenchmarks} presents several things to consider when running benchmarks are presented. For example how the JIT compilation can affect the execution time of benchmarks and how garbage collection can also be an uncontrollable factor. Furthermore, a list of potential pitfalls is presented, which are considered when implementing the framework used in our work, as presented in \cref{subsec:how_to_measure}.
 
-Bokhari et al.\cite*{Bokhari2020r3} came up with \textit{R3-VALIDATION} to avoid system software states changing from restarting the DUT and to generally improve the fairness of running several different test cases. This approach has also been implemented in our work.
+Bokhari et al.\cite{Bokhari2020r3} came up with \textit{R3-VALIDATION} to avoid system software states changing from restarting the DUT and to generally improve the fairness of running several different test cases. The ideas from this work has been adapted to better fit our use case though the core idea is still the same. The idea of our work is to compare energy measurement instruments and not test cases, and we therefore iterate over the measurement instruments instead of test cases.
 
-Finally, it was noted by Dongarra et al.\cite*{Dongarra2012} that when comparing results gathered from different DUTs or measuring instruments it is useful to have the same sampling rate across the setups. This will also be implemented if possible within the limits of the different measuring instruments used in our work.
-
+Finally, it was noted by Dongarra et al.\cite{Dongarra2012} that when comparing results gathered from different DUTs or measuring instruments it is useful to have the same sampling rate across the setups. This will also be implemented if possible within the limits of the different measuring instruments used in our work.
 
 % Mancebo
 % Sestoft

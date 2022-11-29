@@ -2,7 +2,7 @@
 
 \section{Energy consumption of different languages and constructs}\label[section]{sec:rw_energy_consumption_diff_lang}
 
-% One is the work by Hackenberg et al.\cite[]{hackenberg2013} which aims to find which instrument measures the energy consumption of a system best. This is done by measuring using Intel's RAPL, and AMD's APM and comparing them against both AC and DC measuring while running a sequence of synthetic code designed to provide a controllable workload. Hackenberg et al. found AC to be the most accurate one, as $95\%$ and $96\%$ of samples vary with less than 2W in the two tests conducted.
+% One is the work by Hackenberg et al.\cite[]{hackenberg2013} which aims to find which instrument measures the energy consumption of a system best. This is done by measuring using RAPL, and AMD's APM and comparing them against both AC and DC measuring while running a sequence of synthetic code designed to provide a controllable workload. Hackenberg et al. found AC to be the most accurate one, as $95\%$ and $96\%$ of samples vary with less than 2W in the two tests conducted.
 
 Multiple works focus on the differences in energy consumption of different languages and various language constructs within the same language. One such work is by Lindholt et al.\cite[]{Lindholt2022}, where a comparison was made of four groups of language constructs within C\#, including concurrency, casting parameter mechanisms and lambda expressions. This is achieved using 150 micro benchmarks, where further analysis is conducted on each of the constructs to understand the results. Based on the findings, 68 macro benchmarks are created to test the observations on a larger scale and to see how the constructs work in combination with each other.\newline
 
