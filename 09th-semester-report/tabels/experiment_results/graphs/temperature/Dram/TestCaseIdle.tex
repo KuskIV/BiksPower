@@ -4,11 +4,12 @@
                 \begin{tikzpicture}
                     \pgfplotsset{%
                         width=1\textwidth,
-                        height=0.5\textheight
+                        height=1\textheight
                     }
                     \begin{axis}[
                         xlabel={Start temperature},
                         ylabel={Average dynamic energy (watt)},
+                        ymin=0,ymax=100,
                     ]
                     
                     \end{axis}

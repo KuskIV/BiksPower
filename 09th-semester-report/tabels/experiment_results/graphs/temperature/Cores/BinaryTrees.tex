@@ -4,64 +4,65 @@
                 \begin{tikzpicture}
                     \pgfplotsset{%
                         width=1\textwidth,
-                        height=0.5\textheight
+                        height=1\textheight
                     }
                     \begin{axis}[
                         xlabel={Start temperature},
                         ylabel={Average dynamic energy (watt)},
+                        ymin=0,ymax=100,
                     ]
                     
-                        \addplot [mark=none, red, thick]  coordinates {
+                        \addplot [mark=none, thick, red]  coordinates {
                         (35, 11.876483791077623)(50, 12.517576756483235)(55, 12.879514766256165)(60, 13.059517159591882)(65, 13.079105180728474)
                         };
                         \addlegendentry{Surface4Pro - IntelPowerGadget}
                         
-                        \addplot [mark=none, red, dotted]  coordinates {
+                        \addplot [mark=none, thick, blue]  coordinates {
                         (35, 11.40250366002089)(45, 12.237333565803755)(50, 11.797181815066788)(55, 11.996295239279151)(60, 12.050449153037011)(65, 12.610263806283275)
                         };
                         \addlegendentry{Surface4Pro - HardwareMonitor}
                         
-                        \addplot [mark=none, red, dashed]  coordinates {
+                        \addplot [mark=none, thick, orange]  coordinates {
                         (35, 7.884624437441386)(45, 7.9297419133064775)(50, 8.03992337378162)(55, 8.03848100491303)(60, 8.04041779165906)
                         };
                         \addlegendentry{Surface4Pro - RAPL}
                         
-                        \addplot [mark=none, blue, thick]  coordinates {
+                        \addplot [mark=none, dashed, red]  coordinates {
                         (25, 2.8715042423448724)(30, 4.090508875704291)(35, 3.4969516842349493)(40, 3.810390048407284)(45, 4.478457609766739)
                         };
                         \addlegendentry{SurfaceBook - IntelPowerGadget}
                         
-                        \addplot [mark=none, blue, dotted]  coordinates {
+                        \addplot [mark=none, dashed, blue]  coordinates {
                         (30, 3.4254254978566268)(35, 3.562127105833266)(40, 3.503968448311207)
                         };
                         \addlegendentry{SurfaceBook - HardwareMonitor}
                         
-                        \addplot [mark=none, blue, dashed]  coordinates {
+                        \addplot [mark=none, dashed, orange]  coordinates {
                         (30, 5.569917165772829)(35, 5.617305881774356)(45, 5.592142797545676)(50, 5.41418414131237)(55, 5.301975100691381)(60, 5.094774967038667)(65, 4.875640500701061)
                         };
                         \addlegendentry{SurfaceBook - RAPL}
                         
-                        \addplot [mark=none, green, thick]  coordinates {
+                        \addplot [mark=none, dashdotted, red]  coordinates {
                         (25, 67.27791989453937)(30, 67.24613030919926)
                         };
                         \addlegendentry{workstation - IntelPowerGadget}
                         
-                        \addplot [mark=none, green, dotted]  coordinates {
+                        \addplot [mark=none, dashdotted, blue]  coordinates {
                         (30, 66.21753913517547)(35, 66.08227082534482)(40, 65.93822333517744)(45, 65.58825023864561)(50, 65.37834268965575)
                         };
                         \addlegendentry{workstation - HardwareMonitor}
                         
-                        \addplot [mark=none, green, dashdotdotted]  coordinates {
+                        \addplot [mark=none, dashdotted, green]  coordinates {
                         (25, 59.01433548114595)(30, 60.7734372723397)(40, 59.18991045557226)(45, 73.53927085838608)(70, 56.969964516495324)
                         };
                         \addlegendentry{workstation - Clamp (win)}
                         
-                        \addplot [mark=none, green, dashed]  coordinates {
+                        \addplot [mark=none, dashdotted, orange]  coordinates {
                         (25, 56.92075931320293)(30, 56.83069844671305)(35, 56.85401066975601)
                         };
                         \addlegendentry{workstation - RAPL}
                         
-                        \addplot [mark=none, green, dashdotdotted]  coordinates {
+                        \addplot [mark=none, dashdotted, black]  coordinates {
                         (25, 36.19771737236073)(35, 51.01799153939773)(40, 41.784941954565156)
                         };
                         \addlegendentry{workstation - Clamp (lin)}
