@@ -17,9 +17,25 @@ Memory is DDR4 16Gb, the consumption for a single DDR4 stick of ram is $MinRam=1
 
 The TUF B360M-PLUS GAMING energy consumption is, $MinBoard = 15 watts$, $MaxBoard = 60 watts$ and $AvgBoard = 37.5 watt= (MinBoard+MaxBoard)/2$
 
-Power supply does not really have a energy 
-https://www.buildcomputers.net/power-consumption-of-pc-components.html
+Power supply does not really have a energy specific energy consumption, but instead has a energy efficiency, how much of the energy going into the power supply actually gets used in the system. The power supply used in the workstation has a 80-Plus Gold certification meaning that it's efficiency is verified at certain loads. Where the tested loads are 20\%, 50\% and 100\%, having a 80-Plus then provides the following efficiencies at each load level. $MinEff=90\%$, $AvgEff=92\%$ and $MaxEff=89\%$. This is highly relevant for the hardware measurements as they are measured before going into the power supply and will thus be around 10\% higher that the actual system consumption.
+
+Using these values lower and upper bounds for the expected energy consumption can be created for the profilers.
+
+Intel power gadget:
+Intel power gadget measures the Cpu and ram individually so the Min and Max values for this can be considered the bounds. In reality however the bench that are used does not put the system under significant load so the expected bounds would be closer to the following.
+$IntelGCpu = [MinCpu, \dotsc ,AvgCpu] = [10 watt \dotsc 65 watt]$
+$IntelGRam = [MinRam, \dotsc ,AvgRam] = [1.5 watt \dotsc 2.25 watt]$
+
+RAPL and Hardware monitor is measuring the same things as intel power gadget so the same estimations can be used.
+
+Hardware measurements:
+The hardware measurements are more inclusive than the softwares once are, as the whole system is measured, because of this the calculation to determine a upper and lower bound also include more of the value, to limit the different permutation only the lower values will be used as the testcases used does not sufficiently stress the system to ever utilize more than $20\%$ of the computer capabilities.
+
+$LowerBound = MinCpu + $
 
 \paragraph{Surface Book 1}
+As the surface book 1 is an mobile device that runs on it's battery output our hardware measurement setup will not be used, thus only the Cpu and ram will be subject to the measurements.
+
+The Intel Core i5-6300U as a TDP of $14 watt$. The expected ranges for this cpu is then $MinCpu = 7.5 watt$\feetnote{https://www.notebookcheck.net/Intel-Core-i5-6300U-Notebook-Processor.149433.0.html}, $AvgCpu = 14 watt$ and the $MaxCpu = 21 watt = AvgCpu*1.5$
 
 \paragraph{Surface Pro 4}
