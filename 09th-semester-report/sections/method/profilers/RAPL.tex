@@ -18,7 +18,7 @@ The different power domains which are supported are shown in \cref{tab:RAPL_Doma
 
 The energy counters in RAPL can be accessed by utilizing model-specific registers (MSRs). By default, these counters are updated every 1 ms. These MSRs can be accessed on Linux and supplies an interface for doing read and write operations directly on the CPU.\cite{linux_manual_msr}. There are also alternatives to using the MSRs. The Power Capping Framework allows the user to access RAPL by using sysfs, which is a pseudo file system in the Linux kernel\cite{PowerCappingFramework,RAPL_in_action}. Furthermore, perf or perf\_events are Linux commands available in the Linux kernel which allows to access performance counters.\cite{Perf_events,RAPL_in_action} 
 Another option is the Performance Application Programming Interface (PAPI) library, which is a tool that can be used to measure the performance and provide an interface so the measurement in near real time\cite{PAPI}.
-Mozilla also has a tool which can print all the available Intel RAPL power estimates\cite{FireFox}\nytafsnit
+Mozilla also has a tool which can print all the available RAPL power estimates\cite{FireFox}\nytafsnit
 
 %% Der er ogsp jRAPL, men det virker kun med java
 

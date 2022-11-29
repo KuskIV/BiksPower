@@ -1,8 +1,8 @@
-\subsection{Distribution}\todo{sources}
+\subsection{Distribution}\todo{This whole sections needs more sources}
 Here the methods for statistically comparing the distribution of the different measurements will be elaborated on and explained.
 
 \paragraph{Shapiro-Wilk}
-One of the most common preconditions for statistical tests is that the data has to be in a normal distribution for the results to work optimally. To test if a distribution is normally distributed a normalcy test can be used. While there are multiple different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used\cite{razali2011power}. Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
+One of the most common preconditions for statistical tests is that the data has to be in a normal distribution for the results to work optimally. To test if a distribution is normally distributed a normalcy test can be used. While there are multiple different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used.\cite{razali2011power} Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
 
 \begin{equation}
     W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}
@@ -41,7 +41,7 @@ The t-test is performed using two values the $t_{value}$ and the $p_{value}$ and
 \end{equation}
 
 \paragraph{Mann-Whitney U test}
-If however it is determined that the distributions are not normally distributed then another test will have to be made instead of the student t-test. A popular option for this is the Mann-Whitney U test. There are some important differences between the two methods. The t-test calculates the difference in the mean between two samples, while the Mann-Whitney U test checks if there is a difference in the rank sum of the samples\cite{mann1947test}. 
+If however it is determined that the distributions are not normally distributed then another test will have to be made instead of the student t-test. A popular option for this is the Mann-Whitney U test. There are some important differences between the two methods. The t-test calculates the difference in the mean between two samples, while the Mann-Whitney U test checks if there is a difference in the rank sum of the samples.\cite{mann1947test} 
 
 The idea behind the rank sum is that each data point is given a rank, and this rank is based on its position in a sorted order between all of the other data points. 
 The basic requirement for using the Mann-Whitney U test is to have ordinal variables, this just means that there is a way to order and sort them.
