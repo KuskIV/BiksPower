@@ -3,13 +3,16 @@
     \begin{subfigure}[b]{0.4\linewidth}
     \begin{tikzpicture}
         \pgfplotsset{%
-        width=1.1\linewidth,
+        width=1\linewidth,
         % height=1\textheight
         }
         \begin{axis}[%
         scatter/classes={%
             a={mark=o,draw=black},
-            b={mark=o,draw=red}}]
+            b={mark=o,draw=red}},
+            xlabel={Energy consumption (Joules)},
+            ylabel={Duration (m/s)},
+            ]
         \addplot[scatter,only marks,%
             scatter src=explicit symbolic]%
         table[meta=label] {
@@ -154,11 +157,13 @@
 \begin{subfigure}[b]{0.4\linewidth}
     \begin{tikzpicture}
         \pgfplotsset{%
-        width=1.1\linewidth,
+        width=1\linewidth,
         % height=1\textheight
         }
         \begin{axis}[%
         scatter/classes={%
+            xlabel={Datapoint id},
+            ylabel={Distance to 4'th neighbor},
             a={mark=o,draw=black},
             b={mark=o,draw=red}}]
         \addplot[scatter,only marks,%
@@ -303,5 +308,5 @@
     \end{tikzpicture}
     \caption{A 4-dist sorted graph} \label{fig:4-dist}  
 \end{subfigure}
-\caption{An example of how outliers are found for on the workstation for Fasta measured by HardwareMonitor}
+\caption{An example of how outliers are found for on the workstation for Fasta measured by HardwareMonitor}\label{fig:anomaly_detection_example}
 \end{figure}
