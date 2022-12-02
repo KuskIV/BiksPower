@@ -1,0 +1,16 @@
+{
+  "TotalElapsedTimeInSeconds": 60.68867,
+  "MeasuredRdtscFrequencyInGhz": 3.192,
+  "CumulativeProcessorEnergyInJoules": 1762.0776,
+  "CumulativeProcessorEnergyInMwh": 489.466,
+  "AverageProcessorPowerWatt": 29.034702,
+  "CumulativeIaEnergyInJoules": 1624.7367,
+  "CumulativeIaEnergyInMwh": 451.31577,
+  "AverageIaPowerInWatt": 26.771664,
+  "CumulativeDramEnergyInJoules": 37.579468,
+  "CumulativeDramEnergyInMwh": 10.438741,
+  "AverageDramPowerInWatt": 0.619217,
+  "CumulativeGtEnergyInJoules": 81.30054,
+  "CumulativeGtEnergyInMwh": 22.583483,
+  "AverageGtPowerInWatt": 1.339633
+}

@@ -1,0 +1,108 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}[]
+                        \pgfplotsset{%
+                            width=.8\textwidth,
+                            height=1.3\textwidth
+                        }
+                        \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+                        yticklabels={
+                            Surface4Pro - IntelPowerGadget, Surface4Pro - HardwareMonitor, Surface4Pro - RAPL, SurfaceBook - IntelPowerGadget, SurfaceBook - HardwareMonitor, SurfaceBook - RAPL, workstation - IntelPowerGadget, workstation - HardwareMonitor, workstation - Clamp (win), workstation - RAPL, workstation - Clamp (lin)
+                            },
+                            xmin=0,xmax=80,
+                            ]
+                        
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.4987701318290087,
+                            lower quartile=0.5201298210473831,
+                            median=0.5748144996387781,
+                            upper quartile=0.6064468574775675,
+                            upper whisker=0.6475496331002977},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.48229639229430876,
+                            lower quartile=0.5037561170740252,
+                            median=0.5323334807409469,
+                            upper quartile=0.5778766057375946,
+                            upper whisker=0.6285046753384576},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=2.578778067743218,
+                            lower quartile=91.81266533744872,
+                            median=170.475900655629,
+                            upper quartile=250.79272615300465,
+                            upper whisker=339.0003066997405},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.7104255677078417,
+                            lower quartile=0.7225038674497488,
+                            median=0.7268545218481399,
+                            upper quartile=0.7319393663899333,
+                            upper whisker=0.7624501840431727},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.6809218294038181,
+                            lower quartile=0.6943211732707849,
+                            median=0.699633949273854,
+                            upper quartile=0.7036052171491426,
+                            upper whisker=0.7299748088818533},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=-0.29357052978673426,
+                            lower quartile=37.09291735608336,
+                            median=73.4420488749559,
+                            upper quartile=113.1626450295384,
+                            upper whisker=152.9663795399221},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.7541794396631167,
+                            lower quartile=0.7616969702740483,
+                            median=0.7640381362146507,
+                            upper quartile=0.7681379329516734,
+                            upper whisker=0.8001238069846639},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.7561072469546386,
+                            lower quartile=0.7608850945114618,
+                            median=0.763217216040466,
+                            upper quartile=0.7678119930642135,
+                            upper whisker=0.8005951385905621},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.0,
+                            lower quartile=0.0,
+                            median=0.0,
+                            upper quartile=0.0,
+                            upper whisker=0.0},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=64.58906596140068,
+                            lower quartile=847.1311074056259,
+                            median=1578.5624644191598,
+                            upper quartile=2313.4856294016663,
+                            upper whisker=3044.4018024531074},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.0,
+                            lower quartile=0.0,
+                            median=0.0,
+                            upper quartile=0.0,
+                            upper whisker=0.0},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                        \end{axis}
+                    \end{tikzpicture}
+                \caption{Dram energy consumption for test case FannkuchRedux for all DUT's and OS's (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_avg_watts}
+                \end{figure}
+                

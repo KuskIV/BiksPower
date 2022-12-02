@@ -1,0 +1,49 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=1\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 8.952379759888553)(45, 8.992242805493337)(50, 9.027777578738927)(55, 8.989406893011793)(60, 8.9872285309204)(65, 9.066240927091162)(70, 9.072056907810483)(75, 9.034096815974522)(80, 8.816476202619198)
+                            };
+                            \addlegendentry{Surface4Pro - IntelPowerGadget}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 9.149617880993377)(45, 9.143175259038825)(50, 9.150651620756287)(55, 9.150968499221857)(60, 9.188696994941365)(65, 9.177545723957252)(70, 9.181983115182138)(75, 9.148192757889513)(80, 8.848541270186384)
+                            };
+                            \addlegendentry{Surface4Pro - HardwareMonitor}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (50, 6.8929730446034885)(55, 6.910555044964903)(60, 6.910889525461012)(65, 6.912272050274654)(70, 6.904263008408466)(75, 6.871320994685638)(80, 6.762856205132495)
+                            };
+                            \addlegendentry{Surface4Pro - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, 2.659933486890105)(45, 2.6296850474791817)(50, 2.670677848086826)(55, 2.617389171005827)(60, 2.6470986438343798)(65, 2.688138784377088)(70, 2.6774737530597013)(75, 2.7057449508694265)(80, 2.724775621412493)
+                            };
+                            \addlegendentry{SurfaceBook - IntelPowerGadget}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, 4.3763846999857)(45, 4.380121550958145)(50, 4.396155009568939)(55, 4.389033234182674)(60, 4.388415871268527)(65, 4.3935904678594)(70, 4.391945398187246)(75, 4.37931788074888)(80, 4.418515949744594)
+                            };
+                            \addlegendentry{SurfaceBook - HardwareMonitor}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 4.824514574571876)(45, 4.816297777174134)(50, 4.830507541404292)(55, 4.820593210622054)(60, 4.824930898342403)(65, 4.814635380670634)(70, 4.821068349062271)(75, 4.846179474727736)(80, 4.845070422901561)
+                            };
+                            \addlegendentry{SurfaceBook - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Cores for test case Nbody with regards to the battey level of the DUT (with outliers)} \label{fig:Nbody_Cores}
+                \end{figure}
+                

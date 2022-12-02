@@ -1,0 +1,108 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}[]
+                        \pgfplotsset{%
+                            width=.8\textwidth,
+                            height=1.3\textwidth
+                        }
+                        \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+                        yticklabels={
+                            Surface4Pro - IntelPowerGadget, Surface4Pro - HardwareMonitor, Surface4Pro - RAPL, SurfaceBook - IntelPowerGadget, SurfaceBook - HardwareMonitor, SurfaceBook - RAPL, workstation - IntelPowerGadget, workstation - HardwareMonitor, workstation - Clamp (win), workstation - RAPL, workstation - Clamp (lin)
+                            },
+                            xmin=0,xmax=80,
+                            ]
+                        
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.4909067381583814,
+                            lower quartile=0.4956347199244173,
+                            median=0.496890047117634,
+                            upper quartile=0.49905514193902556,
+                            upper whisker=0.5042555278305335},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.4687993767633771,
+                            lower quartile=0.4766960904973687,
+                            median=0.4773408281876597,
+                            upper quartile=0.4791041327835252,
+                            upper whisker=0.4837860872440901},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=2.0709522433398737,
+                            lower quartile=82.4679233959217,
+                            median=171.62279237286648,
+                            upper quartile=253.0268256807248,
+                            upper whisker=330.2400333581899},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.49836873381480873,
+                            lower quartile=0.5000103487856075,
+                            median=0.5010642152245813,
+                            upper quartile=0.5024433929466426,
+                            upper whisker=0.5126193570051413},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.47373975920236844,
+                            lower quartile=0.4743884422468024,
+                            median=0.4761816953148368,
+                            upper quartile=0.4774307498836079,
+                            upper whisker=0.49715455389794655},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=-1.0496120605830064,
+                            lower quartile=31.64964254474365,
+                            median=70.46437885007352,
+                            upper quartile=109.54517191364857,
+                            upper whisker=149.9739215676032},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.5788106696802604,
+                            lower quartile=0.5790707029232778,
+                            median=0.5792524948974229,
+                            upper quartile=0.57956329677322,
+                            upper whisker=0.5839792193451777},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.5773775989054198,
+                            lower quartile=0.577754848512829,
+                            median=0.5779077119470066,
+                            upper quartile=0.5782239335723173,
+                            upper whisker=0.5851024577758888},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.0,
+                            lower quartile=0.0,
+                            median=0.0,
+                            upper quartile=0.0,
+                            upper whisker=0.0},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=41.51693975484298,
+                            lower quartile=501.6389029766875,
+                            median=917.871339375689,
+                            upper quartile=1336.2232903206152,
+                            upper whisker=1741.7583220380511},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                            \addplot+ [boxplot prepared={
+                            lower whisker=0.0,
+                            lower quartile=0.0,
+                            median=0.0,
+                            upper quartile=0.0,
+                            upper whisker=0.0},
+                            ] table[row sep=\\,y index=0] {\\};
+                            
+                        \end{axis}
+                    \end{tikzpicture}
+                \caption{Dram energy consumption for test case Nbody for all DUT's and OS's (without outliers)} \label{fig:Nbody_Dram_comparison_energy_without_outliers_avg_watts}
+                \end{figure}
+                
