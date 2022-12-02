@@ -1,6 +1,0 @@
-PWD c:/Users/Mads Kusk/git/BiksPower/09th-semester-report/sections/experiments/0-experiment
-INPUT c:/texlive/2022/texmf.cnf
-INPUT c:/texlive/2022/texmf-dist/web2c/texmf.cnf
-INPUT c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/Mads Kusk/git/BiksPower/09th-semester-report/sections/experiments/0-experiment/idle_experiments.tex
-OUTPUT idle_experiments.log
