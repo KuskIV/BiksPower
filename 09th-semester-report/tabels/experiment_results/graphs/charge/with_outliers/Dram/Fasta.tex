@@ -1,0 +1,49 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=1\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 0.11965728752508699)(45, 0.11929493884762774)(50, 0.11948226658438683)(55, 0.11983352076656706)(60, 0.12450987890688077)(65, 0.11866114580636555)(70, 0.12104560236394446)(75, 0.11492270974844535)(80, 0.10993522806091334)
+                            };
+                            \addlegendentry{Surface4Pro - IntelPowerGadget}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 0.10916574624875834)(45, 0.11495588755572744)(50, 0.10638387922920255)(55, 0.10632485329118993)(60, 0.10810038090449255)(65, 0.10651237054332585)(70, 0.10943088813746127)(75, 0.10344538848039815)(80, 0.0937859835251066)
+                            };
+                            \addlegendentry{Surface4Pro - HardwareMonitor}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (45, 278.66571656470813)(50, 255.5094222302869)(55, 206.44278884553694)(60, 151.34866593754643)(65, 100.44925952924886)(70, 45.40235154725636)(75, -7.568476567690036)(80, -47.13572855084999)
+                            };
+                            \addlegendentry{Surface4Pro - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, 0.09315024339845923)(45, 0.09819244097050245)(50, 0.09276769529188522)(55, 0.09562749229324433)(60, 0.09546148908752414)(65, 0.0969045360110746)(70, 0.09699846375046157)(75, 0.0962972291195758)(80, 0.10632865536007031)
+                            };
+                            \addlegendentry{SurfaceBook - IntelPowerGadget}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, 0.08724886989576995)(45, 0.09311369424659521)(50, 0.08805185195435972)(55, 0.09070033838962224)(60, 0.08685310913478095)(65, 0.08861663244717483)(70, 0.08843957170739117)(75, 0.09135681635582728)(80, 0.0995091733259033)
+                            };
+                            \addlegendentry{SurfaceBook - HardwareMonitor}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 103.57392539554046)(45, 87.21163099602174)(50, 69.19517062941513)(55, 51.98579994282606)(60, 34.691920707674754)(65, 16.238778448784167)(70, -3.4941888744888323)(75, -22.652094964642703)(80, -34.59811251669567)
+                            };
+                            \addlegendentry{SurfaceBook - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case Fasta with regards to the battey level of the DUT (with outliers)} \label{fig:Fasta_Dram}
+                \end{figure}
+                
