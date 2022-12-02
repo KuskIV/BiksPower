@@ -1,14 +1,14 @@
-\subsection{Expectation}
+\subsection{Expectation} \label[subsection]{subsec:expec}
 In this section the some expectations about the energy consumption of each of the system will be covered, this is largely based on components in the DUT, some experiments will also be conducted to support the estimations. The exact values and calculation steps as well as the rational behind will be covered below. This will involve looking at the expected usage of each of the DUTs components energy usage and the range of usage, this will then provide a lower and upper limit for the consumption of the machine.
 
 \paragraph{Terminology}
 Certain Terminology is commonplace when referencing pc components, here these will be covered and explained as well as how these are used in the calculations.
 \begin{itemize}
-    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nonetheless it can define some bounds for the values.
+    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts\feetnote{https://forums.servethehome.com/index.php?threads/the-truth-about-cpu-power-consumption.16/}. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nonetheless it can define some bounds for the values.
 \end{itemize}
 
 \paragraph{Workstation}
-Here the work stations expected energy consumption will be calculated.
+Here the workstations expected energy consumption will be calculated.
 The CPU is an Intel i7-8700 has a TDP of 65 watt $AvgCpu = 65$, meaning that the maximum power consumption can be expected to be around $MaxCpu=97.5=AvgCpu*1.5 watt$, while the minimum at idle would be around $MinCpu=10 watt$
 
 The Disk is an Samsung SSD 970 EVO Plus 1TB the rated power consume for this ssd is $AvgSdd = 6 watt$, $MaxSdd = 9 watt$ and the idle ssd uses $MinSsd = 20 miliWatt$.
@@ -17,25 +17,41 @@ Memory is DDR4 16Gb, the consumption for a single DDR4 stick of ram is $MinRam=1
 
 The TUF B360M-PLUS GAMING energy consumption is, $MinBoard = 15 watts$, $MaxBoard = 60 watts$ and $AvgBoard = 37.5 watt= (MinBoard+MaxBoard)/2$
 
-Power supply does not really have a energy specific energy consumption, but instead has a energy efficiency, how much of the energy going into the power supply actually gets used in the system. The power supply used in the workstation has a 80-Plus Gold certification meaning that it's efficiency is verified at certain loads. Where the tested loads are 20\%, 50\% and 100\%, having a 80-Plus then provides the following efficiencies at each load level. $MinEff=90\%$, $AvgEff=92\%$ and $MaxEff=89\%$. This is highly relevant for the hardware measurements as they are measured before going into the power supply and will thus be around 10\% higher that the actual system consumption.
+Power supply does not really have a energy specific energy consumption, but instead has a energy efficiency, how much of the energy going into the power supply actually gets used in the system. The power supply used in the workstation has a 80-Plus Gold certification meaning that it's efficiency is verified at certain loads. Where the tested loads are 20\%, 50\% and 100\%, having a 80-Plus then provides the following efficiencies at each load level. $MinEff=90\%$, $AvgEff=92\%$ and $MaxEff=89\%$. This is highly relevant for the hardware measurements as they are measured before going into the power supply and will thus be around 8-11\% higher that the actual system consumption.
+
+The computer case also contains a single fan 12v 0.2A SVIVE model SVGCF001, which have been set to max so this will draw $CaseFan = 2.4 watt = 12*0.2$. The Cpu fans exact model could not be confirmed, but an assuming a standard cpu fan is used the value can be estimated to be around the same as the case fan$ CpuFan = 2.4 watt$
 
 Using these values lower and upper bounds for the expected energy consumption can be created for the profilers.
 
-Intel power gadget:
-Intel power gadget measures the Cpu and ram individually so the Min and Max values for this can be considered the bounds. In reality however the bench that are used does not put the system under significant load so the expected bounds would be closer to the following.
-$IntelGCpu = [MinCpu, \dotsc ,AvgCpu] = [10 watt \dotsc 65 watt]$
-$IntelGRam = [MinRam, \dotsc ,AvgRam] = [1.5 watt \dotsc 2.25 watt]$
-
-RAPL and Hardware monitor is measuring the same things as intel power gadget so the same estimations can be used.
+Intel power gadget, RAPL, Hardware monitor:
+All of these measures the Cpu and ram individually so the Min and Max values for this can be considered the bounds. In reality however the bench that are used does not put the system under significant load so the expected bounds would be closer to the following.
+$$Cpu = [MinCpu \dotsc AvgCpu] = [10 watt \dotsc 65 watt]$$
+$$Ram = [MinRam \dotsc AvgRam] = [1.5 watt \dotsc 2.25 watt]$$
 
 Hardware measurements:
 The hardware measurements are more inclusive than the softwares once are, as the whole system is measured, because of this the calculation to determine a upper and lower bound also include more of the value, to limit the different permutation only the lower values will be used as the testcases used does not sufficiently stress the system to ever utilize more than $20\%$ of the computer capabilities.
-
-$LowerBound = MinCpu + $
-
+\todo{Find out which fans are in the computer}
+$$LowerBound = 35.75 watt= (MinCpu + MinBoard + MinRam + AvgSsd + CpuFan + CaseFan)*(1+(1/MinEff))$$
+The reason for using the avgSSD instead of the min is because our understanding is that the computer will essentially exceed the $MinSsd$ just by being turned on.
+$$AverageCase = 119.6 watt= (AvgCpu+AvgBoard+AvgRam+AvgSsd+ CpuFan + CaseFan)*(1+(1/AvgEff))$$ 
+So essentially the measurements from the hardware are expected
 \paragraph{Surface Book 1}
 As the surface book 1 is an mobile device that runs on it's battery output our hardware measurement setup will not be used, thus only the Cpu and ram will be subject to the measurements.
 
-The Intel Core i5-6300U as a TDP of $14 watt$. The expected ranges for this cpu is then $MinCpu = 7.5 watt$\feetnote{https://www.notebookcheck.net/Intel-Core-i5-6300U-Notebook-Processor.149433.0.html}, $AvgCpu = 14 watt$ and the $MaxCpu = 21 watt = AvgCpu*1.5$
+The Intel Core i5-6300U as a TDP of $14 watt$. The expected ranges for this cpu is then $MinCpu = 7.5 watt$\feetnote{https://www.notebookcheck.net/Intel-Core-i5-6300U-Notebook-Processor.149433.0.html}, $AvgCpu = 14 watt$ and the $MaxCpu = 21 watt = AvgCpu*1.5$.
+
+The ram used in the Surface Book 1 is DDR3\feetnote{https://www.buildcomputers.net/power-consumption-of-pc-components.html} this uses $MinRam = 2 watt$, $MaxRam = 3 watt$. So here we define the average as $AvgRam =2.5 watt= (MinRam+MaxRam)/2$
+Since the hardware measurements are not conducted on this machine this would be the expected readings from the DUT.
+
+$$Cpu = [MinCpu \dotsc AvgCpu] = [7.5 watt \dotsc 14 watt]$$
+$$Ram = [MinRam \dotsc AvgRam] = [2 watt \dotsc 2.5 watt]$$
 
 \paragraph{Surface Pro 4}
+
+The Surface Pro 4 is also a mobile device and is hardware wise similar to the Surface book 1. The ram is the same, but the cpu differs between them, the Surface Pro 4 have a Intel i7-6650U CPU 2.20GHz\feetnote{https://www.intel.com/content/www/us/en/products/sku/91497/intel-core-i76650u-processor-4m-cache-up-to-3-40-ghz/specifications.html}, while the Surface Book 1 had a Intel Core i5-6300U 2.4 GHz.
+
+The Cpu on the Surface pro 4 is expected to have the following power usage $AvgCpu = 15 watt$, $MinCpu = 9.5 watt$ and $MaxCpu = 22.5 watt = AvgCpu*1.5$. Thus we get the following expectations for the energy consumption.
+$$Cpu = [MinCpu \dotsc AvgCpu] = [9.5 watt \dotsc 15 watt]$$
+$$Ram = [MinRam \dotsc AvgRam] = [2 watt \dotsc 2.5 watt]$$
+
+These should be considered rough estimation for what the DUTs can consume values both above and below these estimates might still be valid, but require some further investigation if the divination is significant. 
