@@ -6,6 +6,7 @@ using EnergyComparer.Models;
 using EnergyComparer.Profilers;
 using EnergyComparer.TestCases;
 using EnergyComparer.Utils;
+using Google.Protobuf.WellKnownTypes;
 using ILogger = Serilog.ILogger;
 
 namespace EnergyComparer.Services
@@ -57,9 +58,9 @@ namespace EnergyComparer.Services
             
             var startTime = StartTimeAndProfiler(energyProfiler, stopwatch, testCase);
 
-            var counter = RunTestcase(testCase, startTime, energyProfiler);
+            var (counter, e3Duration, e3StopTime) = RunTestcase(testCase, startTime, energyProfiler, stopwatch);
 
-            var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch);
+            var (stopTime, duration) = StopTimeAndProfiler(energyProfiler, stopwatch, e3Duration, e3StopTime);
 
             await EnableWifiAndDependencies();
 
@@ -80,7 +81,7 @@ namespace EnergyComparer.Services
             }
         }
 
-        private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch)
+        private (DateTime, long) StopTimeAndProfiler(IEnergyProfiler energyProfiler, Stopwatch stopwatch, long e3Duration, DateTime e3StopTime)
         {
             if (energyProfiler.GetName() != EWindowsProfilers.E3.ToString() && energyProfiler.GetName() != EProfilers.Clamp.ToString())
             {
@@ -88,8 +89,8 @@ namespace EnergyComparer.Services
                 Console.WriteLine("late stop");
             }
 
-            var duration = stopwatch.ElapsedMilliseconds;
-            var stopTime = DateTime.UtcNow;
+            var duration = energyProfiler.GetName() == EWindowsProfilers.E3.ToString() ? e3Duration : stopwatch.ElapsedMilliseconds;
+            var stopTime = energyProfiler.GetName() == EWindowsProfilers.E3.ToString() ? e3StopTime : DateTime.UtcNow;
 
             return (stopTime, duration);
         }
@@ -111,9 +112,11 @@ namespace EnergyComparer.Services
             return startTime;
         }
 
-        private int RunTestcase(ITestCase testCase, DateTime startTime, IEnergyProfiler energyProfiler)
+        private (int, long, DateTime) RunTestcase(ITestCase testCase, DateTime startTime, IEnergyProfiler energyProfiler, Stopwatch stopwatch)
         {
             var output = "";
+            long duration = -1;
+            var stopTime = DateTime.MinValue;
 
             var basePath = GetTestCaseBasePath();
             var testCasePath = testCase.GetExecutablePath(basePath);
@@ -139,9 +142,13 @@ namespace EnergyComparer.Services
                     output = newLine;
                 }
 
+
+
                 //output = p.StandardOutput.ReadLine();
                 if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
                 {
+                    duration = stopwatch.ElapsedMilliseconds;
+                    stopTime = DateTime.UtcNow;
                     energyProfiler.Stop(DateTime.MinValue);
                     Console.WriteLine("early stop");
                 }
@@ -158,7 +165,7 @@ namespace EnergyComparer.Services
             //    }
 
             var counter = output.Trim().Split('\n').Last();
-            return int.Parse(counter); ;
+            return (int.Parse(counter), duration, stopTime);
         }
 
         private DirectoryInfo GetTestCaseBasePath()
