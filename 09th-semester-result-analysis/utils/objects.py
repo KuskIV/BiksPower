@@ -48,21 +48,21 @@ class Experiment(object):
             get_time_series = True
 
             for d in data:
-                if not d is None and not d[0] == 5190 and not d[0] == 5191:
-                    raw_data = RawData(
-                        d[0],
-                        d[5],
-                        d[6],
-                        d[8],
-                        d[9],
-                        d[10],
-                        d[11],
-                        get_time_series,
-                        repository,
-                    )
-                    if raw_data.is_valid == True:
-                        self.experiments.append(raw_data)
-                get_time_series = False
+                raw_data = RawData(
+                    d[0],
+                    d[5],
+                    d[6],
+                    d[7],
+                    d[8],
+                    d[9],
+                    d[10],
+                    d[11],
+                    get_time_series,
+                    repository,
+                )
+                if raw_data.is_valid == True:
+                    self.experiments.append(raw_data)
+            get_time_series = False
 
 
 class Dut(object):
@@ -215,6 +215,7 @@ class RawData(object):
         experiment_id,
         start_time,
         end_time,
+        profiler_id,
         runs,
         iteration,
         first_profiler,
@@ -272,6 +273,7 @@ class RawData(object):
             self.start_time = start_time
             self.end_time = end_time
             self.runs = runs
+            self.profiler_id = profiler_id
             self.iteration = iteration
             self.first_profiler = first_profiler
             self.duration = duration

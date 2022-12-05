@@ -1,0 +1,108 @@
+
+                    \begin{figure}
+                        \centering
+                        \begin{tikzpicture}[]
+                            \pgfplotsset{%
+                                width=.8\textwidth,
+                                height=1.3\textwidth
+                            }
+                            \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+                            yticklabels={
+                                Surface4Pro - IntelPowerGadget, Surface4Pro - HardwareMonitor, Surface4Pro - RAPL, SurfaceBook - IntelPowerGadget, SurfaceBook - HardwareMonitor, SurfaceBook - RAPL, workstation - IntelPowerGadget, workstation - HardwareMonitor, workstation - Clamp (win), workstation - RAPL, workstation - Clamp (lin)
+                                },
+                                xmin=0,xmax=80,
+                                ]
+                            
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.0006815863224687857,
+                                lower quartile=0.0054106009732201865,
+                                median=0.006744577390192241,
+                                upper quartile=0.00886122640715964,
+                                upper whisker=0.025083772788366154},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.006930987462270943,
+                                lower quartile=0.0009709811868581358,
+                                median=0.001601626705775544,
+                                upper quartile=0.0033736676053037484,
+                                upper whisker=0.008055715685688025},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-61.97913629966505,
+                                lower quartile=21.36922741752778,
+                                median=101.81234352640253,
+                                upper quartile=182.71580985131874,
+                                upper whisker=266.1895780319111},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.006671230445684961,
+                                lower quartile=-0.005041766661362773,
+                                median=-0.0039808096670223,
+                                upper quartile=-0.002699170695798503,
+                                upper whisker=0.0075794094875138995},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.007073090477366317,
+                                lower quartile=-0.0064508642872079525,
+                                median=-0.004653428506472879,
+                                upper quartile=-0.0032690533475409622,
+                                upper whisker=0.0167976863632191},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-37.715090011488485,
+                                lower quartile=-4.954561755445813,
+                                median=33.893224834134706,
+                                upper quartile=72.85268091263868,
+                                upper whisker=113.30818531056082},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.002208775255647333,
+                                lower quartile=-0.0019388478261778141,
+                                median=-0.0017613547438473098,
+                                upper quartile=-0.0014254503231254656,
+                                upper whisker=0.033467804368444654},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-4.731512534106308e-05,
+                                lower quartile=0.00033126498955451944,
+                                median=0.00049614126136166,
+                                upper quartile=0.0007954899458446074,
+                                upper whisker=0.03697479498876577},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.0,
+                                lower quartile=0.0,
+                                median=0.0,
+                                upper quartile=0.0,
+                                upper whisker=0.0},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-15.87304907114411,
+                                lower quartile=406.8339858539272,
+                                median=832.5226361051886,
+                                upper quartile=1257.5288667900484,
+                                upper whisker=1684.3573033775917},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.0,
+                                lower quartile=0.0,
+                                median=0.0,
+                                upper quartile=0.0,
+                                upper whisker=0.0},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                            \end{axis}
+                        \end{tikzpicture}
+                    \caption{The impact of R3 validation for of Dram dynamic energy consumption for test case Nbody for all DUT's and OS's (with outliers)} \label{fig:Nbody_Dram_R3_dynamic_energy_with_outliers_avg_watts}
+                    \end{figure}
+                    
