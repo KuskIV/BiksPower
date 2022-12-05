@@ -4,7 +4,7 @@
                     \begin{tikzpicture}
                         \pgfplotsset{%
                             width=1\textwidth,
-                            height=1\textheight
+                            height=0.5\textheight
                         }
                         \begin{axis}[
                             xlabel={Start temperature},
@@ -13,62 +13,62 @@
                         ]
                         
                             \addplot [mark=none, ultra thick, red]  coordinates {
-                            (35, 11.756991795584403)(50, 12.517576756483235)(55, 12.856924581194644)(60, 13.054368867732043)
+                            (35, 11.862261569587309)(50, 12.622846530486141)(55, 12.962194355197548)(60, 13.159638641734945)
                             };
                             \addlegendentry{Surface4Pro - IntelPowerGadget}
                             
                             \addplot [mark=none, ultra thick, blue]  coordinates {
-                            (35, 11.444440424063178)(45, 12.237333565803755)(50, 11.797181815066788)(55, 11.996295239279151)(60, 12.052105068326627)(65, 12.610263806283275)
+                            (35, 11.478866822532325)(45, 12.271759964272903)(50, 11.831608213535937)(55, 12.0307216377483)(60, 12.086531466795776)(65, 12.644690204752422)
                             };
                             \addlegendentry{Surface4Pro - HardwareMonitor}
                             
                             \addplot [mark=none, ultra thick, orange]  coordinates {
-                            (35, 7.879003257956144)(45, 7.9297419133064775)(50, 8.03992337378162)(55, 8.040873122067214)(60, 8.04041779165906)
+                            (35, 7.880145123451154)(45, 7.930883778801487)(50, 8.041065239276628)(55, 8.042014987562224)(60, 8.04155965715407)
                             };
                             \addlegendentry{Surface4Pro - RAPL}
                             
                             \addplot [mark=none, dashdotted, red]  coordinates {
-                            (25, 2.8715042423448724)(30, 4.090508875704291)(35, 3.5096875110112187)(40, 3.810390048407284)(45, 4.478457609766739)
+                            (25, 2.8728769598572033)(30, 4.0918815932166215)(35, 3.5110602285235495)(40, 3.8117627659196143)(45, 4.47983032727907)
                             };
                             \addlegendentry{SurfaceBook - IntelPowerGadget}
                             
                             \addplot [mark=none, dashdotted, blue]  coordinates {
-                            (30, 3.5462396083806422)(35, 3.598776357978085)(40, 3.503968448311207)
+                            (30, 3.5477400293223997)(35, 3.600276778919843)(40, 3.5054688692529643)
                             };
                             \addlegendentry{SurfaceBook - HardwareMonitor}
                             
                             \addplot [mark=none, dashdotted, orange]  coordinates {
-                            (30, 5.569917165772829)(35, 5.617305881774356)(45, 5.592142797545676)(50, 5.41418414131237)(55, 5.301975100691381)(60, 5.094644903757351)(65, 4.8776982031567755)
+                            (30, 5.569452928238895)(35, 5.616841644240421)(45, 5.591678560011741)(50, 5.413719903778437)(55, 5.301510863157447)(60, 5.0941806662234175)(65, 4.877233965622842)
                             };
                             \addlegendentry{SurfaceBook - RAPL}
                             
                             \addplot [mark=none, densely dashed, red]  coordinates {
-                            (25, 67.22549671494794)(30, 67.22307679276864)
+                            (25, 68.25487880433246)(30, 68.25245888215314)
                             };
                             \addlegendentry{workstation - IntelPowerGadget}
                             
                             \addplot [mark=none, densely dashed, blue]  coordinates {
-                            (30, 66.2208374579158)(35, 66.09110740303984)(40, 65.93822333517744)(45, 65.58825023864561)(50, 65.37834268965575)
+                            (30, 66.50704675968164)(35, 66.37731670480572)(40, 66.22443263694326)(45, 65.87445954041146)(50, 65.6645519914216)
                             };
                             \addlegendentry{workstation - HardwareMonitor}
                             
                             \addplot [mark=none, densely dashed, cyan]  coordinates {
-                            (25, 59.01433548114595)(30, 60.7734372723397)(40, 59.18991045557226)(70, 56.969964516495324)
+                            (25, 62.05074694404668)(30, 63.80984873524036)(40, 62.22632191847293)(70, 60.00637597939598)
                             };
                             \addlegendentry{workstation - Clamp (win)}
                             
                             \addplot [mark=none, densely dashed, orange]  coordinates {
-                            (25, 56.92075931320293)(30, 56.834004730690694)(35, 56.91031344268558)
+                            (25, 56.96421729563873)(30, 56.877462713126484)(35, 56.953771425121374)
                             };
                             \addlegendentry{workstation - RAPL}
                             
                             \addplot [mark=none, densely dashed, black]  coordinates {
-                            (25, 36.19771737236073)(35, 50.99282150109528)(40, 41.784941954565156)
+                            (25, 36.173719887759326)(35, 50.96882401649389)(40, 41.76094446996375)
                             };
                             \addlegendentry{workstation - Clamp (lin)}
                             
                         \end{axis}
                     \end{tikzpicture} 
-                \caption{A graph illustrating the energy consumption of Cores for test case BinaryTrees with regards to the temperature of the DUT (without outliers)} \label{fig:BinaryTrees_Cores}
+                \caption{A graph illustrating the energy consumption of Cores for test case BinaryTrees with regards to the temperature of the DUT (without outliers)} \label{fig:BinaryTrees_Cores_temperature}
                 \end{figure}
                 

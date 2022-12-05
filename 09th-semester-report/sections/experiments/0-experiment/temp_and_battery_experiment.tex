@@ -25,14 +25,12 @@ A thing to note is that both scripts descibed are used in all experiments. Follo
 
 \input{tabels/experiment_results/graphs/charge/without_outliers/Cores/FannkuchRedux.tex}
 
-\paragraph{Battery level:}
+\paragraph{Battery level:} When considering the impact of the battery level on the performance, FannkuchRedux was picked arbitrarily to illustrate this, and can be seen in \cref*{fig:FannkuchRedux_Cores_charge}. A similar graph for all other test cases can be found in \cref*{app:charge}. When looking at the graph, a slight decrease in energy consumption can be observed when the battery level increases, like Intel Power Gadget in Surface 4 Pro. The overall conclusion for the impact of energy is concluded to be negligible, where the expected decrease in performance would most likely occur at lower battery levels than 40\%, which unfortunately was not possible to test. Based on this, the experiments will be executed with a lower limit of 40\% and an upper limit of 80\%.
 
 \input{tabels/experiment_results/graphs/temperature/without_outliers/Cores/FannkuchRedux.tex}
 
 
-\paragraph{Temperature:}
-
-
+\paragraph{Temperature:} When looking at the impact of the temperature on the energy performance, FannkuchRedux was choosen again to illustrate this, as can be observed in \cref*{fig:FannkuchRedux_Cores_temperature}. The other test cases can be found in \cref*{app:temperature}. When considering the graph in \cref*{fig:FannkuchRedux_Cores_temperature}, a few things can be observed. The temperatures for example never reach a temperature above 65 on any of the DUTs, and the highest temperature for the workstation is even lower. This is most likely due to the workstation having full fan speed during all experiments, where this was not possible in the laptops. Based on the expectations, a increase in power was expected to be observed when the temperature increased, which did not occur, most likely due to the temperatures never rising above 65. When looking at the results, no impact can be observed, which is why no limits are set going forward.
 
 
 

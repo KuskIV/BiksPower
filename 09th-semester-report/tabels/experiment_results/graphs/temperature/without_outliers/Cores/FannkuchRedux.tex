@@ -4,7 +4,7 @@
                     \begin{tikzpicture}
                         \pgfplotsset{%
                             width=1\textwidth,
-                            height=1\textheight
+                            height=0.5\textheight
                         }
                         \begin{axis}[
                             xlabel={Start temperature},
@@ -13,62 +13,62 @@
                         ]
                         
                             \addplot [mark=none, ultra thick, red]  coordinates {
-                            (35, 12.349036139580683)(45, 13.232851018499906)(50, 13.702025277928815)(55, 13.893958214467395)(60, 13.724888590368485)(65, 14.028207569875589)
+                            (35, 12.454305913583585)(45, 13.33812079250281)(50, 13.807295051931721)(55, 13.999227988470302)(60, 13.830158364371393)(65, 14.133477343878498)
                             };
                             \addlegendentry{Surface4Pro - IntelPowerGadget}
                             
                             \addplot [mark=none, ultra thick, blue]  coordinates {
-                            (35, 11.898489489730759)(50, 12.204005000842258)(55, 12.521009915791344)(60, 12.620772107864836)(65, 12.572574491815072)
+                            (35, 11.932915888199908)(50, 12.238431399311406)(55, 12.555436314260495)(60, 12.655198506333985)(65, 12.607000890284217)
                             };
                             \addlegendentry{Surface4Pro - HardwareMonitor}
                             
                             \addplot [mark=none, ultra thick, orange]  coordinates {
-                            (35, 7.088323317685678)(45, 7.21876688140914)(50, 7.283166644450399)(55, 7.298122997667807)(60, 7.264609079071822)
+                            (35, 7.089465183180687)(45, 7.219908746904149)(50, 7.284308509945409)(55, 7.299264863162815)(60, 7.265750944566831)
                             };
                             \addlegendentry{Surface4Pro - RAPL}
                             
                             \addplot [mark=none, dashdotted, red]  coordinates {
-                            (30, 8.210453241698566)(35, 7.9137614054613294)(40, 7.949186404971443)(45, 7.9445954715360125)(50, 8.090579015196333)
+                            (30, 8.211825959210898)(35, 7.915134122973661)(40, 7.9505591224837735)(45, 7.945968189048346)(50, 8.091951732708663)
                             };
                             \addlegendentry{SurfaceBook - IntelPowerGadget}
                             
                             \addplot [mark=none, dashdotted, blue]  coordinates {
-                            (30, 7.947844962356327)(35, 7.824243053163064)(40, 7.755880527149742)(45, 7.77049413990823)(50, 7.561243605500465)
+                            (30, 7.949345383298085)(35, 7.825743474104822)(40, 7.757380948091498)(45, 7.771994560849989)(50, 7.562744026442223)
                             };
                             \addlegendentry{SurfaceBook - HardwareMonitor}
                             
                             \addplot [mark=none, dashdotted, orange]  coordinates {
-                            (35, 5.199019941849548)(45, 5.227527950764098)(50, 5.184960187798514)(55, 5.183422820984068)(60, 5.187757665275914)(65, 5.131526187694835)
+                            (35, 5.1985557043156145)(45, 5.227063713230164)(50, 5.184495950264579)(55, 5.182958583450135)(60, 5.187293427741981)(65, 5.131061950160901)
                             };
                             \addlegendentry{SurfaceBook - RAPL}
                             
                             \addplot [mark=none, densely dashed, red]  coordinates {
-                            (25, 54.916337016307416)(30, 55.28069036055826)(35, 56.732798813100565)(40, 56.973266028927014)
+                            (25, 55.94571910569192)(30, 56.31007244994276)(35, 57.76218090248509)(40, 58.00264811831153)
                             };
                             \addlegendentry{workstation - IntelPowerGadget}
                             
                             \addplot [mark=none, densely dashed, blue]  coordinates {
-                            (30, 58.39222367166389)(35, 58.2826392723951)(40, 57.91227000811998)
+                            (30, 58.67843297342976)(35, 58.56884857416096)(40, 58.19847930988585)
                             };
                             \addlegendentry{workstation - HardwareMonitor}
                             
                             \addplot [mark=none, densely dashed, cyan]  coordinates {
-                            (25, 47.685453505413676)(30, 61.250961079709825)(35, 42.32340299943458)(40, 58.95391317563249)
+                            (25, 50.721864968314364)(30, 64.28737254261048)(35, 45.35981446233524)(40, 61.99032463853315)
                             };
                             \addlegendentry{workstation - Clamp (win)}
                             
                             \addplot [mark=none, densely dashed, orange]  coordinates {
-                            (30, 50.829180396931505)(35, 50.91395305367661)(45, 51.03603186765753)
+                            (30, 50.87263837936731)(35, 50.95741103611241)(45, 51.07948985009333)
                             };
                             \addlegendentry{workstation - RAPL}
                             
                             \addplot [mark=none, densely dashed, black]  coordinates {
-                            (30, 49.51063836253121)(35, 44.30420161864432)
+                            (30, 49.48664087792981)(35, 44.28020413404292)
                             };
                             \addlegendentry{workstation - Clamp (lin)}
                             
                         \end{axis}
                     \end{tikzpicture} 
-                \caption{A graph illustrating the energy consumption of Cores for test case FannkuchRedux with regards to the temperature of the DUT (without outliers)} \label{fig:FannkuchRedux_Cores}
+                \caption{A graph illustrating the energy consumption of Cores for test case FannkuchRedux with regards to the temperature of the DUT (without outliers)} \label{fig:FannkuchRedux_Cores_temperature}
                 \end{figure}
                 

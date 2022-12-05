@@ -1,0 +1,52 @@
+
+                        \begin{figure}[H]
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.8\textwidth,
+                                    height=0.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy (Watts)}, title={Surface4Pro - RAPL}, ytick={1, 2, 3, 4},
+                                yticklabels={
+                                    BinaryTrees - RAPL, FannkuchRedux - RAPL, Nbody - RAPL, Fasta - RAPL
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=7.858033177829578,
+                                    lower quartile=8.011803212714302,
+                                    median=8.038089888161155,
+                                    upper quartile=8.056690576121223,
+                                    upper whisker=8.115861432750386},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=7.081284344273498,
+                                    lower quartile=7.25932213458003,
+                                    median=7.268345833910208,
+                                    upper quartile=7.282195475620339,
+                                    upper whisker=7.348270629929178},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=6.641960335975798,
+                                    lower quartile=6.8776191840397445,
+                                    median=6.89432386915283,
+                                    upper quartile=6.919362600836241,
+                                    upper whisker=6.961499943457061},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=7.603310974042725,
+                                    lower quartile=7.803889771905617,
+                                    median=7.822741402259932,
+                                    upper quartile=7.833541089196073,
+                                    upper whisker=7.8779452706749025},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{R3 validation for energy measurements by RAPL for the Cores for all DUT's on Unix and test cases where the impact of the first profiler can be seen (with outliers)} \label{fig:Fasta_Cores_R3_energy_with_outliers_Unix_avg_watts}
+                        \end{figure}
+                        

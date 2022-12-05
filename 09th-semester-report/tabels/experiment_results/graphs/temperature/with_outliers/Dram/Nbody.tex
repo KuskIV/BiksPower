@@ -4,7 +4,7 @@
                     \begin{tikzpicture}
                         \pgfplotsset{%
                             width=1\textwidth,
-                            height=1\textheight
+                            height=0.5\textheight
                         }
                         \begin{axis}[
                             xlabel={Start temperature},
@@ -13,42 +13,42 @@
                         ]
                         
                             \addplot [mark=none, ultra thick, red]  coordinates {
-                            (35, 0.00661880289746114)(45, 0.004612190732182053)(50, 0.005453724969707855)(55, 0.0066917042555015615)(60, 0.007882866267323319)
+                            (35, 0.007236148022228273)(45, 0.005229535856949186)(50, 0.006071070094474987)(55, 0.007309049380268696)(60, 0.008500211392090451)
                             };
                             \addlegendentry{Surface4Pro - IntelPowerGadget}
                             
                             \addplot [mark=none, ultra thick, blue]  coordinates {
-                            (35, -0.007337508382667983)(50, -0.00021695156134511398)(55, 0.00240138342170097)(60, 0.003855257182898327)
+                            (35, -0.007281045344768681)(50, -0.00016048852344581257)(55, 0.0024578464596002715)(60, 0.003911720220797628)
                             };
                             \addlegendentry{Surface4Pro - HardwareMonitor}
                             
                             \addplot [mark=none, ultra thick, orange]  coordinates {
-                            (35, -59.70274226041511)(40, -50.67207718136457)(45, -44.81897573925217)(50, -27.262016824598213)(55, 49.350780344645784)(60, 195.67452142763238)
+                            (35, -60.61103337194392)(40, -51.58036829289338)(45, -45.727266850780985)(50, -28.17030793612702)(55, 48.44248923311698)(60, 194.76623031610345)
                             };
                             \addlegendentry{Surface4Pro - RAPL}
                             
                             \addplot [mark=none, dashdotted, red]  coordinates {
-                            (30, -0.0008816872294829248)(35, -0.003742766666186844)
+                            (30, -0.0008454203526027382)(35, -0.0037064997893066576)
                             };
                             \addlegendentry{SurfaceBook - IntelPowerGadget}
                             
                             \addplot [mark=none, dashdotted, blue]  coordinates {
-                            (30, -0.00378158780538916)(35, -0.002441192443728772)(40, 0.0012465501573467042)
+                            (30, -0.0035664180846407397)(35, -0.0022260227229803516)(40, 0.0014617198780951246)
                             };
                             \addlegendentry{SurfaceBook - HardwareMonitor}
                             
                             \addplot [mark=none, dashdotted, orange]  coordinates {
-                            (30, -37.349416185239505)(35, -36.325225003219)(45, -28.504509703817966)(50, -18.007617887281683)(55, -0.7125093096853993)(60, 48.51951820133967)(65, 93.90114228799978)
+                            (30, -37.71511524676343)(35, -36.69092406474293)(45, -28.87020876534189)(50, -18.37331694880561)(55, -1.0782083712093256)(60, 48.15381913981573)(65, 93.53544322647588)
                             };
                             \addlegendentry{SurfaceBook - RAPL}
                             
                             \addplot [mark=none, densely dashed, red]  coordinates {
-                            (25, -0.0034263049433614426)(30, -0.001988997330021988)(35, -0.002677133204126436)
+                            (25, -0.0011413521316472955)(30, 0.0002959554816921589)(35, -0.0003921803924122891)
                             };
                             \addlegendentry{workstation - IntelPowerGadget}
                             
                             \addplot [mark=none, densely dashed, blue]  coordinates {
-                            (25, 0.002841604478675911)(30, 0.0004292722849291913)(35, 0.00091490674175949)(40, 0.0009147301577194048)
+                            (25, 0.003179299625303315)(30, 0.000766967431556595)(35, 0.0012526018883868937)(40, 0.0012524253043468085)
                             };
                             \addlegendentry{workstation - HardwareMonitor}
                             
@@ -58,7 +58,7 @@
                             \addlegendentry{workstation - Clamp (win)}
                             
                             \addplot [mark=none, densely dashed, orange]  coordinates {
-                            (25, 846.1745897186809)(30, 826.8297380973986)
+                            (25, 844.4287461427737)(30, 825.0838945214914)
                             };
                             \addlegendentry{workstation - RAPL}
                             
@@ -69,6 +69,6 @@
                             
                         \end{axis}
                     \end{tikzpicture} 
-                \caption{A graph illustrating the energy consumption of Dram for test case Nbody with regards to the temperature of the DUT (with outliers)} \label{fig:Nbody_Dram}
+                \caption{A graph illustrating the energy consumption of Dram for test case Nbody with regards to the temperature of the DUT (with outliers)} \label{fig:Nbody_Dram_temperature}
                 \end{figure}
                 
