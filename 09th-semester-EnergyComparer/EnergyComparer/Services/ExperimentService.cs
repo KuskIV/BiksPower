@@ -140,14 +140,14 @@ namespace EnergyComparer.Services
                 }
 
                 //output = p.StandardOutput.ReadLine();
-
-                p.WaitForExit();
-
                 if (energyProfiler.GetName() == EWindowsProfilers.E3.ToString())
                 {
                     energyProfiler.Stop(DateTime.MinValue);
                     Console.WriteLine("early stop");
                 }
+
+                p.WaitForExit();
+
             }
 
             //var counter = 0;

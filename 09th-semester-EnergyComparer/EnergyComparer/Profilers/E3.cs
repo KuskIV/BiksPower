@@ -57,10 +57,10 @@ namespace EnergyComparer.Profilers
             PrevMeasure = await WaitForBlock();
             return true;
         }
-        public async Task WaitForStop() 
+        public async Task<bool> WaitForStop() 
         {
             _ = await WaitForBlock();
-            //Stop();
+            return true;
         }
 
         private async Task<DateTime> WaitForBlock() 
@@ -97,7 +97,7 @@ namespace EnergyComparer.Profilers
 
         public void Stop(DateTime stopTime)
         {
-            _ = WaitForStop();
+            _ = WaitForStop().Result;
             CollectLogs();
         }
 
