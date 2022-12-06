@@ -1,0 +1,17 @@
+\section{Iterations}
+
+It is now time to take a look at how the performance of the different DUT's change over time. This will be done by plotting the average dynamic energy consumption for the each time a test case is executed after the DUT is restarted.
+
+\subsection{Expectations}
+
+When considering what is expected from this experiment, it would be a slight increased performance when the DUT has been running for a longer time. The expected result of this increased energy consumption would be the background processes. 
+
+\subsection{Results} 
+
+When considering the results, a graph exists for each of the test cases, where two of them can be seen in \cref*{fig:FannkuchRedux_Cores_iteration} and \cref*{fig:Nbody_Cores_iteration}, and the others can be found in \cref{app:iterations}. The first thing to consider on these graphs, is a few overall comments. It can first of all be noted some of the DUT's has no values on some of the higher x-values. This is the case for both DUT's with a battery, meaning they reach the lower limit of 40\% before executing the test cases 30 times. It can also be seen how the energy consumption does not increase over time, which was expected. This means the impact of background processes is smaller than exepcted, which also was found to be the case when considering the impact of R3 validation in \cref{subsec:exp_r3}.  Next up, the different DUT's will be covered one at a time.
+
+\paragraph{Workstation:} The workstation is for all cases in \cref*{fig:FannkuchRedux_Cores_iteration}, \cref*{fig:Fasta_Cores_iteration}, \cref*{fig:NBody_Cores_iteration} and \cref*{fig:BinaryTrees_Cores_iteration} the DUT with the highest energy consumption, which is according to our expectation. This DUT is the only one with Clamp measurements, where this measurement type seems to be the one which deviates the most, which is most likely due to the impact of the energy consumption of the different components within the DUT. For this, the other instruments only measure the energy consumption of the CPU. When comparing the Clamp w.r.t. the operating system, windows overall seem to have the higher energy consumption, as can be observed in \cref*{fig:BinaryTrees_Cores_iteration}. When looking at the different software based measurement instruments, Intel Power Gadget and HardwareMonitor are very close when measuring the energy consumption, with RAPL measuring a lower energy consumption, in all cases except NBody where RAPL records a higher energy consumption in \cref*{fig:NBody_Cores_iteration}. When comparing hardware and software measuring instruments, they are in some cases very similar, as in \cref*{fig:NBody_Cores_iteration}, but vary more in other cases like in \cref*{fig:BinaryTrees_Cores_iteration}.
+
+\paragraph{Surface Book:} When considering the Surface Book, it has the lowest energy consumption in al cases, except when comparing the RAPL measurement for the Surface Pro 4 with the Intel Power Gadget measurements in \cref*{fig:FannkuchRedux_Cores_iteration}. Intel Power Gadget and HardwareMonitor are in all cases except for Nbody in \cref*{fig:NBody_Cores_iteration} close to the same measurement. When considering RAPL, it measures a higher energy consumption compared to Intel Power Gadget and HardwareMonitor for ...
+% \input{tabels/experiment_results/graphs/iteration/without_outliers/Cores/FannkuchRedux.tex}
+% \input{tabels/experiment_results/graphs/iteration/without_outliers/Cores/Nbody.tex}
