@@ -17,12 +17,12 @@ using System.Data.Common;
 using TestClient.Fixers;
 
 
-HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
-await Task.Delay(1000 * 60);
-HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
-await HardwareMeasurementHandler.GetHardwareState();
+//HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
+//await Task.Delay(1000 * 60);
+//HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+//await HardwareMeasurementHandler.GetHardwareState();
 
-await HardwareMeasurementHandler.GetResults();
+//await HardwareMeasurementHandler.GetResults();
 //ClampFixer ClampFixer = new ClampFixer();
 //ClampFixer.InitializeDatabase();
 //await ClampFixer.GetTimeseries();
@@ -37,12 +37,10 @@ await HardwareMeasurementHandler.GetResults();
 
 //var data = intel.ParseData("C:\\Users\\Mads Kusk\\Documents\\09-experiment-data\\IntelPowerGadget\\2022-10-17-09-30-24.csv", 1, DateTime.UtcNow);
 
-//var e3 = new E3();
-//await e3.WaitForStart(DateTime.UtcNow);
-//await e3.WaitForStop();
-//e3.Start(DateTime.UtcNow);
-//await Task.Delay(10000 * 6);
-//e3.Stop();
+var e3 = new E3();
+e3.Start(DateTime.UtcNow);
+await Task.Delay(10000);
+e3.Stop(DateTime.UtcNow);
 
 //E3Experiments E3Ex = new();
 ////await E3Ex.Experiment1("Ex1",90);
