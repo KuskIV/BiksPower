@@ -1,3 +1,44 @@
-\section{Experiment}
+\section{Experiment \#1}\label{sec:experiment_one}
 
-%% all temperature measurements are made on openhardwaremonitor to be consistent.
+Following the initial experiments presented in \cref{sec:initial_experiments} the experiments can be conducted. This will be done based on the findings of \cref{sec:initial_experiments}, which were as following:
+
+\begin{itemize}
+    \item E3:
+    \begin{itemize}
+        \item E3 sample once per minute, one measurement will therefore be based on one minute
+        \item Each process can appear multiple times during that minute, but in different states. If this is the case, the energy consumption of the different states will be summed.
+        \item If one process executed in parallel, E3 would not be able to differentiate between them
+    \end{itemize}
+    \item Energy Consumption:
+    \begin{itemize}
+        \item Workstation: 
+        \begin{itemize}
+            \item CPU between $10.0$ and $65.0$ watt
+            \item RAM between $1.5$ and $2.25$ watt
+        \end{itemize}
+        \item Surface Book: 
+        \begin{itemize}
+            \item CPU between $7.5$ and $14.0$ watt
+            \item RAM between $2,9$ and $2.5$ watt
+        \end{itemize}
+        \item Surface Pro 4: 
+        \begin{itemize}
+            \item CPU between $9.5$ and $15.0$ watt
+            \item RAM between $2.0$ and $2.5$ watt
+        \end{itemize}
+        \item Scripts:
+        \begin{itemize}
+            \item Script to ensure the framework is running
+            \item Script to start the framework after a restart
+        \end{itemize}
+        \item R3 validation: Will not be used
+        \item Temperature: There will be no upper limit
+        \item Battery level: Between 40 and 80\%
+        \item Cochrans: One measurement is enough
+    \end{itemize}
+\end{itemize}
+
+For the initial experiments, the experiments were made with $120$ measurements for each unique test case measurement. This was done with the hope of getting a wide variaty of temperatures, battery levels and in order to calculate the Cochrans score. Based on what has been found so fra, no additional measurements are required and no new requirements has been found which would require any changes to the current state of the framework.
+
+\paragraph*{}
+The next step is thus to present and analyze the data in more depth, from this experiment, which will be done in \cref{ch:results}. Based on observations, one additional experiment will however be conducted, as will be covered in \cref*{sec:experiment_two}.
