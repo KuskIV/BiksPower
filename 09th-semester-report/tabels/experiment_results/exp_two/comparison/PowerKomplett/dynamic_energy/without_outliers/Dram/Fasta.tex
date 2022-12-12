@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Fasta - Dynamic Energy - without outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.01726580539228073,
+                                    lower quartile=0.017468004163989942,
+                                    median=0.01952338025133321,
+                                    upper quartile=0.02109896758056526,
+                                    upper whisker=0.028154434182311228},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.015007016388465244,
+                                    lower quartile=0.017973916304123594,
+                                    median=0.02469004738634817,
+                                    upper quartile=0.028626628427707468,
+                                    upper whisker=0.07812222433105764},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Fasta for the workstation (without outliers)} \label{fig:Fasta_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

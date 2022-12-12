@@ -1,0 +1,29 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start temperature},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=100,
+                        ]
+                        
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (35, 0.006602504806741948)(40, 0.010762547681520029)
+                            };
+                            \addlegendentry{workstation - IntelPowerGadget}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (40, 0.002953569965617813)(45, 0.0037503468662754744)(50, 0.0017531145514974034)
+                            };
+                            \addlegendentry{workstation - HardwareMonitor}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case Nbody with regards to the temperature of the DUT (without outliers)} \label{fig:Nbody_Dram_temperature_exp2}
+                \end{figure}
+                

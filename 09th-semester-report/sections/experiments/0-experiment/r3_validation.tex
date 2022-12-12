@@ -3,7 +3,7 @@
 In this work, an adapted version of R3 validation is used, based on the work by Bokhari et al.\cite[]{Bokhari2020r3}. The data presented in this chapter is only based on three measuring instruments, as some problems occurred while measuring using both E3 and the Clamp. When looking at the results for the different DUTs, similar observations can be made, which is why the results for only the workstation can be observed in \cref{fig:PowerKomplett_HardwareMonitor_Cores_R3_dynamic_energy_without_outliers_Win32NT_avg_watts}. The results for the other DUT's can be found in \cref{app:r3_validation}. 
 
 
-\input{tabels/experiment_results/R3/dynamic_energy/PowerKomplett/Win32NT/without_outliers/Cores/HardwareMonitor.tex}
+\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/without_outliers/Cores/HardwareMonitor.tex}
 
 \paragraph{Expectations:} R3 validation was chosen in this work, because Bokhari et al.\cite[]{Bokhari2020r3} observed the order of which the test cases were executed in, mattered. This was argued to be the case because the state of the DUT changed over time, where different background processes executed at different times and would use different amount of processor power. This could evoke garbage collection, which would impact the measured energy consumption. Because of this, it was deemed unfair to execute the test cases in the same order, which resulted in the R3 way of switching the order upon a restart. The work by Bokhari et al. was however done on an android phone, where our work is on Windows and Linux, where less background processes are expected to interfere with the results. Because of this, the impact of R3 is expected to be limited.
 

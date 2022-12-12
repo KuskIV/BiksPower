@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - BinaryTrees - Dynamic Energy - with outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=49.279955454534075,
+                                    lower quartile=49.51183983816868,
+                                    median=49.78782355933117,
+                                    upper quartile=50.26274449544755,
+                                    upper whisker=50.7557136355654},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=49.00361809139487,
+                                    lower quartile=49.6778543690713,
+                                    median=49.97674854361759,
+                                    upper quartile=50.13902890808102,
+                                    upper whisker=51.33383700310924},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case BinaryTrees for the workstation (with outliers)} \label{fig:BinaryTrees_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

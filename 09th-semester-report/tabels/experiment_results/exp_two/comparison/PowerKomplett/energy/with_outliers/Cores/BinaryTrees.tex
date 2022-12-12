@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - with outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=75.2711092246746,
+                                    lower quartile=75.50299360830921,
+                                    median=75.7789773294717,
+                                    upper quartile=76.25389826558808,
+                                    upper whisker=76.74686740570593},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=72.59277285969208,
+                                    lower quartile=73.2670091373685,
+                                    median=73.5659033119148,
+                                    upper quartile=73.72818367637822,
+                                    upper whisker=74.92299177140644},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores energy consumption for test case BinaryTrees for the workstation (with outliers)} \label{fig:BinaryTrees_Cores_comparison_energy_with_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

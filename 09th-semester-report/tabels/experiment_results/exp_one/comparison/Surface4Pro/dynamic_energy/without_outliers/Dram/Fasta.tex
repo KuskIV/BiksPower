@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.1037652883079272,
+                                    lower quartile=0.11535229956499182,
+                                    median=0.11818449461557928,
+                                    upper quartile=0.12241457915905987,
+                                    upper whisker=0.14670616946966863},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.08631841751370162,
+                                    lower quartile=0.10203057221368828,
+                                    median=0.10550367279483475,
+                                    upper quartile=0.1096391009602149,
+                                    upper whisker=0.14733412388509304},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-58.37666493161601,
+                                    lower quartile=24.510715121086818,
+                                    median=113.55202278487712,
+                                    upper quartile=200.92949556473178,
+                                    upper whisker=285.6374937514482},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Fasta for the Surface4Pro (without outliers)} \label{fig:Fasta_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

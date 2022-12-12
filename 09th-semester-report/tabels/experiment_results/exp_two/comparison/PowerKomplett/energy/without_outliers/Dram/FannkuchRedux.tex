@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.7648208892941595,
+                                    lower quartile=0.7698829961516469,
+                                    median=0.7747236532844155,
+                                    upper quartile=0.7771924848330656,
+                                    upper whisker=0.8295321439143828},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.7633415640722911,
+                                    lower quartile=0.7686623461428851,
+                                    median=0.7713517612576667,
+                                    upper quartile=0.7750232566168644,
+                                    upper whisker=0.8124074884326415},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the workstation (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

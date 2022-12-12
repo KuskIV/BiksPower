@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - BinaryTrees - Dynamic Energy - with outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=10,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=2.2635851383939376,
+                                    lower quartile=2.6669675047715176,
+                                    median=3.083839852547502,
+                                    upper quartile=4.360332932207584,
+                                    upper whisker=6.174937540138209},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=1.3654690702402312,
+                                    lower quartile=2.5230150530404427,
+                                    median=3.3459894605096423,
+                                    upper quartile=4.425318072277559,
+                                    upper whisker=6.272269550794949},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=4.828990409238446,
+                                    lower quartile=4.964541891753839,
+                                    median=5.116938323843005,
+                                    upper quartile=5.29025054639263,
+                                    upper whisker=5.625751617985332},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case BinaryTrees for the SurfaceBook (with outliers)} \label{fig:BinaryTrees_Cores_comparison_dynamic_energy_with_outliers_SurfaceBook_avg_watts}
+                            \end{figure}
+                            

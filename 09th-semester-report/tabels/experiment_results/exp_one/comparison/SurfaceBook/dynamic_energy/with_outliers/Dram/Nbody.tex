@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - with outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=10,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.006671230445684961,
+                                    lower quartile=-0.005041766661362773,
+                                    median=-0.0039808096670223,
+                                    upper quartile=-0.002699170695798503,
+                                    upper whisker=0.0075794094875138995},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.007073090477366317,
+                                    lower quartile=-0.0064508642872079525,
+                                    median=-0.004653428506472879,
+                                    upper quartile=-0.0032690533475409622,
+                                    upper whisker=0.0167976863632191},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-37.715090011488485,
+                                    lower quartile=-4.954561755445813,
+                                    median=33.893224834134706,
+                                    upper quartile=72.85268091263868,
+                                    upper whisker=113.30818531056082},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Nbody for the SurfaceBook (with outliers)} \label{fig:Nbody_Dram_comparison_dynamic_energy_with_outliers_SurfaceBook_avg_watts}
+                            \end{figure}
+                            

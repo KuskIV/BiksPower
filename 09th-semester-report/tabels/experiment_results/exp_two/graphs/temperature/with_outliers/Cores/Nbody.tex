@@ -1,0 +1,29 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start temperature},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=100,
+                        ]
+                        
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (35, 18.18590732616388)(40, 18.369287564448882)(50, 48.31343436330823)
+                            };
+                            \addlegendentry{workstation - IntelPowerGadget}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (35, 20.642332634007122)(40, 17.935803438153563)(45, 18.02230916993157)(50, 18.50229206962415)
+                            };
+                            \addlegendentry{workstation - HardwareMonitor}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Cores for test case Nbody with regards to the temperature of the DUT (with outliers)} \label{fig:Nbody_Cores_temperature_exp2}
+                \end{figure}
+                

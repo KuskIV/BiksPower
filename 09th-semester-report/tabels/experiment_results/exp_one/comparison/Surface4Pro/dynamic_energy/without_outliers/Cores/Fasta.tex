@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.356853803168196,
+                                    lower quartile=8.859106987023315,
+                                    median=9.010768828500439,
+                                    upper quartile=9.208153986422733,
+                                    upper whisker=9.74059419770444},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.279142219193341,
+                                    lower quartile=8.73523078232185,
+                                    median=8.85474108302506,
+                                    upper quartile=9.043350095550533,
+                                    upper whisker=9.311094841693164},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=7.603310974042725,
+                                    lower quartile=7.803889771905617,
+                                    median=7.822741402259932,
+                                    upper quartile=7.833541089196073,
+                                    upper whisker=7.8779452706749025},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case Fasta for the Surface4Pro (without outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

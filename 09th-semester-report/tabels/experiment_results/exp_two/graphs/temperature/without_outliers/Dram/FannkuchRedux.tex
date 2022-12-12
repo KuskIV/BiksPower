@@ -1,0 +1,29 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start temperature},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=100,
+                        ]
+                        
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (35, 0.24980191368429483)(40, 0.20675425644219458)(45, 0.19230246740529564)
+                            };
+                            \addlegendentry{workstation - IntelPowerGadget}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (40, 0.20716993512336848)(45, 0.19348733606013893)(60, 0.1965026852801608)
+                            };
+                            \addlegendentry{workstation - HardwareMonitor}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case FannkuchRedux with regards to the temperature of the DUT (without outliers)} \label{fig:FannkuchRedux_Dram_temperature_exp2}
+                \end{figure}
+                

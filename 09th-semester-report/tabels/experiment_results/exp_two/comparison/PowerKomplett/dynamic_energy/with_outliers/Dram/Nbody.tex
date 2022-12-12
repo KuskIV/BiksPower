@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - with outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0005947713962708434,
+                                    lower quartile=0.0009086883420265646,
+                                    median=0.0013679036079213835,
+                                    upper quartile=0.009057195909057847,
+                                    upper whisker=0.07987715183184951},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0007939641006449172,
+                                    lower quartile=0.0011733589757778606,
+                                    median=0.0017119424419494988,
+                                    upper quartile=0.006872712587027874,
+                                    upper whisker=0.04354655146755004},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Nbody for the workstation (with outliers)} \label{fig:Nbody_Dram_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

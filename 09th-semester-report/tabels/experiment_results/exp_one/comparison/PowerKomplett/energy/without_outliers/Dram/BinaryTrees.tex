@@ -1,0 +1,60 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - BinaryTrees - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.6340883922859034,
+                                    lower quartile=0.6460088454063434,
+                                    median=0.6534872699230763,
+                                    upper quartile=0.6625072296043609,
+                                    upper whisker=0.6906208139154244},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.6250774828334291,
+                                    lower quartile=0.639713879856104,
+                                    median=0.6468078860329827,
+                                    upper quartile=0.6536033520912408,
+                                    upper whisker=0.7225935923195874},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=72.15577796942317,
+                                    lower quartile=927.1691250071984,
+                                    median=1759.8405011839357,
+                                    upper quartile=2630.770501153518,
+                                    upper whisker=3450.1442255781494},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case BinaryTrees for the workstation (without outliers)} \label{fig:BinaryTrees_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
+                            \end{figure}
+                            

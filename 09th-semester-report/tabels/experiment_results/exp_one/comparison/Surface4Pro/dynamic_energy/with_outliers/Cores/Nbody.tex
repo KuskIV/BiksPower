@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Nbody - Dynamic Energy - with outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.643994382456427,
+                                    lower quartile=9.018456207493987,
+                                    median=9.076271842102395,
+                                    upper quartile=9.22384390808987,
+                                    upper whisker=9.628753660464337},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.709118427912667,
+                                    lower quartile=9.112696893816207,
+                                    median=9.189468660466687,
+                                    upper quartile=9.285569112195116,
+                                    upper whisker=9.387300430135976},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=6.641947735713999,
+                                    lower quartile=6.877775072984793,
+                                    median=6.893920117716332,
+                                    upper quartile=6.9195601191209395,
+                                    upper whisker=6.961486986056854},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case Nbody for the Surface4Pro (with outliers)} \label{fig:Nbody_Cores_comparison_dynamic_energy_with_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

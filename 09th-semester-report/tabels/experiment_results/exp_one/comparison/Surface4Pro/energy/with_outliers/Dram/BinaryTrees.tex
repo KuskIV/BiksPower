@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - BinaryTrees - Energy - with outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.4885853031104899,
+                                    lower quartile=0.5605405991577217,
+                                    median=0.6327936489254244,
+                                    upper quartile=0.7092930878834134,
+                                    upper whisker=0.8171193061251457},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.47443580721387535,
+                                    lower quartile=0.6259712525372916,
+                                    median=0.6900410107677806,
+                                    upper quartile=0.7280605945328563,
+                                    upper whisker=0.8385932002256871},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=3.8769195729972017,
+                                    lower quartile=87.43299410765006,
+                                    median=175.40563107685452,
+                                    upper quartile=261.37427972527814,
+                                    upper whisker=346.8625339450292},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case BinaryTrees for the Surface4Pro (with outliers)} \label{fig:BinaryTrees_Dram_comparison_energy_with_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

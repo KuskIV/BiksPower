@@ -1,0 +1,84 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.6\textwidth,
+                                    height=0.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy (Watts)}, title={Surface4Pro - HardwareMonitor}, ytick={1, 2, 3, 4, 5, 6, 7, 8},
+                                yticklabels={
+                                    BinaryTrees - IntelPowerGadget, BinaryTrees - HardwareMonitor, FannkuchRedux - IntelPowerGadget, FannkuchRedux - HardwareMonitor, Nbody - IntelPowerGadget, Nbody - HardwareMonitor, Fasta - IntelPowerGadget, Fasta - HardwareMonitor
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.668476941995676,
+                                    lower quartile=11.84919994927866,
+                                    median=12.001868765215796,
+                                    upper quartile=12.201495959009964,
+                                    upper whisker=12.643882115104434},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.388783220279507,
+                                    lower quartile=11.871302744434551,
+                                    median=12.049307671117978,
+                                    upper quartile=12.160387181157919,
+                                    upper whisker=12.733616223196417},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=12.023432318496441,
+                                    lower quartile=12.378696665305036,
+                                    median=12.571688561784088,
+                                    upper quartile=12.757111421942824,
+                                    upper whisker=13.117205886469979},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.805431945637787,
+                                    lower quartile=12.400592200392893,
+                                    median=12.710494730119427,
+                                    upper quartile=12.974643768042544,
+                                    upper whisker=13.12059687907726},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.98325731876268,
+                                    lower quartile=9.094313809904154,
+                                    median=9.159650886797657,
+                                    upper quartile=9.265169478524399,
+                                    upper whisker=9.36804757101107},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.70852769648707,
+                                    lower quartile=9.119373433509764,
+                                    median=9.201325417475209,
+                                    upper quartile=9.299943140040721,
+                                    upper whisker=9.386665910067286},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.575189607595762,
+                                    lower quartile=8.786845299509624,
+                                    median=8.856692825865654,
+                                    upper quartile=8.965072230995675,
+                                    upper whisker=9.313014699889814},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.27650316423301,
+                                    lower quartile=8.717825002837017,
+                                    median=8.867079128255014,
+                                    upper quartile=9.07174813218868,
+                                    upper whisker=9.30814343850147},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{R3 validation for energy measurements by HardwareMonitor for the Cores for all DUT's on Win32NT and test cases where the impact of the first profiler can be seen (without outliers)} \label{fig:Surface4Pro_HardwareMonitor_Cores_R3_energy_without_outliers_Win32NT_avg_watts}
+                        \end{figure}
+                        

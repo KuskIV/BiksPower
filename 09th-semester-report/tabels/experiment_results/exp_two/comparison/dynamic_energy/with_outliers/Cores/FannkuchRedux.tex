@@ -1,0 +1,36 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - with outliers}, ytick={1, 2},
+                                yticklabels={
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=39.13302413793164,
+                                lower quartile=39.65528622644183,
+                                median=39.8891134714588,
+                                upper quartile=41.65440102470683,
+                                upper whisker=66.12230684434647},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=39.19629795553155,
+                                lower quartile=40.132773696988934,
+                                median=40.80250786316242,
+                                upper quartile=41.16245647275235,
+                                upper whisker=42.17314023125945},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Cores dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_with_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

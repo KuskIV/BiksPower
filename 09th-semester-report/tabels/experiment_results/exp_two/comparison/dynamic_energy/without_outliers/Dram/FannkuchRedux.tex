@@ -1,0 +1,36 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2},
+                                yticklabels={
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.18558248160513224,
+                                lower quartile=0.1906445884626196,
+                                median=0.19548524559538827,
+                                upper quartile=0.19795407714403834,
+                                upper whisker=0.25029373622535556},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.18578122460028412,
+                                lower quartile=0.19110200667087807,
+                                median=0.19379142178565967,
+                                upper quartile=0.19746291714485736,
+                                upper whisker=0.23484714896063452},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Dram dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_dynamic_energy_without_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

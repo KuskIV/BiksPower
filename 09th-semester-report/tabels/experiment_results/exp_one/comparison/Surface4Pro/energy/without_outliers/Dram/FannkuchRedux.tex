@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.4987701318290087,
+                                    lower quartile=0.5201298210473831,
+                                    median=0.5748144996387781,
+                                    upper quartile=0.6064468574775675,
+                                    upper whisker=0.6475496331002977},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.48229639229430876,
+                                    lower quartile=0.5037561170740252,
+                                    median=0.5323334807409469,
+                                    upper quartile=0.5778766057375946,
+                                    upper whisker=0.6285046753384576},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=2.578778067743218,
+                                    lower quartile=91.81266533744872,
+                                    median=170.475900655629,
+                                    upper quartile=250.79272615300465,
+                                    upper whisker=339.0003066997405},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the Surface4Pro (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

@@ -1,0 +1,36 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - with outliers}, ytick={1, 2},
+                                yticklabels={
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.76483222500491,
+                                lower quartile=0.770453145059903,
+                                median=0.7747554668350334,
+                                upper quartile=0.7778432424515122,
+                                upper whisker=0.8583347610482386},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.7633415640722911,
+                                lower quartile=0.7686623461428851,
+                                median=0.7713517612576667,
+                                upper quartile=0.7750232566168644,
+                                upper whisker=0.8124074884326415},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for all DUT's and OS's (with outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_with_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - without outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.5798273881851624,
+                                    lower quartile=0.5801159095827022,
+                                    median=0.5804404930339399,
+                                    upper quartile=0.5863289528438503,
+                                    upper whisker=0.6220105864141019},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.578384399096336,
+                                    lower quartile=0.5786980535077395,
+                                    median=0.5792691239911968,
+                                    upper quartile=0.5820649904324364,
+                                    upper whisker=0.5867513120652417},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case Nbody for the workstation (without outliers)} \label{fig:Nbody_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

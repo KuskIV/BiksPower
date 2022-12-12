@@ -1,0 +1,36 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Fasta - Energy - with outliers}, ytick={1, 2},
+                                yticklabels={
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.5964816167866952,
+                                lower quartile=0.5966878736102068,
+                                median=0.5987553523257464,
+                                upper quartile=0.6006552421704029,
+                                upper whisker=0.653799757168665},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.5925670675415544,
+                                lower quartile=0.595574649699757,
+                                median=0.6022707359135546,
+                                upper quartile=0.6064200201997302,
+                                upper whisker=0.655682244774881},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Dram energy consumption for test case Fasta for all DUT's and OS's (with outliers)} \label{fig:Fasta_Dram_comparison_energy_with_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

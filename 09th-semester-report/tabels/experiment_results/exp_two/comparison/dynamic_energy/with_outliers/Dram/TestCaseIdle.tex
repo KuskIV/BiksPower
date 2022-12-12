@@ -1,0 +1,36 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - TestCaseIdle - Dynamic Energy - with outliers}, ytick={1, 2},
+                                yticklabels={
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.001032892115687134,
+                                lower quartile=-0.0007733788241687523,
+                                median=-0.000646927722459445,
+                                upper quartile=1.4089555774837725e-05,
+                                upper whisker=0.04193759952996101},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=-0.0008386442765190294,
+                                lower quartile=-0.0007476398737907841,
+                                median=-0.0005125564986611097,
+                                upper quartile=0.0002353843543423384,
+                                upper whisker=0.006856769806507845},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Dram dynamic energy consumption for test case TestCaseIdle for all DUT's and OS's (with outliers)} \label{fig:TestCaseIdle_Dram_comparison_dynamic_energy_with_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

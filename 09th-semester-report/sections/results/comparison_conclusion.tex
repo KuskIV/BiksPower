@@ -1,0 +1,12 @@
+\section{Comparison Conclusion}
+
+Based on the comparison of this first experiment, it is difficult to find a clear conclusion. This is because patterns across the different DUT's are difficult to find, and the lack of consistency across the DUT's. Some things are however clear:
+
+\begin{itemize}
+    \item Intel Power Gadget and LHM are in most cases similar. This could be due to both measurement instruments measuring in a similar way.
+    \item The clamp measurements deviates the most, especially on windows. This could be due to the OS having more background processes, or us not disabeling enough. Linux still has outliers, but most measurements are within the 25th and 75th percentile.
+    \item RAPL measurements deviates very limited compared to the other measurement instruments, and generally measures too high values.
+\end{itemize}
+
+When considering the different measurement instruments, no consistent pattern could be found when considering which measurement instrument would measure the highest, second highest and lowest measurements. This could be due to the different target the test case focuses on, as was presented in \cref{tab:benchmarks}, where some of the measurement instruments might measure certain operations or certain loads better. We were however unable to find such patterns.
+

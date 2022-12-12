@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - BinaryTrees - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.0016382853127328012,
+                                    lower quartile=0.06604092139108653,
+                                    median=0.14257109369074766,
+                                    upper quartile=0.21907108073313253,
+                                    upper whisker=0.32689807150167705},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.0012863179536662939,
+                                    lower quartile=0.1487629151572547,
+                                    median=0.21225314755875196,
+                                    upper quartile=0.25075425432815124,
+                                    upper whisker=0.36287722296042746},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-59.96948916126297,
+                                    lower quartile=25.925883936189866,
+                                    median=116.07610389848959,
+                                    upper quartile=199.45213070733894,
+                                    upper whisker=282.81224021152843},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case BinaryTrees for the Surface4Pro (without outliers)} \label{fig:BinaryTrees_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - TestCaseIdle - Energy - without outliers}, ytick={1, 2},
+                                    yticklabels={
+                                        IntelPowerGadget , HardwareMonitor 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.5782326471597824,
+                                    lower quartile=0.578464237494409,
+                                    median=0.5785652974401114,
+                                    upper quartile=0.5792095779980653,
+                                    upper whisker=0.5873677772345715},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.5767390958345116,
+                                    lower quartile=0.5768152076781776,
+                                    median=0.5770184828669426,
+                                    upper quartile=0.5775148735837359,
+                                    upper whisker=0.5806251621199328},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case TestCaseIdle for the workstation (without outliers)} \label{fig:TestCaseIdle_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            
