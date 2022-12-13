@@ -2,23 +2,24 @@
 
 In this section of the results, a comparison between the different DUTs and measurement instruments will be performed. This will be done in a way where the different measurement instruments will be compared for each DUT, before comparing all DUTs and all measurement instruments. Before this, the expectations will be presented.
 
-\paragraph{Expectations:} Based on what was seen in \cref{sec:iterations}, similar observations are expected. This will include a clamp with a high standard deviation compared to the different software measurement instruments, and cases where Intel Power Gadget and LHM measurements a close to each other. For RAPL, a low standard deviation is expected, in addition to lower measured energy consumption in most cases compared to the other measurement instruments.
+\subsection{Expectations:} Based on what was seen in \cref{sec:iterations}, similar observations are expected. This will include a clamp with a high standard deviation compared to the different software measurement instruments, and cases where Intel Power Gadget and LHM measurements a close to each other. For RAPL, a low standard deviation is expected, in addition to lower measured energy consumption in most cases compared to the other measurement instruments.
 
-\subsection{Workstation}
+\subsection{Results}
+\paragraph{Workstation}
 
 \input{tabels/experiment_results/exp_one/comparison/PowerKomplett/dynamic_energy/without_outliers/Cores/Fasta.tex}
 \input{tabels/experiment_results/exp_one/comparison/PowerKomplett/dynamic_energy/without_outliers/Cores/Nbody.tex}
 
 The first DUT to consider is the workstation. For this DUT, Fasta and NBody measurements can be seen in \cref{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts} and \cref{fig:Nbody_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts} respectively, and the rest can be found in \cref{app:comparison_workstation}. When comparing the software measurement instruments, Intel Power Gadget and LHM measure close to each other in most cases. This includes BinaryTrees, Fasta and NBody where for FannkuchRedux a bigger difference can be observed. When considering RAPL compare to this, RAPL will in all test cases except NBody measure an energy consumption lower than its windows equivalents. When comparing the software measurement instruments against the hardware measurements, RAPL will against the clamp on Linux in all cases except NBody get a measurement higher than the clamp. For Windows, both Intel Power Gadget and LHM will get a measurement higher than the clamp.
 
-\subsection{Surface Pro 4}
+\paragraph{Surface Pro 4}
 
 \input{tabels/experiment_results/exp_one/comparison/Surface4Pro/dynamic_energy/without_outliers/Cores/Fasta.tex}
 \input{tabels/experiment_results/exp_one/comparison/Surface4Pro/dynamic_energy/without_outliers/Cores/FannkuchRedux.tex}
 
 The next DUT is the Surface Pro 4, where FannkuchRedux and Fasta are illustrated in \cref{fig:FannkuchRedux_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts} and \cref{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts} respectively, and the rest can be found in \cref{app:comparison_surfacepro4}. On the Surface Pro 4, a few things can be observed. When comparing the standard deviation, Intel Power Gadget deviates the most, which for example can be observed in the FannkuchRedux in \cref{fig:FannkuchRedux_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}. Intel Power Gadgets measurements are close the those made by LHM. When comparing RAPL against the measurement instruments on Windows, the difference changes from test case to test case,  where the measurements differ by $~6$W in FannkuchRedux in \cref{fig:FannkuchRedux_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts} and $~1$W in Fasta in \cref{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}.
 
-\subsection{Surface Book}
+\paragraph{Surface Book}
 
 \input{tabels/experiment_results/exp_one/comparison/SurfaceBook/dynamic_energy/without_outliers/Cores/BinaryTrees.tex}
 \input{tabels/experiment_results/exp_one/comparison/SurfaceBook/dynamic_energy/without_outliers/Cores/Nbody.tex}
