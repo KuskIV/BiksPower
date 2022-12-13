@@ -8,17 +8,17 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-0.10483486094320549,
-                                    lower quartile=-0.05917697199879379,
-                                    median=-0.04573754167574995,
-                                    upper quartile=-0.012215548914825902,
-                                    upper whisker=45.31746266779784},
+                                    lower whisker=-0.18885088922600568,
+                                    lower quartile=-0.14319300028159399,
+                                    median=-0.12975356995855014,
+                                    upper quartile=-0.0962315771976261,
+                                    upper whisker=45.23344663951504},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,23 +38,23 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-0.23524333793192032,
-                                    lower quartile=-0.07483418810218079,
-                                    median=0.004176569900522065,
-                                    upper quartile=0.09658398162045945,
-                                    upper whisker=1.0507629434987593},
+                                    lower whisker=-0.2692260331700562,
+                                    lower quartile=-0.1088168833403167,
+                                    median=-0.029806125337613842,
+                                    upper quartile=0.06260128638232354,
+                                    upper whisker=1.0167802482606234},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-10.615607560967028,
-                                    lower quartile=0.19977278578643087,
-                                    median=1.762137006268322,
-                                    upper quartile=2.2613969422912774,
-                                    upper whisker=11.201689313685172},
+                                    lower whisker=-10.497162373497787,
+                                    lower quartile=0.31821797325567225,
+                                    median=1.8805821937375633,
+                                    upper quartile=2.379842129760519,
+                                    upper whisker=11.320134501154413},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the workstation (with outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the workstation,  (with outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

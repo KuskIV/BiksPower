@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -22,23 +22,31 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.48229639229430876,
-                                    lower quartile=0.5037561170740252,
-                                    median=0.5323334807409469,
-                                    upper quartile=0.5778766057375946,
-                                    upper whisker=0.6285046753384576},
+                                    lower whisker=0.48229751580555946,
+                                    lower quartile=0.5041687069767379,
+                                    median=0.5333367198721592,
+                                    upper quartile=0.5794459304293877,
+                                    upper whisker=0.6285061394424509},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=2.578778067743218,
-                                    lower quartile=91.81266533744872,
-                                    median=170.475900655629,
-                                    upper quartile=250.79272615300465,
-                                    upper whisker=339.0003066997405},
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=2.578774423762519,
+                                    lower quartile=84.13632141875951,
+                                    median=170.34308117967822,
+                                    upper quartile=250.21279921151572,
+                                    upper whisker=338.99982767031565},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the Surface4Pro (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the Surface4Pro,  (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

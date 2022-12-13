@@ -6,19 +6,19 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=8.356853803168196,
-                                    lower quartile=8.859106987023315,
-                                    median=9.010768828500439,
-                                    upper quartile=9.208153986422733,
-                                    upper whisker=9.74059419770444},
+                                    lower whisker=8.356933553510295,
+                                    lower quartile=8.855395326520588,
+                                    median=9.007600387558021,
+                                    upper quartile=9.207311877670753,
+                                    upper whisker=9.74068515507554},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -30,15 +30,23 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=7.603310974042725,
-                                    lower quartile=7.803889771905617,
-                                    median=7.822741402259932,
-                                    upper quartile=7.833541089196073,
-                                    upper whisker=7.8779452706749025},
+                                    lower whisker=7.208626530291974,
+                                    lower quartile=7.354103628538118,
+                                    median=7.39273492755742,
+                                    upper quartile=7.424707092938403,
+                                    upper whisker=7.5148634384842055},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=7.603302219950778,
+                                    lower quartile=7.804452690850074,
+                                    median=7.822519518868586,
+                                    upper quartile=7.833903468684134,
+                                    upper whisker=7.8779363200845784},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case Fasta for the Surface4Pro (without outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case Fasta for the Surface4Pro,  (without outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

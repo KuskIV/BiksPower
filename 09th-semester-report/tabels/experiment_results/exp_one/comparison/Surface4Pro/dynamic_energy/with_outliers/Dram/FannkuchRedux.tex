@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - FannkuchRedux - Dynamic Energy - with outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - FannkuchRedux - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=-61.4713122106398,
                                     lower quartile=20.379485952339582,
                                     median=106.4255466922692,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case FannkuchRedux for the Surface4Pro (with outliers)} \label{fig:FannkuchRedux_Dram_comparison_dynamic_energy_with_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case FannkuchRedux for the Surface4Pro,  (with outliers)} \label{fig:FannkuchRedux_Dram_comparison_dynamic_energy_with_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

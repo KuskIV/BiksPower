@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -22,23 +22,31 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-0.006930758086345523,
-                                    lower quartile=0.0009659556476461217,
-                                    median=0.001610693337937119,
-                                    upper quartile=0.0033739979338026083,
-                                    upper whisker=0.008055952394367516},
+                                    lower whisker=-0.006930987462270943,
+                                    lower quartile=0.0009709811868581358,
+                                    median=0.001601626705775544,
+                                    upper quartile=0.0033736676053037484,
+                                    upper whisker=0.008055715685688025},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-61.97913398503309,
-                                    lower quartile=18.417837167548736,
-                                    median=107.57270614449352,
-                                    upper quartile=188.97673945235186,
-                                    upper whisker=266.18994712981697},
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-61.97913516452936,
+                                    lower quartile=23.354455565926425,
+                                    median=103.23621634169906,
+                                    upper quartile=185.77287676025534,
+                                    upper whisker=266.18975904393045},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case Nbody for the Surface4Pro (without outliers)} \label{fig:Nbody_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Nbody for the Surface4Pro,  (without outliers)} \label{fig:Nbody_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

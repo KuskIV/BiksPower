@@ -8,17 +8,17 @@
                                     }
                                     \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - TestCaseIdle - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.5799143804919693,
-                                    lower quartile=0.5802921688494962,
-                                    median=0.5805369392308926,
-                                    upper quartile=0.5808782200277952,
-                                    upper whisker=0.5960727200067548},
+                                    lower whisker=0.5799056976389522,
+                                    lower quartile=0.5802934016285488,
+                                    median=0.5805302770727993,
+                                    upper quartile=0.580907843460625,
+                                    upper whisker=0.6125031665328576},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,11 +38,11 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=14.66063773829286,
-                                    lower quartile=36.162884435330504,
-                                    median=57.367214573648,
-                                    upper quartile=78.27603378267699,
-                                    upper whisker=100.13186693945325},
+                                    lower whisker=12.909984796095587,
+                                    lower quartile=33.600878814549915,
+                                    median=55.315842949278625,
+                                    upper quartile=76.8876038003086,
+                                    upper whisker=100.13259936268818},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -55,6 +55,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram energy consumption for test case TestCaseIdle for the workstation (without outliers)} \label{fig:TestCaseIdle_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Dram energy consumption for test case TestCaseIdle for the workstation,  (without outliers)} \label{fig:TestCaseIdle_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

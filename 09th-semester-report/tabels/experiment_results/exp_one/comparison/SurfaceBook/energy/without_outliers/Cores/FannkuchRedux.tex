@@ -6,39 +6,47 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=10,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=8.052977305285912,
-                                    lower quartile=8.804240343547255,
-                                    median=9.000819252550535,
-                                    upper quartile=9.134141560927633,
-                                    upper whisker=9.438317834793883},
+                                    lower whisker=7.783878807000558,
+                                    lower quartile=8.802696633618481,
+                                    median=8.997411620292299,
+                                    upper quartile=9.13196133794635,
+                                    upper whisker=9.43841470406695},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=6.635396682400599,
-                                    lower quartile=7.678733669018099,
-                                    median=7.902031896469664,
-                                    upper quartile=8.106761342559125,
-                                    upper whisker=8.33541361058007},
+                                    lower whisker=6.093014611070966,
+                                    lower quartile=7.640421642152171,
+                                    median=7.891956494626795,
+                                    upper quartile=8.094712559522588,
+                                    upper whisker=8.335462328159714},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=8.72516868135009,
-                                    lower quartile=8.817963793198853,
-                                    median=8.84324640414938,
-                                    upper quartile=8.860033551153606,
-                                    upper whisker=8.903505511137409},
+                                    lower whisker=2.3153977897131677,
+                                    lower quartile=5.224931543952206,
+                                    median=5.2667479674574995,
+                                    upper quartile=5.305835695665918,
+                                    upper whisker=5.429854064989536},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.725155286218605,
+                                    lower quartile=8.82104711166788,
+                                    median=8.844205575438703,
+                                    upper quartile=8.860469468622627,
+                                    upper whisker=8.917357181489608},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores energy consumption for test case FannkuchRedux for the SurfaceBook (without outliers)} \label{fig:FannkuchRedux_Cores_comparison_energy_without_outliers_SurfaceBook_avg_watts}
+                            \caption{A comparison of of Cores energy consumption for test case FannkuchRedux for the SurfaceBook,  (without outliers)} \label{fig:FannkuchRedux_Cores_comparison_energy_without_outliers_SurfaceBook_avg_watts}
                             \end{figure}
                             

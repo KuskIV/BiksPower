@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - with outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - with outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=11.226721062720783,
+                                    lower quartile=11.399099850691691,
+                                    median=11.524199121753298,
+                                    upper quartile=11.628022610205717,
+                                    upper whisker=11.911791274106257},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=12.489812326121548,
                                     lower quartile=12.641757280428244,
                                     median=12.667401010811085,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores energy consumption for test case BinaryTrees for the Surface4Pro (with outliers)} \label{fig:BinaryTrees_Cores_comparison_energy_with_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Cores energy consumption for test case BinaryTrees for the Surface4Pro,  (with outliers)} \label{fig:BinaryTrees_Cores_comparison_energy_with_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

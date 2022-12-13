@@ -1,18 +1,18 @@
 
-                    \begin{figure}
-                        \centering
-                        \begin{tikzpicture}[]
-                            \pgfplotsset{%
-                                width=.7\textwidth,
-                                height=.4\textheight
-                            }
-                            \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-                            yticklabels={
-                                Surface4Pro - IntelPowerGadget , Surface4Pro - HardwareMonitor , Surface4Pro - RAPL , SurfaceBook - IntelPowerGadget , SurfaceBook - HardwareMonitor , SurfaceBook - RAPL , workstation - IntelPowerGadget , workstation - HardwareMonitor , workstation - Clamp (win) , workstation - RAPL , workstation - Clamp (lin) 
-                                },
-                                xmin=0,xmax=80,
-                                ]
-                            
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
+                                yticklabels={
+                                    SP4 - IPG , SP4 - LHM , SP4 - E3 , SP4 - RAPL , SB - IPG , SB - LHM , SB - E3 , SB - RAPL , WRK - IPG , WRK - LHM , WRK - CLAMP (win) , WRK - RAPL , WRK - CLAMP (lin) 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
                                 \addplot+ [boxplot prepared={
                                 lower whisker=11.926464643426591,
                                 lower quartile=13.133691378238453,
@@ -22,87 +22,103 @@
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=11.80643756295332,
-                                lower quartile=12.388714839864143,
-                                median=12.6249512872951,
-                                upper quartile=12.866104351574618,
-                                upper whisker=13.121710500965511},
+                                lower whisker=11.718750655691684,
+                                lower quartile=12.387139127742111,
+                                median=12.623617251434515,
+                                upper quartile=12.859414421059958,
+                                upper whisker=13.121742092804862},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=7.081284344273498,
-                                lower quartile=7.25932213458003,
-                                median=7.268345833910208,
-                                upper quartile=7.282195475620339,
-                                upper whisker=7.348270629929178},
+                                lower whisker=8.413861272177755,
+                                lower quartile=8.803683786735316,
+                                median=8.837944750817972,
+                                upper quartile=8.875859884782134,
+                                upper whisker=8.936299355191307},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=7.059564196917156,
-                                lower quartile=7.810827235178499,
-                                median=8.007406144181779,
-                                upper quartile=8.140728452558877,
-                                upper whisker=8.444904726425127},
+                                lower whisker=7.081267792965497,
+                                lower quartile=7.258781830695685,
+                                median=7.268248209337497,
+                                upper quartile=7.282785506850852,
+                                upper whisker=7.348253701352232},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=6.585216352577126,
-                                lower quartile=7.628553339194626,
-                                median=7.85185156664619,
-                                upper quartile=8.056581012735649,
-                                upper whisker=8.285233280756595},
+                                lower whisker=6.78909298111947,
+                                lower quartile=7.807910807737396,
+                                median=8.002625794411212,
+                                upper quartile=8.137175512065264,
+                                upper whisker=8.443628878185864},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=5.063396378737768,
-                                lower quartile=5.156191490586532,
-                                median=5.1814741015370585,
-                                upper quartile=5.198261248541284,
-                                upper whisker=5.241733208525088},
+                                lower whisker=6.042941149286529,
+                                lower quartile=7.590348180367734,
+                                median=7.841883032842357,
+                                upper quartile=8.044639097738152,
+                                upper whisker=8.285388866375277},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=54.55377998247485,
-                                lower quartile=55.807558077791754,
-                                median=56.12840074139042,
-                                upper quartile=56.779734405688245,
-                                upper whisker=59.706822951383884},
+                                lower whisker=2.3118880815897613,
+                                lower quartile=5.221421835828799,
+                                median=5.263238259334093,
+                                upper quartile=5.3023259875425115,
+                                upper whisker=5.42634435686613},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=56.85353430580016,
-                                lower quartile=57.95059917316837,
-                                median=58.396434780724476,
-                                upper quartile=59.13646718335485,
-                                upper whisker=60.35062028368831},
+                                lower whisker=5.062875916575935,
+                                lower quartile=5.15876774202521,
+                                median=5.1819262057960325,
+                                upper quartile=5.198190098979957,
+                                upper whisker=5.255077811846938},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=41.28192214081105,
-                                lower quartile=48.213804683142186,
-                                median=49.38276183605339,
-                                upper quartile=55.25827405962339,
-                                upper whisker=65.72956395528195},
+                                lower whisker=53.8220484166336,
+                                lower quartile=55.723885155635514,
+                                median=56.04900813170462,
+                                upper quartile=56.906274082246334,
+                                upper whisker=60.31787022893325},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=50.55659185956924,
-                                lower quartile=50.785787790660954,
-                                median=50.878386477353665,
-                                upper quartile=50.98671958330326,
-                                upper whisker=51.32473098840559},
+                                lower whisker=56.84815176778077,
+                                lower quartile=57.91916678672111,
+                                median=58.348003387962436,
+                                upper quartile=59.12214565669487,
+                                upper whisker=60.3505978483267},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
                                 \addplot+ [boxplot prepared={
-                                lower whisker=26.12696805951493,
-                                lower quartile=45.04958891153477,
-                                median=45.513578608368775,
-                                upper quartile=46.270342271529174,
-                                upper whisker=54.50151100295424},
+                                lower whisker=41.26662053419828,
+                                lower quartile=48.21241837299763,
+                                median=49.39702368335719,
+                                upper quartile=56.679135952479015,
+                                upper whisker=65.81954114948346},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
-                            \end{axis}
-                        \end{tikzpicture}
-                    \caption{A comparison of of Cores dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's (without outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_without_outliers_avg_watts}
-                    \end{figure}
-                    
+                                \addplot+ [boxplot prepared={
+                                lower whisker=50.5227971489376,
+                                lower quartile=50.75157351841153,
+                                median=50.844592889244566,
+                                upper quartile=50.95293806529164,
+                                upper whisker=52.3866333306309},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=26.245583328204887,
+                                lower quartile=45.1689420924493,
+                                median=45.63428005369751,
+                                upper quartile=46.517958470850715,
+                                upper whisker=62.99071013257756},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Cores dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's  (without outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_without_outliers_avg_watts}
+                        \end{figure}
+                        

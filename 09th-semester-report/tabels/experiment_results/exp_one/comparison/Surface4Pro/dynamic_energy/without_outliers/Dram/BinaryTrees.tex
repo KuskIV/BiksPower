@@ -6,39 +6,47 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - BinaryTrees - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - BinaryTrees - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-0.0016382853127328012,
-                                    lower quartile=0.06604092139108653,
-                                    median=0.14257109369074766,
-                                    upper quartile=0.21907108073313253,
-                                    upper whisker=0.32689807150167705},
+                                    lower whisker=-0.0016417858087414694,
+                                    lower quartile=0.07031351023849036,
+                                    median=0.142566560006193,
+                                    upper quartile=0.21906599896418194,
+                                    upper whisker=0.3268922172059143},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-0.0012863179536662939,
-                                    lower quartile=0.1487629151572547,
-                                    median=0.21225314755875196,
-                                    upper quartile=0.25075425432815124,
-                                    upper whisker=0.36287722296042746},
+                                    lower whisker=-0.0012943276358472477,
+                                    lower quartile=0.15024111768756895,
+                                    median=0.21431087591805792,
+                                    upper quartile=0.2523304596831337,
+                                    upper whisker=0.36286306537596447},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=-59.96948916126297,
-                                    lower quartile=25.925883936189866,
-                                    median=116.07610389848959,
-                                    upper quartile=199.45213070733894,
-                                    upper whisker=282.81224021152843},
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-60.17316670097572,
+                                    lower quartile=22.224400502716,
+                                    median=114.87935410545812,
+                                    upper quartile=198.3699464069619,
+                                    upper whisker=282.81244363689206},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case BinaryTrees for the Surface4Pro (without outliers)} \label{fig:BinaryTrees_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case BinaryTrees for the Surface4Pro,  (without outliers)} \label{fig:BinaryTrees_Dram_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - FannkuchRedux - Energy - with outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - FannkuchRedux - Energy - with outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=8.420698210448471,
+                                    lower quartile=8.80967211541238,
+                                    median=8.844640644724457,
+                                    upper quartile=8.882476743269576,
+                                    upper whisker=8.943136861660854},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=11.713037625196996,
                                     lower quartile=11.890034221379295,
                                     median=11.899789800205262,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores energy consumption for test case FannkuchRedux for the Surface4Pro (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_energy_with_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Cores energy consumption for test case FannkuchRedux for the Surface4Pro,  (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_energy_with_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

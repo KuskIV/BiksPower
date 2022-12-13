@@ -8,25 +8,25 @@
                                     }
                                     \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.5788106696802604,
-                                    lower quartile=0.5790707029232778,
-                                    median=0.5792524948974229,
-                                    upper quartile=0.57956329677322,
-                                    upper whisker=0.5839792193451777},
+                                    lower whisker=0.578810682935132,
+                                    lower quartile=0.5790740150637106,
+                                    median=0.5792550457621097,
+                                    upper quartile=0.5795731942041475,
+                                    upper whisker=0.5896260992446146},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.5773775989054198,
-                                    lower quartile=0.577754848512829,
-                                    median=0.5779077119470066,
-                                    upper quartile=0.5782239335723173,
-                                    upper whisker=0.5851024577758888},
+                                    lower whisker=0.5773760123173488,
+                                    lower quartile=0.5777519265243514,
+                                    median=0.577908530050576,
+                                    upper quartile=0.5781958822386193,
+                                    upper whisker=0.5851008499605154},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,11 +38,11 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=41.51693975484298,
-                                    lower quartile=501.6389029766875,
-                                    median=917.871339375689,
-                                    upper quartile=1336.2232903206152,
-                                    upper whisker=1741.7583220380511},
+                                    lower whisker=41.51660011166746,
+                                    lower quartile=472.0664067213508,
+                                    median=903.6467159572071,
+                                    upper quartile=1320.2735380489578,
+                                    upper whisker=1741.7440730030555},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -55,6 +55,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram energy consumption for test case Nbody for the workstation (without outliers)} \label{fig:Nbody_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Dram energy consumption for test case Nbody for the workstation,  (without outliers)} \label{fig:Nbody_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

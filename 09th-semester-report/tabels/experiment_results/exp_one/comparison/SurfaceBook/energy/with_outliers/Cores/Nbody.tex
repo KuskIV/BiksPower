@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Nbody - Energy - with outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Nbody - Energy - with outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=10,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=2.399996038382789,
+                                    lower quartile=4.241702359737292,
+                                    median=4.27199328109721,
+                                    upper quartile=4.302908157167919,
+                                    upper whisker=4.369796102164826},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=8.442268947178363,
                                     lower quartile=8.469458770450048,
                                     median=8.486493968102357,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores energy consumption for test case Nbody for the SurfaceBook (with outliers)} \label{fig:Nbody_Cores_comparison_energy_with_outliers_SurfaceBook_avg_watts}
+                            \caption{A comparison of of Cores energy consumption for test case Nbody for the SurfaceBook,  (with outliers)} \label{fig:Nbody_Cores_comparison_energy_with_outliers_SurfaceBook_avg_watts}
                             \end{figure}
                             

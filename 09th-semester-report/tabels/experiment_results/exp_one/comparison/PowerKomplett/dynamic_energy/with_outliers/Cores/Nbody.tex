@@ -8,17 +8,17 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Nbody - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=24.17459235216108,
-                                    lower quartile=24.278268163578925,
-                                    median=24.337101252745626,
-                                    upper quartile=24.389513025159673,
-                                    upper whisker=27.1792394452839},
+                                    lower whisker=24.09057632387828,
+                                    lower quartile=24.194252135296125,
+                                    median=24.253085224462822,
+                                    upper quartile=24.30549699687687,
+                                    upper whisker=27.0952234170011},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,23 +38,23 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=27.273300691201165,
-                                    lower quartile=27.50341040252969,
-                                    median=27.561004552646807,
-                                    upper quartile=27.597294371775398,
-                                    upper whisker=28.09076900662615},
+                                    lower whisker=27.239317995963027,
+                                    lower quartile=27.46942770729155,
+                                    median=27.52702185740867,
+                                    upper quartile=27.56331167653726,
+                                    upper whisker=28.056786311388013},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=2.8426099885068226,
-                                    lower quartile=28.94161393667105,
-                                    median=29.535963004560053,
-                                    upper quartile=30.098571336123126,
-                                    upper whisker=35.32373846896845},
+                                    lower whisker=2.961055175976064,
+                                    lower quartile=29.06005912414029,
+                                    median=29.654408192029294,
+                                    upper quartile=30.217016523592367,
+                                    upper whisker=35.44218365643769},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case Nbody for the workstation (with outliers)} \label{fig:Nbody_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case Nbody for the workstation,  (with outliers)} \label{fig:Nbody_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

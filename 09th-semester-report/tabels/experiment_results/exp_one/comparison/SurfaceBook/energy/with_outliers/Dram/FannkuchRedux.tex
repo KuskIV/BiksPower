@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - with outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - with outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=10,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=-0.293570095165233,
                                     lower quartile=33.13250211480417,
                                     median=73.28518883508494,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the SurfaceBook (with outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_with_outliers_SurfaceBook_avg_watts}
+                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the SurfaceBook,  (with outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_with_outliers_SurfaceBook_avg_watts}
                             \end{figure}
                             

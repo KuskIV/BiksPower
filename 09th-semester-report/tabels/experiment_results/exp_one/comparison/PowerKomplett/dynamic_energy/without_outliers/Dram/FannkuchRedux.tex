@@ -8,25 +8,25 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.17316525285206663,
-                                    lower quartile=0.18068278346299815,
-                                    median=0.1830239494036005,
-                                    upper quartile=0.18712374614062335,
-                                    upper whisker=0.2191096201736138},
+                                    lower whisker=0.1724190055653636,
+                                    lower quartile=0.179950534578657,
+                                    median=0.18234020134555806,
+                                    upper quartile=0.18702158292177395,
+                                    upper whisker=0.21836359751911416},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.1786882197017884,
-                                    lower quartile=0.18346606725861164,
-                                    median=0.18579818878761573,
-                                    upper quartile=0.19039296581136328,
-                                    upper whisker=0.22317611133771187},
+                                    lower whisker=0.17868794239862518,
+                                    lower quartile=0.18324607170650714,
+                                    median=0.1857039378171692,
+                                    upper quartile=0.1902351331337127,
+                                    upper whisker=0.22317581771856565},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,11 +38,11 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=7.1993464648029715,
-                                    lower quartile=789.7413879090283,
-                                    median=1521.172744922562,
-                                    upper quartile=2256.0959099050688,
-                                    upper whisker=2987.01208295651},
+                                    lower whisker=8.804606201449786,
+                                    lower quartile=765.6827692057697,
+                                    median=1522.783285882603,
+                                    upper quartile=2278.0496950208067,
+                                    upper whisker=2988.627737232948},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -55,6 +55,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case FannkuchRedux for the workstation (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case FannkuchRedux for the workstation,  (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

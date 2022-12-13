@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.15\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , RAPL 
+                                        IPG , LHM , E3 , RAPL 
                                         },
                                         xmin=0,xmax=20,
                                         ]
@@ -30,6 +30,14 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
+                                    lower whisker=-0.0009518336933719883,
+                                    lower quartile=-0.00025271260221482357,
+                                    median=-1.96722384957701e-05,
+                                    upper quartile=0.00026330534602022476,
+                                    upper whisker=0.0010290093982399749},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
                                     lower whisker=-0.08006107682545949,
                                     lower quartile=-0.013893692714544992,
                                     median=0.0022262007788294014,
@@ -39,6 +47,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the Surface4Pro (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the Surface4Pro,  (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
                             \end{figure}
                             

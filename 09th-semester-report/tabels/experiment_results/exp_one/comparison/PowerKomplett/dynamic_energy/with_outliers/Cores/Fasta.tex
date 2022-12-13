@@ -8,17 +8,17 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Fasta - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=40.35378183693665,
-                                    lower quartile=41.03868028824076,
-                                    median=41.666044572955364,
-                                    upper quartile=42.519180897554705,
-                                    upper whisker=60.852824361889574},
+                                    lower whisker=40.269765808653844,
+                                    lower quartile=40.954664259957966,
+                                    median=41.58202854467257,
+                                    upper quartile=42.4351648692719,
+                                    upper whisker=60.76880833360677},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,23 +38,23 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=37.02139581665228,
-                                    lower quartile=37.45480119316427,
-                                    median=37.65715008598457,
-                                    upper quartile=37.836073462164265,
-                                    upper whisker=38.41097260189899},
+                                    lower whisker=36.98741312141414,
+                                    lower quartile=37.420818497926135,
+                                    median=37.62316739074643,
+                                    upper quartile=37.80209076692613,
+                                    upper whisker=38.37698990666085},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=19.962512778883614,
-                                    lower quartile=34.354827411272,
-                                    median=35.736205294484606,
-                                    upper quartile=36.306338441439614,
-                                    upper whisker=43.17527893583148},
+                                    lower whisker=20.080957966352855,
+                                    lower quartile=34.47327259874123,
+                                    median=35.85465048195385,
+                                    upper quartile=36.424783628908855,
+                                    upper whisker=43.29372412330072},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case Fasta for the workstation (with outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case Fasta for the workstation,  (with outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

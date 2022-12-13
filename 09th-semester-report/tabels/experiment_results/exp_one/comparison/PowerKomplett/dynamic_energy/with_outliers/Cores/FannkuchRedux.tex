@@ -8,17 +8,17 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=53.905963954228056,
-                                    lower quartile=55.79703598807643,
-                                    median=56.13169279431543,
-                                    upper quartile=56.98661987738161,
-                                    upper whisker=60.4017741504685},
+                                    lower whisker=53.82194792594526,
+                                    lower quartile=55.713019959793634,
+                                    median=56.04767676603262,
+                                    upper quartile=56.9026038490988,
+                                    upper whisker=60.3177581221857},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,23 +38,23 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=50.5569752765111,
-                                    lower quartile=50.78574078756954,
-                                    median=50.8844812694081,
-                                    upper quartile=50.987955663279166,
-                                    upper whisker=52.42081821742549},
+                                    lower whisker=50.522992581272966,
+                                    lower quartile=50.7517580923314,
+                                    median=50.85049857416996,
+                                    upper quartile=50.95397296804103,
+                                    upper whisker=52.386835522187354},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=1.7408184283916697,
-                                    lower quartile=45.04712537630901,
-                                    median=45.513341698126084,
-                                    upper quartile=46.34132170740688,
-                                    upper whisker=62.87174741572391},
+                                    lower whisker=1.859263615860911,
+                                    lower quartile=45.165570563778246,
+                                    median=45.631786885595325,
+                                    upper quartile=46.45976689487611,
+                                    upper whisker=62.99019260319315},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case FannkuchRedux for the workstation (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case FannkuchRedux for the workstation,  (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             

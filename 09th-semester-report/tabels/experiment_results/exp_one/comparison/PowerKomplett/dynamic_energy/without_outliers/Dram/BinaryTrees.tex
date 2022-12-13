@@ -8,25 +8,25 @@
                                     }
                                     \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - BinaryTrees - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor , Clamp (win) , RAPL , Clamp (lin) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.05307420547485331,
-                                    lower quartile=0.0649946585952933,
-                                    median=0.07247308311202616,
-                                    upper quartile=0.08149304279331082,
-                                    upper whisker=0.1096066271043743},
+                                    lower whisker=0.05231955414000833,
+                                    lower quartile=0.06434488124289028,
+                                    median=0.07185216180058152,
+                                    upper quartile=0.08088878659982929,
+                                    upper whisker=0.12919041632659967},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=0.04765845558057891,
-                                    lower quartile=0.062294852603253764,
-                                    median=0.06938885878013251,
-                                    upper quartile=0.0761843248383906,
-                                    upper whisker=0.1451745650667372},
+                                    lower whisker=0.047658268244341384,
+                                    lower quartile=0.06214127871134212,
+                                    median=0.06928293631353455,
+                                    upper quartile=0.07617824784256094,
+                                    upper whisker=0.14517434850484123},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -38,11 +38,11 @@
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
-                                    lower whisker=14.766058472825463,
-                                    lower quartile=869.7794055106008,
-                                    median=1702.450781687338,
-                                    upper quartile=2573.3807816569206,
-                                    upper whisker=3392.754506081552},
+                                    lower whisker=16.371033831951664,
+                                    lower quartile=857.6389455332697,
+                                    median=1704.054375426293,
+                                    upper quartile=2548.1800588706337,
+                                    upper whisker=3394.3567160562948},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
@@ -55,6 +55,6 @@
                                     
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case BinaryTrees for the workstation (without outliers)} \label{fig:BinaryTrees_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case BinaryTrees for the workstation,  (without outliers)} \label{fig:BinaryTrees_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts}
                             \end{figure}
                             
