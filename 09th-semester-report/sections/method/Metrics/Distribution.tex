@@ -83,7 +83,7 @@ Then calculate the value $z$.
 using z to find the p-value to check if $H_0$ can be rejected, again the $\alpha$ is set to $0.05$. 
 
 \paragraph{Kolmogorov-Smirnov test}
-Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1) it tests how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same population as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same population. To calculate the KS2 the following series of calculations are needed.
+Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1) it tests how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same underlying distribution as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same distribution. To calculate the KS2 the following series of calculations are needed.
 $$D_{n,m} = max(|F_1(x)-F_2(x)|)$$
 where:
 $$F_1 = CDF(sample1,x)$$
