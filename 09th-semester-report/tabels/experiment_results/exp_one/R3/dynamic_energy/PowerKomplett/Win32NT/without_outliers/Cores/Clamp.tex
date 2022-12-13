@@ -1,0 +1,52 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.6\textwidth,
+                                    height=0.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={workstation - Clamp}, ytick={1, 2, 3, 4},
+                                yticklabels={
+                                    BinaryTrees - CLAMP (win), FannkuchRedux - CLAMP (win), Nbody - CLAMP (win), Fasta - CLAMP (win)
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=49.36761698963683,
+                                    lower quartile=59.360953992243516,
+                                    median=60.213191669333526,
+                                    upper quartile=68.36724437924657,
+                                    upper whisker=74.07463632358858},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=41.26662053419828,
+                                    lower quartile=48.21241837299763,
+                                    median=49.39702368335719,
+                                    upper quartile=56.679135952479015,
+                                    upper whisker=65.81954114948346},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=16.06480148557668,
+                                    lower quartile=21.570040867558305,
+                                    median=22.565008161619772,
+                                    upper quartile=30.85942868682885,
+                                    upper whisker=45.19930649543822},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=25.73948178320542,
+                                    lower quartile=34.11725530455646,
+                                    median=35.533360361666254,
+                                    upper quartile=43.8347520770804,
+                                    upper whisker=51.071769322509255},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{R3 validation for dynamic energy measurements by Clamp for the Cores for all DUT's on Win32NT and test cases where the impact of the first profiler can be seen (without outliers)} \label{fig:PowerKomplett_Clamp_Cores_R3_dynamic_energy_without_outliers_Win32NT_avg_watts}
+                        \end{figure}
+                        

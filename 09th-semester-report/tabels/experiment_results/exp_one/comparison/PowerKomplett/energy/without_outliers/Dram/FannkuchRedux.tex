@@ -1,0 +1,60 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - FannkuchRedux - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.7541831270136908,
+                                    lower quartile=0.7617146560269843,
+                                    median=0.7641043227938853,
+                                    upper quartile=0.7687857043701012,
+                                    upper whisker=0.8001277189674414},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.7561069696514754,
+                                    lower quartile=0.7606650989593573,
+                                    median=0.7631229650700194,
+                                    upper quartile=0.767654160386563,
+                                    upper whisker=0.8005948449714159},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=64.58929126871881,
+                                    lower quartile=821.4674542730387,
+                                    median=1578.567970949872,
+                                    upper quartile=2333.8343800880757,
+                                    upper whisker=3044.4124223002173},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case FannkuchRedux for the workstation,  (without outliers)} \label{fig:FannkuchRedux_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts}
+                            \end{figure}
+                            

@@ -1,0 +1,59 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 0.006595684402444291)(45, 0.007295220674193181)(50, 0.007999659608910881)(55, 0.007202467971243639)(60, 0.007280865079495958)(65, 0.006858423509955077)(70, 0.008369444141141925)(75, 0.007144940647010992)(80, 0.004753236834232667)
+                            };
+                            \addlegendentry{SP4 - IPG}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 0.002385328427460912)(45, 0.0017856511573015649)(50, 0.0025901992189954056)(55, 0.00210998144366709)(60, 0.00286452646862575)(65, 0.0020038487280194628)(70, 0.002908483770774353)(75, 0.0005098111150931342)(80, -0.005995916826693459)
+                            };
+                            \addlegendentry{SP4 - LHM}
+                            
+                            \addplot [mark=none, ultra thick, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SP4 - E3}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (50, 251.8661014299577)(55, 214.7597259251014)(60, 162.23880995564176)(65, 107.43421593849766)(70, 53.9187387386668)(75, 0.7554852536149699)(80, -44.463085003568885)
+                            };
+                            \addlegendentry{SP4 - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, -0.004074329231767212)(45, -0.004348935377157716)(50, -0.0038449307879016847)(55, -0.003742007629655712)(60, -0.004514524809862658)(65, -0.002667140376430351)(70, -0.003445334321572774)(75, -0.0030777639565776225)(80, -0.002069697603515874)
+                            };
+                            \addlegendentry{SB - IPG}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, -0.0024249289828336576)(45, -0.00290709806596184)(50, -0.0025331878255300637)(55, -0.002738131230460483)(60, -0.0021882692066193653)(65, -0.0026202401370450552)(70, -0.002441183746765067)(75, -0.0024267608514129614)(80, -0.0005226813172282685)
+                            };
+                            \addlegendentry{SB - LHM}
+                            
+                            \addplot [mark=none, dashdotted, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SB - E3}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 102.49555919324683)(45, 87.2898077227021)(50, 69.97608362876993)(55, 51.912323050815004)(60, 33.011650398396576)(65, 15.09431683392325)(70, -3.951979735406033)(75, -23.24316933423957)(80, -35.131834522067365)
+                            };
+                            \addlegendentry{SB - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case Nbody with regards to the battey level of the DUT (with outliers)} \label{fig:Nbody_Dram_charge}
+                \end{figure}
+                

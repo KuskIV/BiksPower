@@ -1,0 +1,59 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 0.15848753136673455)(45, 0.11309084605448518)(50, 0.13605744225178504)(55, 0.12025295510418599)(60, 0.14391326789900943)(65, 0.10304880193657476)(70, 0.15862132712125415)(75, 0.16815633192760146)(80, 0.2665807571610491)
+                            };
+                            \addlegendentry{SP4 - IPG}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 0.22768060641970245)(45, 0.16628540998299626)(50, 0.13857863714340188)(55, 0.19355412009465878)(60, 0.2049441027663069)(65, 0.19218732966879257)(70, 0.18718713238495224)(75, 0.19158443525142552)(80, 0.25803918849449675)
+                            };
+                            \addlegendentry{SP4 - LHM}
+                            
+                            \addplot [mark=none, ultra thick, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SP4 - E3}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (45, 268.27314343050966)(50, 236.25590767792522)(55, 189.5636194223414)(60, 142.20010002232627)(65, 90.53036165552356)(70, 38.52497449471596)(75, -12.169164953560154)(80, -49.11471981916282)
+                            };
+                            \addlegendentry{SP4 - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, 0.35799683981229796)(45, 0.36595920004344706)(50, 0.364951903245553)(55, 0.36579074040864834)(60, 0.35796349628621327)(65, 0.36814103077187593)(70, 0.39006106615008634)(75, 0.35893345475664734)(80, 0.3719570717712392)
+                            };
+                            \addlegendentry{SB - IPG}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, 0.35071325443376056)(45, 0.3738952832355969)(50, 0.3733652066540515)(55, 0.375777494323059)(60, 0.3674002231510821)(65, 0.36199845774121386)(70, 0.3516263699823233)(75, 0.3757629606763322)(80, 0.33875586480356773)
+                            };
+                            \addlegendentry{SB - LHM}
+                            
+                            \addplot [mark=none, dashdotted, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SB - E3}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 90.0485435456754)(45, 75.85229245364238)(50, 60.823027266047056)(55, 44.301472670950346)(60, 28.50322754986726)(65, 9.836554221050374)(70, -6.81773988784133)(75, -24.125433202565077)(80, -35.58055476965924)
+                            };
+                            \addlegendentry{SB - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case BinaryTrees with regards to the battey level of the DUT (with outliers)} \label{fig:BinaryTrees_Dram_charge}
+                \end{figure}
+                

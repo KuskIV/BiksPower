@@ -1,0 +1,84 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start temperature},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=100,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (35, 0.107361946551227)(45, 0.11268827365855183)(50, 0.11428004755918222)(55, 0.12007859909981462)(60, 0.12225259754294067)
+                            };
+                            \addlegendentry{SP4 - IPG}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (35, 0.08692022251795277)(45, 0.10285220533730066)(50, 0.1022383451243782)(55, 0.10736029292004508)(60, 0.11658258889458285)
+                            };
+                            \addlegendentry{SP4 - LHM}
+                            
+                            \addplot [mark=none, ultra thick, green]  coordinates {
+                            (35, 0.0)(40, 0.0)(45, 0.0)
+                            };
+                            \addlegendentry{SP4 - E3}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (50, -37.52474725990749)(55, -2.593053357209397)(60, 167.73228881014245)
+                            };
+                            \addlegendentry{SP4 - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (25, 0.11222368409528483)(30, 0.09619456661508262)(35, 0.10161121655252581)
+                            };
+                            \addlegendentry{SB - IPG}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (25, 0.10461781392140584)(30, 0.08913425183155703)(35, 0.09988110745406695)
+                            };
+                            \addlegendentry{SB - LHM}
+                            
+                            \addplot [mark=none, dashdotted, green]  coordinates {
+                            (30, 0.0)(35, 0.0)
+                            };
+                            \addlegendentry{SB - E3}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (35, -35.613833122477025)(45, -26.99951564047896)(50, -18.68682646087318)(55, -5.014256217070822)(60, 43.54258684172346)(65, 94.8526238269172)
+                            };
+                            \addlegendentry{SB - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (30, 0.021807137202053337)(35, 0.017329743109162406)(40, 0.017549352041869217)(45, 0.053532320253135035)
+                            };
+                            \addlegendentry{WRK - IPG}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (30, 0.018425469876408473)(35, 0.01815762026310667)(40, 0.01825478599408336)(45, 0.01920166477457197)
+                            };
+                            \addlegendentry{WRK - LHM}
+                            
+                            \addplot [mark=none, densely dashed, cyan]  coordinates {
+                            (25, 0.0)(30, 0.0)(35, 0.0)(40, 0.0)(45, 0.0)(50, 0.0)(70, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (win)}
+                            
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (25, 743.0122885321638)(30, 1134.8357589012016)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (25, 0.0)(30, 0.0)(35, 0.0)(45, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case Fasta with regards to the temperature of the DUT (without outliers)} \label{fig:Fasta_Dram_temperature}
+                \end{figure}
+                

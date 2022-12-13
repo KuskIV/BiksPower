@@ -1,0 +1,59 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 0.0893759398001943)(45, 0.07616094713006805)(50, 0.06645205365757045)(55, 0.07889048691889755)(60, 0.06096048869830003)(65, 0.0951695181654476)(70, 0.06886084393325319)(75, 0.061722001491681985)(80, 0.11914117923812059)
+                            };
+                            \addlegendentry{SP4 - IPG}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 0.06957584820654733)(45, 0.06705316171479353)(50, 0.06015768792479324)(55, 0.05589618407206713)(60, 0.06285013783792916)(65, 0.07502866631499536)(70, 0.049470003475325555)(75, 0.06888139112335316)(80, 0.11025660053626592)
+                            };
+                            \addlegendentry{SP4 - LHM}
+                            
+                            \addplot [mark=none, ultra thick, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SP4 - E3}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (45, 266.5709904519232)(50, 241.4342508985696)(55, 190.56031767869217)(60, 140.54077039392448)(65, 86.95709333736008)(70, 35.20911324089824)(75, -16.619535174494832)(80, -52.63999042345174)
+                            };
+                            \addlegendentry{SP4 - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, 0.22258774011933755)(45, 0.21837234676581235)(50, 0.2227378290624075)(55, 0.2223340553617128)(60, 0.2221719408060549)(65, 0.220278789647154)(70, 0.21928504892791004)(75, 0.2259781153738402)(80, 0.22590341723564877)
+                            };
+                            \addlegendentry{SB - IPG}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, 0.21796112721786645)(45, 0.21358309749752924)(50, 0.21734976216628374)(55, 0.218339916302337)(60, 0.21898705128570184)(65, 0.2173923491830371)(70, 0.2186895066683252)(75, 0.2219912522329916)(80, 0.22059677640229394)
+                            };
+                            \addlegendentry{SB - LHM}
+                            
+                            \addplot [mark=none, dashdotted, green]  coordinates {
+                            (40, 0.0)(45, 0.0)(50, 0.0)(55, 0.0)(60, 0.0)(65, 0.0)(70, 0.0)(75, 0.0)(80, 0.0)
+                            };
+                            \addlegendentry{SB - E3}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 106.17319508672709)(45, 90.70993404259326)(50, 74.28354171409413)(55, 57.090821863287374)(60, 36.449335881404274)(65, 15.771028628519055)(70, -2.0875150812812566)(75, -22.404604035775858)(80, -34.44693150576021)
+                            };
+                            \addlegendentry{SB - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case FannkuchRedux with regards to the battey level of the DUT (without outliers)} \label{fig:FannkuchRedux_Dram_charge}
+                \end{figure}
+                

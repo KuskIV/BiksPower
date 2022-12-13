@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Nbody - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0005889804961352052,
+                                    lower quartile=0.0008775018936749979,
+                                    median=0.0012020853449126179,
+                                    upper quartile=0.00709054515482313,
+                                    upper whisker=0.04277217872507466},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0008240596243289655,
+                                    lower quartile=0.00113771403573254,
+                                    median=0.0017087845191897655,
+                                    upper quartile=0.004504650960429374,
+                                    upper whisker=0.009190972593234648},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Nbody for the workstation,  experiment \#2 (without outliers)} \label{fig:Nbody_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

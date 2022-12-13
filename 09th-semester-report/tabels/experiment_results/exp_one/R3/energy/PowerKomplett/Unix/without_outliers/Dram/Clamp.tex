@@ -1,0 +1,84 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.6\textwidth,
+                                    height=0.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy (Watts)}, title={workstation - Clamp}, ytick={1, 2, 3, 4, 5, 6, 7, 8},
+                                yticklabels={
+                                    BinaryTrees - RAPL (lin), BinaryTrees - CLAMP (lin), FannkuchRedux - RAPL (lin), FannkuchRedux - CLAMP (lin), Nbody - RAPL (lin), Nbody - CLAMP (lin), Fasta - RAPL (lin), Fasta - CLAMP (lin)
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=34.24842921757235,
+                                    lower quartile=51.504245897605585,
+                                    median=52.17823475240391,
+                                    upper quartile=52.6444445112962,
+                                    upper whisker=61.529269311944745},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=36.2700363862467,
+                                    lower quartile=51.895705297286085,
+                                    median=52.47218851416912,
+                                    upper quartile=52.82324733422759,
+                                    upper whisker=61.39700737050565},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=26.24574464296711,
+                                    lower quartile=45.15361192204433,
+                                    median=45.68529978974074,
+                                    upper quartile=46.491207088144975,
+                                    upper whisker=54.51036179552078},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=32.03886172181342,
+                                    lower quartile=45.19377404035914,
+                                    median=45.52743388063425,
+                                    upper quartile=46.98518311889684,
+                                    upper whisker=62.990484479422534},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=17.185700385627257,
+                                    lower quartile=29.508026082742973,
+                                    median=29.8687827832086,
+                                    upper quartile=30.538312094311863,
+                                    upper whisker=35.441567640108715},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=15.899950116838468,
+                                    lower quartile=29.006741221551078,
+                                    median=29.539499781800707,
+                                    upper quartile=29.83913693857481,
+                                    upper whisker=34.11030462740817},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=23.5081259788669,
+                                    lower quartile=35.04556052721031,
+                                    median=36.017296384258856,
+                                    upper quartile=36.611760370913174,
+                                    upper whisker=43.292468285569754},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=20.08239274147293,
+                                    lower quartile=33.55452297706378,
+                                    median=35.7286406298642,
+                                    upper quartile=36.321697055963156,
+                                    upper whisker=42.59780034451053},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{R3 validation for energy measurements by Clamp for the Dram for all DUT's on Unix and test cases where the impact of the first profiler can be seen (without outliers)} \label{fig:PowerKomplett_Clamp_Dram_R3_energy_without_outliers_Unix_avg_watts}
+                        \end{figure}
+                        

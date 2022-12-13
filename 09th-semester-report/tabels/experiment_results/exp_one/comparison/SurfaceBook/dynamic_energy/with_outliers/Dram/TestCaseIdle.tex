@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - TestCaseIdle - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        IPG , LHM , E3 , RAPL 
+                                        },
+                                        xmin=0,xmax=10,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.007760652221826758,
+                                    lower quartile=-0.0050946580806172925,
+                                    median=-0.002701259291109648,
+                                    upper quartile=0.0007901945120050713,
+                                    upper whisker=0.06652544692424178},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.004211624125857905,
+                                    lower quartile=-0.0013310560346237732,
+                                    median=-0.0005287729523269225,
+                                    upper quartile=0.00041126298589083676,
+                                    upper whisker=0.026912573364984538},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-42.077966714439654,
+                                    lower quartile=-20.49555938759298,
+                                    median=-2.1660726897132747,
+                                    upper quartile=19.821314597007422,
+                                    upper whisker=50.19696627935566},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case TestCaseIdle for the SurfaceBook,  (with outliers)} \label{fig:TestCaseIdle_Dram_comparison_dynamic_energy_with_outliers_SurfaceBook_avg_watts}
+                            \end{figure}
+                            

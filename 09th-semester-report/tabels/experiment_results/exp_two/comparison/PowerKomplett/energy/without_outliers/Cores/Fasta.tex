@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Fasta - Energy - without outliers}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=54.22445449466433,
+                                    lower quartile=54.45751347572185,
+                                    median=54.54624547297937,
+                                    upper quartile=54.72020125409266,
+                                    upper whisker=55.103791721157386},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=51.45082608392138,
+                                    lower quartile=51.933860038023106,
+                                    median=52.121433545941585,
+                                    upper quartile=52.479201309170854,
+                                    upper whisker=54.95103920614709},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=129.0635902071594,
+                                    lower quartile=129.9512460855855,
+                                    median=130.16610443449048,
+                                    upper quartile=130.38603418686554,
+                                    upper whisker=131.45669407362817},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores energy consumption for test case Fasta for the workstation,  experiment \#2 (without outliers)} \label{fig:Fasta_Cores_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

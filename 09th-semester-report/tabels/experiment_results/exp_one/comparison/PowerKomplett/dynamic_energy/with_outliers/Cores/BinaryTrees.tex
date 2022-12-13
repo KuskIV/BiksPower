@@ -1,0 +1,60 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - BinaryTrees - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=66.89792094118035,
+                                    lower quartile=67.82648820588565,
+                                    median=68.22365397596283,
+                                    upper quartile=68.53649902422302,
+                                    upper whisker=72.91899239828562},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=65.4708069509544,
+                                    lower quartile=66.11534816821023,
+                                    median=66.27532723833454,
+                                    upper quartile=66.44412633159524,
+                                    upper whisker=69.64149630164013},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=49.36748648899456,
+                                    lower quartile=59.39957521748035,
+                                    median=60.22154751822312,
+                                    upper quartile=68.57561563020016,
+                                    upper whisker=76.59487529684452},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=56.400276110515385,
+                                    lower quartile=56.75939325693689,
+                                    median=56.86448126331913,
+                                    upper quartile=56.965123398456655,
+                                    upper whisker=57.15490760460869},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=34.2500767117359,
+                                    lower quartile=51.50619275990899,
+                                    median=52.32916789904128,
+                                    upper quartile=52.74930164067668,
+                                    upper whisker=72.15287309502655},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case BinaryTrees for the workstation,  (with outliers)} \label{fig:BinaryTrees_Cores_comparison_dynamic_energy_with_outliers_PowerKomplett_avg_watts}
+                            \end{figure}
+                            

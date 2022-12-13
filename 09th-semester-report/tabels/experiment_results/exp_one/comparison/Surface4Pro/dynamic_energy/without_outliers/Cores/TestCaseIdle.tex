@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        IPG , LHM , E3 , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.3217474324497074,
+                                    lower quartile=-0.1714317339456961,
+                                    median=-0.035256536352193946,
+                                    upper quartile=0.1625053922648536,
+                                    upper whisker=0.6018295025895739},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.3203527404143697,
+                                    lower quartile=-0.1839508660098631,
+                                    median=-0.05497064999458773,
+                                    upper quartile=0.1707759215257339,
+                                    upper whisker=0.7803720457850478},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.0009518336933719883,
+                                    lower quartile=-0.00025271260221482357,
+                                    median=-1.96722384957701e-05,
+                                    upper quartile=0.00026330534602022476,
+                                    upper whisker=0.0010290093982399749},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.08006107682545949,
+                                    lower quartile=-0.013893692714544992,
+                                    median=0.0022262007788294014,
+                                    upper quartile=0.02015562535000881,
+                                    upper whisker=0.047904985457755345},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the Surface4Pro,  (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.7\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Nbody - Energy - without outliers}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        IPG , LHM , E3 , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=10.133935985797786,
+                                    lower quartile=10.508083627897138,
+                                    median=10.563290440819467,
+                                    upper quartile=10.713440548550249,
+                                    upper whisker=11.04116722156298},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=9.149025698325639,
+                                    lower quartile=9.552604164229178,
+                                    median=9.629375930879661,
+                                    upper quartile=9.725476382608088,
+                                    upper whisker=9.827207700548948},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=8.10131771108396,
+                                    lower quartile=8.266098189684913,
+                                    median=8.296885014978823,
+                                    upper quartile=8.325836367790025,
+                                    upper whisker=8.44225776526485},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.273725591556662,
+                                    lower quartile=11.50982829302302,
+                                    median=11.526277045645164,
+                                    upper quartile=11.551637508253602,
+                                    upper whisker=11.59326501704639},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores energy consumption for test case Nbody for the Surface4Pro,  (without outliers)} \label{fig:Nbody_Cores_comparison_energy_without_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

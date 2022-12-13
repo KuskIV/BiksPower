@@ -1,0 +1,59 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start battery level},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=20,
+                        ]
+                        
+                            \addplot [mark=none, ultra thick, red]  coordinates {
+                            (40, 13.078200713302017)(45, 13.333673736570914)(50, 13.204181261237729)(55, 13.17338446690309)(60, 13.15621997221506)(65, 13.405035569561575)(70, 13.04197328850529)(75, 12.94366076471958)(80, 11.96043511980522)
+                            };
+                            \addlegendentry{SP4 - IPG}
+                            
+                            \addplot [mark=none, ultra thick, blue]  coordinates {
+                            (40, 12.02162751922554)(45, 12.191671665720499)(50, 12.199436750403821)(55, 12.030402353539156)(60, 12.051855372000201)(65, 12.08877168111388)(70, 12.054071307650789)(75, 11.999796272264994)(80, 11.633794055795791)
+                            };
+                            \addlegendentry{SP4 - LHM}
+                            
+                            \addplot [mark=none, ultra thick, green]  coordinates {
+                            (40, 11.553469934407548)(45, 11.51090572307054)(50, 11.593553257480506)(55, 11.515491844217244)(60, 11.500000839027733)(65, 11.4782304695641)(70, 11.542946002557699)(75, 11.55048845479555)(80, 11.427288219710313)
+                            };
+                            \addlegendentry{SP4 - E3}
+                            
+                            \addplot [mark=none, ultra thick, orange]  coordinates {
+                            (45, 8.060371471492777)(50, 8.0502820332702)(55, 8.04648345457208)(60, 8.036646182097344)(65, 8.02575795361955)(70, 8.013014822841003)(75, 8.025221667057368)(80, 7.947057958802778)
+                            };
+                            \addlegendentry{SP4 - RAPL}
+                            
+                            \addplot [mark=none, dashdotted, red]  coordinates {
+                            (40, 3.2391698817070744)(45, 3.5010080439499665)(50, 3.4825469531568407)(55, 3.579107066366934)(60, 3.4357354018088557)(65, 3.6311607501566323)(70, 4.125564412752033)(75, 3.4271095085441265)(80, 3.8854027626167476)
+                            };
+                            \addlegendentry{SB - IPG}
+                            
+                            \addplot [mark=none, dashdotted, blue]  coordinates {
+                            (40, 3.2465605894729794)(45, 3.800755064500345)(50, 3.6549915829209874)(55, 3.7284637944554957)(60, 3.642015594771468)(65, 3.441345733875307)(70, 3.1889947374866883)(75, 3.9526824746706017)(80, 3.067950420399155)
+                            };
+                            \addlegendentry{SB - LHM}
+                            
+                            \addplot [mark=none, dashdotted, green]  coordinates {
+                            (40, 4.2925822603549015)(45, 4.5442652330461355)(50, 4.036597577528207)(55, 4.0847313132415755)(60, 4.710235620369017)(65, 4.108962911899098)(70, 4.442041802762724)(75, 4.0293639940237576)(80, 3.401830855809001)
+                            };
+                            \addlegendentry{SB - E3}
+                            
+                            \addplot [mark=none, dashdotted, orange]  coordinates {
+                            (40, 4.925215120662519)(45, 4.9322159298988035)(50, 5.007393863135249)(55, 5.013024849578513)(60, 5.149867016680887)(65, 5.148315827955687)(70, 5.296360678363955)(75, 5.502412332994262)(80, 5.611947748408645)
+                            };
+                            \addlegendentry{SB - RAPL}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Cores for test case BinaryTrees with regards to the battey level of the DUT (with outliers)} \label{fig:BinaryTrees_Cores_charge}
+                \end{figure}
+                

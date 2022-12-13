@@ -1,0 +1,44 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.7\textwidth,
+                                    height=.15\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Nbody - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                yticklabels={
+                                    WRK - IPG , WRK - LHM , WRK - CLAMP (win) 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=17.428026615031836,
+                                lower quartile=17.787406660639974,
+                                median=17.973573995893066,
+                                upper quartile=18.118453483883485,
+                                upper whisker=20.798206550780964},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=17.395517758590184,
+                                lower quartile=17.628643264585463,
+                                median=18.079150633434303,
+                                upper quartile=18.38327579292764,
+                                upper whisker=18.677404259263444},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=11.847377669769841,
+                                lower quartile=13.291255345492104,
+                                median=14.19000907327802,
+                                upper quartile=15.206584591856767,
+                                upper whisker=16.022025856928337},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of of Cores dynamic energy consumption for test case Nbody for all DUT's and OS's  for experiment \#2 (without outliers)} \label{fig:Nbody_Cores_comparison_dynamic_energy_without_outliers_avg_watts_exp2}
+                        \end{figure}
+                        
