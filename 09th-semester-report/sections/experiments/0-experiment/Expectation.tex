@@ -16,22 +16,39 @@ Using these values lower and upper bounds for the expected energy consumption ca
 
 \paragraph{Software measurement instruments}: The different software approaches measure the CPU and ram individually so the Min and Max values for these components are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
 
-$$CPU: 10W < x < 65W $$
-$$Ram: 1.5W < y < 2.25W $$
+\begin{gather*}
+    CPU: 10W < x < 65W \\
+    Ram: 1.5W < y < 2.25W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
 
-Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.
+\paragraph{Hardware measurements:} The hardware measurements include the energy consumption of the entire system. To calculate the lower and upper limits to the energy consumption, the values found in \cref{tab:WorkstationEstEnergCon} are summarized. Based on observations, the CPU never utilizes more than $40\%$. Because of this, and as there is no GPU in the DUT, the efficiency of the power supply is set to the minimum efficiency for the calculations. The lower bound is thus calculated based on:
 
-\paragraph{Hardware measurements:} The hardware measurements include the energy consumption of the entire system. To calculate the lower and upper limits to the energy consumption, the values found in \cref{tab:WorkstationEstEnergCon} are summarized. Based on observations, the CPU never utilizes more than $40\%$. Because of this, and as there is no GPU in the DUT, the efficiency of the power supply is set to the minimum efficiency for the calculations. The lower bound is thus calculated to be:
-\todo{Call hardware measurements Clamp measurements}
-$$LowerCase = 35.75W =  (MinCPU + MinBoard + MinRam + AvgSSD + CPUFan + CaseFan)*(1+(\frac{1}{MinEff}))$$
+\begin{equation}
+    Min = {MinCPU, MinBoard, MinRam, AvgSSD, CPUFan, CaseFan}
+\end{equation}
 
-$avgSSD$ was used instead of $minSSD$ based on observations, where the SSD is used but the OS all the time.
+Based in $Min$, the $LowerCase$ can be calculated, representing the minimum energy consumption of the DUT. This is calculated as:
 
-$$AverageCase = 119.6W = (AvgCPU+AvgBoard+AvgRam+AvgSSD+ CPUFan + CaseFan)*(1+(1/AvgEff))$$ 
+\begin{equation}
+    LowerCase = \left ( \sum_{m \in Min} m \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 35.75W
+\end{equation}
+
+A thing to note here, is how $avgSSD$ was used instead of $minSSD$. This decision is based on observations, where the SSD is used but the OS all the time. Next up, the average case can be calculated. Here, the equation is the same, but the values change. They are as following:
+
+\begin{eqnarray}
+    Avg = {AvgCPU, AvgBoard, AvgRam, AvgSSD, CPUFan, CaseFan}
+\end{eqnarray}
+
+And $AverageCase$ is as following:
+
+\begin{equation}
+    AverageCase = \left ( \sum_{a \in Avg} a \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 119.6W
+\end{equation}
 
 The measurements from the hardware are expected to be between the $LowerCase$ and $AverageCase$.
 
-\paragraph{Surface Book 1:} As the Surface Book 1 is a laptop and is running on a battery, the hardware measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
+\paragraph{Surface Book:} As the Surface Book 1 is a laptop and is running on a battery, the hardware measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
 
 $$CPU: 7.5W < x < 14W $$
 $$Ram: 2W < y < 2.5W $$

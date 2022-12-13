@@ -2,7 +2,7 @@
 \begin{lstlisting}[caption=The method handeling dependencies and the validity of the results, label={lst:execute_async}]
 public async Task ExecuteAsync()
 {
-    CreateFolderIfNew();
+    CreateNonexistingFolders();
 
     await WaitTillStableState();
     var isExpValid = true;
