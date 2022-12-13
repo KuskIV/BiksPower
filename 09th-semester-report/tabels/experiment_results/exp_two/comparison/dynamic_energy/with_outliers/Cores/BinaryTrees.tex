@@ -6,9 +6,9 @@
                                     width=.7\textwidth,
                                     height=.15\textheight
                                 }
-                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - BinaryTrees - Dynamic Energy - with outliers}, ytick={1, 2},
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - BinaryTrees - Dynamic Energy - with outliers}, ytick={1, 2, 3},
                                 yticklabels={
-                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor , workstation - Clamp (win) 
                                     },
                                     xmin=0,xmax=80,
                                     ]
@@ -29,8 +29,16 @@
                                 upper whisker=51.33383700310924},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
+                                \addplot+ [boxplot prepared={
+                                lower whisker=29.830259066912944,
+                                lower quartile=31.58901951580512,
+                                median=44.45960234702146,
+                                upper quartile=45.21820217407331,
+                                upper whisker=46.94368206882841},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
                                 \end{axis}
                             \end{tikzpicture}
-                        \caption{A comparison of of Cores dynamic energy consumption for test case BinaryTrees for all DUT's and OS's (with outliers)} \label{fig:BinaryTrees_Cores_comparison_dynamic_energy_with_outliers_avg_watts_exp2}
+                        \caption{A comparison of of Cores dynamic energy consumption for test case BinaryTrees for all DUT's and OS's  for experiment \#2 (with outliers)} \label{fig:BinaryTrees_Cores_comparison_dynamic_energy_with_outliers_avg_watts_exp2}
                         \end{figure}
                         

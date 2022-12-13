@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor 
+                                        IntelPowerGadget , HardwareMonitor , Clamp (win) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -29,8 +29,16 @@
                                     upper whisker=0.0830881070686722},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.5622607671301552,
+                                    lower quartile=-0.2394391646469849,
+                                    median=-0.0969529391503201,
+                                    upper quartile=0.10358768756713843,
+                                    upper whisker=1.4873460685195852},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the workstation (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the workstation,  experiment \#2 (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
                             \end{figure}
                             

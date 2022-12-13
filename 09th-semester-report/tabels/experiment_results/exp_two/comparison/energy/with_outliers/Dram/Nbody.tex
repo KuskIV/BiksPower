@@ -6,9 +6,9 @@
                                     width=.7\textwidth,
                                     height=.15\textheight
                                 }
-                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - with outliers}, ytick={1, 2},
+                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - with outliers}, ytick={1, 2, 3},
                                 yticklabels={
-                                    workstation - IntelPowerGadget , workstation - HardwareMonitor 
+                                    workstation - IntelPowerGadget , workstation - HardwareMonitor , workstation - Clamp (win) 
                                     },
                                     xmin=0,xmax=80,
                                     ]
@@ -29,8 +29,16 @@
                                 upper whisker=0.6211068909395571},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.0,
+                                lower quartile=0.0,
+                                median=0.0,
+                                upper quartile=0.0,
+                                upper whisker=0.0},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
                                 \end{axis}
                             \end{tikzpicture}
-                        \caption{A comparison of of Dram energy consumption for test case Nbody for all DUT's and OS's (with outliers)} \label{fig:Nbody_Dram_comparison_energy_with_outliers_avg_watts_exp2}
+                        \caption{A comparison of of Dram energy consumption for test case Nbody for all DUT's and OS's  for experiment \#2 (with outliers)} \label{fig:Nbody_Dram_comparison_energy_with_outliers_avg_watts_exp2}
                         \end{figure}
                         

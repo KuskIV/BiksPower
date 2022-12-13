@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Fasta - Dynamic Energy - without outliers}, ytick={1, 2},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Dram - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor 
+                                        IntelPowerGadget , HardwareMonitor , Clamp (win) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -29,8 +29,16 @@
                                     upper whisker=0.07812222433105764},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Dram dynamic energy consumption for test case Fasta for the workstation (without outliers)} \label{fig:Fasta_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \caption{A comparison of of Dram dynamic energy consumption for test case Fasta for the workstation,  experiment \#2 (without outliers)} \label{fig:Fasta_Dram_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
                             \end{figure}
                             

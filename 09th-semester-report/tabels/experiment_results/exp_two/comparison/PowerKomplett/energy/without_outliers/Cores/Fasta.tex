@@ -6,9 +6,9 @@
                                         width=.7\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Fasta - Energy - without outliers}, ytick={1, 2},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Fasta - Energy - without outliers}, ytick={1, 2, 3},
                                     yticklabels={
-                                        IntelPowerGadget , HardwareMonitor 
+                                        IntelPowerGadget , HardwareMonitor , Clamp (win) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -29,8 +29,16 @@
                                     upper whisker=54.95103920614709},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=129.0635902071594,
+                                    lower quartile=129.9512460855855,
+                                    median=130.16610443449048,
+                                    upper quartile=130.38603418686554,
+                                    upper whisker=131.45669407362817},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
                                     \end{axis}
                                 \end{tikzpicture}
-                            \caption{A comparison of of Cores energy consumption for test case Fasta for the workstation (without outliers)} \label{fig:Fasta_Cores_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \caption{A comparison of of Cores energy consumption for test case Fasta for the workstation,  experiment \#2 (without outliers)} \label{fig:Fasta_Cores_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
                             \end{figure}
                             
