@@ -6,18 +6,9 @@ When referring to the energy consumption of pc components, one term which can be
 
 \paragraph{Workstation} The first DUT is the workstations, and the energy consumption for the different components can be seen in \cref{tab:WorkstationEstEnergCon}.
 
-\begin{table}[ht]
-    \begin{tabular}{||c | c | c | c | c | c ||}
-    \hline
-    % \multicolumn{5}{l}{Workstation} \\
-     & RAM\cite{buildComputerRAM} & CPU\cite{IntelCPUi7} & SSD\cite{tomshardwareSSD} & Motherboard\cite{CPUPowerCum} & Fans\\
-    Minimum consumption & $1.5 * 2$W & $10$W   & $0.2$W & $15$W & \\ \hline
-    Average consumption & $2.25 * 2$W & $65$W   & $6$W & $37.5$W & \\ \hline
-    Maximum consumption & $3 * 2$ & $97.5$W & $9$W &  $60$W & $2.4W*2$ \\ \hline
-    \end{tabular}
-    \caption{The energy consumption for the different components in the workstation}
-    \label{tab:WorkstationEstEnergCon}    
-\end{table}
+\input{tabels/workstation_components.tex}
+
+
 \todo{Add second SSD}
 The power supply does not have a specific energy consumption but instead has an energy efficiency rating. The energy efficiency rating represents how much of the energy going into the power supply, is used by the system. The power supply used in the workstation has an 80-Plus Gold certification, representing an efficiency of $90\%$ at a load of 20\%, an efficiency of $92\%$ at a load of 50\% and an efficiency of $89\%$ at a load of 100\%. This is highly relevant for the hardware measurements as they are measured before going into the power supply and will thus be around 8-11\% higher that the actual system consumption.
 
@@ -45,35 +36,13 @@ The measurements from the hardware are expected to be between the $LowerCase$ an
 $$CPU: 7.5W < x < 14W $$
 $$Ram: 2W < y < 2.5W $$
 
-\begin{table}[ht]
-    \begin{tabular}{llllll}
-    \hline
-    \multicolumn{5}{l}{Surface Book 1} \\
-     & RAM\cite{buildComputerRAM} & CPU\cite{NotebookCPU} \\
-    Minimum consumption & $2$W& $7.5$W \\ \hline
-    Average consumption & $2.5$W& $14$W \\ \hline
-    Maximum consumption & $3$W & $21$W \\ \hline
-    \end{tabular}
-    \caption{The energy consumption for the different components in the Surface Book 1}
-    \label{tab:bookjuanEstEnergCon}    
-\end{table}
+\input{tabels/surface_book_components.tex}
 
 \paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book 1. They are similar in terms of the RAM, and the CPU is from the same generation, but one is a better version. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
 
 $$CPU: 9.5W < x < 15W $$
 $$Ram: 2W < y < 2.5W $$
 
-\begin{table}[ht]
-    \begin{tabular}{llllll}
-    \hline
-    \multicolumn{5}{l}{Surface Pro 4} \\
-     & RAM\cite{buildComputerRAM} & CPU\cite{IntelCPUSpec} \\
-    Minimum consumption & $1.5 * 2$W& $9.5$W \\ \hline
-    Average consumption & $2.25 * 2$W& $15$W \\ \hline
-    Maximum consumption & $3 * 2$ & $22.5$W\\ \hline
-    \end{tabular}
-    \caption{The energy consumption for the different components in the Surface Pro 4}
-    \label{tab:proQuadroEstEnergCon}    
-\end{table}
+\input{tabels/surface_pro_components.tex}
 
 These should be considered rough estimates for what the DUTs can consume, values both above and below these estimates might still be valid, but require some further investigation if the deviation is significant.
