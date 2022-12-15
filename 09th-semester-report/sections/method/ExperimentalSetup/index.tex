@@ -1,0 +1,14 @@
+\section{Measurement Methodology}\label{sec:Measurement_Methodology}
+
+Now that the different components required to execute the experiment have been introduced, the following section will delve into the measurement methodology. When conducting the experiments three different kinds of measuring approaches are being utilized from the tools in \cref{sec:hardware}.
+The first is hardware-based measurements, which are system-level physical measurements. Another approach is software-based measurements: RAPL, LHM, Intel Power Gadget and sometimes E3, where measurements are performed using on-chip sensors. Lastly, there are energy predictive models, which are utilized by E3, when there is no power meter chip in the DUT.\todo{We could remove this from here as it should be described in a previous section.} There is however some uncertainty about how E3 works, this is covered in \cref{sec:E3Experiments}. Of these three approaches, the most accurate is the system-level physical measurements which can provide highly accurate measurements for the DUT's energy consumption, but these measurements are for the entire DUT, so they cannot provide a view of the power consumption of applications on an individual level, which the E3 can do. It is however not necessary to get a per-application energy consumption, as only the test cases' energy consumption is to be calculated. In the following our framework is described as well as how to solve the concern of full DUT energy consumption measurements and e.g. only CPU measurements. Furthermore, the test cases on which the measurements are done is also presented and the programming languages used.
+
+
+%A framework to runTo solve these issues and accommodate an  dynamic energy consumption can solve this, which is expanded upon in \cref{subsec:how_to_measure}
+
+
+
+%\input{sections/method/ExperimentalSetup/HardwareSetup.tex}
+\input{sections/method/ExperimentalSetup/framework.tex}
+\input{sections/method/ExperimentalSetup/experimental_setup.tex}
+\input{sections/method/ExperimentalSetup/languages.tex}
