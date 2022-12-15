@@ -3,12 +3,12 @@
                                 \centering
                                 \begin{tikzpicture}[]
                                     \pgfplotsset{%
-                                        width=.7\textwidth,
+                                        width=.85\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IPG , LHM , CLAMP (win) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -35,6 +35,22 @@
                                     median=152.50747337090698,
                                     upper quartile=153.2063277790902,
                                     upper whisker=154.77867517986473},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=59.986518206182524,
+                                    lower quartile=60.397582106740785,
+                                    median=60.544278679748786,
+                                    upper quartile=60.614039157335874,
+                                    upper whisker=60.775024918409045},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=112.5538501128723,
+                                    lower quartile=113.5805773369018,
+                                    median=113.8150765195558,
+                                    upper quartile=113.98719793196355,
+                                    upper whisker=119.76027785702989},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}

@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 1312.238439901686)(35, 1403.1079417608346)(40, 109.75941101274798)(45, 211.88224949533196)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (35, 0.0)(40, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Dram for test case FannkuchRedux with regards to the temperature of the DUT, experiment \#2, (with outliers)} \label{fig:FannkuchRedux_Dram_temperature_exp2}

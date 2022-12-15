@@ -3,12 +3,12 @@
                                 \centering
                                 \begin{tikzpicture}[]
                                     \pgfplotsset{%
-                                        width=.7\textwidth,
+                                        width=.85\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IPG , LHM , CLAMP (win) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -27,6 +27,22 @@
                                     median=0.5792691239911968,
                                     upper quartile=0.5820649904324364,
                                     upper whisker=0.5867513120652417},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=42.340526986302514,
+                                    lower quartile=492.58211204029897,
+                                    median=942.1648554726307,
+                                    upper quartile=1333.5297690861244,
+                                    upper whisker=1724.7090872044537},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={

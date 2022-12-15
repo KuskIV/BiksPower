@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 51.3562440863701)(35, 51.51357850325015)(40, 50.796403929955616)(45, 51.290363309915286)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (35, 63.943637495365984)(40, 43.818811817147264)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Cores for test case FannkuchRedux with regards to the temperature of the DUT, experiment \#2, (with outliers)} \label{fig:FannkuchRedux_Cores_temperature_exp2}

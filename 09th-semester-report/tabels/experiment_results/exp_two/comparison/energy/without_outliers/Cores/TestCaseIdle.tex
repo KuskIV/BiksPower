@@ -3,12 +3,12 @@
                             \centering
                             \begin{tikzpicture}[]
                                 \pgfplotsset{%
-                                    width=.7\textwidth,
-                                    height=.15\textheight
+                                    width=.85\textwidth,
+                                    height=.2\textheight
                                 }
-                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - TestCaseIdle - Energy - without outliers}, ytick={1, 2, 3},
+                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - TestCaseIdle - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                 yticklabels={
-                                    WRK - IPG , WRK - LHM , WRK - CLAMP (win) 
+                                    WRK - IPG , WRK - LHM , WRK - CLAMP (win) , WRK - RAPL , WRK - CLAMP (lin) 
                                     },
                                     xmin=0,xmax=80,
                                     ]
@@ -37,8 +37,24 @@
                                 upper whisker=109.32194251610085},
                                 ] table[row sep=\\,y index=0] {\\};
                                 
+                                \addplot+ [boxplot prepared={
+                                lower whisker=3.0802158570500757,
+                                lower quartile=3.2920977285217106,
+                                median=3.390199037452751,
+                                upper quartile=3.428294959116721,
+                                upper whisker=3.5958324701493782},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=61.66230919317957,
+                                lower quartile=62.17113947296338,
+                                median=62.40238227083836,
+                                upper quartile=62.83933186041619,
+                                upper whisker=63.55680160143954},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
                                 \end{axis}
                             \end{tikzpicture}
-                        \caption{A comparison of of Cores energy consumption for test case TestCaseIdle for all DUT's and OS's  for experiment \#2 (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_energy_without_outliers_avg_watts_exp2}
+                        \caption{A comparison of Cores energy consumption for test case TestCaseIdle for all DUT's and OS's  for experiment \#2 (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_energy_without_outliers_avg_watts_exp2}
                         \end{figure}
                         

@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 57.168412456482464)(35, 57.1806775213987)(50, 57.40253642474941)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (35, 51.44049654037824)(40, 50.76588789984609)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Cores for test case BinaryTrees with regards to the temperature of the DUT, experiment \#2, (without outliers)} \label{fig:BinaryTrees_Cores_temperature_exp2}
