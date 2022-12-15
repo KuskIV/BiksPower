@@ -14,7 +14,7 @@ The power supply does not have a specific energy consumption but instead has an 
 
 Using these values lower and upper bounds for the expected energy consumption can be created for the DUTs.
 
-\paragraph{Software measurement instruments}: The different software approaches measure the CPU and ram individually so the Min and Max values for these components are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
+\paragraph{Software measuring instruments}: The different software approaches measure the CPU and ram individually so the Min and Max values for these components are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
 
 \begin{gather*}
     CPU: 10W < x < 65W \\
@@ -48,14 +48,14 @@ And $AverageCase$ is as following:
 
 The measurements from the hardware are expected to be between the $LowerCase$ and $AverageCase$.
 
-\paragraph{Surface Book:} As the Surface Book 1 is a laptop and is running on a battery, the hardware measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
+\paragraph{Surface Book:} As the Surface Book is a laptop and is running on a battery, the hardware measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
 
 $$CPU: 7.5W < x < 14W $$
 $$Ram: 2W < y < 2.5W $$
 
 \input{tabels/surface_book_components.tex}
 
-\paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book 1. They are similar in terms of the RAM, and the CPU is from the same generation, but one is a better version. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
+\paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book. They are similar in terms of the RAM, and the CPU is from the same generation, but one is a better version. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
 
 $$CPU: 9.5W < x < 15W $$
 $$Ram: 2W < y < 2.5W $$
