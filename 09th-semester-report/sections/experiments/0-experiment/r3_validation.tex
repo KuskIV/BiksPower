@@ -2,8 +2,10 @@
 
 In this work, an adapted version of R3 validation is used, based on the work by Bokhari et al.\cite[]{Bokhari2020r3}. The data presented in this chapter is based on the three measuring instruments Clamp(win), LHM and IPG. When looking at the results for the different DUTs, similar observations can be made, which is one reason only the results for the workstation can be observed in \cref{fig:PowerKomplett_HardwareMonitor_Cores_R3_dynamic_energy_without_outliers_Win32NT_avg_watts}. The results for the other DUT's can be found in \cref{app:r3_validation}. 
 
-
-\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/without_outliers/Cores/HardwareMonitor.tex}
+\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/BinaryTrees/without_outliers/Cores/IntelPowerGadget.tex}
+\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/FannkuchRedux/without_outliers/Cores/IntelPowerGadget.tex}
+\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/Fasta/without_outliers/Cores/IntelPowerGadget.tex}
+\input{tabels/experiment_results/exp_one/R3/dynamic_energy/PowerKomplett/Win32NT/Nbody/without_outliers/Cores/IntelPowerGadget.tex}
 
 \paragraph{Expectations:} R3 validation was chosen in our work because Bokhari et al.\cite[]{Bokhari2020r3} observed that the order in which the test cases were executed, affected the results. This was argued to be the case because the state of the DUT changed over time, where different background processes were executed at different times and would use a different amount of processor power. This could evoke garbage collection, which would impact the measured energy consumption. Because of this, it was deemed unfair to execute the test cases in the same order, which resulted in the R3 way of switching the order upon a restart. The work by Bokhari et al. was however done on an android phone, whereas our work is on Windows and Linux, where we expect background processes to have less of an impact due to the hardware in general being faster and having more memory on computers than on phones.\todo{er det en fair grund?} Because of this, the impact of R3 is expected to be limited.
 

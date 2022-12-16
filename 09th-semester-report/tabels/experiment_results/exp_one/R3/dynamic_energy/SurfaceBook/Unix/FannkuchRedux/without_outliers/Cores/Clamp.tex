@@ -1,0 +1,28 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={SurfaceBook - Clamp}, ytick={1},
+                                    yticklabels={
+                                        FannkuchRedux - RAPL
+                                        },
+                                        xmin=0,xmax=70,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=5.062875916575935,
+                                        lower quartile=5.15876774202521,
+                                        median=5.1819262057960325,
+                                        upper quartile=5.198190098979957,
+                                        upper whisker=5.255077811846938},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by Clamp for the Cores for DUT SurfaceBook, OS Unix and test case FannkuchRedux, where the impact of the first profiler can be seen (without outliers)} \label{fig:SurfaceBook_Clamp_Cores_R3_dynamic_energy_without_outliers_Unix_avg_watts}
+                            \end{figure}
+                            

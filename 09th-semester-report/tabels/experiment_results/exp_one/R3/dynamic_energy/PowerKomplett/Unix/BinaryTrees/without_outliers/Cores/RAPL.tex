@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={workstation - RAPL}, ytick={1, 2},
+                                    yticklabels={
+                                        BinaryTrees - RAPL, BinaryTrees - CLAMP
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=56.488626256668205,
+                                        lower quartile=56.73699964908353,
+                                        median=56.858622564501516,
+                                        upper quartile=56.9634887304031,
+                                        upper whisker=57.159023925217625},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=56.3962116679819,
+                                        lower quartile=56.76292116535778,
+                                        median=56.8768355315114,
+                                        upper quartile=56.997751708246135,
+                                        upper whisker=57.13902502159266},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by RAPL for the Cores for DUT PowerKomplett, OS Unix and test case BinaryTrees, where the impact of the first profiler can be seen (without outliers)} \label{fig:PowerKomplett_RAPL_Cores_R3_dynamic_energy_without_outliers_Unix_avg_watts}
+                            \end{figure}
+                            

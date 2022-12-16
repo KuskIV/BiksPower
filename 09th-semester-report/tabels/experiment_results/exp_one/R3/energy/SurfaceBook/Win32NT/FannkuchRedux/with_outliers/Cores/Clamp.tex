@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={SurfaceBook - Clamp}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        FannkuchRedux - IPG, FannkuchRedux - LHM, FannkuchRedux - IPG, FannkuchRedux - LHM
+                                        },
+                                        xmin=0,xmax=70,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=7.275377739099774,
+                                        lower quartile=7.86037147931664,
+                                        median=8.016547202166343,
+                                        upper quartile=8.163781076054823,
+                                        upper whisker=8.443607336852416},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=6.7891160101762065,
+                                        lower quartile=7.726221632093489,
+                                        median=7.9294102918426415,
+                                        upper quartile=8.088556168940455,
+                                        upper whisker=8.331280472756825},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=6.043318385570014,
+                                        lower quartile=7.591947383613743,
+                                        median=7.844212473451631,
+                                        upper quartile=8.01751048314169,
+                                        upper whisker=8.272274564703096},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=6.584873335325397,
+                                        lower quartile=7.595039735929399,
+                                        median=7.829593775620731,
+                                        upper quartile=8.080420296600865,
+                                        upper whisker=8.284775000974735},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by Clamp for the Cores for DUT SurfaceBook, OS Win32NT and test case FannkuchRedux, where the impact of the first profiler can be seen (with outliers)} \label{fig:SurfaceBook_Clamp_Cores_R3_energy_with_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

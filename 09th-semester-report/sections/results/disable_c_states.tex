@@ -2,10 +2,18 @@
 
 Next, up, experiment \#2 will be covered, where the DUT was in performance mode. This was done to attempt to get a more realistic idle case, resulting in a more realistic dynamic energy consumption of the other test cases.
 
-\paragraph*{Expectations:} The expectation for this experiment, is a higher energy consumption on all test cases, especially the idle test case. This increased energy consumption for the test cases will result in a decreased dynamic energy consumption, as we expect the energy consumption for the idle test case to increase more than the other test cases.
+\subsection{Expectations} 
 
-\paragraph*{Result:} When considering the result, the test case BinaryTrees can be seen in \cref{fig:BinaryTrees_Cores_comparison_dynamic_energy_without_outliers_avg_watts_exp2}, and for the other test cases in \cref{app:exp_two}.\todo{lidt kort}
+The expectation for this experiment, is a higher energy consumption on all test cases, especially the idle test case. This increased energy consumption for the test cases will most likely result in a decreased dynamic energy consumption, as we expect the energy consumption for the idle test case to increase more than the other test cases. In addition to this, the expection will also be a lower standard deviation for especially the clamp.
+
+\subsection{Result} 
+When considering the result, the test case Nbody can be seen in \cref{fig:Nbody_Cores_comparison_dynamic_energy_without_outliers_avg_watts_exp2}, and for the other test cases in \cref{app:exp_two}. In this graph, the measurements from the first and second experiments can be observed and compared. The results will be discussed through \textbf{RQ2} and \textbf{3}.
+
+\paragraph*{RQ1:} When comparing based on the different measuring instruments, the patterns and orders of the profilers has not changed, but the dynamic energy consumption has. This is especially for the clamp on windows, where the uncertainty has decreased in all cases except for BinaryTrees, where it increased. IPG and LHM are still similar, and still measures a higher values compared to the clam on windows. When comparing IPG and LHM to RAPL, RAPL now reports a higher energy consumption in all cases, as a very limited effect on the reported measurements when disabling the C-states is observed for RAPL.
+
+\paragraph*{RQ2:} When comparing Windows and Linux, the difference between an enabled and disabled C-state can be observed for Nbody in \cref{fig:Nbody_Cores_comparison_dynamic_energy_without_outliers_avg_watts_exp2} and all other test cases in \cref{app:exp_two}. The effect for Linux in general is limited, especially on RAPL. When considering the clamp on Linux it has improved in some cases. For Nbody, the min/max values are now very close the the 25th and 75th percentile, but the dynamic energy consumption is still close to the same value, but for Fasta, a very limited effect is observed. On windows it is different, where the dynamic energy for all measurement instruments has decreased. This is especially clear for the clamp in Windows, where the uncertainty before was the highest of all measuring instruments.
 
 \input{tabels/experiment_results/exp_two/comparison/dynamic_energy/without_outliers/Cores/BinaryTrees.tex}
-%\input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/TestCaseIdle.tex}
-%\input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/BinaryTrees.tex}
+% \input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/TestCaseIdle.tex}
+\input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/BinaryTrees.tex}
+

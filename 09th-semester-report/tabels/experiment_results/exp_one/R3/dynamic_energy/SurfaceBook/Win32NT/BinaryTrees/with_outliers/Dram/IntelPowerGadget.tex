@@ -1,0 +1,36 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={SurfaceBook - IntelPowerGadget}, ytick={1, 2},
+                                    yticklabels={
+                                        BinaryTrees - IPG, BinaryTrees - LHM
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=2.33114386881236,
+                                        lower quartile=2.658330592296816,
+                                        median=3.240613731907986,
+                                        upper quartile=4.835049335368083,
+                                        upper whisker=6.173623404106571},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=2.3394580047788764,
+                                        lower quartile=2.7240458363609354,
+                                        median=2.9603410250462083,
+                                        upper quartile=4.022877210447765,
+                                        upper whisker=6.009460710931991},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by IntelPowerGadget for the Dram for DUT SurfaceBook, OS Win32NT and test case BinaryTrees, where the impact of the first profiler can be seen (with outliers)} \label{fig:SurfaceBook_IntelPowerGadget_Dram_R3_dynamic_energy_with_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            
