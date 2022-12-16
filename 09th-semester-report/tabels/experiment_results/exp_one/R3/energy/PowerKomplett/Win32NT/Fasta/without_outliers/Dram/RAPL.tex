@@ -1,0 +1,68 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={workstation - RAPL}, ytick={1, 2, 3, 4, 5, 6},
+                                    yticklabels={
+                                        Fasta - IPG, Fasta - LHM, Fasta - CLAMP, Fasta - IPG, Fasta - LHM, Fasta - CLAMP
+                                        },
+                                        xmin=0,xmax=50,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.30526797215659,
+                                        lower quartile=40.97327163025656,
+                                        median=41.72166726874962,
+                                        upper quartile=42.639938738927185,
+                                        upper whisker=44.425335327916834},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.48550261459181,
+                                        lower quartile=40.831039235552794,
+                                        median=41.5846158762684,
+                                        upper quartile=42.207863208562216,
+                                        upper whisker=43.46991921513228},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.2697084750618,
+                                        lower quartile=41.035098465232245,
+                                        median=41.38869099577169,
+                                        upper quartile=42.44694669562162,
+                                        upper whisker=43.91629239371539},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.758440129667676,
+                                        lower quartile=41.39236498066475,
+                                        median=41.773795862544134,
+                                        upper quartile=42.42892778500295,
+                                        upper whisker=44.19480610081178},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.81938120830589,
+                                        lower quartile=41.27530056939251,
+                                        median=41.61423462219319,
+                                        upper quartile=42.13919903223857,
+                                        upper whisker=43.40666243037317},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=40.864166136835486,
+                                        lower quartile=41.51662118233571,
+                                        median=41.88433916576963,
+                                        upper quartile=42.86202552311207,
+                                        upper whisker=45.290678405053065},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by RAPL for the Dram for DUT PowerKomplett, OS Win32NT and test case Fasta, where the impact of the first profiler can be seen (without outliers)} \label{fig:PowerKomplett_RAPL_Dram_R3_energy_without_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

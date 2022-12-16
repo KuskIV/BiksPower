@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={workstation - Clamp}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        Fasta - RAPL, Fasta - CLAMP, Fasta - RAPL (lin), Fasta - CLAMP (lin)
+                                        },
+                                        xmin=0,xmax=50,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=36.98653934093082,
+                                        lower quartile=37.455991972956724,
+                                        median=37.655706834606306,
+                                        upper quartile=37.781601525528046,
+                                        upper whisker=38.29764701847023},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=37.04366092823343,
+                                        lower quartile=37.37916853847982,
+                                        median=37.5901187289616,
+                                        upper quartile=37.845142006512965,
+                                        upper whisker=38.37789381423628},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=23.5081259788669,
+                                        lower quartile=35.04556052721031,
+                                        median=36.017296384258856,
+                                        upper quartile=36.611760370913174,
+                                        upper whisker=43.292468285569754},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=20.08239274147293,
+                                        lower quartile=33.55452297706378,
+                                        median=35.7286406298642,
+                                        upper quartile=36.321697055963156,
+                                        upper whisker=42.59780034451053},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by Clamp for the Dram for DUT PowerKomplett, OS Unix and test case Fasta, where the impact of the first profiler can be seen (with outliers)} \label{fig:PowerKomplett_Clamp_Dram_R3_energy_with_outliers_Unix_avg_watts}
+                            \end{figure}
+                            

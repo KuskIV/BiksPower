@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={Surface4Pro - RAPL}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        Fasta - IPG, Fasta - LHM, Fasta - IPG, Fasta - LHM
+                                        },
+                                        xmin=0,xmax=50,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.360417457139448,
+                                        lower quartile=8.858172876167487,
+                                        median=8.994186941260125,
+                                        upper quartile=9.209238485879588,
+                                        upper whisker=9.744658639162708},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.592152209551102,
+                                        lower quartile=8.855365531309413,
+                                        median=9.037068069822336,
+                                        upper quartile=9.201644889483333,
+                                        upper whisker=9.593846703546518},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.575189607595762,
+                                        lower quartile=8.786845299509624,
+                                        median=8.856692825865654,
+                                        upper quartile=8.965072230995675,
+                                        upper whisker=9.313014699889814},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.27650316423301,
+                                        lower quartile=8.717825002837017,
+                                        median=8.867079128255014,
+                                        upper quartile=9.07174813218868,
+                                        upper whisker=9.30814343850147},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by RAPL for the Cores for DUT Surface4Pro, OS Win32NT and test case Fasta, where the impact of the first profiler can be seen (with outliers)} \label{fig:Surface4Pro_RAPL_Cores_R3_dynamic_energy_with_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

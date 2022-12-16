@@ -1,8 +1,8 @@
-PWD c:/Users/Jeppe Holt/Documents/GitHub/BiksPower/09th-semester-report/tabels
+PWD c:/Users/Mads Kusk/git/BiksPower/09th-semester-report/tabels
 INPUT c:/texlive/2022/texmf.cnf
 INPUT c:/texlive/2022/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/Jeppe Holt/Documents/GitHub/BiksPower/09th-semester-report/tabels/ExampleHeat.tex
+INPUT c:/Users/Mads Kusk/git/BiksPower/09th-semester-report/tabels/ExampleHeat.tex
 OUTPUT ExampleHeat.log
 INPUT c:/texlive/2022/texmf-dist/tex/latex/standalone/standalone.cls
 INPUT c:/texlive/2022/texmf-dist/tex/latex/standalone/standalone.cls

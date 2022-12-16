@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={Surface4Pro - HardwareMonitor}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        Nbody - IPG, Nbody - LHM, Nbody - IPG, Nbody - LHM
+                                        },
+                                        xmin=0,xmax=30,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.643715255626521,
+                                        lower quartile=9.002537230327587,
+                                        median=9.053926935812104,
+                                        upper quartile=9.203186906200491,
+                                        upper whisker=9.457729201376516},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.900203536828617,
+                                        lower quartile=9.037263686444046,
+                                        median=9.143567015865415,
+                                        upper quartile=9.22507264757424,
+                                        upper whisker=9.551441847690075},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.98325731876268,
+                                        lower quartile=9.094313809904154,
+                                        median=9.159650886797657,
+                                        upper quartile=9.265169478524399,
+                                        upper whisker=9.36804757101107},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=8.708528476017076,
+                                        lower quartile=9.120617804394135,
+                                        median=9.20679698627475,
+                                        upper quartile=9.2997309433299,
+                                        upper whisker=9.386666747380843},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by HardwareMonitor for the Cores for DUT Surface4Pro, OS Win32NT and test case Nbody, where the impact of the first profiler can be seen (without outliers)} \label{fig:Surface4Pro_HardwareMonitor_Cores_R3_dynamic_energy_without_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

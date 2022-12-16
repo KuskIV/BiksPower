@@ -1,0 +1,68 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={workstation - RAPL}, ytick={1, 2, 3, 4, 5, 6},
+                                    yticklabels={
+                                        FannkuchRedux - IPG, FannkuchRedux - LHM, FannkuchRedux - CLAMP, FannkuchRedux - IPG, FannkuchRedux - LHM, FannkuchRedux - CLAMP
+                                        },
+                                        xmin=0,xmax=70,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=54.74562668952167,
+                                        lower quartile=55.799136019397636,
+                                        median=56.05422434946934,
+                                        upper quartile=56.96539824078928,
+                                        upper whisker=59.085052950256895},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=54.46397491768422,
+                                        lower quartile=55.36817726159913,
+                                        median=55.73062735933872,
+                                        upper quartile=56.303864605009274,
+                                        upper whisker=59.401111606284935},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=53.82535256733344,
+                                        lower quartile=55.859029137171845,
+                                        median=56.300930240028,
+                                        upper quartile=58.09286270332852,
+                                        upper whisker=60.321556317610025},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=56.85381583436594,
+                                        lower quartile=57.407202435565,
+                                        median=58.15549306763974,
+                                        upper quartile=59.01882540192972,
+                                        upper whisker=60.222719944641426},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=56.84701382005832,
+                                        lower quartile=58.13220173613038,
+                                        median=58.46110738617428,
+                                        upper quartile=58.96874569247589,
+                                        upper whisker=60.34939079109168},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=57.33450841536033,
+                                        lower quartile=58.11715960853908,
+                                        median=58.82265996028625,
+                                        upper quartile=59.4014555948303,
+                                        upper whisker=60.058667569794075},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by RAPL for the Cores for DUT PowerKomplett, OS Win32NT and test case FannkuchRedux, where the impact of the first profiler can be seen (with outliers)} \label{fig:PowerKomplett_RAPL_Cores_R3_energy_with_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            
