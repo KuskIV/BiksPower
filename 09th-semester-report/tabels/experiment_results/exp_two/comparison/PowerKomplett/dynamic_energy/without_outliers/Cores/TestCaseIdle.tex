@@ -3,12 +3,12 @@
                                 \centering
                                 \begin{tikzpicture}[]
                                     \pgfplotsset{%
-                                        width=.7\textwidth,
+                                        width=.85\textwidth,
                                         height=.2\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5},
                                     yticklabels={
-                                        IPG , LHM , CLAMP (win) 
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -35,6 +35,22 @@
                                     median=-0.0969529391503201,
                                     upper quartile=0.10358768756713843,
                                     upper whisker=1.4873460685195852},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.274029792336258,
+                                    lower quartile=-0.062147920864623285,
+                                    median=0.03595338806641757,
+                                    upper quartile=0.07404930973038715,
+                                    upper whisker=0.2415868207630445},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.8192939926668856,
+                                    lower quartile=-0.3104637128830703,
+                                    median=-0.07922091500809358,
+                                    upper quartile=0.357728674569735,
+                                    upper whisker=1.0751984155930856},
                                     ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}

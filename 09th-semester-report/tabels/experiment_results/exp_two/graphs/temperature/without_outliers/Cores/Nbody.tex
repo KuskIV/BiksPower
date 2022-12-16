@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 27.66846094448952)(35, 27.76909495833)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (30, 27.783870191328653)(35, 27.505347287108208)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Cores for test case Nbody with regards to the temperature of the DUT, experiment \#2, (without outliers)} \label{fig:Nbody_Cores_temperature_exp2}

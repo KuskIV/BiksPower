@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 1667.6313682557404)(35, 1898.2826601709114)(50, 599.3187290302408)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (35, 0.0)(40, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Dram for test case BinaryTrees with regards to the temperature of the DUT, experiment \#2, (without outliers)} \label{fig:BinaryTrees_Dram_temperature_exp2}

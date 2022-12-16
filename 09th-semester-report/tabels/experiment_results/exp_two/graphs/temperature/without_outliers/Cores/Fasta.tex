@@ -27,6 +27,16 @@
                             };
                             \addlegendentry{WRK - CLAMP (win)}
                             
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 37.92824454855095)(40, 37.5032167860626)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (30, 34.65360795631813)(35, 34.724430368243034)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
                         \end{axis}
                     \end{tikzpicture} 
                 \caption{A graph illustrating the energy consumption of Cores for test case Fasta with regards to the temperature of the DUT, experiment \#2, (without outliers)} \label{fig:Fasta_Cores_temperature_exp2}

@@ -17,14 +17,21 @@ In order to conduct this study, four different research questions are formulated
 
 \begin{itemize}
     \item \textbf{RQ1:} How do we systematically measure the energy consumption of a test case on different DUTs and OSes and how do we make the test case measurements comparable?
-    \item \textbf{RQ2:} How do existing solutions to energy measurements compare to each other?
+    \item \textbf{RQ2:} How do existing energy measurements instruments compare to each other?
     \item \textbf{RQ3:} How does the test case measurement compare between windows and Linux?
     \item \textbf{RQ4:} How does the test case measurement compare between different DUTs?
 \end{itemize}
 
-\textbf{RQ1} signifies that several DUTs have to be tested and a method to compare the results is required, so that the different measuring instruments can be compared in \textbf{RQ2}. Based on \textbf{RQ2}, an analysis will be made comparing the measuring instruments with each other based on performance on Linux and Windows (\textbf{RQ3}) and different DUTs with different hardware components (\textbf{RQ4}).
+The overall goal of this work is to compare existing measurement instruments (\textbf{RQ2}). This will be done based on both operating systems (\textbf{RQ3}) and DUT's (\textbf{RQ4}). When comparing measurement instruments, it will be done with different test cases. In order to achieve this, a systematic way of measuring energy consumption and make the comparisons comparable across different DUT's and OS's, as stated in \textbf{RQ1}.
 
+\paragraph*{}
 This work is motivated by how most research today mainly uses RAPL on Linux\cite[]{Rasmussen2021,Pereira2017,Theilmann2022,Lindholt2022}, and those who do not, have the disclaimer of not knowing how accurate their results actually are\cite[]{Bruce2015ReducingEC, Ozturk2019, Unlu2021}. This is despite claims from Microsoft how their tool (Enegy Esimation Engine (E3)) can perform with 98\% accuracy in certain cases\cite[]{E3WinHec}. The main contribution of this work is to create an independent source of how accurate different measuring instruments are.
+
+\paragraph*{}
+In \cref*{ch:related_work} a look into existing work will be made, for inspiration. Following this, \cref*{ch:method} will aim to answer \textbf{RQ1}, by introducing the framework created, and how to make measurements comparable. In \cref*{ch:experiments}, the different experiments performed in order to answer \textbf{RQ2-4} will be explained, and analyzed in \cref*{ch:results}. Lastly, the results will be discussed and concluded upon in \cref*{ch:discussion} and \cref*{ch:conclusion} respectively.
+
+
+
 
 
 

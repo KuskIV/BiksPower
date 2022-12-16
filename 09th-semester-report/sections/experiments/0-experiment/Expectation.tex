@@ -50,15 +50,22 @@ The measurements from the clamp are expected to be between the $LowerCase$ and $
 
 \paragraph{Surface Book:} As the Surface Book is a laptop and is running on a battery, the clamp measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
 
-$$CPU: 7.5W < x < 14W $$
-$$Ram: 2W < y < 2.5W $$
+\begin{gather*}
+    CPU: 7.5W < x < 14W \\
+    Ram: 2W < y < 2.5W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
+
 
 \input{tabels/surface_book_components.tex}
 
 \paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book. They are similar in terms of the RAM, and the CPU is from the same generation, but CPU in the Surface Pro 4 is slightly better with a higher turbo clock speed and bigger L3 cache. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
 
-$$CPU: 9.5W < x < 15W $$
-$$Ram: 2W < y < 2.5W $$
+\begin{gather*}
+    CPU: 9.5W < x < 15W \\
+    Ram: 2W < y < 2.5W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
 
 \input{tabels/surface_pro_components.tex}
 

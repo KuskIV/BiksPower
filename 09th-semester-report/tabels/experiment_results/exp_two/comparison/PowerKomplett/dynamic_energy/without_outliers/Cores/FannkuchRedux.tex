@@ -3,12 +3,12 @@
                                 \centering
                                 \begin{tikzpicture}[]
                                     \pgfplotsset{%
-                                        width=.7\textwidth,
-                                        height=.2\textheight
+                                        width=.85\textwidth,
+                                        height=.4\textheight
                                     }
-                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2, 3},
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                                     yticklabels={
-                                        IPG , LHM , CLAMP (win) 
+                                        IPG EXP\#2, IPG , LHM EXP \#2 , LHM , CLAMP (win) EXP \#2 , CLAMP (win) , RAPL EXP \#2 , RAPL , CLAMP (lin) EXP \#2, CLAMP (lin) 
                                         },
                                         xmin=0,xmax=80,
                                         ]
@@ -20,6 +20,14 @@
                                     upper quartile=41.43397013922524,
                                     upper whisker=43.83707081580782},
                                     ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp1
+                                        lower whisker=53.8220484166336,
+                                        lower quartile=55.723885155635514,
+                                        median=56.04900813170462,
+                                        upper quartile=56.906274082246334,
+                                        upper whisker=60.31787022893325},
+                                        ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
                                     lower whisker=39.19629795553155,
@@ -28,6 +36,14 @@
                                     upper quartile=41.16245647275235,
                                     upper whisker=42.17314023125945},
                                     ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp 1
+                                        lower whisker=56.84815176778077,
+                                        lower quartile=57.91916678672111,
+                                        median=58.348003387962436,
+                                        upper quartile=59.12214565669487,
+                                        upper whisker=60.3505978483267},
+                                        ] table[row sep=\\,y index=0] {\\};
                                     
                                     \addplot+ [boxplot prepared={
                                     lower whisker=18.24213762590746,
@@ -36,6 +52,46 @@
                                     upper quartile=36.18954468612935,
                                     upper whisker=38.23404395723189},
                                     ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% ep 1
+                                        lower whisker=41.26662053419828,
+                                        lower quartile=48.21241837299763,
+                                        median=49.39702368335719,
+                                        upper quartile=56.679135952479015,
+                                        upper whisker=65.81954114948346},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=50.78793906398947,
+                                    lower quartile=51.28452896727571,
+                                    median=51.3972029089396,
+                                    upper quartile=51.44096052412707,
+                                    upper whisker=51.55730514137844},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp 1
+                                        lower whisker=50.5227971489376,
+                                        lower quartile=50.75157351841153,
+                                        median=50.844592889244566,
+                                        upper quartile=50.95293806529164,
+                                        upper whisker=52.3866333306309},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=33.32387264561788,
+                                    lower quartile=43.921284136647415,
+                                    median=44.37098418501048,
+                                    upper quartile=44.66200267245195,
+                                    upper whisker=53.038660388254016},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp 1
+                                        lower whisker=26.245583328204887,
+                                        lower quartile=45.1689420924493,
+                                        median=45.63428005369751,
+                                        upper quartile=46.517958470850715,
+                                        upper whisker=62.99071013257756},
+                                        ] table[row sep=\\,y index=0] {\\};
                                     
                                     \end{axis}
                                 \end{tikzpicture}
