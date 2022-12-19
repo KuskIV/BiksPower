@@ -1,4 +1,4 @@
-\section{Disabled C-States}
+\section{Disabled C-States}\label{sec:disable_c_states_exp}
 
 Next, up, experiment \#2 will be covered, where the DUT was in performance mode. This was done to attempt to get a more realistic idle case, resulting in a more realistic dynamic energy consumption of the other test cases.
 
@@ -13,7 +13,6 @@ When considering the result, the test case Nbody can be seen in \cref{fig:Nbody_
 
 \paragraph*{RQ2:} When comparing Windows and Linux, the difference between an enabled and disabled C-state can be observed for Nbody in \cref{fig:Nbody_Cores_comparison_dynamic_energy_without_outliers_avg_watts_exp2} and all other test cases in \cref{app:exp_two}. The effect for Linux in general is limited, especially on RAPL. When considering the clamp on Linux it has improved in some cases. For Nbody, the min/max values are now very close the the 25th and 75th percentile, but the dynamic energy consumption is still close to the same value, but for Fasta, a very limited effect is observed. On windows it is different, where the dynamic energy for all measurement instruments has decreased. This is especially clear for the clamp in Windows, where the uncertainty before was the highest of all measuring instruments.
 
-\input{tabels/experiment_results/exp_two/comparison/dynamic_energy/without_outliers/Cores/Nbody.tex}
-% \input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/TestCaseIdle.tex}
-% \input{tabels/experiment_results/exp_two/comparison/energy/without_outliers/Cores/BinaryTrees.tex}
+\input{tabels/experiment_results/exp_two/comparison/PowerKomplett/dynamic_energy/without_outliers/Cores/Nbody.tex}
+
 
