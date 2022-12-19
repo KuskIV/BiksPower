@@ -6,7 +6,7 @@ Another approach is the model-based interface, where on-chip sensors are used. F
 
 Given RAPL, Intel Power Gadget, LHM and the physical measurements only provide the energy consumption of the entire system, the idle energy consumption is required for this experiment, to extract the energy consumption of the test program only. To solve this, dynamic energy consumption can be utilized, as presented by Fahad et al.\cite{fahad2019comparative}, which was covered in \cref{sec:rw_measureing_methodology_setup} Dynamic energy consumption is an estimation of the applications power consumption and is calculated using \cref{eq:dynamicEnergy}
 
-To do this a certain amount of control over the system is required and some precautions are necessary. The procedures that will be used are different for the DUTs and OSes, but some will be the same for all DUTs as shown here, and are a combination of procedures presented in \cref{sec:rw_measureing_methodology_setup} by Sestoft\cite*[]{sestoft2013microbenchmarks} and Fahad et al.\cite*[]{fahad2019comparative}:
+To do this a certain amount of control over the system is required and some precautions are necessary. The procedures that will be used are different for the DUTs and OSs, but some will be the same for all DUTs as shown here, and are a combination of procedures presented in \cref{sec:rw_measureing_methodology_setup} by Sestoft\cite*[]{sestoft2013microbenchmarks} and Fahad et al.\cite*[]{fahad2019comparative}:
 
 \begin{itemize}
     \item The machines are reserved exclusively for the experiments, this is to prevent divinations in the results.
