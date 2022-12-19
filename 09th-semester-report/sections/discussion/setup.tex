@@ -4,11 +4,13 @@ In this section, different aspects of how the experimental setup was made will b
 
 \paragraph*{Test cases based on time or iterations:} In this work, the test cases are executed based on time rather than runs, where runs is chosen in other studies\cite*[]{Pereira2017,Koedijk2022diff,Georgiou2020}. One work running test cases based on time, is the work by Sestoft\cite*[]{sestoft2013microbenchmarks}, where $0.25$s is chosen to avoid problems with the virtual machine and the clock resolution. Another argument for time made by Sestoft\cite*[]{sestoft2013microbenchmarks} is when considering test cases of different sizes, where 100 milion runs might be too time consuming for larger test cases. In this work the argument is because of E3, where the test cases has to run for one minute for E3 to detect the test case. A side effect of running based on time is that the different test cases will most likely not run for an equal amount. This potential issue is addressed in this work by running Cochran's one all test cases, and ensuring all test cases has enough measurements. 
 
-\paragraph*{A C\# implementation of the framework:} In other works,  
+% \paragraph*{A C\# implementation of the framework:} In other works,  
 
-\paragraph*{SQL:}
+% \paragraph*{SQL:}
 
-\paragraph*{Test cases:}
+\paragraph*{Test cases:} In this work, the test cases used were chosen based on what is generally used in research\cite*[]{Koedijk2022diff, greenland2016statistical}. The argument for using such test cases is to make this work more comparable to ensure everything is implemented correctly. Questionmarks can however be made with regards to how well a such test case represents a real life application. Because of this, it could have been interesting to test the different measuring instruments on larger applications, where could be a potential future work. In this work, all test cases are implemented in C\#, as the focus is not to compare energy consumption of any specific language, but rather to compare the measuring instruments. It could however have been interesting to test an even wider range of test cases, also including different language. This could be interesting as when comparing the different measuring instruments in \cref*{sec:iterations} some overall patterns could be observed, but there were always exceptions, like how RAPL only in some cases reported a higher energy consumption compared to IPG and LHM. Additional test cases could help finding patters if for example RAPL was better/worse when measuring certain kinds of operations. This is however a task for a future work.  
 %% not unsafe
 %% small test cases
 %% only c#
+
+\paragraph*{Background processes:}
