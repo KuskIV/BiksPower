@@ -1,8 +1,8 @@
 \section{Measuring instruments}\label{sec:measuring_instruments}
 
-The aim of this work is to compare different measurement instruments, across different DUT's and OS's, as is covered in \textbf{RQ2-4}. In this section, different measurement instruments used in this work will be introduced.
+The aim of this work is to compare different measuring instruments, across different DUTs and OSs, as is covered in \textbf{RQ2-4}. In this section, different measuring instruments used in this work will be introduced.
 
-When considering measuring approahces, three different kinds exists:
+When considering measuring approaches, three different kinds exists:
 
 \begin{itemize}
     \item Hardware-based measurements: System-level physical measurements
@@ -11,7 +11,7 @@ When considering measuring approahces, three different kinds exists:
 \end{itemize}
 
 \paragraph*{}
-When selecting measurement instruments, they can be either a energy predictive model, software or hardware based. When considering software based measurement instruments, multiple versions exists, where this work will aim to include a wide variety. This will include a Linux and Windows versions created by Intel, this being RAPL and Intel Power Gadget. RAPL was chosen as \cref*{ch:related_work} found this to be widely used in existing work, and Intel Power Gadget makes sense, as this is the Windows version, created by the same company. Microsoft has also made their own versions, this being E3. This was chosen based on the assumption of how their domain knowledge could prove valuable. Another measurement instrument included is Libre Hardware Monitor (LHM), representing open source. LHM was chosen as it was chosen as their implementation was easy to use. An assumption here is that all open source versions will measure energy in the same way. Energy predictive models are models estimating the energy consumption based on performance monitoring counters, and will be used by E3 in some cases. Lastly a hardware measurement instrument is also included, and will serve as the ground truth.
+When selecting measuring instruments, they can be either a energy predictive model, software-, hardware-based or a combination. When considering software-based measuring instruments, multiple versions exists, where this work will aim to include a wide variety. This will include a Linux and Windows version created by Intel, this being RAPL and Intel Power Gadget. RAPL was chosen as \cref*{ch:related_work} found this to be widely used in existing work, and Intel Power Gadget was chosen as it is created by the same company. Microsoft has also made their own versions, this being E3. This was chosen based on the assumption of how their domain knowledge could prove valuable. Another measuring instrument included is Libre Hardware Monitor (LHM), representing an open source solution. LHM was chosen as it was chosen as their implementation was easy to use. An assumption here is that all open source versions will measure energy in a similar fashion. Energy predictive models are models estimating the energy consumption based on performance monitoring counters, and will be used by E3 in some cases, depending on the DUT. Lastly a hardware measuring instrument is also included, and will serve as the ground truth.
 
 
 
@@ -19,7 +19,7 @@ When selecting measurement instruments, they can be either a energy predictive m
 
 
 
-% A thing to note here is some uncertainty regarding E3, as covered in \cref{sec:E3Experiments}. In this case the assumption is that this measurement instrument will utilize on-chip sensors if a chip like the MAXIM chip is available, otherwise an energy predictive model will be used. Of these three approaches, the most accurate is the system-level physical measurements which can provide highly accurate measurements for the DUT's energy consumption, but these measurements are for the entire DUT, so they cannot provide a view of the power consumption of applications on an individual level, which the E3 can do. It is however not necessary to get a per-application energy consumption, as only the test cases' energy consumption is to be calculated, dynamic energy consumption can solve this, which is expanded upon in \cref{subsec:how_to_measure}
+% A thing to note here is some uncertainty regarding E3, as covered in \cref{sec:E3Experiments}. In this case the assumption is that this measuring instrument will utilize on-chip sensors if a chip like the MAXIM chip is available, otherwise an energy predictive model will be used. Of these three approaches, the most accurate is the system-level physical measurements which can provide highly accurate measurements for the DUT's energy consumption, but these measurements are for the entire DUT, so they cannot provide a view of the power consumption of applications on an individual level, which the E3 can do. It is however not necessary to get a per-application energy consumption, as only the test cases' energy consumption is to be calculated, dynamic energy consumption can solve this, which is expanded upon in \cref{subsec:how_to_measure}
 
 
 \input{sections/method/profilers/RAPL.tex}
