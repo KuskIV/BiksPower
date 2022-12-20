@@ -12,7 +12,25 @@ The results from the MannWhitney U test can be seen here in \cref{tab:HeatFannku
 \input{tabels/experiment_results/exp_two/StatQuest/MannWhitFann.tex}
 The shown table in \cref{tab:HeatFannkuchRedux2}, is again from the FannkuchRedux Test Case as in \cref{subsec:Stat1}. Again we see a similar tendency in that for most cases we can reject $H_0$, but for experiment 2 there are a few more cases where we cannot reject $H_0$. Once possible reason why that might be the case is that there are fewer samples in experiment 2 so outlier have a larger effect on the Ex1Statistics.
 
-Finally for the Correlations between the measuring instruments, which can be seen in 
+Finally for the Correlations between the measuring instruments, the expectations for the correlations in Experiment 2 is that they are either are a bit more correlated since the uncertainty's of the C-Stats have been removed, or that i will remain nearly exactly the same. The calculated Correlations for experiments 2 can be seen in \cref{tab:correlationWork2}.
 \input{tabels/experiment_results/exp_two/StatQuest/CorrelationPower.tex}
+At an first these results look very similar to the once from experiment 1, but to verify these number more in depth we can compare the averages of the correlations as before.
+
+The average correlation from experiments on the workstation are:
+$$AvgCoefEx1 = (0.81+0.80+0.77+0.71+0.80+0.78+0.71+0.77+0.72+0.70)/10 = 0.757$$
+$$AvgCoefEx2 = (0.85+0.83+0.78+0.76+0.78+0.76+0.76+0.76+0.81+0.72)/10 = 0.781$$
+
+This slight increase in overall correlation matches up with our expectations as the added consistency in the experiments should help reduce inconsistencies. Generally the correlations are higher in experiment 2, but the correlation does fall in certain cases, these cases will be looked at a bit here.
+
+The first case is the $RAPL|CLAMP(win)$ which used to in experiment one to have a coefficients of $0.77$, but in Experiment 2 as $0.76$, while this is only a marginal decrease it could be caused by the fact that one measures linux and the other windows. Another one is $LHM|RAPL$ which went from $0.80$ to $0.78$ these measurements are again done on separate OSs. 
+
+So the divide between linux and windows seems to have gotten larger.   
+
+
+
+
+
+
+
 
 
