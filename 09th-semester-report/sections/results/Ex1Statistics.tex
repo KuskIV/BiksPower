@@ -1,70 +1,75 @@
-\section{Statistical analysis of experiment 1}\label{sub:Stat1}\todo{Split into expectations and result}
+\section{Statistical analysis of experiment \#1}\label{sec:Stat1}
 
-In this section the various statistical methods covered in \cref{subsec:correlation} and \cref{subsec:distribution} will be used to analyses the data. The initial step is to verify if the data is normally distributed as it has an effect on which statistical methods can be used to analyze the data. To do this the Shapiro-Wilk test will be used to check if the data is normally distributed, to see which statistical methods should be utilized. Then the MannWhitney U Test will test if they are from the same population or not, and finally the correlation between the different measure will be calculated and analyzed.
+In this section the various statistical methods covered in \cref{subsec:correlation} and \cref{subsec:distribution} will be used to analyses the data collected from experiment \#1. This analysis will first of all aim to check if the data is normally distributed as it has an effect on which statistical methods can be used in the later stages of the analysis. When checking if the data is normally distributed, the Shapiro-Wilk test will be used. In the next step of the analysis, the MannWhitney U Test will test if the different test case measurements are from the same population or not, and finally the correlation between the different test case measurements will be calculated and analyzed.
 
 \subsection{Normal distribution}\label{subsec:NormalDist1}
+The Sharpiro Wilk test will be used to test if the data is normally distributed, this is important as it effects which statistical methods can be applied to the test case measurements correctly when finding correlations as covered in \cref{subsec:distribution}. 
 
-The Sharpiro Wilk test will be used to test if the data is normally distributed, this is important as is effects which statistical methods can be applied to the data correctly as covered in \cref{subsec:distribution}. 
+\paragraph{Expectations:} For the Sharpiro Wilk test the expectation is that the majority of the test case measurements will be normally distributed. This assumption is primarily based on the findings by Koedijk et al.\cite{Koedijk2022diff}. We expect most of the data to either be normally distributed, with some exceptions that behave differently.
 
-\paragraph{Expectations}
-For the Sharpiro Wilk test the expectations are that the some of the data will not be normally distributed, this assumption is mostly based on the findings by\cite{Koedijk2022diff}. We expect most of the data to either be normally distributed or close to, while having some outliers that behave differently.
+\paragraph{Result:} The results for this experiment can be seen in \cref{tab:NormDistSurfB}. The values in this table are normally distributed if they are smaller than $P$, where $P = 0.05$\todo{is 0.05 mentioned somewhere}. Based on this, most data can be concluded to be normally distributed, with a few exceptions like E3 on TestCaseIdle. Because not all data is normally distributed, the statistical methods able to handle data which is not normally distributed data are used. This in line with what we expected based on the literature.
 
-\paragraph{Result}
-The results show that the data for the different DUTs are not all normally distributed, though the majority is.
 \input{tabels/experiment_results/exp_one/StatQuest/Distribution/SharpiroWilkSurfaceB.tex}
-As can be seen in \cref{tab:NormDistSurfB}, the majority of the results are normally distributed given $P = 0.05$\todo{is 0.05 mentioned somewhere}. This is however not the case for all results, which is why the statistical methods able to handle non-normally distributed data is used. This in line with what we expected based on the literature.
 
 \subsection{Independence Test}\label{subsec:independence1}
-To Test the independence of the data either the T-test or the MannWhitney U Test can be used depending on the distribution of the data. It was found in \cref{subsec:NormalDist1}, that the data was not normally distributed. Thus the MannWhitney U Test will have to be used instead as it is non-parametric independence test, allowing a comparison of the different measurement foreach of the test cases to check if they are are independent from each other. The null hypothesis $H_0$ for the Mann-Whitney U test is defined as:
+
+When testing the independence of data either the T-test or the MannWhitney U Test can be used depending on the distribution of the data. It was found in \cref{subsec:NormalDist1}, that the data was not normally distributed which is why the MannWhitney U Test will be used when testing if the test case measurements are independent of each other. The null hypothesis $H_0$ for the Mann-Whitney U test is defined as:
 
 \begin{quote}
-    \textit{In the population, the sum of the rankings in the two groups does not differ.}
+    \textit{"In the population, the sum of the rankings in the two groups does not differ"}\cite*[]{mann1947test}
 \end{quote}
 
-\paragraph{Expectations}
-The expectation is that $H_0$ can be rejected in all cases as each of the measurement are obtained independently from each other and should not influence each other as found in \cref{subsec:exp_r3}. Thus the results should in most cases be close to zero.
+\paragraph{Expectations:} The expectation is that $H_0$ can be rejected in all cases as each of the measurement are obtained independently from each other and should not influence each other as found in \cref{subsec:exp_r3}. The expected values will therefore be close to zero.
 
 \paragraph{results}
 The results from the FannkuchRedux test case can be seen below, where the results for the remaining test cases can be found in the appendix.\todo{cref til dem}
-\input{tabels/experiment_results/exp_one/StatQuest/Distribution/MannWFannkuchRedux.tex} 
-As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$, meaning that we can confidently reject the null hypotheses. The only cases where $H_0$ cannot be rejected is SP4 LHM and SP4 IPG. This aligns with the expectations that the samples are independent of each other in the majority of cases.
 
+\input{tabels/experiment_results/exp_one/StatQuest/Distribution/MannWFannkuchRedux.tex} 
+
+As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis can be rejected confidently, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This aligns with the expectations that the samples are independent of each other in the majority of cases.
 
 \subsection{Correlation}\label{subsec:correlation1}
-In this section the correlation between the data will be calculated, to do this the Kendal Tau correlation coefficients will be used, because it was found in \cref{subsec:NormalDist1}, that the data was not normally distributed. To test the results from the Test cases with Kendall tau the following data is preprocessed in the following manner. When using the Kendall Tau Correlation, the test case results for each of the DUTs were appended to each other and sorted based on the test case, an example of which can be seen in \cref{tab:RainBowGraph}.
+
+In this section the correlation between the data will be calculated. to do this the Kendal Tau correlation coefficients found in \cref{subsec:NormalDist1} will be used, as the data was not normally distributed. When testing the test case measurements from experiment \#1 with Kendall Tau, the following data is processed in the following manner. When using the Kendall Tau Correlation, the test case measurements for each of the test cases were combined for each DUT, and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.
 
 \input{tabels/experiment_results/exp_one/StatQuest/stats.tex}
-In \cref{tab:RainBowGraph} the background represents which test case the data point is a measurement of and these are then used to calculate the correlation as seen in \cref{tab:correlationWork} and \cref{tab:HeatFasta}.
 
-\paragraph{Expectations}
-The expectations are that all of the measurement instrument will positively correlated with each other. Though to what degrees this positive correlations will be present is unknown though higher correlations would generally be more indicative of valid measurements, as it show the measurement instruments agreeing.
+In \cref{tab:RainBowGraph} the background represents which test case the data point is a measurement of. When calculating the correlation, it is done based on this graph, where the correlation can be seen in \cref{tab:correlationWork} and \cref{tab:HeatFasta}.
 
-\paragraph{Result}
-Here the results from the correlations can be seen for the different DUTs and the different measurement instruments. The results for the workstation can be seen in \cref{tab:correlationWork}, the Surface4Pro in \cref{tab:correlationSurfP} and the SurfaceBook in \cref{tab:CompbinedSurfB}
+\paragraph{Expectations:} The expectations are that all of the measurement instrument will positively correlated with each other. The exact correlation is difficult to predict, but a positive correlation is expected. When calculating correlation higher correlations would generally be more indicative of valid measurements, as it show the measurement instruments agreeing.
+
+\paragraph{Result:} The correlation between DUTs and measurement instruments can be see observed in \cref{tab:correlationWork},  \cref{tab:correlationSurfP} and \cref{tab:CompbinedSurfB} for the workstation Surface Pro 4 and Surface Book respectively.
+
 \input{tabels/experiment_results/exp_one/StatQuest/Correlation/CorrrelationWork.tex}
 \input{tabels/experiment_results/exp_one/StatQuest/Correlation/CompbinedSurfBP.tex}
-These results match our expectations as all of the correlations are a positive. A more in depth analysis of these results will be conducted in \cref{subsec:ResultStat1}
 
-\subsection{Results}\label{subsec:ResultStat1}
-Here the results from \cref[subsec:NormalDist1, subsec:independence1,subsec:correlation1], will be analyses more in depth and using it to answer our research questions \textbf{RQ2},\textbf{RQ3} and \textbf{RQ4}.
+These results match our expectations as all of the correlations are a positive. A more in depth analysis of these results will be conducted in the following paragraphs, based on \textbf{RQ2-4}.
 
-\paragraph{RQ2}
-When comparing the measurement instrument to each other.
-The correlations coefficients found in \cref{subsec:correlation1}, can be used. When evaluating the results, the scale presented by Guildford in \cite[219]{guilford1950fundamental} to evaluate correlation can be used. 
-\begin{itemize}
-    \item $<.20$: Slight; almost negligible relationship
-    \item $.20-.40$: Low correlation; definite but small relationship
-    \item $.40-.70$: Moderate correlation; substantial relationship
-    \item $.70-.90$: High Correlation; marked relationship
-    \item $.90-1$: Very high correlation; very dependable relationship
-\end{itemize}
-Using this scale we can evaluate the correlation between the different measuring instruments. Looking across the different DUTs we can calculate average correlation between each of the measuring instruments. When comparing the correlation between the different measuring instruments across all DUTs, the correlation is as following:
+\paragraph{RQ2:} When comparing the measurement instrument with each other, the correlations coefficients found in \cref{subsec:correlation1} can be used and when evaluating the results, the scale presented by Guildford in \cite[219]{guilford1950fundamental} to can be used. The values for the scale can be found in \cref{GuildfordScale}.
+
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|| c | c ||}
+        \hline
+        \textbf{Values} & \textbf{Label} \\ [0.5ex] \hline\hline
+        $<.20$ & Slight; almost negligible relationship \\
+        $.20-.40$ & Low correlation; definite but small relationship \\
+        $.40-.70$ & Moderate correlation; substantial relationship \\
+        $.70-.90$ & High Correlation; marked relationship \\
+        $.90-1$ & Very high correlation; very dependable relationship \\ \hline
+    \end{tabular}
+    \caption{The values for the scale presented by Guildford in \cite[219]{guilford1950fundamental} }
+    \label{tab:GuildfordScale}
+\end{table}
+
+Using this scale we can evaluate the correlation between the different measuring instruments. Looking across the different DUTs we can calculate average correlation between each of the measuring instruments. This can only be done for the measurement instruments IPG, LHM and RAPL, as these are the only measurement instruments used on all DUTs. When comparing the correlation between the different measuring instruments across all DUTs, the average correlation is as following:
 
 $$IPG|LHM = (0.68+0.81+0.69)/3 = 0.726$$
 $$IPG|RAPL = (0.30+0.42+0.80)/3 = 0.506$$
 $$LHM|RAPL = (0.80+0.39+0.21)/3 = 0.466$$
 
-Now, the average correlation between the different software measuring instruments against the clamp will be calculated. This is done for only the workstation, as the the clamp was only used on this DUT.
+Next up, the average correlation between the different software measuring instruments against the clamp can be calculated. This is done for only the workstation, as the the clamp was only used on this DUT.
 
 $$IPG|Clamp = (0.77+0.71)/2 = 0.74$$
 $$LHM|Clamp = (0.78+0.71)/2 = 0.745$$
@@ -76,10 +81,10 @@ $$IPG|E3 = (0.63+0.61)/2 = 0.62$$
 $$LHM|E3 = (0.65+0.64)/2 = 0.645$$
 $$RAPL|E3 = (0.24+0.49)/2 = 0.365$$
 
-Looking at these numbers and evaluating them on the Guildford scale, we can see that IPG|LHM, IPG|Clamp and RAPL|Clamp all are highly correlated and marked relationships, while LHM|RAPL, LHM|RAPL,IPG|E3 and LHM|E3 has a substantial relationships. The lowest correlation between the measurements was found with RAPL|E3 which are a low on correlation.
-\paragraph{RQ3}
-In regards to the different operating system and how these effect the results it can be seen that these are are differences between the measurements conducted on Linux and Windows.
-Looking at the coefficients for RAPL and CLAMP(lin) int can be seen that they are generally less correlated with the other measurement instruments Then there Windows counter part. This can be clearly seen when calculating the average coefficients for each of the instruments across the different DUTs.
+Looking at these numbers and evaluating them on the Guildford scale, we can see that IPG|LHM, IPG|Clamp and RAPL|Clamp all are highly correlated, while LHM|RAPL, LHM|RAPL,IPG|E3 and LHM|E3 has a substantial relationships. The lowest correlation between the measurements was found with RAPL|E3 which are a low on correlation.
+
+\paragraph{RQ3:} In regards to the different operating system and how these effect the results, it can be seen that these are are differences between the measurements conducted on Linux and Windows. When looking at the coefficients for RAPL and the clamp on linux, it can be seen that they are generally less correlated with the other measurement instruments on Windows. This can be seen when calculating the average coefficients for each of the instruments across the different DUTs.
+
 \begin{itemize}
     \item \textbf{Windows}
     \begin{itemize}
@@ -94,10 +99,11 @@ Looking at the coefficients for RAPL and CLAMP(lin) int can be seen that they ar
         \item $RAPL = 0.513$ %0.80+0.80+0.77+0.72+0.3+0.2+0.24+0.42+0.39+0.49
     \end{itemize}
 \end{itemize}
-Looking at these number it can be seen that linux that Rapl and the hardware measurements on linux are generally less correlated with the rest of the measurement instruments. This does make sense as they are different OSs and would be expected to have different power consumption.
 
-\paragraph{RQ4}
-comparing the different DUTs in a similar manner i can be found that there are significant differences between how correlated the measurement instruments are on each DUT.
+Looking at these number it can be seen that RAPL and the hardware measurements on linux are generally less correlated with the rest of the measurement instruments. This does make sense as they are different OSs and would be expected to have different power consumption.
+
+\paragraph{RQ4}: Comparing the different DUTs in a similar manner i can be found that there are significant differences between how correlated the measurement instruments are on each DUT.
+
 \begin{itemize}
     \item \textbf{Workstation}
     \begin{itemize}
@@ -112,7 +118,9 @@ comparing the different DUTs in a similar manner i can be found that there are s
         \item Average coefficients: $0.450$ %0.68+0.30+0.63+0.20+0.65+0.24
     \end{itemize}
 \end{itemize}
-When comparing the different DUTs it can be seen that the measurement instruments are more correlated with each other on the Workstation than on the two laptops. Comparing the two laptops it can be seen that the Surface Book as a significantly lower coefficients than the Surface 4 Pro. Looking more close at the number they are very similar in all cases except for Rapl where the surface book performance much worse. Comparing the average Rapl coefficients between the two DUTs results in a stark difference.
+
+When comparing the different DUTs it can be seen that the measurement instruments are more correlated with each other on the Workstation than on the two laptops. When comparing the two laptops it can be seen that the Surface Book has a significantly lower coefficients than the Surface 4 Pro. Looking more close at the numbers they are very similar in all cases except for RAPL, where the Surface Book performance is worse.
+
 \begin{itemize}
     \item Surface book:$AvgRAPL = 0.246$
     \item Surface 4 Pro:$AvgRAPL = 0.433$
