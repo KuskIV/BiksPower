@@ -2,6 +2,7 @@ WINDOWS_OS = "Win32NT"
 LINUX_OS = "Unix"
 
 IDLE_CASE = "TestCaseIdle"
+TEST_CASE_SPEED = "TestCaseIdleSpeed"
 DINING_PHILOSOPHERS = "DiningPhilosophers"
 BINARY_TREE = "BinaryTrees"
 REVERSE_COMPLEMENT = "ReverseComplement"

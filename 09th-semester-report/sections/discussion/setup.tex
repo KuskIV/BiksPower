@@ -1,4 +1,4 @@
-\section*{Setup}
+\section{Setup}
 
 In this section, different aspects of how the experimental setup was made will be discussed.
 
@@ -13,4 +13,10 @@ In this section, different aspects of how the experimental setup was made will b
 %% small test cases
 %% only c#
 
-\paragraph*{Background processes:}
+\paragraph*{Background processes:} In this work, different processes were disabled, in order to limit their effect on the measurements. These processes includes the ones presented in \cref*{tab:disabled_proc} and Windows update. One thing to note here, is how no background processes are disabled for Linux, as we were unable to find any processes which made sense to disable. For Windows, eight background processes were located and stopped upon startup for the DUT, but for both OSs it can be argued more time could have been spend trying to limit the activity of background processes. This was based on the expectation that a fresh install of both OSs would mean they would have a limited amount of background processes, which is a subject for a future work. 
+
+\paragraph*{Temperature:} For the temperature, there was an expectation that when the CPU reached some temperature, an effect would be observable on the results. This did however not happen, as was discussed in \cref{subsec:TempBat}. The reason for this, as was also mention in \cref{subsec:TempBat}, was most likely due to the test cases never stressing the CPU enough to reach temperatures beyond 65 degrees. As a result of this, no temperature limits were set when running the experiments. It could however have been interesting to see what impact temperatures above 65 degrees had on the results. Given the temperatures never increased above 65 for the test cases used, a stress test could have been used for the experiment instead. The stress test would be expected to bring the CPU to higher temperatures, as it will bring the load of the CPU to 100\%, and since the effect of a overheated CPU would be expected to be similar for all test cases, it would be fine that the stress test is used instead of the test cases. This is however a subject for a future work.
+
+\paragraph*{Battery:} Given some issues on the surface devices as discussed in \cref{subsec:TempBat}, the battery limit were set between $40-80$\%. Within these limits, no visible effect of the battery limit could be find. The expectation for this experiment covered in \cref{subsec:TempBat} was to find some lower limit, where the energy consumption would change. This would occur as the DUT would enter a power saving mode, when some battery percentage is reached. This power saving mode would most likely cause the OS to stop some background process and under clocking the CPU. When a CPU is under clocked, the test case would run less samples during a measurement. The energy consumption of one samples when the DUT is on power saving mode is expected to be different compared to when the DUT is not in power saving mode, but this is a subject for future work. For both surface devices, the power mode is set to maximum, where it could have been interesting to see how the results would change if the power saving mode would be different, this is however a subject for future works. 
+
+%% power mode
