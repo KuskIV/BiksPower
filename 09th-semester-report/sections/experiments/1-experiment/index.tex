@@ -1,47 +1,12 @@
 \section{Experiment \#1}\label{sec:experiment_one}
 
-Following the initial experiments presented in \cref{sec:initial_experiments} the experiments can now be conducted. This will be done based on the findings of \cref{sec:initial_experiments}, which were as following:
-
-\begin{itemize}
-    \item E3:
-    \begin{itemize}
-        \item E3 sample once per minute, one measurement will therefore be based on one minute
-        \item Each process can appear multiple times during one minute, but in different states. If this is the case, the energy consumption of the different states will be summed.
-        \item If one process is executed in parallel, E3 would not be able to differentiate between them
-    \end{itemize}
-    \item Energy Consumption:
-    \begin{itemize}
-        \item Workstation: 
-        \begin{itemize}
-            \item CPU between $10.0$ and $65.0$W
-            \item RAM between $1.5$ and $2.25$W
-        \end{itemize}
-        \item Surface Book: 
-        \begin{itemize}
-            \item CPU between $7.5$ and $14.0$W
-            \item RAM between $2.0$ and $2.5$W
-        \end{itemize}
-        \item Surface Pro 4: 
-        \begin{itemize}
-            \item CPU between $9.5$ and $15.0$W
-            \item RAM between $2.0$ and $2.5$W
-        \end{itemize}
-        \item Scripts:
-        \begin{itemize}
-            \item Script to ensure the framework is running in windows
-            \item Script to start the framework after a restart in windows
-        \end{itemize}
-        \item R3 validation: Will not be used
-        \item Temperature: There will be no upper limit
-        \item Battery level: Between 40 and 80\%
-        \item Cochrans: Four measurements is enough
-    \end{itemize}
-\end{itemize}
-
-Based on this, the first experiment was as following; Each of the three DUT's will perform a measurement of each test case at least four times. This will be without R3 validation, and for DUT's with battery, it should be between 40\% and 80\%.
+Following the initial experiments presented in \cref{sec:initial_experiments} the experiments can now be conducted. This will be done based on the findings of \cref{sec:initial_experiments}. This means the measurements will execute for one minute as a result of E3, R3 validation will be disregarded, temperature will not have an upper limit and the battery limits are set between 40-80\%. A few scripts were also introduced, including a script to ensure the framework is running and a script to start the framework when on startup.
 
 \paragraph*{}
-For the initial experiments, the experiments were made with $120$ measurements for each unique test case measurement. This was done with the hope of getting a wide variety of temperatures, and battery levels. As well as calculate an estimated standard deviation to use to calculate how many measurements would be required according to Cochran's formula. Based on what has been found so far, no additional measurements are required and no new requirements have been found which would require any changes to the current state of the framework.
+This experiment is conducted with an aim to answer the research questions presented in \cref{ch:introduction}. Through these the research questions, comparisons will be made between measurement instruments, OSs and DUTs and aims to answer the question of how good RAPL is compared to alternatives.
+
+\paragraph*{}
+For the initial experiments, the experiments were run with $120$ measurements for each unique test case measurement. This was done with the hope of getting a wide variety of temperatures, and battery levels. As well as calculate an estimated standard deviation to use to calculate how many measurements would be required according to Cochran's formula. Based on what has been found so far, no additional measurements are required and no new requirements have been found which would require any changes to the current state of the framework. Because of this, no new measurements are made, and the data used to analyze this experiment will be the same as in the initial experiment.
 
 \paragraph*{}
 The next step is thus to present and analyze the data in more depth, from this experiment, which will be done in \cref{ch:results}. Based on observations, one additional experiment will however be conducted, as will be covered in \cref{sec:experiment_two}.
