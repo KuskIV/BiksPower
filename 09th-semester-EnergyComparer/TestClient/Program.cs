@@ -17,9 +17,9 @@ using System.Data.Common;
 using TestClient.Fixers;
 
 
-HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString());
+HardwareMeasurementHandler.StartMeasurement(DateTime.Now.ToString("dd/MM/yyyy HH.mm.ss"));
 await Task.Delay(1000 * 60);
-HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString("dd/MM/yyyy HH.mm.ss"));
 await HardwareMeasurementHandler.GetHardwareState();
 
 await HardwareMeasurementHandler.GetResults();

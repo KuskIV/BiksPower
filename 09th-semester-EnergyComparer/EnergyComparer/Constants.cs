@@ -33,14 +33,15 @@ namespace EnergyComparer
             var language = ELanguage.CSharp.ToString();
 
             var testCases = new List<TestCase>();
-
-            testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
-            testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
-            //testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
-            testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
-            testCases.Add(new TestCase(dataHandler, "Nbody", language));
-            testCases.Add(new TestCase(dataHandler, "Fasta", language));
-            testCases.Add(new TestCase(dataHandler, "DiningPhilosophers", language));
+            
+            testCases.Add(new TestCase(dataHandler, "TestCaseIdleSpeed", language));
+            // testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
+            // testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
+            // //testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
+            // testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
+            // testCases.Add(new TestCase(dataHandler, "Nbody", language));
+            // testCases.Add(new TestCase(dataHandler, "Fasta", language));
+            // testCases.Add(new TestCase(dataHandler, "DiningPhilosophers", language));
 
             return testCases;
         }
@@ -58,7 +59,7 @@ namespace EnergyComparer
             else
             {
 #if !DEBUG
-                return path.Parent.FullName + Constants.GetLinuxExecutablePath(name);;
+                return path.FullName + Constants.GetLinuxExecutablePath(name);;
 #else
                 return path.FullName + Constants.GetLinuxExecutablePath(name);
 #endif
@@ -72,7 +73,7 @@ namespace EnergyComparer
 
         public static string GetLinuxExecutablePath(string name)
         {
-            return $"/BiksPower/09th-semester-test-cases/{name}/{name}/bin/Release/net6.0/{name}";
+            return $"/09th-semester-test-cases/{name}/{name}/bin/Release/net6.0/{name}";
         }
 
         public static bool IsWindows()

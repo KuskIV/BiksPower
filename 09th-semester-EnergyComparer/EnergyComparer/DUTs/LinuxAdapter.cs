@@ -70,7 +70,7 @@ namespace EnergyComparer.DUTs
             float temperature = 0;
             if (_machineName.Equals(Constants.PowerKomplett))
             {
-                temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone5/temp");
+                temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone1/temp");
             }else if (_machineName.Equals(Constants.SurfaceBook))
             {
                 temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone8/temp");
