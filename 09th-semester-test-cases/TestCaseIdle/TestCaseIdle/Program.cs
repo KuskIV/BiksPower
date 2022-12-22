@@ -1,7 +1,4 @@
-﻿
-using Microsoft.VisualBasic;
-
-var arguments = Environment.GetCommandLineArgs();
+﻿var arguments = Environment.GetCommandLineArgs();
 
 if (!int.TryParse(arguments[1], out var experimentDurationInMinutes))
 {

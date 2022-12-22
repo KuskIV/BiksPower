@@ -39,7 +39,7 @@ using TestClient.Fixers;
 
 var e3 = new E3();
 e3.Start(DateTime.UtcNow);
-await Task.Delay(10000);
+await Task.Delay(10000 * 6);
 e3.Stop(DateTime.UtcNow);
 
 //E3Experiments E3Ex = new();
