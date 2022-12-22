@@ -10,7 +10,7 @@ The first part of the analysis will be analyzing the distribution for this exper
 \input{tabels/experiment_results/exp_two/StatQuest/NormDist.tex} 
 
 
-\paragraph{Results:} The results from the Shapiro Wilk test can be seen in \cref{tab:NormDist2}. \cref{tab:NormDist2} shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.\todo{it shouldn't be because of this}
+\paragraph{Results:} The results from the Shapiro Wilk test can be seen in \cref{tab:NormDist2}, it shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
 
 \subsection{Independence Test}\label{subsec:independence2}
 It was found in \cref{subsec:NormalDist2}, that the data for this experiment was not normally distributed. Because of this, the Mann-Whitney U Test\cite{mann1947test} will be used to test independence equal to the method used in \cref{subsec:independence1}.
@@ -22,20 +22,20 @@ It was found in \cref{subsec:NormalDist2}, that the data for this experiment was
 \paragraph{Results:} The results from the Mann-Whitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, and the results from the rest of the test cases can be found in \cref{app:stat2}. In \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be observed. This tendency is that we can reject $H_0$ in most cases. When comparing this analysis to the one conducted in the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of fewer measurements compared to the first experiment, meaning outliers has a larger effect.
 
 \subsection{Correlation}\label{subsec:correlation2}
-In this section the correlation between the different measurement instrument will be conducted for the second experiment. The Kendall Tau coefficients\cite{kendall1938new} will again be used as it was in \cref{subsec:correlation1}
+In this section, the correlation between the different measuring instruments will be conducted for the second experiment. The Kendall Tau coefficients\cite{kendall1938new} will again be used as it was in \cref{subsec:correlation1}
 
 \paragraph{Expectations:} The expectations for the correlations when the C-states are disabled will either be a similar or higher correlation. If the similarity increases, it would be expected to be because the uncertainty of the C-states has been removed.
 
 \input{tabels/experiment_results/exp_two/StatQuest/CorrelationPower.tex}
 
-\paragraph{Results:} The calculated Correlations for this experiment can be seen in \cref{tab:correlationWork2}. These results look very similar to the similarities obtained from the first experiment in \cref{subsec:correlation1}. The average correlation from experiments on the workstation are as following:
+\paragraph{Results:} The calculated Correlations for this experiment can be seen in \cref{tab:correlationWork2}. These results look very similar to the similarities obtained from the first experiment in \cref{subsec:correlation1}. The average correlation from experiments on the workstation is as follows:
 
 $$\text{AvgCoefEx1} = (0.81+0.80+0.77+0.71+0.80+0.78+0.71+0.77+0.72+0.70)/10 = 0.757$$
 $$\text{AvgCoefEx2} = (0.85+0.83+0.78+0.76+0.78+0.76+0.76+0.76+0.81+0.72)/10 = 0.781$$
 
-These coefficients show a higher correlations between the different DUTs and their measurement instruments. Next up, the coefficients will be analyzed and utilized to answer our research questions. 
+These coefficients show higher correlations between the different DUTs and their measuring instruments. Now, the coefficients will be analyzed and utilized to answer our research questions. 
 
-\paragraph{RQ2:} When comparing the measurement instruments to each other the average correlation foreach instrument can be calculated. These will then be compared with the results from \cref{sec:Stat1}, to see what effect disabling the C-States have had on the measurements.
+\paragraph{RQ2:} When comparing the measuring instruments to each other the average correlation for each instrument can be calculated. These will then be compared with the results from \cref{sec:Stat1}, to see what effect disabling the C-States have had on the measurements.
 
 \begin{itemize}
     \item \textbf{Experiment 1}
@@ -56,9 +56,9 @@ These coefficients show a higher correlations between the different DUTs and the
     \end{itemize}
 \end{itemize}
 
-When looking at the average correlation for the measurement instruments across the two experiments, the second experiment generally had larger coefficients than the first experiment, showing a higher correlation for the second experiment. Looking at these number using the Guildford scale, it can be seen how the correlation does not increase enought to change evaluation, as we expected.
+When looking at the average correlation for the measuring instruments across the two experiments, the second experiment generally had larger coefficients than the first experiment, showing a higher correlation for the second experiment. Looking at these numbers using the Guildford scale, it can be seen how the correlation does not increase enough to change evaluation.
 
-\paragraph{RQ3:} When comparing the results across OSs, some differences can be observed when compared with the first experiment. The OS benefitting the most in terms of correlation coefficients when disabling the C-Stats is linux, as the correlation between RAPL and the other measuring instruments increased. This is mostly dues to an increased correlation between RAPL and the clamp on Linux, which increased from $0.72$ to $0.81$.  Overall it seems that RAPL is the measuring instrument most closely correlated with the hardware measurements while IPG is the most correlated measuring instrument for Windows.
+\paragraph{RQ3:} When comparing the results across OSs, some differences can be observed when compared to the first experiment. The OS benefitting the most in terms of correlation coefficients when disabling the C-Stats is Linux, as the correlation between RAPL and the other measuring instruments increased. This is mostly dues to an increased correlation between RAPL and the clamp on Linux, which increased from $0.72$ to $0.81$.  Overall it seems that RAPL is the measuring instrument most closely correlated with the hardware measurements while IPG is the most correlated measuring instrument for Windows.
 
 
 
