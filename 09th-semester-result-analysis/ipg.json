@@ -1,16 +1,82 @@
-{
-  "TotalElapsedTimeInSeconds": 60.68867,
-  "MeasuredRdtscFrequencyInGhz": 3.192,
-  "CumulativeProcessorEnergyInJoules": 1762.0776,
-  "CumulativeProcessorEnergyInMwh": 489.466,
-  "AverageProcessorPowerWatt": 29.034702,
-  "CumulativeIaEnergyInJoules": 1624.7367,
-  "CumulativeIaEnergyInMwh": 451.31577,
-  "AverageIaPowerInWatt": 26.771664,
-  "CumulativeDramEnergyInJoules": 37.579468,
-  "CumulativeDramEnergyInMwh": 10.438741,
-  "AverageDramPowerInWatt": 0.619217,
-  "CumulativeGtEnergyInJoules": 81.30054,
-  "CumulativeGtEnergyInMwh": 22.583483,
-  "AverageGtPowerInWatt": 1.339633
-}
+[
+  {
+    "TotalElapsedTimeInSeconds": 60.68867,
+    "CumulativeProcessorEnergyInJoules": 1762.0776, // 29.36796
+    // "MeasuredRdtscFrequencyInGhz": 3.192,
+    // "CumulativeProcessorEnergyInMwh": 489.466,
+    // "AverageProcessorPowerWatt": 29.034702,
+    // "CumulativeIaEnergyInJoules": 1624.7367,
+    // "CumulativeIaEnergyInMwh": 451.31577,
+    // "AverageIaPowerInWatt": 26.771664,
+    // "CumulativeDramEnergyInJoules": 37.579468,
+    // "CumulativeDramEnergyInMwh": 10.438741,
+    // "AverageDramPowerInWatt": 0.619217,
+    // "CumulativeGtEnergyInJoules": 81.30054,
+    // "CumulativeGtEnergyInMwh": 22.583483,
+    // "AverageGtPowerInWatt": 1.339633
+  },
+  {
+    "TotalElapsedTimeInSeconds": 60.67657,
+    "CumulativeProcessorEnergyInJoules": 1597.6147, // 26.6269116667, 26.3491966667, 26.346985, 29.36796, 26.3371016667
+    // "MeasuredRdtscFrequencyInGhz": 3.192,
+    // "CumulativeProcessorEnergyInMwh": 443.78186,
+    // "AverageProcessorPowerWatt": 26.330011,
+    // "CumulativeIaEnergyInJoules": 1460.5027,
+    // "CumulativeIaEnergyInMwh": 405.69516,
+    // "AverageIaPowerInWatt": 24.07029,
+    // "CumulativeDramEnergyInJoules": 35.6532,
+    // "CumulativeDramEnergyInMwh": 9.903666,
+    // "AverageDramPowerInWatt": 0.587594,
+    // "CumulativeGtEnergyInJoules": 81.43103,
+    // "CumulativeGtEnergyInMwh": 22.619732,
+    // "AverageGtPowerInWatt": 1.342051
+  },
+  {
+    "TotalElapsedTimeInSeconds": 60.770172,
+    "CumulativeProcessorEnergyInJoules": 1580.9518, // 26.3491966667
+    // "MeasuredRdtscFrequencyInGhz": 3.192,
+    // "CumulativeProcessorEnergyInMwh": 439.15326,
+    // "AverageProcessorPowerWatt": 26.01526,
+    // "CumulativeIaEnergyInJoules": 1443.5349,
+    // "CumulativeIaEnergyInMwh": 400.98193,
+    // "AverageIaPowerInWatt": 23.754004,
+    // "CumulativeDramEnergyInJoules": 35.223206,
+    // "CumulativeDramEnergyInMwh": 9.784224,
+    // "AverageDramPowerInWatt": 0.579613,
+    // "CumulativeGtEnergyInJoules": 81.76239,
+    // "CumulativeGtEnergyInMwh": 22.711775,
+    // "AverageGtPowerInWatt": 1.345436
+  },
+  {
+    "TotalElapsedTimeInSeconds": 60.7751,
+    "CumulativeProcessorEnergyInJoules": 1580.8191, // 26.346985
+    // "MeasuredRdtscFrequencyInGhz": 3.192,
+    // "CumulativeProcessorEnergyInMwh": 439.11642,
+    // "AverageProcessorPowerWatt": 26.010967,
+    // "CumulativeIaEnergyInJoules": 1443.4778,
+    // "CumulativeIaEnergyInMwh": 400.96606,
+    // "AverageIaPowerInWatt": 23.751139,
+    // "CumulativeDramEnergyInJoules": 35.221313,
+    // "CumulativeDramEnergyInMwh": 9.783698,
+    // "AverageDramPowerInWatt": 0.579535,
+    // "CumulativeGtEnergyInJoules": 81.65198,
+    // "CumulativeGtEnergyInMwh": 22.681105,
+    // "AverageGtPowerInWatt": 1.34351
+  },
+  {
+    "TotalElapsedTimeInSeconds": 60.806637,
+    "CumulativeProcessorEnergyInJoules": 1580.2261, // 26.3371016667
+    // "MeasuredRdtscFrequencyInGhz": 3.192,
+    // "CumulativeProcessorEnergyInMwh": 438.9517,
+    // "AverageProcessorPowerWatt": 25.987724,
+    // "CumulativeIaEnergyInJoules": 1442.8593,
+    // "CumulativeIaEnergyInMwh": 400.79422,
+    // "AverageIaPowerInWatt": 23.728647,
+    // "CumulativeDramEnergyInJoules": 35.22119,
+    // "CumulativeDramEnergyInMwh": 9.783664,
+    // "AverageDramPowerInWatt": 0.579233,
+    // "CumulativeGtEnergyInJoules": 81.70331,
+    // "CumulativeGtEnergyInMwh": 22.695362,
+    // "AverageGtPowerInWatt": 1.343658
+  }
+]

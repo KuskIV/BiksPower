@@ -1,0 +1,60 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.85\textwidth,
+                                    height=.2\textheight
+                                }
+                                \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - FannkuchRedux - Dynamic Energy - with outliers}, ytick={1, 2, 3, 4, 5},
+                                yticklabels={
+                                    WRK - IPG , WRK - LHM , WRK - CLAMP (win) , WRK - RAPL , WRK - CLAMP (lin) 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=39.13302413793164,
+                                lower quartile=39.65528622644183,
+                                median=39.8891134714588,
+                                upper quartile=41.65440102470683,
+                                upper whisker=66.12230684434647},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=39.19629795553155,
+                                lower quartile=40.132773696988934,
+                                median=40.80250786316242,
+                                upper quartile=41.16245647275235,
+                                upper whisker=42.17314023125945},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=18.24213762590746,
+                                lower quartile=34.8791864950844,
+                                median=35.815997317008865,
+                                upper quartile=36.18954468612935,
+                                upper whisker=38.23404395723189},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=50.78696135168335,
+                                lower quartile=51.29410579286008,
+                                median=51.37571498742463,
+                                upper quartile=51.44816978523957,
+                                upper whisker=51.567611573557386},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=33.32446287008575,
+                                lower quartile=43.92834136675152,
+                                median=44.38894256187132,
+                                upper quartile=44.72137076079913,
+                                upper whisker=631.3554261329713},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of Cores dynamic energy consumption for test case FannkuchRedux for all DUT's and OS's  for experiment \#2 (with outliers)} \label{fig:FannkuchRedux_Cores_comparison_dynamic_energy_with_outliers_avg_watts_exp2}
+                        \end{figure}
+                        

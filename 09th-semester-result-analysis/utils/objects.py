@@ -243,9 +243,29 @@ class RawData(object):
                         x for x in json_data if "09th-semester-test-cases" in x["AppId"]
                     ]
                     if len(correct_app) == 0:
-                        self.__dict__ = {}
+                        self.AppId = ["EMPTY"]
+                        self.EnergyLosses = [0]
+                        self.CPUEnergyConsumptions = [0]
+                        self.TotalEnergyConsumptions = [0]
+                        self.TimeInMSecs = [0]
+                        self.TimeStamps = ["9999-12-06:16:08:00.0000"]
+                        self.EnergyLoss = sum(self.EnergyLosses)
+                        self.CPUEnergyConsumption = sum(self.CPUEnergyConsumptions)
+                        self.TotalEnergyConsumption = sum(self.TotalEnergyConsumptions)
                     else:
-                        self.__dict__ = correct_app[-1]
+                        self.AppId = [x["AppId"] for x in correct_app]
+                        self.EnergyLosses = [int(x["EnergyLoss"]) for x in correct_app]
+                        self.CPUEnergyConsumptions = [
+                            int(x["CPUEnergyConsumption"]) for x in correct_app
+                        ]
+                        self.TotalEnergyConsumptions = [
+                            int(x["TotalEnergyConsumption"]) for x in correct_app
+                        ]
+                        self.TimeInMSecs = [int(x["TimeInMSec"]) for x in correct_app]
+                        self.TimeStamps = [x["TimeStamp"] for x in correct_app]
+                        self.EnergyLoss = sum(self.EnergyLosses)
+                        self.CPUEnergyConsumption = sum(self.CPUEnergyConsumptions)
+                        self.TotalEnergyConsumption = sum(self.TotalEnergyConsumptions)
                 else:
                     self.__dict__ = json_data[0]
             else:
@@ -302,9 +322,10 @@ class RawData(object):
             )
 
         else:
-            raise Exception(
-                f"Could not find any RawData for experiment id '{experiment_id}'"
-            )
+            self.is_valid = False
+            # raise Exception(
+            #     f"Could not find any RawData for experiment id '{experiment_id}'"
+            # )
 
 
 class Bucket(object):

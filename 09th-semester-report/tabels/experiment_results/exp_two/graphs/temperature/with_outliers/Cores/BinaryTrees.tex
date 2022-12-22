@@ -1,0 +1,44 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Start temperature},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=100,
+                        ]
+                        
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (35, 50.71102878604533)(40, 49.585803591135885)(45, 49.86735036723233)(50, 50.18025149669704)
+                            };
+                            \addlegendentry{WRK - IPG}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (40, 51.276888213314066)(45, 49.76888798996236)(50, 49.73228511871436)(55, 50.096783105451756)
+                            };
+                            \addlegendentry{WRK - LHM}
+                            
+                            \addplot [mark=none, densely dashed, cyan]  coordinates {
+                            (40, 44.669945650644806)(45, 41.72111629565631)(50, 40.382517702019776)(55, 31.683409814770126)
+                            };
+                            \addlegendentry{WRK - CLAMP (win)}
+                            
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (30, 57.168412456482464)(35, 57.1806775213987)(50, 57.40253642474941)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (35, 50.9191432797982)(40, 50.76588789984609)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Cores for test case BinaryTrees with regards to the temperature of the DUT, experiment \#2, (with outliers)} \label{fig:BinaryTrees_Cores_temperature_exp2}
+                \end{figure}
+                

@@ -1,0 +1,100 @@
+
+                        \begin{figure}
+                            \centering
+                            \begin{tikzpicture}[]
+                                \pgfplotsset{%
+                                    width=.85\textwidth,
+                                    height=.4\textheight
+                                }
+                                \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - Fasta - Energy - with outliers}, ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+                                yticklabels={
+                                    SP4 - E3 , SB - E3 , SP4 - E3 , SB - E3 , SP4 - E3 , SB - E3 , SP4 - E3 , SB - E3 , SP4 - E3 , SB - E3 
+                                    },
+                                    xmin=0,xmax=80,
+                                    ]
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.005875063052267449,
+                                lower quartile=0.0065907222909289236,
+                                median=0.006823727624446612,
+                                upper quartile=0.007090019434181114,
+                                upper whisker=0.007855608387167807},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=0.0,
+                                lower quartile=0.003443137789362813,
+                                median=0.0036593734959411545,
+                                upper quartile=0.00392550975019142,
+                                upper whisker=0.00444114874280131},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=11.226721062720783,
+                                lower quartile=11.399099850691691,
+                                median=11.524199121753298,
+                                upper quartile=11.628022610205717,
+                                upper whisker=11.911791274106257},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=2.360129324989437,
+                                lower quartile=3.318839313253211,
+                                median=4.08887206115477,
+                                upper quartile=4.838847453389958,
+                                upper whisker=6.155104139781052},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=8.420698210448471,
+                                lower quartile=8.80967211541238,
+                                median=8.844640644724457,
+                                upper quartile=8.882476743269576,
+                                upper whisker=8.943136861660854},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=2.3153664011404116,
+                                lower quartile=5.2246693735880205,
+                                median=5.2666765690556785,
+                                upper quartile=5.307090660665121,
+                                upper whisker=5.429780455448173},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=8.101364513430177,
+                                lower quartile=8.268909573851605,
+                                median=8.297806986707299,
+                                upper quartile=8.329896725021772,
+                                upper whisker=8.442306537265269},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=2.399996038382789,
+                                lower quartile=4.241702359737292,
+                                median=4.27199328109721,
+                                upper quartile=4.302908157167919,
+                                upper whisker=4.369796102164826},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=7.215316071648703,
+                                lower quartile=7.357951981412017,
+                                median=7.399420941638489,
+                                upper quartile=7.430851450232459,
+                                upper whisker=7.521547112743026},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \addplot+ [boxplot prepared={
+                                lower whisker=1.7769491179021455,
+                                lower quartile=2.8381719887749677,
+                                median=3.0641632188907555,
+                                upper quartile=3.278707221594825,
+                                upper whisker=3.709949901348629},
+                                ] table[row sep=\\,y index=0] {\\};
+                                
+                                \end{axis}
+                            \end{tikzpicture}
+                        \caption{A comparison of Cores energy consumption for test case Fasta, measured by E3 for all DUT's and OS's  (with outliers)} \label{fig:Fasta_Cores_comparison_profilers_energy_with_outliers_avg_watts}
+                        \end{figure}
+                        

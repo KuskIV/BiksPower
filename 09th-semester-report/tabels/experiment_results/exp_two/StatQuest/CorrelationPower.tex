@@ -1,0 +1,22 @@
+\begin{figure}
+  \centering
+    \begin{tikzpicture}[scale=0.6]
+      \foreach \y [count=\n] in {{1.00, 0.85, 0.83, 0.78, 0.76},{0.85, 1.00, 0.78, 0.76, 0.76},{0.83, 0.78, 1.00, 0.76, 0.81},{0.78, 0.76, 0.76, 1.00, 0.72},{0.76, 0.76, 0.81, 0.72, 1.00},} {
+      % column labels
+      \foreach \a [count=\n] in {IPG,LHM,RAPL,CLAMP(win),CLAMP(lin)} {
+        \node[minimum size=10mm, xshift=0.2cm, rotate=-45] at (\n*1.6, -10.5) {\a};
+      }
+      % heatmap tiles
+      \foreach \x [count=\m] in \y {
+        \pgfmathsetmacro{\xa }{(\x + 1) / 2 * 100}
+        \node[fill=darkgray!\xa!lightgray, minimum size=10mm, text=white, font={\normalsize}] at (\m*1.6,-\n*1.6) {\x};
+      }
+    }
+      % row labels
+      \foreach \a [count=\i] in {IPG,LHM,RAPL,CLAMP(win),CLAMP(lin)} {
+        \node[minimum size=10mm, xshift=-0.35cm, yshift=-0.25cm, rotate=45] at (0,-\i*1.6) {\a};
+      }
+    \end{tikzpicture}
+    \caption{This heat map represents Correlation coefficients between the different measurement instruments -1 to 1 on the Workstation}
+    \label{tab:correlationWork2}
+\end{figure}

@@ -1,57 +1,72 @@
-\subsection{Expectation} \label[subsec]{subsec:expec}
-In this section the some expectations about the energy consumption of each of the system will be covered, this is largely based on components in the DUT, some experiments will also be conducted to support the estimations. The exact values and calculation steps as well as the rational behind will be covered below. This will involve looking at the expected usage of each of the DUTs components energy usage and the range of usage, this will then provide a lower and upper limit for the consumption of the machine.
+\subsection{Expected Energy Consumption} \label[subsec]{subsec:expec_energy_consumption}
 
-\paragraph{Terminology}
-Certain Terminology is commonplace when referencing pc components, here these will be covered and explained as well as how these are used in the calculations.
-\begin{itemize}
-    \item TDP: Thermal Design Power is used to represent the average power that processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than it's TDP \cite{hennessy2011computer}, the lower limit is disputed, but it seems the be around the same for most modern cpu's around $10-25$ watts\feetnote{https://forums.servethehome.com/index.php?threads/the-truth-about-cpu-power-consumption.16/}. Note that TDP is not designed as a measure of power usage, but a measure for needed system cooling, nonetheless it can define some bounds for the values.
-\end{itemize}
+In this section, the expected energy consumption of the different components within the DUTs will be covered. The values and calculations will be covered, in addition to the rationale behind them. This will be achieved by looking at the expected range of energy consumption of each component individually, this will then provide a lower and upper limit for the consumption of the DUT.
 
-\paragraph{Workstation}
-Here the workstations expected energy consumption will be calculated.
-The CPU is an Intel i7-8700 has a TDP of 65 watt $AvgCpu = 65$, meaning that the maximum power consumption can be expected to be around $MaxCpu=97.5=AvgCpu*1.5 watt$, while the minimum at idle would be around $MinCpu=10 watt$
+When referring to the energy consumption of computer components, a common term is Thermal Design Power (TDP). In the work by Hennessy\cite{hennessy2011computer}, TDP is defined as a representation of the average power a processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than its TDP. The lower power limit of a CPU is disputed, but it is approximated To be around $10-25$W for most modern CPU's\cite{CPUPowerCum}.
 
-The Disk is an Samsung SSD 970 EVO Plus 1TB the rated power consume for this ssd is $AvgSdd = 6 watt$, $MaxSdd = 9 watt$ and the idle ssd uses $MinSsd = 20 miliWatt$.
+\paragraph{Workstation} The first DUT is the workstations, and the energy consumption for the different components can be seen in \cref{tab:WorkstationEstEnergCon}.
 
-Memory is DDR4 16Gb, the consumption for a single DDR4 stick of ram is $MinRam=1.5 watt$ and $MaxRam=3 watt$\feetnote{https://www.tomshardware.com/reviews/intel-core-i7-5960x-haswell-e-cpu,3918-13.html}. The average consumption would then be between this two values $AvgRam=2.25 watt=(MinRam+MaxRam)/2$.
+\input{tabels/workstation_components.tex}
 
-The TUF B360M-PLUS GAMING energy consumption is, $MinBoard = 15 watts$, $MaxBoard = 60 watts$ and $AvgBoard = 37.5 watt= (MinBoard+MaxBoard)/2$
 
-Power supply does not really have a energy specific energy consumption, but instead has a energy efficiency, how much of the energy going into the power supply actually gets used in the system. The power supply used in the workstation has a 80-Plus Gold certification meaning that it's efficiency is verified at certain loads. Where the tested loads are 20\%, 50\% and 100\%, having a 80-Plus then provides the following efficiencies at each load level. $MinEff=90\%$, $AvgEff=92\%$ and $MaxEff=89\%$. This is highly relevant for the hardware measurements as they are measured before going into the power supply and will thus be around 8-11\% higher that the actual system consumption.
+\todo{Add second SSD}
+The power supply does not have a specific energy consumption but instead has an energy efficiency rating. The energy efficiency rating represents how much of the energy going into the power supply, is used by the system. The power supply used in the workstation has an 80-Plus Gold certification, representing an efficiency of $90\%$ at a load of 20\%, an efficiency of $92\%$ at a load of 50\% and an efficiency of $89\%$ at a load of 100\%. This is highly relevant for the clamp measurements as they are measured before going into the power supply and will thus be around 8-11\% higher that the actual system consumption.
 
-The computer case also contains a single fan 12v 0.2A SVIVE model SVGCF001, which have been set to max so this will draw $CaseFan = 2.4 watt = 12*0.2$. The Cpu fans exact model could not be confirmed, but an assuming a standard cpu fan is used the value can be estimated to be around the same as the case fan$ CpuFan = 2.4 watt$
+Using these values lower and upper bounds for the expected energy consumption can be created for the DUTs.
 
-Using these values lower and upper bounds for the expected energy consumption can be created for the profilers.
+\paragraph{Software measuring instruments}: The different software approaches measure the CPU and ram individually so the Min and Max values for these components are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
 
-Intel power gadget, RAPL, Hardware monitor:
-All of these measures the Cpu and ram individually so the Min and Max values for this can be considered the bounds. In reality however the bench that are used does not put the system under significant load so the expected bounds would be closer to the following.
-$$Cpu = [MinCpu \dotsc AvgCpu] = [10 watt \dotsc 65 watt]$$
-$$Ram = [MinRam \dotsc AvgRam] = [1.5 watt \dotsc 2.25 watt]$$
+\begin{gather*}
+    CPU: 10W < x < 65W \\
+    Ram: 1.5W < y < 2.25W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
 
-Hardware measurements:
-The hardware measurements are more inclusive than the softwares once are, as the whole system is measured, because of this the calculation to determine a upper and lower bound also include more of the value, to limit the different permutation only the lower values will be used as the testcases used does not sufficiently stress the system to ever utilize more than $20\%$ of the computer capabilities.
-\todo{Find out which fans are in the computer}
-$$LowerBound = 35.75 watt= (MinCpu + MinBoard + MinRam + AvgSsd + CpuFan + CaseFan)*(1+(1/MinEff))$$
-The reason for using the avgSSD instead of the min is because our understanding is that the computer will essentially exceed the $MinSsd$ just by being turned on.
-$$AverageCase = 119.6 watt= (AvgCpu+AvgBoard+AvgRam+AvgSsd+ CpuFan + CaseFan)*(1+(1/AvgEff))$$ 
-So essentially the measurements from the hardware are expected
-\paragraph{Surface Book 1}
-As the surface book 1 is an mobile device that runs on it's battery output our hardware measurement setup will not be used, thus only the Cpu and ram will be subject to the measurements.
+\paragraph{Clamp measurements:} The clamp measurements include the energy consumption of the entire system. To calculate the lower and upper limits to the energy consumption, the values found in \cref{tab:WorkstationEstEnergCon} are summarized. Based on our observations, the CPU never utilizes more than $40\%$. Because of this, and as there is no GPU in the DUT, the efficiency of the power supply is set to the minimum efficiency for the calculations. The lower bound is thus calculated based on:
 
-The Intel Core i5-6300U as a TDP of $14 watt$. The expected ranges for this cpu is then $MinCpu = 7.5 watt$\feetnote{https://www.notebookcheck.net/Intel-Core-i5-6300U-Notebook-Processor.149433.0.html}, $AvgCpu = 14 watt$ and the $MaxCpu = 21 watt = AvgCpu*1.5$.
+\begin{equation}
+    Min = {MinCPU, MinBoard, MinRam, AvgSSD, CPUFan, CaseFan}
+\end{equation}
 
-The ram used in the Surface Book 1 is DDR3\feetnote{https://www.buildcomputers.net/power-consumption-of-pc-components.html} this uses $MinRam = 2 watt$, $MaxRam = 3 watt$. So here we define the average as $AvgRam =2.5 watt= (MinRam+MaxRam)/2$
-Since the hardware measurements are not conducted on this machine this would be the expected readings from the DUT.
+Based in $Min$, the $LowerCase$ can be calculated, representing the minimum energy consumption of the DUT. This is calculated as:
 
-$$Cpu = [MinCpu \dotsc AvgCpu] = [7.5 watt \dotsc 14 watt]$$
-$$Ram = [MinRam \dotsc AvgRam] = [2 watt \dotsc 2.5 watt]$$
+\begin{equation}
+    LowerCase = \left ( \sum_{m \in Min} m \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 35.75W
+\end{equation}
 
-\paragraph{Surface Pro 4}
+A thing to note here, is how $avgSSD$ was used instead of $minSSD$. This decision is based on observations, where the SSD is used by the OS all the time. Next up, the average case can be calculated. Here, the equation is the same, but the values change. They are as following:
 
-The Surface Pro 4 is also a mobile device and is hardware wise similar to the Surface book 1. The ram is the same, but the cpu differs between them, the Surface Pro 4 have a Intel i7-6650U CPU 2.20GHz\feetnote{https://www.intel.com/content/www/us/en/products/sku/91497/intel-core-i76650u-processor-4m-cache-up-to-3-40-ghz/specifications.html}, while the Surface Book 1 had a Intel Core i5-6300U 2.4 GHz.
+\begin{eqnarray}
+    Avg = {AvgCPU, AvgBoard, AvgRam, AvgSSD, CPUFan, CaseFan}
+\end{eqnarray}
 
-The Cpu on the Surface pro 4 is expected to have the following power usage $AvgCpu = 15 watt$, $MinCpu = 9.5 watt$ and $MaxCpu = 22.5 watt = AvgCpu*1.5$. Thus we get the following expectations for the energy consumption.
-$$Cpu = [MinCpu \dotsc AvgCpu] = [9.5 watt \dotsc 15 watt]$$
-$$Ram = [MinRam \dotsc AvgRam] = [2 watt \dotsc 2.5 watt]$$
+And $AverageCase$ is as following:
 
-These should be considered rough estimation for what the DUTs can consume values both above and below these estimates might still be valid, but require some further investigation if the divination is significant. 
+\begin{equation}
+    AverageCase = \left ( \sum_{a \in Avg} a \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 119.6W
+\end{equation}
+
+The measurements from the clamp are expected to be between the $LowerCase$ and $AverageCase$.
+
+\paragraph{Surface Book:} As the Surface Book is a laptop and is running on a battery, the clamp measurement setup will not be used on this DUT. Thus only the CPU and RAM will be subject to the measurements. The energy consumption of the components of this DUT can be seen in \cref*{tab:bookjuanEstEnergCon}
+
+\begin{gather*}
+    CPU: 7.5W < x < 14W \\
+    Ram: 2W < y < 2.5W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
+
+
+\input{tabels/surface_book_components.tex}
+
+\paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book. They are similar in terms of the RAM, and the CPU is from the same generation, but CPU in the Surface Pro 4 is slightly better with a higher turbo clock speed and bigger L3 cache. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
+
+\begin{gather*}
+    CPU: 9.5W < x < 15W \\
+    Ram: 2W < y < 2.5W \\
+    \text{Where $x$ and $y$ represent the measured energy consumption of the CPU and Ram respectively.}
+\end{gather*}
+
+\input{tabels/surface_pro_components.tex}
+
+These should be considered rough estimates for what the DUTs can consume, values both above and below these estimates might still be valid, but require some further investigation if the deviation is significant.

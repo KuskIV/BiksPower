@@ -1,0 +1,28 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={Surface4Pro - RAPL}, ytick={1},
+                                    yticklabels={
+                                        Nbody - RAPL
+                                        },
+                                        xmin=0,xmax=30,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=6.641953915101083,
+                                        lower quartile=6.878056616567441,
+                                        median=6.894505369189585,
+                                        upper quartile=6.919865831798024,
+                                        upper whisker=6.961493340590811},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by RAPL for the Dram for DUT Surface4Pro, OS Unix and test case Nbody, where the impact of the first profiler can be seen (without outliers)} \label{fig:Surface4Pro_RAPL_Dram_R3_dynamic_energy_without_outliers_Unix_avg_watts}
+                            \end{figure}
+                            

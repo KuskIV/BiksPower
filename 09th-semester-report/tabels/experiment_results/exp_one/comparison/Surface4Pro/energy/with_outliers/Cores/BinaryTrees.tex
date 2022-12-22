@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Cores - BinaryTrees - Energy - with outliers}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        IPG , LHM , E3 , RAPL 
+                                        },
+                                        xmin=0,xmax=20,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=12.910729954003683,
+                                    lower quartile=14.148008262036656,
+                                    median=14.620555266077766,
+                                    upper quartile=15.09781338014019,
+                                    upper whisker=15.954092568866766},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.816827626138537,
+                                    lower quartile=12.29934578118489,
+                                    median=12.461401515077434,
+                                    upper quartile=12.638715353380558,
+                                    upper whisker=13.173791157686056},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=11.226721062720783,
+                                    lower quartile=11.399099850691691,
+                                    median=11.524199121753298,
+                                    upper quartile=11.628022610205717,
+                                    upper whisker=11.911791274106257},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=12.489812326121548,
+                                    lower quartile=12.641757280428244,
+                                    median=12.667401010811085,
+                                    upper quartile=12.687841376357463,
+                                    upper whisker=12.747640735284198},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores energy consumption for test case BinaryTrees for the Surface4Pro,  (with outliers)} \label{fig:BinaryTrees_Cores_comparison_energy_with_outliers_Surface4Pro_avg_watts}
+                            \end{figure}
+                            

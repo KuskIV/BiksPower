@@ -1,0 +1,60 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - TestCaseIdle - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.04349157972476547,
+                                    lower quartile=-0.03787126704598354,
+                                    median=-0.020446134162705576,
+                                    upper quartile=-0.0009447975285263865,
+                                    upper whisker=0.3214925574960752},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.032750274129014656,
+                                    lower quartile=-0.023110561912710992,
+                                    median=-0.01687091686494213,
+                                    upper quartile=0.0034683256896954617,
+                                    upper whisker=0.0830881070686722},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.5622607671301552,
+                                    lower quartile=-0.2394391646469849,
+                                    median=-0.0969529391503201,
+                                    upper quartile=0.10358768756713843,
+                                    upper whisker=1.4873460685195852},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.274029792336258,
+                                    lower quartile=-0.062147920864623285,
+                                    median=0.03595338806641757,
+                                    upper quartile=0.07404930973038715,
+                                    upper whisker=0.2415868207630445},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-0.8192939926668856,
+                                    lower quartile=-0.3104637128830703,
+                                    median=-0.07922091500809358,
+                                    upper quartile=0.357728674569735,
+                                    upper whisker=1.0751984155930856},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Cores dynamic energy consumption for test case TestCaseIdle for the workstation,  experiment \#2 (without outliers)} \label{fig:TestCaseIdle_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

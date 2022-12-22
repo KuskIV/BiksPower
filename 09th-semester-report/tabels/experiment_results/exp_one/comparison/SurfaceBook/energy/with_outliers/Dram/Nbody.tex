@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Nbody - Energy - with outliers}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        IPG , LHM , E3 , RAPL 
+                                        },
+                                        xmin=0,xmax=10,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.4983693193415598,
+                                    lower quartile=0.499998783125882,
+                                    median=0.5010597401202225,
+                                    upper quartile=0.5023413790914463,
+                                    upper whisker=0.5126199592747587},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.4737379859681988,
+                                    lower quartile=0.4743602121583572,
+                                    median=0.47615764793909227,
+                                    upper quartile=0.4775420230980242,
+                                    upper whisker=0.49760876280878424},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=-1.049610265357917,
+                                    lower quartile=31.710917990684752,
+                                    median=70.55870458026527,
+                                    upper quartile=109.51816065876923,
+                                    upper whisker=149.97366505669137},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case Nbody for the SurfaceBook,  (with outliers)} \label{fig:Nbody_Dram_comparison_energy_with_outliers_SurfaceBook_avg_watts}
+                            \end{figure}
+                            
