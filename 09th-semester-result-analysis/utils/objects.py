@@ -1,5 +1,5 @@
 import json
-from re import A
+import random
 
 
 class Experiment(object):
@@ -11,6 +11,11 @@ class Experiment(object):
         profiler_id,
         language,
         repository,
+        dut,
+        os,
+        test_case,
+        version,
+        profiler,
         count=200,
     ):
         data_tuple = (config_id, dut_id, test_case_id, language, profiler_id, count)
@@ -28,20 +33,36 @@ class Experiment(object):
             self.language = language
             self.count = count
 
+            parameters_for_query = (dut, os, test_case, version, profiler)
+
+            if repository.parameters_exists(parameters_for_query, repository):
+                (k, look_back) = repository.get_parameters(
+                    parameters_for_query, repository
+                )
+                self.k = k
+                self.look_back = look_back
+                self.has_outlier_parameters = True
+            else:
+                self.has_outlier_parameters = False
+
+            get_time_series = True
+
             for d in data:
-                if not d is None:
-                    raw_data = RawData(
-                        d[0],
-                        d[5],
-                        d[6],
-                        d[8],
-                        d[9],
-                        d[10],
-                        d[11],
-                        repository,
-                    )
-                    if raw_data.is_valid == True:
-                        self.experiments.append(raw_data)
+                raw_data = RawData(
+                    d[0],
+                    d[5],
+                    d[6],
+                    d[7],
+                    d[8],
+                    d[9],
+                    d[10],
+                    d[11],
+                    get_time_series,
+                    repository,
+                )
+                if raw_data.is_valid == True:
+                    self.experiments.append(raw_data)
+            get_time_series = False
 
 
 class Dut(object):
@@ -174,8 +195,13 @@ class TimeSeries(object):
         self.data_point = []
 
         data_points = json.loads(data[2])
-        for d in data_points:
-            self.data_point.append(DataPoint(d))
+
+        if "DataPoints" in data_points:
+            for d in data_points["DataPoints"]:
+                self.data_point.append(DataPoint(d))
+        else:
+            for d in data_points:
+                self.data_point.append(DataPoint(d))
 
 
 class DataPoint(object):
@@ -189,10 +215,12 @@ class RawData(object):
         experiment_id,
         start_time,
         end_time,
+        profiler_id,
         runs,
         iteration,
         first_profiler,
         duration,
+        take_time_series,
         repository,
     ):
         data_tuple = (experiment_id,)
@@ -200,7 +228,7 @@ class RawData(object):
             "SELECT Value FROM RawData WHERE ExperimentId = %s", data_tuple
         )
 
-        if len(data) == 1:
+        if not data is None and len(data) == 1:
             if data[0] == "string2":
                 self.is_valid = False
                 return
@@ -215,9 +243,29 @@ class RawData(object):
                         x for x in json_data if "09th-semester-test-cases" in x["AppId"]
                     ]
                     if len(correct_app) == 0:
-                        self.__dict__ = {}
+                        self.AppId = ["EMPTY"]
+                        self.EnergyLosses = [0]
+                        self.CPUEnergyConsumptions = [0]
+                        self.TotalEnergyConsumptions = [0]
+                        self.TimeInMSecs = [0]
+                        self.TimeStamps = ["9999-12-06:16:08:00.0000"]
+                        self.EnergyLoss = sum(self.EnergyLosses)
+                        self.CPUEnergyConsumption = sum(self.CPUEnergyConsumptions)
+                        self.TotalEnergyConsumption = sum(self.TotalEnergyConsumptions)
                     else:
-                        self.__dict__ = correct_app[-1]
+                        self.AppId = [x["AppId"] for x in correct_app]
+                        self.EnergyLosses = [int(x["EnergyLoss"]) for x in correct_app]
+                        self.CPUEnergyConsumptions = [
+                            int(x["CPUEnergyConsumption"]) for x in correct_app
+                        ]
+                        self.TotalEnergyConsumptions = [
+                            int(x["TotalEnergyConsumption"]) for x in correct_app
+                        ]
+                        self.TimeInMSecs = [int(x["TimeInMSec"]) for x in correct_app]
+                        self.TimeStamps = [x["TimeStamp"] for x in correct_app]
+                        self.EnergyLoss = sum(self.EnergyLosses)
+                        self.CPUEnergyConsumption = sum(self.CPUEnergyConsumptions)
+                        self.TotalEnergyConsumption = sum(self.TotalEnergyConsumptions)
                 else:
                     self.__dict__ = json_data[0]
             else:
@@ -245,11 +293,19 @@ class RawData(object):
             self.start_time = start_time
             self.end_time = end_time
             self.runs = runs
+            self.profiler_id = profiler_id
             self.iteration = iteration
             self.first_profiler = first_profiler
             self.duration = duration
 
             self.time_series = TimeSeries(experiment_id, repository)
+            self.has_time_series = True
+
+            # if take_time_series or random.randint(0, 20) == 1:
+            #     self.time_series = TimeSeries(experiment_id, repository)
+            #     self.has_time_series = True
+            # else:
+            #     self.has_time_series = False
 
             self.start_temperature = GetMeasurements(
                 experiment_id, "CpuTemperature", repository, min
@@ -266,9 +322,10 @@ class RawData(object):
             )
 
         else:
-            raise Exception(
-                f"Could not find any RawData for experiment id '{experiment_id}'"
-            )
+            self.is_valid = False
+            # raise Exception(
+            #     f"Could not find any RawData for experiment id '{experiment_id}'"
+            # )
 
 
 class Bucket(object):

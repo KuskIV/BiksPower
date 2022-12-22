@@ -1,0 +1,44 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy (Watts)}, title={workstation - IntelPowerGadget}, ytick={1, 2, 3},
+                                    yticklabels={
+                                        FannkuchRedux - IPG, FannkuchRedux - LHM, FannkuchRedux - CLAMP
+                                        },
+                                        xmin=0,xmax=70,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=54.74562668952167,
+                                        lower quartile=55.799136019397636,
+                                        median=56.05422434946934,
+                                        upper quartile=56.96539824078928,
+                                        upper whisker=59.085052950256895},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=54.46397491768422,
+                                        lower quartile=55.36817726159913,
+                                        median=55.73062735933872,
+                                        upper quartile=56.303864605009274,
+                                        upper whisker=59.401111606284935},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=53.82535256733344,
+                                        lower quartile=55.859029137171845,
+                                        median=56.300930240028,
+                                        upper quartile=58.09286270332852,
+                                        upper whisker=60.321556317610025},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for dynamic energy measurements by IntelPowerGadget for the Cores for DUT workstation and test case FannkuchRedux, where the impact of the first profiler can be seen (without outliers)} \label{fig:PowerKomplett_IntelPowerGadget_FannkuchRedux_Cores_R3_dynamic_energy_without_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

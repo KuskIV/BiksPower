@@ -1,8 +1,26 @@
 \section{Measuring instruments}\label{sec:measuring_instruments}
 
-When considering \textbf{RQ2}, different measuring instruments are needed. In this section, different existing approaches will be presented, and then compared.
+The aim of this work is to compare different measuring instruments, across different DUTs and OSs, as is covered in \textbf{RQ2-4}. In this section, different measuring instruments used in this work will be introduced.
 
-When selecting software-based measuring instruments there are several options which are chosen from different categories, including software manufacturers, hardware manufacture and open source. From the hardware manufacturers, Intel's RAPL and Intel's Power Gadget were chosen as their solutions with potential for hardware support could be promising. For software manufacturers, Microsoft's E3 was chosen as their domain knowledge could prove valuable for energy estimation. Lastly, an open source project is included, this being Libre Hardware Monitor, to see how this compared to three, potentially more sophisticated solutions. Libre Hardware Monitor was chosen as a C\# implementation was found, which made it easy to use, and based on the assumption that all open source versions will measure in the same way. As the most used approach in existing work, Intels RAPL will also be used. All the different measuring instruments will be introduced now and compared in the end.
+When considering measuring approaches, three different kinds exists:
+
+\begin{itemize}
+    \item Hardware-based measurements: System-level physical measurements
+    \item Software based measurements: RAPL, LHM, Intel Power Gadget and E3s.
+    \item Energy predictive models: A model estimating the energy consumption based on performance monitoring counters.
+\end{itemize}
+
+\paragraph*{}
+When selecting measuring instruments, they can be either a energy predictive model, software-, hardware-based or a combination. When considering software-based measuring instruments, multiple versions exists, where this work will aim to include a wide variety. This will include a Linux and Windows version created by Intel, this being RAPL and Intel Power Gadget. RAPL was chosen as \cref*{ch:related_work} found this to be widely used in existing work, and Intel Power Gadget was chosen as it is created by the same company. Microsoft has also made their own versions, this being E3. This was chosen based on the assumption of how their domain knowledge could prove valuable. Another measuring instrument included is Libre Hardware Monitor (LHM), representing an open source solution. LHM was chosen as it was chosen as their implementation was easy to use. An assumption here is that all open source versions will measure energy in a similar fashion. Energy predictive models are models estimating the energy consumption based on performance monitoring counters, and will be used by E3 in some cases, depending on the DUT. Lastly a hardware measuring instrument is also included, and will serve as the ground truth.
+
+
+
+% When considering the measurement methodology, it is in regards to a few things. This is first of all the different kinds of measurement for both software and hardware approahces.
+
+
+
+% A thing to note here is some uncertainty regarding E3, as covered in \cref{sec:E3Experiments}. In this case the assumption is that this measuring instrument will utilize on-chip sensors if a chip like the MAXIM chip is available, otherwise an energy predictive model will be used. Of these three approaches, the most accurate is the system-level physical measurements which can provide highly accurate measurements for the DUT's energy consumption, but these measurements are for the entire DUT, so they cannot provide a view of the power consumption of applications on an individual level, which the E3 can do. It is however not necessary to get a per-application energy consumption, as only the test cases' energy consumption is to be calculated, dynamic energy consumption can solve this, which is expanded upon in \cref{sec:rw_measureing_methodology_setup}
+
 
 \input{sections/method/profilers/RAPL.tex}
 \input{sections/method/profilers/E3.tex}

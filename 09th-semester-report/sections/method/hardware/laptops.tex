@@ -1,4 +1,15 @@
-\subsection{Laptops}
+\subsection{DUTs}\label[subsec]{subsec:DUTs}
+
+Following the introduction to what kind of DUTs are required for this work in \cref{subsec:setup}, this section will introduce the chosen DUTs. Before going into depth with each DUT, some overall comments can be made. The first thing is the OSs, where each DUT has the same version of both Windows and Linux. The specific versions was the most recent update when the experiments were executed in November 2022. Each DUT were in addition to this running on a fresh install of each OS, to limit unnecessary background processes.
+
+\paragraph{Surface Book:} The first DUT was the Surface Book, first released in October in 2015, where the specifications can be seen in \cref{tab:surfaceBook}. This was to most difficult DUT to find, as this is the one with a MAXMIM chip. The reason why this DUT was difficult to find, was because the MAXIM chip is not mentioned anywhere in the documentation for the Surface Book, or any newer versions of it. Because of this, it was a challenge to ensure the DUT had the chip. The Surface Book was chosen as a teardown was found\feetnote{https://www.ifixit.com/Teardown/Microsoft+Surface+Book+Teardown/51972}, where the chip was pointed out.
+
+\input{tabels/SurfaceBook.tex}
+
+\paragraph{Surface Pro 4:} The Surface Pro 4 represents the DUT with a battery, but without a MAXIM chip, and was chosen based on what was available at the University. The DUT was released in October of 2015, meaning it is from the same generation as the Surface Book, but with an upgraded CPU and more RAM, as can be seen in \cref{tab:surfacePro}.
 
 \input{tabels/SurfacePro.tex}
-\input{tabels/SurfaceBook.tex}
+
+\paragraph{Workstation:} The workstation represents the DUT without a battery, making it possible to measure the energy consumption through hardware. This DUT was also chosen based on what was available at the University and came with a external GPU, which was removed for comparability as neither of the other DUTs had an external GPU.
+
+\input{tabels/Komplett.tex}

@@ -1,0 +1,33 @@
+\section{Key takeaways}\label[section]{sec:rw_key_takeaways}
+
+In this section, the major aspects of the related works covered in \cref{sec:rw_energy_consumption_diff_lang,sec:rw_diff_measuring_instruments,sec:rw_measureing_methodology_setup} are presented. 
+
+In \cref{sec:rw_diff_measuring_instruments} the idea of comparing different measuring instruments as Japgroep et al.\cite{Jagroep2015} did was presented. However, only two measuring instruments could be set up to conduct measurements. Those were Joulemeter and Energy Consumption Tools (EC Tools). Joulemeter was last updated in 2011\cite{Joulemeter} and EC Tools was last updated in 2013\cite{ECTools}. Since the last updates are many years ago we decided against using them as we assumed they are discontinued, since the last updates were around 10 years ago. However, the idea of comparing different measuring instruments as Jagroep et al. did, is the essence of our work as well. A measuring instrument used in multiple related works is RAPL\cite{RAPL_in_action,hackenberg2013,fahad2019comparative} and is as such relevant to include. However, as shown by Khan et al.\cite{RAPL_in_action} RAPL performs differently on different Intel CPU architectures, but still deems it to be a viable alternative to hardware-based measurements in many cases. However, Fahad et al.\cite{fahad2019comparative} and Hackenberg et al.\cite{hackenberg2013} showed that in some cases, it was not very accurate compared to the hardware-based measuring instruments. A hardware-based measuring instrument will therefore be used as a ground truth in our work. In \cref{sec:rw_energy_consumption_diff_lang,sec:rw_diff_measuring_instruments,sec:rw_measureing_methodology_setup} different approaches are used, their number of occurrences are shown in \cref{tab:Hardware_based_Measuring_instruments}. Furthermore, another hardware based measuring instrument seen in the literature is Kill A Watt\cite{weaver2012measuring}, which is also shown in \cref{tab:Hardware_based_Measuring_instruments}. These will be considered when choosing the hardware-based approach to utilize in our work in \cref{subsec:HardwareMeasurementsIntro} and \cref{subsec:Equipment}.
+\input{tabels/HB_MI}
+
+%  Watts  Up? PRO Jagroep
+%  Plugwise Khan
+% ZES ZIMMER LMG450 Hackenberg
+% Watt up Pro Fahad
+% Custom setup Mancebo
+
+Furthermore, Hackenberg et al.\cite{hackenberg2013} provide insight to be considered regarding optimal sample rate depending on the type of measurements.
+
+Another aspect presented by Fahad et al.\cite{fahad2019comparative} is the concept of dynamic energy consumption. This enables a comparison between the hardware-based measurements and software-based measurements used in our work, which will be chosen in \cref{ch:method}.\newline
+
+% Fahad
+% Hackenberg
+% Khan
+
+% Add terminology alert
+In \cref{sec:rw_measureing_methodology_setup} different frameworks and other aspects of methodology were presented. First of all, some of the contributions from Mancebo et al. \cite{GarciaFEETINGS} are also incorporated to some extent. Specifically, some of the terminology defined in the GSMO. However, some aspects in the GSMO are deemed irrelevant to our use case and will not be used. Furthermore, some additional terminology is also needed. The terminology can be seen in \cref{tab:TerminologyAlert}. The two other components are the methodological component and the technological components, both of which are not used. The methodological component which are guidelines to assist with the study design are not explicitly followed, since we were not aware of it in the initial phase of our work, however a similar processes is used. The technological component consisting of a custom hardware-based measuring instrument and a software tool is not available to the public and can therefore not be used.
+
+Sestoft\cite{sestoft2013microbenchmarks} presents several things to consider when running benchmarks. For example how the JIT compilation can affect the execution time of benchmarks and how garbage collection can also be an uncontrollable factor. Furthermore, a list of potential pitfalls is presented, which are considered when implementing the framework used in our work, as presented in \cref{sec:rw_measureing_methodology_setup}.
+
+Bokhari et al.\cite{Bokhari2020r3} came up with \textit{R3-VALIDATION} to avoid system software states changing from restarting the DUT and to generally improve the fairness of running several different test cases. The ideas of \textit{R3-VALIDATION} will be adapted in \cref{subsec:exp_rep} to better fit our use case although the core idea will remain the same.
+
+Finally, it was noted by Dongarra et al.\cite{Dongarra2012} that when comparing results gathered from different DUTs or measuring instruments it is useful to have the same sampling rate across the setups. This will also be implemented if possible within the limits of the different measuring instruments used in our work.
+
+% Mancebo
+% Sestoft
+% Bokhari

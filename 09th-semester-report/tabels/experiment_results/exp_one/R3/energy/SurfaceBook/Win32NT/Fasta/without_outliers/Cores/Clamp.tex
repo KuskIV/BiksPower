@@ -1,0 +1,52 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={SurfaceBook - Clamp}, ytick={1, 2, 3, 4},
+                                    yticklabels={
+                                        Fasta - IPG, Fasta - LHM, Fasta - IPG, Fasta - LHM
+                                        },
+                                        xmin=0,xmax=50,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=1.7732967446988237,
+                                        lower quartile=2.0914437107987247,
+                                        median=2.333191129399987,
+                                        upper quartile=2.596642358991259,
+                                        upper whisker=3.3022758680177877},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=1.7443845119197205,
+                                        lower quartile=2.010859931679573,
+                                        median=2.2605225892452148,
+                                        upper quartile=2.4296019400498583,
+                                        upper whisker=3.242346932825505},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=1.8225259165015386,
+                                        lower quartile=2.106346202843307,
+                                        median=2.312576141591143,
+                                        upper quartile=2.5931943025643807,
+                                        upper whisker=3.5288241475451576},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=1.8184386334431506,
+                                        lower quartile=2.0903926487345745,
+                                        median=2.2729643868445937,
+                                        upper quartile=2.4595030599819396,
+                                        upper whisker=3.2737056347952698},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by Clamp for the Cores for DUT SurfaceBook, OS Win32NT and test case Fasta, where the impact of the first profiler can be seen (without outliers)} \label{fig:SurfaceBook_Clamp_Cores_R3_energy_without_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

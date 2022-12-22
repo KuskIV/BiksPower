@@ -82,8 +82,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Change margins, papersize, etc of the document
 \usepackage[
-  inner=28mm,% left margin on an odd page
-  outer=41mm,% right margin on an odd page
+  inner=18mm,% left margin on an odd page
+  outer=31mm,% right margin on an odd page
+  bottom=20mm,
   ]{geometry}
 % Modify how \chapter, \section, etc. look
 % The titlesec package is very configureable
@@ -155,8 +156,8 @@
 \hypersetup{%
 	pdfpagelabels=true,%
 	plainpages=false,%
-	pdfauthor={Author(s)},%
-	pdftitle={Title},%
+	pdfauthor={Mads Hjuler Kusk, Jamie Baldwin Pedersen and Jeppe Jon Holt},%
+	pdftitle={Measuring Measurement Instruments},%
 	pdfsubject={Subject},%
 	bookmarksnumbered=true,%
 	colorlinks=false,%
@@ -166,6 +167,13 @@
 	urlcolor=black,%
 	pdfstartview=FitH%
 }
+
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.16}
+\usepgfplotslibrary{statistics}
 
 \usepackage[utf8]{inputenc}
 \usepackage{fourier} 
@@ -187,6 +195,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{marvosym}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -215,6 +224,8 @@
 
 \crefname{lstlisting}{listing}{listings}
 \Crefname{lstlisting}{Listing}{Listings}
+\crefname{subsec}{subsection}{subsections}
+\Crefname{subsec}{Subsection}{Subsections}
 \lstset{style=mystyle}
 \let\feetnote\footnote
 

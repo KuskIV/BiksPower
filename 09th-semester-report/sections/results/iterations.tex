@@ -1,0 +1,21 @@
+\section{Iterations}\label{sec:iterations}
+
+In this section, the energy consumption over time will be analyzed. This will be done by plotting the average dynamic energy consumption for each iteration after a restart. The results will be analyzed with respect to \textbf{RQ2-4}, where DUTs, test cases and OSs will be compared for the different measuring instruments. Before this, some expectations will be presented.
+
+\subsection{Expectations}
+
+The expectation for this experiment is to see a similar energy consumption when executing the same test case multiple times between a restart. This expectation is primarily based on the limited effect of R3 validation, as was shown in \cref{subsec:exp_r3}.
+
+\subsection{Results}
+
+For the results, FannkuchRedux and BinaryTrees were chosen as these illustrate the findings well, where the other test cases can be found in \cref{app:iterations}. When discussing the results, it will be done based on \textbf{RQ2-4} one at a time. Before going into depth with these, some overall comments will be made. It can first of all be noted how in \cref{fig:FannkuchRedux_Cores_iteration} and \cref{fig:BinaryTrees_Cores_iteration}, some DUTs do not have values on the entire x-axis. This is the case for both DUTs with a battery, meaning they reach the lower limit of 40\% battery before executing the test cases 30 times. It can also be seen how energy consumption does not increase over time, as expected. 
+
+\input{tabels/experiment_results/exp_one//graphs/iteration/without_outliers/Cores/FannkuchRedux.tex}
+
+\paragraph*{RQ2:} The second research question aims to compare the different measuring instruments. When comparing the measuring instruments, some overall comments can be made for all DUTs. One observation is how IPG and LHM seem to have similar measurements across all runs after a restart. When comparing IPG and LHM against E3, the similarity differs from test case to test case. In FannkuchRedux in \cref{fig:FannkuchRedux_Cores_iteration}, E3's measurements are lower compared to IPG and LHM, but for BinaryTrees in \cref{fig:BinaryTrees_Cores_iteration}, E3's measurements are similar to IPG and LHM. When considering RAPL measurements, these are in most cases lower compared to IPG and LHM measurements, there are however exceptions, one being for BinaryTrees in \cref{fig:BinaryTrees_Cores_iteration} for the Surface Book. When considering the clamp, the Windows measurements are higher than the Linux measurements, where both have measurements lower than IPG and LHM. 
+
+\input{tabels/experiment_results/exp_one/graphs/iteration/without_outliers/Cores/BinaryTrees.tex}
+
+\paragraph*{RQ3:} The third research question considers the measurements between the different OSs. When comparing Linux and Windows, the overall pattern is higher measurements from Windows, with a few outliers. One outlier is RAPL for BinaryTrees, for the Surface Book in \cref{fig:BinaryTrees_Cores_iteration}. This observation is based both on software-based measuring instruments, but also the clamp, where the clamp represents the ground truth. Because of this, it seems like Windows has a higher energy consumption. When looking at the workstation, the clamp measurements for Linux are less than RAPL, and Windows are less than IPG and LHM.
+
+\paragraph*{RQ4:} The last research question aims to compare the DUTs. When comparing the DUTs, one difference is regarding energy consumption. Here the workstation will in all cases have the highest energy consumption, which can be observed in both \cref*{fig:BinaryTrees_Cores_iteration} and \cref*{fig:FannkuchRedux_Cores_iteration}. Between the two Surfaces, the Surface Pro 4 has a higher energy consumption than the Surface Book. Between the two surfaces, a key difference is the MAXIM chip on the Surface Book which, according to Microsoft meant E3 would have an accuracy of $98\%$, as was covered in \cref*{subsec:e3}. Based on the results in this experiment, it is difficult to find any pattern suggesting the measurements has improved.

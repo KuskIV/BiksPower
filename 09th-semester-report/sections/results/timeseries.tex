@@ -1,0 +1,117 @@
+\section{Time series}\label{sec:timeseries}\todo{add obeservation of E3}
+In this section, we are presenting some of the time series graphs containing the average energy consumption in joules at a specific time stamp over 120 measurements. These graphs are not showing dynamic energy consumption, but rather the raw data. Not all of the graphs will be shown, because of the vast amount of graphs that would be, however some additional graphs are shown in \cref{ch:appAlabel}. This section is split up into different parts that focus on either the cases, the DUT or the measuring instrument. They will each include our expectations and then the actual results will be presented.
+%Add expectations
+\subsection{Comparing the test cases}\label[subsec]{subsec:comparing_test_case}
+In this subsection, light will be shed on the different test cases. To do this it is helpful to keep the DUT and measuring instrument consistent.
+
+\paragraph{Expectations:}
+When looking at the different test cases with their real measured energy consumption and not dynamic energy consumption, we expect that the energy consumption of TestCaseIdle is a lot less than the other test cases. Furthermore, the energy consumption should be consistent as there should not be many background processes that can interfere with the energy consumption. For BinaryTrees and Fasta there could potentially be some visible spikes due to garbage collection since those test cases are memory-heavy.
+\paragraph{Results:}
+%Sammenligne alle test cases samme DUT og MI. se tendens.
+In \cref{fig:time_series_Workstation_RAPL} some time series graphs are shown where the DUT is the workstation and the measuring instrument is RAPL. Each graph is an average of all the measurements of a given configuration. In \cref{fig:time_series_Workstation_RAPLIdleCase} TestCaseIdle is shown. What can be seen, is a lower average than the other test cases as we expected. However, there are some spikes, which were not expected. We can also observe that BinaryTrees consumes the most energy, followed by FannkuckRedux, Fasta, Nbody and finally TestCaseIdle. Nbody has a lower variance than the other test cases, but like the others, it does have some spikes. Since these graphs show an average over the measurements, the spikes are consistent over many measurements. Notably, all the figures seem to have a spike at around $~28$ seconds into a test case run. This is an interesting observation, in an attempt to figure out why this occurs a look at a second configuration is done. With the same DUT, but using Intel Power Gadget as shown in \cref{fig:time_series_Workstation_IntelPowerGadget} the spike at around $~28$ does not seem to appear. However, perhaps it has something to do with the Measuring instrument and not the DUT so a third configuration is looked at, where the Surface Pro 4 and RAPL are used, as shown in \cref{fig:time_series_Surface4Pro_RAPL}. Here the spikes also do not seem to appear in this configuration. The cause of the spike is as such currently unknown, but it can be speculated that there is some process that would start at the same interval in each run.\todo{Any ideas as to why this spike occurs?} Another observation which seems to be appearing in many configurations is that the measurement will start with a measurement close to $~0$, we speculate that this could be due to the measuring instrument being started by our framework one line of code before the test case. As such the measuring instrument could potentially conduct a measurement before the test case is executed. Therefore it might in theory be more of a measurement on TestCaseIdle, however looking at \cref{fig:time_series_Workstation_RAPLIdleCase} there is also an initial measurement which is lower than the remaining measurements. This trend is consistent with all the RAPL measurements on TestCaseIdle as can be seen in \cref{fig:time_series_TestCaseIdle_RAPL}, however, it is not present on the other measuring instruments for TestCaseIdle as can be seen for Intel Power Gadget in \cref{fig:time_series_TestCaseIdle_IPG}. One speculation as to the reasoning could be that the actual increase in the TestCaseIdle is the command prompt being opened, however, this does not explain why it does not appear on the other measuring instruments. 
+
+
+\input{tabels/reulsts_timeseries/Workstation_Rapl.tex}
+
+
+\subsection{Comparing the DUTs}
+After looking at the different test cases, this subsection will compare the difference between the DUTs. Therefore the test case and the measuring instrument will be kept consistent. 
+
+\paragraph{Expectation:}
+We expect that the workstation has a higher energy consumption than the laptops since the CPU has a higher TDP. Regarding the laptops, it is expected they perform similarly since the hardware specifications are very similar.
+
+\paragraph{Results:}
+%Så vælg test case. vælg forksellige DUTs.
+As can be seen in \cref{fig:time_series_Fankuch_IntelPowerGadget} the Surface Book and Surface Pro 4 look similar as expected. However, the Surface Pro 4 consumes $~5-10$ more joules than the Surface Book. Although, they are similar in regards to variance except that the Surface Pro 4 has lower valleys. When looking at \cref{fig:time_series_Fankuch_IntelPowerGadgetWorkstation} which is the workstation it is clear that it consumes notably more energy than the other systems as expected. It also has more variance with more peaks and valleys. Interestingly the workstation shows a trend with a slight climb in the average energy consumption as the test case goes on.\todo{why?}
+
+\input{tabels/reulsts_timeseries/Fankuch_IntelPowerGadget.tex}
+
+Regarding energy consumption, we can see that the Surface Book uses the least, followed by the Surface Pro 4 and then the Workstation. If we look at the specifications for each DUT shown in \cref{tab:surfaceBook,tab:surfacePro}. Here the two laptops' CPUs have the same TDP ($15W$), however, following the trend seen in the graphs, the Surface Book's CPU's configurable TDP-down ($7.5W$) is lower than the Surface Pro 4's($9.5W$). However, the workstation's CPU's TDP is much higher at $65W$, which also shows in the energy consumption. There seems to be a correlation between energy consumption and the TDP.
+
+%så vælg DUt hvis forskellige measruing instruments. 
+
+\subsection{Comparing the measuring instruments}
+Finally, after comparing the different DUTs, this section will proceed with a comparison of the different measuring instruments.
+
+\paragraph{Expectation:}
+We expect the clamp measurements to have a higher energy consumption than the software-based measuring instruments, due to the clamp measurements measure the whole system. The software-based measuring approaches should be very similar. However, we expect that the RAPL measurements are slightly lower than Windows due to Linux being a more lightweight OS with fewer background processes.
+
+\paragraph{Results:}
+On \cref{fig:time_series_Fankuch_Workstation} the graphs for test case FannkuchRedux on the workstations can be observed. The workstation was chosen since this DUT is the only one with clamp measurements as well as software-based measuring instruments. When considering \cref{fig:time_series_Fankuch_WorkstationIntelPowerGadget,fig:time_series_Fankuch_WorkstationLHM}, which are the two software-based measuring instruments on Windows, there is a pretty consistent average, although with a slight upwards trend throughout the runtime. The average also seems to be very similar as expected, although with Intel Power Gadget there is more variance and the peaks and valleys are further from the average. Notable both measuring instruments seem to have a peak at $~10$ seconds. Looking at \cref{fig:time_series_Fankuch_WorkstationRAPL}, which is RAPL, the energy consumption is slightly lower, and the slight upwards trend does not seem to be present. When looking at the clamp measurements shown in \cref{fig:time_series_Fankuch_WorkstationClampW,fig:time_series_Fankuch_WorkstationClampL} there is a higher energy consumption as expected since the clamp measurements measure the system as a whole and not just the CPU. Furthermore, the average is not as straight as a line as the software-based measurements. For the clamp on Windows as shown in \cref{fig:time_series_Fankuch_WorkstationClampW} it seems as though the average becomes more varied in the final $20$ seconds of the measurement. In \cref{fig:time_series_Fankuch_WorkstationClampL} there is a pattern where there is a small drop followed by a sharp peak followed by a sharp drop, where it then slowly rises until the pattern starts again.\todo{Any ideas as to what causes this?} The pattern observed in \cref{subsec:comparing_test_case} regarding the initial measurement being $~0$ is also noticeable here, however only on LHM and RAPL. Furthermore, there seems to be missing data.\todo{Whats going on here??}
+
+\input{tabels/reulsts_timeseries/Fankuch_workstation.tex}
+
+To gain more insight into the differences between the different measuring instruments a look at a different configuration is useful. Therefore in \cref{fig:time_series_BinaryTrees_Workstation}. This figure shows the test case BinaryTrees on the workstation. Previously we saw that the measuring instruments Intel Power Gadget and LHM showed a consistent average, but with a slight upwards trend in energy consumption. This is not as obvious in \cref{fig:time_series_BinaryTrees_Workstation_IntelPowerGadget} and in \cref{fig:time_series_BinaryTrees_Workstation_LHM} there is a trend downwards. They both also have a peak at around the same time step as in \cref{fig:time_series_Fankuch_Workstation}
+However, another thing which can be observed is that Intel Power Gadget seems to be noisier in this configuration as well.  Regarding the clamp measurements in \cref{fig:time_series_BinaryTrees_Workstation_ClampW} there is also a drop off in energy consumption towards the end of the measurement. When looking at \cref{fig:time_series_BinaryTrees_Workstation_ClampL} a very similar pattern occurs although with a bit more variance. 
+
+
+
+\input{tabels/reulsts_timeseries/BinaryTrees_Workstation.tex}
+
+
+
+
+
+
+
+
+%\subsection{Binarytress}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/HardwareMonitor/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/IntelPowerGadget/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Unix/RAPL/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/HardwareMonitor/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/IntelPowerGadget/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Unix/RAPL/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/HardwareMonitor/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/IntelPowerGadget/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/Clamp/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/RAPL/BinaryTrees.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/Clamp/BinaryTrees.tex}
+%\subsection{FannkuchRedux}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/HardwareMonitor/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/IntelPowerGadget/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Unix/RAPL/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/HardwareMonitor/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/IntelPowerGadget/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Unix/RAPL/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/HardwareMonitor/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/IntelPowerGadget/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/Clamp/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/RAPL/FannkuchRedux.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/Clamp/FannkuchRedux.tex}
+%\subsection{Fasta}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/HardwareMonitor/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/IntelPowerGadget/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Unix/RAPL/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/HardwareMonitor/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/IntelPowerGadget/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Unix/RAPL/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/HardwareMonitor/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/IntelPowerGadget/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/Clamp/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/RAPL/Fasta.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/Clamp/Fasta.tex}
+%\subsection{NBody}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/HardwareMonitor/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Win32NT/IntelPowerGadget/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/Surface4Pro/Unix/RAPL/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/HardwareMonitor/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Win32NT/IntelPowerGadget/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/SurfaceBook/Unix/RAPL/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/HardwareMonitor/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/IntelPowerGadget/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Win32NT/Clamp/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/RAPL/Nbody.tex}
+%\input{tabels/experiment_results/timeseries/PowerKomplett/Unix/Clamp/Nbody.tex}
+%\subsection{TestCaseIdle}
+%\input{tabels/experiment_results/exp_one/timeseries/Surface4Pro/Win32NT/HardwareMonitor/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/Surface4Pro/Win32NT/IntelPowerGadget/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/Surface4Pro/Unix/RAPL/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/SurfaceBook/Win32NT/HardwareMonitor/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/SurfaceBook/Win32NT/IntelPowerGadget/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/SurfaceBook/Unix/RAPL/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/PowerKomplett/Win32NT/HardwareMonitor/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/PowerKomplett/Win32NT/IntelPowerGadget/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/PowerKomplett/Win32NT/Clamp/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/PowerKomplett/Unix/RAPL/TestCaseIdle.tex}
+%\input{tabels/experiment_results/exp_one/timeseries/PowerKomplett/Unix/Clamp/TestCaseIdle.tex}

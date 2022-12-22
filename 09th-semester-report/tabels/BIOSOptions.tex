@@ -1,0 +1,25 @@
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{||c|c|c|c||}
+    \hline
+                                                                                   & \begin{tabular}[c]{@{}l@{}}\textbf{Performance}\\  \textbf{Mode}\end{tabular} & \begin{tabular}[c]{@{}l@{}}\textbf{Max Power-}\\ \textbf{Saving Mode}\end{tabular} & \textbf{Default (Auto)} \\[0.5ex] \hline\hline
+    Intell(R) SpeedStep                                                            & Disabled                                                    & Enabled                                                          & Auto           \\ \hline
+    \begin{tabular}[c]{@{}l@{}}Long Duration \\ Package Power Limit\end{tabular}   & 4095                                                        & Auto                                                             & Auto           \\ \hline
+    \begin{tabular}[c]{@{}l@{}}Package Power\\ Time Window\end{tabular}            & 127                                                         & Auto                                                             & Auto           \\ \hline
+    Short Duration Power Limit                                                     & 4095                                                        & Auto                                                             & Auto           \\ \hline
+    \begin{tabular}[c]{@{}l@{}}CPU Core/Cache\\ Current Limit\end{tabular}         & 255.50                                                      & Auto                                                             & Auto           \\ \hline
+    \begin{tabular}[c]{@{}l@{}}PCI Express-\\ Native Power Management\end{tabular} & 255.50                                                      & Enabled                                                          & 255.50         \\ \hline
+    Native ASPM                                                                    & Disabled                                                    & Enabled                                                          & Disabled       \\ \hline
+    PCH DMI ASPM                                                                   & Disabled                                                    & L0sL1                                                            & Disabled       \\ \hline
+    ASPM                                                                           & Disabled                                                    & L0sL1                                                            & Disabled       \\ \hline
+    DMI Link ASPM Control                                                          & Disabled                                                    & L0sL1                                                            & Disabled       \\ \hline
+    PEG - ASPM                                                                     & Disabled                                                    & ASPM L0sL1                                                       & Disabled       \\ \hline
+    \begin{tabular}[c]{@{}l@{}}Intel(R) Speed-\\ Shift Technology\end{tabular}     & Disabled                                                    & Enabled                                                          & Enabled        \\ \hline
+    CPU C-states                                                                   & Disabled                                                    & Enabled                                                          & Auto           \\ \hline
+    Package C State Limit                                                          & CO/C1                                                       & C10                                                              & C10            \\ \hline
+    RC6(Render Standby)                                                            & Disabled                                                    & Enabeld                                                          & Auto           \\ \hline
+    Aggressive LPM support                                                         & Disabled                                                    & Enabled                                                          & Enabled        \\ \hline
+    \end{tabular}
+    \caption{These are the different BIOS setting that change based on which Performance mode is selected}
+    \label{tab:BIOSOptions}
+\end{table}

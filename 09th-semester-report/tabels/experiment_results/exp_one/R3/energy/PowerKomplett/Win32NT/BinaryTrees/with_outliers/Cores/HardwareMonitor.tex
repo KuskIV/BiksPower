@@ -1,0 +1,68 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=0.15\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy (Watts)}, title={workstation - HardwareMonitor}, ytick={1, 2, 3, 4, 5, 6},
+                                    yticklabels={
+                                        BinaryTrees - IPG, BinaryTrees - LHM, BinaryTrees - CLAMP, BinaryTrees - IPG, BinaryTrees - LHM, BinaryTrees - CLAMP
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=66.8984904334508,
+                                        lower quartile=67.84612309844385,
+                                        median=68.32806301259244,
+                                        upper quartile=68.5379701148509,
+                                        upper whisker=69.24811471382141},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=67.3613473115873,
+                                        lower quartile=67.77518466199587,
+                                        median=68.12541556743429,
+                                        upper quartile=68.4543257978911,
+                                        upper whisker=68.8823007754735},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=67.1089168005427,
+                                        lower quartile=67.926822043721,
+                                        median=68.14697106392397,
+                                        upper quartile=68.57378135255439,
+                                        upper whisker=69.04908108498708},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=65.47102329106423,
+                                        lower quartile=66.1327900185145,
+                                        median=66.27855823595375,
+                                        upper quartile=66.49880262543775,
+                                        upper whisker=67.30875603984722},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=65.76059679326289,
+                                        lower quartile=66.05964669108536,
+                                        median=66.26190040212177,
+                                        upper quartile=66.4283724172665,
+                                        upper whisker=69.64097862853284},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                        \addplot+ [boxplot prepared={
+                                        lower whisker=65.83756201648133,
+                                        lower quartile=66.15408688193276,
+                                        median=66.27568914166659,
+                                        upper quartile=66.39029383005042,
+                                        upper whisker=66.91049700419154},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                        
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{R3 validation for energy measurements by HardwareMonitor for the Cores for DUT PowerKomplett, OS Win32NT and test case BinaryTrees, where the impact of the first profiler can be seen (with outliers)} \label{fig:PowerKomplett_HardwareMonitor_Cores_R3_energy_with_outliers_Win32NT_avg_watts}
+                            \end{figure}
+                            

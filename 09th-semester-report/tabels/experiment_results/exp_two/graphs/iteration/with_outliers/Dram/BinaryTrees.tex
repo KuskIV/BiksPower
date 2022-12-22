@@ -1,0 +1,44 @@
+
+                \begin{figure}
+                    \centering
+                    \begin{tikzpicture}
+                        \pgfplotsset{%
+                            width=1\textwidth,
+                            height=0.4\textheight
+                        }
+                        \begin{axis}[
+                            xlabel={Runs since restart},
+                            ylabel={Average dynamic energy (watt)},
+                            ymin=0,ymax=70,
+                        ]
+                        
+                            \addplot [mark=none, densely dashed, red]  coordinates {
+                            (1, 0.11572768902380141)(2, 0.07419036983227956)(3, 0.07349316293494967)(4, 0.07677370000396333)(5, 0.07082352629836504)
+                            };
+                            \addlegendentry{WRK - IPG}
+                            
+                            \addplot [mark=none, densely dashed, blue]  coordinates {
+                            (1, 0.09885066820980193)(2, 0.08395619890623067)(3, 0.0643557249508514)(4, 0.09757834508098547)(5, 0.0661934712859699)
+                            };
+                            \addlegendentry{WRK - LHM}
+                            
+                            \addplot [mark=none, densely dashed, cyan]  coordinates {
+                            (1, 0.0)(2, 0.0)(3, 0.0)(4, 0.0)(5, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (win)}
+                            
+                            \addplot [mark=none, densely dashed, orange]  coordinates {
+                            (1, 14.029507862400123)(2, 128.1048237574377)(3, 251.17303870174663)(4, 370.014151419346)(5, 484.47387274271415)(6, 599.3187290302408)(7, 712.9276959512814)(8, 827.6018653182117)(9, 941.8470203047258)(10, 1055.6550771216962)(11, 1169.9686658011851)(12, 1283.9859483167907)(13, 1399.1567850902159)(14, 1513.0191287650057)(15, 1626.712642750985)(16, 1741.4031498058885)(17, 1855.204896199118)(18, 1969.700544512574)(19, 2083.7710285216986)(20, 2198.0864113925336)(21, 2312.5246251124017)(22, 2425.0605637238564)(23, 2541.36411415467)(24, 2655.579128213914)(25, 2769.777169865771)(26, 2882.9843366760865)(27, 2997.3598060819604)(28, 3112.0672990230446)(29, 3224.056132178244)
+                            };
+                            \addlegendentry{WRK - RAPL}
+                            
+                            \addplot [mark=none, densely dashed, black]  coordinates {
+                            (1, 0.0)(2, 0.0)(3, 0.0)(4, 0.0)(5, 0.0)(6, 0.0)(7, 0.0)(8, 0.0)(9, 0.0)(10, 0.0)(11, 0.0)(12, 0.0)(13, 0.0)(14, 0.0)(15, 0.0)(16, 0.0)(17, 0.0)(18, 0.0)(19, 0.0)(20, 0.0)(21, 0.0)(22, 0.0)(23, 0.0)(24, 0.0)(25, 0.0)(26, 0.0)(27, 0.0)(28, 0.0)(29, 0.0)
+                            };
+                            \addlegendentry{WRK - CLAMP (lin)}
+                            
+                        \end{axis}
+                    \end{tikzpicture} 
+                \caption{A graph illustrating the energy consumption of Dram for test case BinaryTrees with regards to how long ago the DUT was restarted, experiment \#2, (with outliers)} \label{fig:BinaryTrees_Dram_iteration_exp2}
+                \end{figure}
+                

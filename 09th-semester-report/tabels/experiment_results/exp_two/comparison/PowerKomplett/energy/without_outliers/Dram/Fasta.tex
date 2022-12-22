@@ -1,0 +1,60 @@
+
+                            \begin{figure}
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=.2\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average energy consumption (Watts)}, title={Dram - Fasta - Energy - without outliers}, ytick={1, 2, 3, 4, 5},
+                                    yticklabels={
+                                        IPG , LHM , CLAMP (win) , RAPL , CLAMP (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.596504213081308,
+                                    lower quartile=0.5967064118530172,
+                                    median=0.5987617879403604,
+                                    upper quartile=0.6003373752695925,
+                                    upper whisker=0.6073928418713385},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.5925673558604723,
+                                    lower quartile=0.5955342557761306,
+                                    median=0.6022503868583552,
+                                    upper quartile=0.6061869678997145,
+                                    upper whisker=0.6556825638030647},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=52.28434157785926,
+                                    lower quartile=611.4550596188482,
+                                    median=1169.8765426342216,
+                                    upper quartile=1725.6979429693174,
+                                    upper whisker=2284.840738720774},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=0.0,
+                                    lower quartile=0.0,
+                                    median=0.0,
+                                    upper quartile=0.0,
+                                    upper whisker=0.0},
+                                    ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of of Dram energy consumption for test case Fasta for the workstation,  experiment \#2 (without outliers)} \label{fig:Fasta_Dram_comparison_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            

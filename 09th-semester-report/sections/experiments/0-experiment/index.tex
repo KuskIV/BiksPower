@@ -1,7 +1,17 @@
-\section{Initial Experiments}
+\section{Initial Experiments}\label{sec:initial_experiments}
 
-Before the experiments can run some initial experiments will be introduced and analyzed in this section. These experiments will first of all cover three issues regarding E3, where the documentation is not sufficient. Intel power Gadget, RAPL and LHM all seemed to work as intended during the initial testing, but E3 did not. Second of all, the configuration introduced in \cref{subsec:sql} needs some values for what ranges of battery percentages and temperatures are ideal for the experiment to run in. Lastly, we have the idle energy consumption of the different systems used to isolate the energy consumption of the test program. 
 
+
+
+In this section, some initial experiments will be introduced and analyzed. This will be done to address some of our issues with E3. Since there is no documentation, we conduct these experiments in an attempt to get more insight in how E3 functions. This will not be done for Intel power Gadget, RAPL and LHM as no issues has been observed during the initial testing. Secondly, the configuration introduced in \cref{subsec:sql} needs some values for what ranges of battery percentages and temperatures are ideal for the experiment to run in.
+
+\todo{Get back to E3 at some point}
 \input{sections/experiments/0-experiment/E3_experiment.tex}
+\input{sections/experiments/0-experiment/setup.tex}
+\input{sections/experiments/0-experiment/Expectation.tex}
+\input{sections/experiments/0-experiment/outliers.tex}
 \input{sections/experiments/0-experiment/temp_and_battery_experiment.tex}
-\input{sections/experiments/0-experiment/idle_experiments.tex}
+\input{sections/experiments/0-experiment/r3_validation.tex}
+% \input{sections/experiments/0-experiment/idle_experiments.tex}
+\input{sections/experiments/0-experiment/cochrans.tex}
+\input{sections/experiments/0-experiment/control_experiment.tex}

@@ -35,7 +35,7 @@ class DatabaseConnection:
         return self.conn
 
     def query_all(self, query, data_tuple):
-        cur = self.conn.cursor()
+        cur = self.conn.cursor(buffered=True)
         cur.execute(query, data_tuple)
         return cur.fetchall()
 
@@ -43,3 +43,8 @@ class DatabaseConnection:
         cur = self.conn.cursor()
         cur.execute(query, data_tuple)
         return cur.fetchone()
+
+    def execute_one(self, query, data_tuple):
+        cur = self.conn.cursor()
+        cur.execute(query, data_tuple)
+        self.conn.commit()

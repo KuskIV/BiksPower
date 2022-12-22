@@ -1,19 +1,28 @@
-\subsection{Hardware measurements} \label{sec:clampIntro}
-Hardware measurements are from the literature seen as the most accurate way to measure the energy consumption of a system, it is sometimes used to compare the software measurements to access their accuracy as seen in \cite{fahad2019comparative}. The hardware measurements are usually using some electrical probe, but the exact make and type are not consistent in the literature, \cite{Pereira2017} and \cite{fahad2019comparative} uses the WattsUpPro, while \cite{hackenberg2013} utilizes the ZES ZIMMER LMG45. For what would be best for this project certain criteria and priorities for the chosen measurement instrument would have to be made, by looking at the instruments used in similar studies.
+\subsection{Hardware measurements}\label[subsec]{subsec:HardwareMeasurementsIntro}
+Hardware-based measuring instruments are often from the literature seen as the most accurate way to measure the energy consumption of a system, and it is sometimes used to compare the software-based measuring instruments to estimate their accuracy\cite{fahad2019comparative}. The hardware-based measuring instruments are usually using some electrical probe, but the exact make and model are not consistent in the literature, which can be seen in \cref{tab:Hardware_based_Measuring_instruments}.
+To determine what to use in our work the MoSCoW Method\cite{MoSCoW} has been used as shown below. To make the criteria, knowledge gathered from \cref{ch:related_work} is used.
+
 \begin{itemize}
-    \item Availability, should be easy to purchase and receive to promote reproducibility.
-    \item Price, high end power measurement instruments can quickly become very expensive.
-    \item Accuracy, the measurements should be accurate.
-    \item Frequency, the measurements should be taken several times a second.
-    \item Safety, as the measurements could involved high voltages safety should be a concern.
-    \item Ease of use, it should not be difficult to setup or obtain logging from the device.
+    \item Must have
+    \begin{itemize}
+        \item Accuracy: The measurement should be as least as accurate as Watts Up Pro ($1.5\%$)\cite{fahad2019comparative}.
+        \item Frequency: The measurements should be as frequent as Watts Up Pro (1Hz)\cite{fahad2019comparative}.
+        \item Safety: as the measurements could involve high voltages safety is a concern.\cite{sik}.
+    \end{itemize}
+    \item Should have
+    \begin{itemize}
+        \item Ease of use: It should not be difficult to set up or obtain logging from the device. In the sense that it should not take too long to set up and it should be reproducible, for people without extensive knowledge in the electrical field.
+    \end{itemize}
+    \item Could have
+    \begin{itemize}
+        \item Availability: It should be available for a private consumer to promote reproducibility.
+        \item Price: It should be affordable for a private consumer to promote reproducibility .
+    \end{itemize}
+    \item Wont have
+    \begin{itemize}
+        \item DC measuring: When measuring DC, measurements are from each component within the system, which requires more experience.
+    \end{itemize}
 \end{itemize}
 
-% This section will cover the tool used to conduct hardware measurements and how to use it. For the measurements, an AC clamp was used specifically the MN60 created by Chauvin Arnoux. The current clamp is an analogue device meaning it does not use a digital signal but instead outputs an analogue signal which has a direct relation to the measurements. To read the signal the current clamp has to be connected to an oscilloscope, and the clamp itself is connected to the electrical phase of the wire leading to the power supply for the computer. An illustration of the proposed usage of the current clamp together with an oscilloscope can be seen in \cref{fig:clampSetup}
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics*[scale=0.4]{figures/CLAMP.png}
-%     \caption{Here the MN60 current clamp can be seen connected onto the phase of the wire into the computer}
-%     \label{fig:clampSetup}
-% \end{figure}
-% The output from the current is in mv that then has a specific conversion rate to a current root mean square (RMS) value which together with the wall socket specification, this being 230 volts in the EU, can be used to calculate the exact amount of joules flowing through the wire at any point in time. The sampling frequency of the current clamps is depended on the oscilloscope used, the accuracy of the clamp is claimed to be $<1\%$ \cite{ClampDoc}, which is within the expected range for hardware measurements used in other studies such as the HCLWattsUp with an accuracy of $<1.5\%$, but our setups potential in terms of measurement frequency is higher.
+The Watts Up Pro is not in production anymore thus the availability is poor. and the other devices used in \cref{ch:related_work} do not meet the criteria. The Plugwise has a reported accuracy of 5\%\cite{PlugWise}, which is not accurate enough since a higher degree of accuracy is prioritized in our work. The ZES ZIMMER LMG450 is extremely accurate at about $0.11\%$\cite{hackenberg2013}, but could not be used because of the steep price point of around \EUR{6800}, and this exceeds our budget. We were not able to find a Kill A Watt\cite{KillAWatt} that fits the european wall socket, therefore it is not a suitable choice for our use case. None of the devices fits the exact needs of our work, therefore a custom setup has to be made. It also has to measure in AC, because measuring the wire from the wall socket to the DUT provides measurements for the whole system, which is desired for a ground truth measurement. The setup will involve some type of electrical probe able to measure the current of the energy going into the power supply of the DUT. The probe will then be connected to a logging device, chosen in \cref{par:AnalDisc2}. 
+

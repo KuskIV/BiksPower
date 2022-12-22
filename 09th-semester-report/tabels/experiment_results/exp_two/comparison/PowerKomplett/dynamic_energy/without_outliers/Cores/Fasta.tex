@@ -1,0 +1,100 @@
+
+                            \begin{figure}[H]
+                                \centering
+                                \begin{tikzpicture}[]
+                                    \pgfplotsset{%
+                                        width=.85\textwidth,
+                                        height=.4\textheight
+                                    }
+                                    \begin{axis}[xlabel={Average dynamic energy consumption (Watts)}, title={Cores - Fasta - Dynamic Energy - without outliers}, ytick={1, 2, 3, 4, 5, 6, 7 ,8 ,9, 10},
+                                    yticklabels={
+                                        IPG - EXP \#2 , IPG , LHM - EXP \#2 , LHM , CLAMP (win) - EXP \#2 , CLAMP (win) , RAPL - EXP \#2 , RAPL , CLAMP (lin) - EXP\#2 ,  CLAMP (lin) 
+                                        },
+                                        xmin=0,xmax=80,
+                                        ]
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=28.233300724523804,
+                                    lower quartile=28.466359705581326,
+                                    median=28.555091702838848,
+                                    upper quartile=28.729047483952137,
+                                    upper whisker=29.11263795101686},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% EXP1
+                                        lower whisker=40.269755522881795,
+                                        lower quartile=40.9515459692972,
+                                        median=41.550356929599175,
+                                        upper quartile=42.425306187818805,
+                                        upper whisker=44.426706672570724},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=27.861671315624168,
+                                    lower quartile=28.344705269725896,
+                                    median=28.532278777644375,
+                                    upper quartile=28.890046540873644,
+                                    upper whisker=31.361884437849877},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% EXP1
+                                        lower whisker=40.75801528011144,
+                                        lower quartile=41.39193365406009,
+                                        median=41.74449668943527,
+                                        upper quartile=42.38449172107398,
+                                        upper whisker=45.29075005487825},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=21.22899375957813,
+                                    lower quartile=22.116649638004233,
+                                    median=22.33150798690923,
+                                    upper quartile=22.55143773928428,
+                                    upper whisker=23.62209762604691},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% EXP 1
+                                        lower whisker=25.73948178320542,
+                                        lower quartile=34.11725530455646,
+                                        median=35.533360361666254,
+                                        upper quartile=43.8347520770804,
+                                        upper whisker=51.071769322509255},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=37.4851287218925,
+                                    lower quartile=37.71621558614899,
+                                    median=37.917207068020716,
+                                    upper quartile=38.102006519909104,
+                                    upper whisker=38.41404140934323},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp 1
+                                        lower whisker=36.98741312141414,
+                                        lower quartile=37.420818497926135,
+                                        median=37.62316739074643,
+                                        upper quartile=37.80209076692613,
+                                        upper whisker=38.37698990666085},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \addplot+ [boxplot prepared={
+                                    lower whisker=24.823540993590527,
+                                    lower quartile=34.598219971375705,
+                                    median=35.15261450079996,
+                                    upper quartile=35.557610303396395,
+                                    upper whisker=42.0980011608858},
+                                    ] table[row sep=\\,y index=0] {\\};
+
+                                    \addplot+ [boxplot prepared={ %% exp 1
+                                        lower whisker=20.08117742991196,
+                                        lower quartile=34.50014356388564,
+                                        median=35.85496277913967,
+                                        upper quartile=36.4283178821539,
+                                        upper whisker=43.2940066394155},
+                                        ] table[row sep=\\,y index=0] {\\};
+                                    
+                                    \end{axis}
+                                \end{tikzpicture}
+                            \caption{A comparison of Cores dynamic energy consumption for test case Fasta for the workstation,  experiment \#2 (without outliers)} \label{fig:Fasta_Cores_comparison_dynamic_energy_without_outliers_PowerKomplett_avg_watts_exp2}
+                            \end{figure}
+                            
