@@ -1,4 +1,5 @@
-\begin{figure}
+\begin{figure}[H]
+  \centering
     \begin{tikzpicture}[scale=0.6]
       \foreach \y [count=\n] in {{1.00, 0.37, 0.00, 0.00},{0.37, 1.00, 0.00, 0.00},{0.00, 0.00, 1.00, 0.00},{0.00, 0.00, 0.00, 1.00},} {
       % column labels
@@ -16,5 +17,6 @@
         \node[minimum size=10mm, xshift=-0.35cm, yshift=-0.5cm, rotate=45] at (0,-\i*1.6) {\a};
       }
     \end{tikzpicture}
+    \caption{Here the results for the Nbody on the Mann Whitney U Test can be seen. The Range in $0 - 1$}
     \label{tab:HeatNbody2}
     \end{figure}
