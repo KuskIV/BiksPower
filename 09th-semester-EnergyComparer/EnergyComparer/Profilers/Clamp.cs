@@ -45,12 +45,12 @@ namespace EnergyComparer.Profilers
 
         public void Start(DateTime date)
         {
-            HardwareMeasurementHandler.StartMeasurement(date.ToString());
+            HardwareMeasurementHandler.StartMeasurement(date.ToString("dd/MM/yyyy HH.mm.ss"));
         }
 
         public void Stop(DateTime stopTime)
         {
-            HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString());
+            HardwareMeasurementHandler.EndMeasurement(DateTime.Now.ToString("dd/MM/yyyy HH.mm.ss"));
         }
     }
 }
