@@ -26,6 +26,9 @@ The results from the FannkuchRedux test case can be seen below, and the results 
 
 \input{tabels/experiment_results/exp_one/StatQuest/Distribution/MannWFannkuchRedux.tex} 
 
+As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis can be rejected, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This could indicate that IPG and LHM might not be independent from eachother, we have suspected from the results that the measurements from these two are done the same way. This serves a another indication of this hypothesis being true.
+This aligns with the expectations that the samples are mostly independent of each other in the majority of cases.
+
 \subsection{Correlation}\label{subsec:correlation1}
 In this section the correlation between the data will be calculated. to do this the Kendal Tau correlation coefficients found in \cref{subsec:NormalDist1} will be used, as the data was not normally distributed. When testing the test case measurements from experiment \#1 with Kendall Tau, the following data is processed in the following manner. When using the Kendall Tau Correlation, the test case measurements for each of the test cases were combined for each DUT, and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.
 

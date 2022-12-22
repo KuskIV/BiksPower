@@ -13,7 +13,7 @@ Console.WriteLine("Starting IdleCase");
 
 while (startTime.AddMinutes(experimentDurationInMinutes) > DateTime.UtcNow)
 {
-    Thread.Sleep(TimeSpan.FromSeconds(30));
+    await Task.Delay(TimeSpan.FromSeconds(30));
     counter += 1;
 }
 
