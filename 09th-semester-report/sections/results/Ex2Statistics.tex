@@ -10,7 +10,7 @@ The fist part of the analysis will be the normal distribution for this experimen
 \input{tabels/experiment_results/exp_two/StatQuest/NormDist.tex} 
 
 
-\paragraph{Results:} The results from the Sharpiro Wilk test can be seen in \cref{tab:NormalDist2}. \cref{tab:NormalDist2} shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
+\paragraph{Results:} The results from the Sharpiro Wilk test can be seen in \cref{tab:NormDist2}. \cref{tab:NormDist2} shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
 
 \subsection{Independence Test}\label{subsec:independence2}
 It was found in \cref{subsec:NormalDist2}, that the data for this experiment was not normally distributed. Because of this, the Mann Whitney U Test will be used to test independence just like in \cref{subsec:independence1}.
@@ -19,7 +19,7 @@ It was found in \cref{subsec:NormalDist2}, that the data for this experiment was
 
 \input{tabels/experiment_results/exp_two/StatQuest/MannWhitFann.tex}
 
-\paragraph{Results:} The results from the MannWhitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, where the results from the rest of the test cases can eb found in the appendix.\todo[]{ref to this}. The shown table in \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be seen. This tendency being that we can reject $H_0$ in most cases. When comparing this analysis the one conducted on the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of less measurements compared to the first experiment, meaning outliers has a larger effect.
+\paragraph{Results:} The results from the MannWhitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, where the results from the rest of the test cases can be found in \cref{app:stat2}. The shown table in \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be seen. This tendency being that we can reject $H_0$ in most cases. When comparing this analysis the one conducted on the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of less measurements compared to the first experiment, meaning outliers has a larger effect.
 
 \subsection{Correlation}\label{subsec:correlation2}
 In this section the correlation between the different measurement instrument will be conducted for the second experiment. The Kendall Tau correlation coefficients will again be used as it was in \cref{subsec:correlation1}
@@ -28,14 +28,14 @@ In this section the correlation between the different measurement instrument wil
 
 \input{tabels/experiment_results/exp_two/StatQuest/CorrelationPower.tex}
 
-\paragraph{Results:} The calculated Correlations for this experiment can be seen in \cref{tab:correlationWork2}. These results look very similar to the similarities obtained from experiment 1 in \cref{subsec:correlation1}. The average correlation from experiments on the workstation are as following:
+\paragraph{Results:} The calculated Correlations for this experiment can be seen in \cref{tab:correlationWork2}. These results look very similar to the similarities obtained from the first experiment in \cref{subsec:correlation1}. The average correlation from experiments on the workstation are as following:
 
-$$AvgCoefEx1 = (0.81+0.80+0.77+0.71+0.80+0.78+0.71+0.77+0.72+0.70)/10 = 0.757$$
-$$AvgCoefEx2 = (0.85+0.83+0.78+0.76+0.78+0.76+0.76+0.76+0.81+0.72)/10 = 0.781$$
+$$\text{AvgCoefEx1} = (0.81+0.80+0.77+0.71+0.80+0.78+0.71+0.77+0.72+0.70)/10 = 0.757$$
+$$\text{AvgCoefEx2} = (0.85+0.83+0.78+0.76+0.78+0.76+0.76+0.76+0.81+0.72)/10 = 0.781$$
 
 These coefficients show a higher correlations between the different DUTs and their measurement instruments. Next up, the coefficients will be analyzed and utilized to answer our research questions. 
 
-\paragraph{RQ2:} When comparing the measurement instruments to each other the average correlation foreach instrument can be calculated. These will then be compared with the results from \cref{subsec:ResultStat1}, to see what effect disabling the C-States have had on the measurements.
+\paragraph{RQ2:} When comparing the measurement instruments to each other the average correlation foreach instrument can be calculated. These will then be compared with the results from \cref{sec:Stat1}, to see what effect disabling the C-States have had on the measurements.
 
 \begin{itemize}
     \item \textbf{Experiment 1}

@@ -3,9 +3,9 @@
 Based on the comparison of this first experiment, it is difficult to find a clear conclusion. This is because patterns across the different DUTs are difficult to find, and the lack of consistency across the DUTs. Some things are however clear:
 
 \begin{itemize}
-    \item Intel Power Gadget and LHM are in most cases similar. This could be due to both measuring instruments measuring similarly.\todo{elobrate or put in FW}
+    \item Intel Power Gadget and LHM are in most cases similar. This could be due to both measuring instruments measuring similarly. An observation was made on how LHM made measurements, where it made system calls to a process called RAPL. It could be interesting to see if a similar call is made by IPG, but this is a subject for future work.
     \item The clamp measurements deviate the most, especially on windows. This could be due to the OS having more background processes, or us not disabling enough. Linux still has outliers, but most measurements are within the 25th and 75th percentile.\todo{Bent: Hvad kan der gøres ved det?}
-    \item RAPL measurements deviate very little compared to the other measuring instruments.
+    \item RAPL measurements deviate less compared to the other measurement instruments.
 \end{itemize}
 
 When considering the different measuring instruments, no consistent pattern could be found when considering which measuring instrument would measure the highest, second highest and lowest measurements. This could be due to the different targets the test case focuses on, as was presented in \cref{tab:benchmarks}, where some of the measuring instruments might measure certain operations or certain loads better. We were however unable to find such patterns.
