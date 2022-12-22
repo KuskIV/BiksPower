@@ -1,28 +1,28 @@
 \section{Statistical Analysis of Experiment \#2}\label{sec:Stat2}
-In this section the results from experiment \#2 will be analyzed. The expectation from this analysis is to see similar observations to what was found in \cref{sec:Stat1}, possibly with some deviations as a result of the disabled C-State. 
+In this section, the results from experiment \#2 will be analyzed. The expectation from this analysis is to see similar observations to what was found in \cref{sec:Stat1}, possibly with some deviations as a result of the disabled C-State. 
 
 \subsection{Normal distribution}\label{subsec:NormalDist2}
 
-The fist part of the analysis will be the normal distribution for this experiment, analyzed using the Shapiro-Wilk test.
+The first part of the analysis will be analyzing the distribution for this experiment, using the Shapiro-Wilk test\cite{razali2011power}.
 
-\paragraph{Expectations:} The expectation is to find a similar conclusion as was found when analyzing the first experiment in \cref{sec:Stat1}. In \cref{sec:Stat1} the data was not found to be normally distributed in some cases, but not all.
+\paragraph{Expectations:} The expectation is to find a similar conclusion as was found when analyzing the first experiment in \cref{sec:Stat1}. In \cref{sec:Stat1} the data was found to be normally distributed in some cases, but not all.
 
 \input{tabels/experiment_results/exp_two/StatQuest/NormDist.tex} 
 
 
-\paragraph{Results:} The results from the Sharpiro Wilk test can be seen in \cref{tab:NormDist2}. \cref{tab:NormDist2} shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
+\paragraph{Results:} The results from the Shapiro Wilk test can be seen in \cref{tab:NormDist2}. \cref{tab:NormDist2} shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.\todo{it shouldn't be because of this}
 
 \subsection{Independence Test}\label{subsec:independence2}
-It was found in \cref{subsec:NormalDist2}, that the data for this experiment was not normally distributed. Because of this, the Mann Whitney U Test will be used to test independence just like in \cref{subsec:independence1}.
+It was found in \cref{subsec:NormalDist2}, that the data for this experiment was not normally distributed. Because of this, the Mann-Whitney U Test\cite{mann1947test} will be used to test independence equal to the method used in \cref{subsec:independence1}.
 
-\paragraph{Expectations:} For the MannWhitney U test we would expect very similar results to the results from experiment 1, where the null hypotheses can be rejected in most of the cases. This is because the changes between in experiment 1 and experiment 2 would not change the independence of the data, so should not change the result remarkably
+\paragraph{Expectations:} For the Mann-Whitney U test we would expect very similar results to the results from experiment \#1, where the null hypotheses can be rejected in most of the cases. This is because the changes between experiment \#1 and experiment \#2 would not change the independence of the data, so should not change the result remarkably.
 
 \input{tabels/experiment_results/exp_two/StatQuest/MannWhitFann.tex}
 
-\paragraph{Results:} The results from the MannWhitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, where the results from the rest of the test cases can be found in \cref{app:stat2}. The shown table in \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be seen. This tendency being that we can reject $H_0$ in most cases. When comparing this analysis the one conducted on the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of less measurements compared to the first experiment, meaning outliers has a larger effect.
+\paragraph{Results:} The results from the Mann-Whitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, and the results from the rest of the test cases can be found in \cref{app:stat2}. In \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be observed. This tendency is that we can reject $H_0$ in most cases. When comparing this analysis to the one conducted in the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of fewer measurements compared to the first experiment, meaning outliers has a larger effect.
 
 \subsection{Correlation}\label{subsec:correlation2}
-In this section the correlation between the different measurement instrument will be conducted for the second experiment. The Kendall Tau correlation coefficients will again be used as it was in \cref{subsec:correlation1}
+In this section the correlation between the different measurement instrument will be conducted for the second experiment. The Kendall Tau coefficients\cite{kendall1938new} will again be used as it was in \cref{subsec:correlation1}
 
 \paragraph{Expectations:} The expectations for the correlations when the C-states are disabled will either be a similar or higher correlation. If the similarity increases, it would be expected to be because the uncertainty of the C-states has been removed.
 
