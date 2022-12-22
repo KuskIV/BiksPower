@@ -34,13 +34,17 @@ namespace EnergyComparer
 
             var testCases = new List<TestCase>();
 
-            testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
-            testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
+            //testCases.Add(new TestCase(dataHandler, "TestCaseIdle", language));
+            testCases.Add(new TestCase(dataHandler, "TestCaseIdleSpeed", language));
+            //testCases.Add(new TestCase(dataHandler, "TestCaseIdle1secCStateDisabled", language));
+            //testCases.Add(new TestCase(dataHandler, "TestCaseIdleDelay", language));
+            //testCases.Add(new TestCase(dataHandler, "BinaryTrees", language));
             //testCases.Add(new TestCase(dataHandler, "ReverseComplement", language));
-            testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
-            testCases.Add(new TestCase(dataHandler, "Nbody", language));
-            testCases.Add(new TestCase(dataHandler, "Fasta", language));
-            testCases.Add(new TestCase(dataHandler, "DiningPhilosophers", language));
+            //testCases.Add(new TestCase(dataHandler, "FannkuchRedux", language));
+            //testCases.Add(new TestCase(dataHandler, "TestCaseIdleCStateDisabled", language));
+            //testCases.Add(new TestCase(dataHandler, "Nbody", language));
+            //testCases.Add(new TestCase(dataHandler, "Fasta", language));
+            //testCases.Add(new TestCase(dataHandler, "DiningPhilosophers", language));
 
             return testCases;
         }
