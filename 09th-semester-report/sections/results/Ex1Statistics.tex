@@ -26,48 +26,48 @@ The results from the FannkuchRedux test case can be seen below, and the results 
 
 \input{tabels/experiment_results/exp_one/StatQuest/Distribution/MannWFannkuchRedux.tex} 
 
-As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis is rejected, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This could indicate that IPG and LHM might not be independent from eachother, we have suspected from the results that the measurements from these two are done the same way. This serves as another indication of this hypothesis being true. However to further investigate this is future work.
+As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis is rejected, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This could indicate that IPG and LHM might not be independent of each other, we have suspected from the results that the measurements from these two are done the same way. This serves as another indication of this hypothesis being true. However to further investigate this is future work.
 This aligns with the expectations that the samples are mostly independent of each other in the majority of cases.
 
 \subsection{Correlation}\label{subsec:correlation1}
-In this section the correlation between the data will be calculated. To do this the Kendall Tau coefficient\cite{kendall1938new} described in \cref{subsec:NormalDist1} will be used, as the data was not normally distributed. When testing the test case measurements from experiment \#1 with Kendall Tau coefficients, the following data is processed in the following manner. When using the Kendall Tau coefficient, the test case measurements for each of the test cases were combined for each DUT, and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.\todo{fix axis of rainbow graph.}
+In this section, the correlation between the data will be calculated. To do this the Kendall Tau coefficient\cite{kendall1938new} described in \cref{subsec:NormalDist1} will be used, as the data were not normally distributed. When testing the test case measurements from experiment \#1 with Kendall Tau coefficients, the following data is processed in the following manner. When using the Kendall Tau coefficient, the test case measurements for each of the test cases were combined for each DUT and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.\todo{fix axis of rainbow graph.}
 
 \input{tabels/experiment_results/exp_one/StatQuest/stats.tex}
 
-\paragraph{Expectations:} The expectations are that all of the measurement instrument will positively correlated with each other. The exact correlation is difficult to predict, but a positive correlation is expected. When calculating correlation higher correlations would generally be more indicative of valid measurements, as it show the measurement instruments agreeing.
+\paragraph{Expectations:} The expectations are that all of the measuring instruments will be positively correlated with each other. The exact correlation is difficult to predict, but a positive correlation is expected. When calculating correlation higher correlations would generally be more indicative of valid measurements, as it shows the measuring instruments agreeing.
 
-\paragraph{Result:} The correlation between DUTs and measurement instruments can be observed in \cref{tab:correlationWork},  \cref{tab:correlationSurfB} and \cref{tab:correlationSurfP} for the workstation Surface Pro 4 and Surface Book respectively.
+\paragraph{Result:} The correlation between DUTs and measuring instruments can be observed in \cref{tab:correlationWork},  \cref{tab:correlationSurfB} and \cref{tab:correlationSurfP} for the workstation Surface Pro 4 and Surface Book respectively.
 
 \input{tabels/experiment_results/exp_one/StatQuest/Correlation/CorrrelationWork.tex}
 \input{tabels/experiment_results/exp_one/StatQuest/Correlation/CompbinedSurfBP.tex}
 
-These results match our expectations as all of the correlations are a positive. A more in depth analysis of these results will be conducted in the following paragraphs, based on \textbf{RQ2-4}.
+These results match our expectations as all of the correlations are positive. A more in depth analysis of these results will be conducted in the following paragraphs, based on \textbf{RQ2-4}.
 
-\paragraph{RQ2:} When comparing the measurement instrument with each other, the correlations coefficients found in \cref{subsec:correlation1} is used and when evaluating the results, the scale presented by Guildford in \cite[219]{guilford1950fundamental} is used. The values for the scale can be found in \cref{tab:GuildfordScale}.
+\paragraph{RQ2:} When comparing the measuring instrument with each other, the correlations coefficients found in \cref{subsec:correlation1} is used and when evaluating the results, the scale presented by Guildford in \cite[219]{guilford1950fundamental} is used. The values for the scale can be found in \cref{tab:GuildfordScale}.
 
 \input{tabels/experiment_results/exp_one/StatQuest/GuildfordScale.tex}
 
-Using this scale we evaluate the correlation between the different measuring instruments. Looking across the different DUTs we calculate average correlation between each of the measuring instruments. This can only be done for the measurement instruments IPG, LHM and RAPL, as these are the only measurement instruments used on all DUTs. When comparing the correlation between the different measuring instruments across all DUTs, the average correlation is as following:
+Using this scale we evaluate the correlation between the different measuring instruments. Looking across the different DUTs we calculate the average correlation between each of the measuring instruments. This can only be done for the measuring instruments IPG, LHM and RAPL, as these are the only measuring instruments used on all DUTs. When comparing the correlation between the different measuring instruments across all DUTs, the average correlation is as follows:
 
 $$IPG | LHM = (0.68+0.81+0.69)/3 = 0.726$$
 $$IPG | RAPL = (0.30+0.42+0.80)/3 = 0.506$$
 $$LHM | RAPL = (0.80+0.39+0.21)/3 = 0.466$$
 
-Next up, the average correlation between the different software measuring instruments against the clamp is calculated. This is done for only the workstation, as the the clamp was only used on this DUT.
+Next up, the average correlation between the different software measuring instruments against the clamp is calculated. This is done for only the workstation, as the clamp was only used on this DUT.
 
 $$IPG | Clamp = (0.77+0.71)/2 = 0.74$$
 $$LHM | Clamp = (0.78+0.71)/2 = 0.745$$
 $$RAPL | Clamp = (0.77+0.72)/2 = 0.745$$
 
-Similarly, the average correlation between the different measuring instruments from the DUTs with a battery are calculated, to see how they are correlated with E3.
+Similarly, the average correlation between the different measuring instruments from the DUTs with a battery is calculated, to see how they are correlated with E3.
 
 $$IPG | E3 = (0.63+0.61)/2 = 0.62$$
 $$LHM | E3 = (0.65+0.64)/2 = 0.645$$
 $$RAPL | E3 = (0.24+0.49)/2 = 0.365$$
 
-Looking at these numbers and evaluating them on the Guildford scale, we see that IPG | LHM, IPG | Clamp and RAPL | Clamp all are highly correlated, while LHM | RAPL, LHM | RAPL,IPG | E3 and LHM | E3 has a substantial relationships. The lowest correlation between the measurements was found with RAPL | E3 which are a low on correlation.
+Looking at these numbers and evaluating them on the Guildford scale, we see that IPG | LHM, IPG | Clamp and RAPL | Clamp all are highly correlated, while LHM | RAPL, LHM | RAPL, IPG | E3 and LHM | E3 has substantial relationships. The lowest correlation between the measurements was found with RAPL | E3 which is a low correlation.
 
-\paragraph{RQ3:} In regards to the different OSs and how these effect the results, it can be seen that these are are differences between the measurements conducted on Linux and Windows. When looking at the coefficients for RAPL and the clamp on linux, it can be observed that they are generally less correlated with the other measurement instruments on Windows. This can be seen when calculating the average coefficients for each of the instruments across the different DUTs.
+\paragraph{RQ3:} In regards to the different OSs and how these affect the results, it can be seen that there are differences between the measurements conducted on Linux and Windows. When looking at the coefficients for RAPL and the clamp on Linux, it can be observed that they are generally less correlated with the other measuring instruments on Windows. This can be seen when calculating the average coefficients for each of the instruments across the different DUTs.
 
 \begin{itemize}
     \item \textbf{Windows}
@@ -84,9 +84,9 @@ Looking at these numbers and evaluating them on the Guildford scale, we see that
     \end{itemize}
 \end{itemize}
 
-Looking at these number it can be seen that RAPL and the hardware measurements on linux are generally less correlated with the rest of the measurement instruments. This does make sense as they are different OSs and would be expected to have different power consumption.
+Looking at these numbers it can be seen that RAPL and the hardware measurements on Linux are generally less correlated with the rest of the measuring instruments. This does make sense as they are different OSs and would be expected to have different power consumption.
 
-\paragraph{RQ4}: Comparing the different DUTs in a similar manner it is found that there are significant differences between how correlated the measurement instruments are on each DUT.
+\paragraph{RQ4}: Similarly comparing the different DUTs it is found that there are significant differences in how correlated the measuring instruments are on each DUT.
 
 \begin{itemize}
     \item \textbf{Workstation}
@@ -103,7 +103,7 @@ Looking at these number it can be seen that RAPL and the hardware measurements o
     \end{itemize}
 \end{itemize}
 
-When comparing the different DUTs it can be observed that the measurement instruments are more correlated with each other on the Workstation than on the two laptops. When comparing the two laptops it can be seen that the Surface Book has a significantly lower coefficients than the Surface 4 Pro. Looking more close at the numbers they are very similar in all cases except for RAPL, where the Surface Book performance is worse.
+When comparing the different DUTs it can be observed that the measuring instruments are more correlated with each other on the Workstation than on the two laptops. When comparing the two laptops it can be seen that the Surface Book has significantly lower coefficients than the Surface 4 Pro. Looking closely at the numbers they are very similar in all cases except for RAPL, where the Surface Book performance is worse.
 
 \begin{itemize}
     \item \textbf{Surface Book}
