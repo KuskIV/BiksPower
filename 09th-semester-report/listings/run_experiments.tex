@@ -13,11 +13,7 @@ public bool RunExperiment(IMeasuringInstrument mi, ITestCase tc)
 
     var startTime = StartTimeAndProfiler();
 
-    while (startTime.AddMinutes(Duration) > DateTime.UtcNow)
-    {
-        tc.Run();
-        counter += 1;
-    }
+    counter = tc.Run();
 
     var (stopTime, duration) = StopTimeAndProfiler();
 
