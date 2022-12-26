@@ -1,11 +1,10 @@
 \subsection{Distribution}\label[subsec]{subsec:distribution}
 
 
-
-Here the methods for statistically comparing the distribution of the different measurements will be elaborated on and explained.
+In this section, the methods for statistically comparing the distribution of the different measurements will be elaborated and explained.
 
 \paragraph{Shapiro-Wilk}
-When using parametric test such as many commonly used statistical test such as the student T-Test, one of the most common assumptions about the data is whether it is normally distributed\cite{kaur2015comparative}. To test if a distribution is normally distributed a normalcy test can be used. While there are multiple different normalcy tests the Shapiro-Wilk test seems generally more powerful than the others that are commonly used.\cite{razali2011power} Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
+When analyzing data in order to find correlations, one of the most common assumptions about the data is whether it is normally distributed or not\cite{kaur2015comparative}. To test if a distribution is normally distributed a normalcy test can be used. While there are multiple different normalcy tests, the Shapiro-Wilk test seems generally more powerful\todo[]{Is this something we think, or the source?} than the others that are commonly used.\cite{razali2011power} Because of this, the Shapiro-Wilk test will be used to check for normal distributions. The formula for the Shapiro-Wilk test is:
 
 \begin{equation}
     W=\frac{( \sum{a_i x_i} )^2}{\sum{(x_i - \bar{x})^2}}
@@ -17,13 +16,13 @@ The null hypnosis $H_0$ for the test is\cite{razali2011power}:
     \textit{The sample comes from a normally-distributed population}
 \end{quotation}
 
-To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value is the probability of achieving the same results under $H_0$ of a statistical test. $\alpha$ represents the statistical significance, a common threshold is $0.05$\cite{wasserstein2019moving}. If the $p_{Value}$ is less than $\alpha$, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing\cite{greenland2016statistical}, and it is also used for the rest of the tests in this section and unless specified otherwise all tests are conducted with an $p$ of $0.05$.
+To find whether $H_0$ can be rejected, the $p_{value}$ is used. The $p_{Value}$ or probability value represents the probability of achieving the same results under $H_0$ of a statistical test. $\alpha$ represents the statistical significance,  where a common threshold is $0.05$\cite{wasserstein2019moving}. If the $p_{Value}$ is less than $\alpha$, it can reject $H_0$. Using the $p_{value}$ is commonplace in statistical testing\cite{greenland2016statistical}, and it is also used for the rest of the tests in this section and unless specified otherwise. All tests are conducted with an $p$ of $0.05$.
 
 \paragraph{T-Test}
 
-If the $H_0$ for the Shapiro-Wilk test could not be rejected it is assumed that the distribution is normal or close enough not to be significant.
+If the $H_0$ for the Shapiro-Wilk test could not be rejected it is assumed that the distribution is normal or close enough not to be significant.\newline
 
-In the case of a normal distribution, a student's t-test can be utilized to check if there is a statistically significant difference between the two samples. There are a couple of conditions when using a t-test these are\cite{kaur2015comparative}:
+In the case of a normal distribution, a student's t-test can be utilized to check if there is a statistically significant difference between the two samples. When using a t-test, the following conditions has to be met:\cite{kaur2015comparative}:
 
 \begin{itemize}
     \item Both samples have to follow a normal Distribution.
@@ -44,20 +43,15 @@ The t-test is performed using two values the $t_{value}$ and the $p_{value}$ and
 \end{equation}
 
 \paragraph{Mann-Whitney U test}
-If however it is determined that the distributions are not normally distributed then another test will have to be made instead of the student t-test. A non-parametric alternative to the student T-Test is the Mann-Whitney U Test\cite{kaur2015comparative}. There are some important differences between the two methods. The t-test calculates the difference in the mean between two samples, while the Mann-Whitney U test checks if there is a difference in the rank sum of the samples.\cite{mann1947test} 
+If the distributions are not normally distributed another test will have to be made instead of the student t-test. A non-parametric alternative to the student T-Test is the Mann-Whitney U Test\cite{kaur2015comparative}. There are some important differences between the two methods. The t-test calculates the difference in the mean between two samples, while the Mann-Whitney U test checks if there is a difference in the rank sum of the samples.\cite{mann1947test}\newline
 
-The idea behind the rank sum is that each data point is given a rank, and this rank is based on its position in a sorted order between all of the other data points. 
-The basic requirement for using the Mann-Whitney U test is to have ordinal variables, this just means that there is a way to order and sort them.
-
-The null hypothesis $H_0$ for the Mann-Whitney U test is defined as:
+The idea behind the rank sum is that each data point is given a rank, and this rank is based on its position in a sorted order between all of the other data points. The basic requirement for using the Mann-Whitney U test is to have ordinal variables. Ordinal variables means there is a way to order and sort them. The null hypothesis $H_0$ for the Mann-Whitney U test is defined as:
 
 \begin{quote}
     \textit{In the population, the sum of the rankings in the two groups does not differ.}
 \end{quote}
 
-Doing the calculations require a series of calculations where the initial is finding $U_1$ and $U_2$.
-
-The actual calculations for each group consist of the number of cases in the group $n_1$ and rank sum $T_1$. These are then used in the formula:
+Doing the calculations require a series of calculations where the initial is finding $U_1$ and $U_2$. The actual calculations for each group consist of the number of cases in the group $n_1$ and rank sum $T_1$. These are then used in the formula:
 
 \begin{equation}
     U_1 = n_1*n_2+\frac{n_1*(n_1+1)}{2}-T_1  
@@ -83,16 +77,16 @@ Then calculate the value $z$.
     z = \frac{U-\varphi U}{\sigma U}
 \end{equation}
 
-using z to find the p-value to check if $H_0$ can be rejected, again the $\alpha$ is set to $0.05$. 
+using $z$ to find the p-value to check if $H_0$ can be rejected, again the $\alpha$ is set to $0.05$. 
 
 \paragraph{Kolmogorov-Smirnov test}
-Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test\cite{massey1951kolmogorov}. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1) it tests how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same underlying distribution as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same distribution. To calculate the KS2 the following series of calculations are needed\cite{massey1951kolmogorov}.
+Comes in two different variations the one-sample and two-sample Kolmogorov-Smirnov test\cite{massey1951kolmogorov}. The one-sample test is also known as the Kolmogorov-Smirnov normalcy test(KS1), where it is tested ho how close to the normal distribution a sample is, much like the Shapiro-Wilk test. The two-sample Kolmogorov-Smirnov test(KS2) is, however, a bit different as instead of checking if a sample is normally distributed it instead checks if the sample is from the same underlying distribution as some other provided sample. Thus KS2 is used here to determine if the two samples are from the same distribution. To calculate the KS2 the following series of calculations are needed\cite{massey1951kolmogorov}.
 $$D_{n,m} = max(|F_1(x)-F_2(x)|)$$
 where:
 $$F_1 = CDF(sample1,x)$$
 $$F_2 = CDF(sample2,x)$$
-where CDF (cumulative distribution function) assuming a sorted list of observations counts the number of observations below x and then divides with the total number of samples. The KS2 depends on a parameter $en$, which can be calculated using the following formula:
+where CDF (cumulative distribution function) assuming a sorted list of observations, and counts the number of observations below $x$ and then divides with the total number of samples. The KS2 depends on a parameter $en$, which can be calculated using the following formula:
 $$en=\frac{(m*n)}{(m+n)}$$
-where $n$ is the size of sample 1 and $m$ is the size of sample 2.
+where $n$ is the size of sample $1$ and $m$ is the size of sample $2$.
 The $H_0$ for KS2: \textit{The two samples are from the same distribution}.
 $H_0$ can be rejected in the case of $D_{n,m} > c(\alpha)\sqrt{en}$\cite{massey1951kolmogorov}

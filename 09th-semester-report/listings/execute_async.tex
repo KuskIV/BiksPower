@@ -17,7 +17,7 @@ public async Task ExecuteAsync()
 
         RemoveDependencies();
 
-        isExpValid = await RunExperiment(mi, tc);
+        isExpValid = await RunMeasurement(mi, tc);
 
         InitializeDependencies();
 

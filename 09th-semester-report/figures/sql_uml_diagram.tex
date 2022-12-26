@@ -22,8 +22,8 @@
             \attribute{InstrumentId : INT}
             \attribute{Name : VARCHAR}
         \end{object}
-        \begin{object}{Experiment}{6.5,-2.5}
-            \attribute{ExperimentId : INT}
+        \begin{object}{Measurement}{6.5,-2.5}
+            \attribute{MeasurementId : INT}
             \attribute{ConfigId : INT}
             \attribute{InstrumentId : INT}
             \attribute{DutId : INT}
@@ -36,13 +36,13 @@
         \end{object}
         \begin{object}[text width=4 cm]{RawData}{0, -10}
             \attribute{RawDataId : INT}
-            \attribute{ExperimentId : INT}
+            \attribute{MeasurementId : INT}
             \attribute{Value : VARCHAR}
             \attribute{Time : DATETIME(6)}
         \end{object}
         \begin{object}[text width=4 cm]{TimeSeries}{0, -4.5}
             \attribute{TimeSeriesId : INT}
-            \attribute{ExperimentId : INT}
+            \attribute{MeasurementId : INT}
             \attribute{Value : VARCHAR}
             \attribute{Time : DATETIME(6)}
         \end{object}
@@ -56,9 +56,9 @@
             \attribute{MaxBattery : INT}
             \attribute{Version : INT}
         \end{object}
-        \begin{object}[text width = 4 cm]{Measurement}{10, -10}
+        \begin{object}[text width = 4 cm]{Environment}{10, -10}
+            \attribute{EnvironmentId : INT}
             \attribute{MeasurementId : INT}
-            \attribute{ExperimentId : INT}
             \attribute{Time : DATETIME(6)}
             \attribute{Name : VARCHAR}
             \attribute{Value : INT}
@@ -67,14 +67,14 @@
         
         \association{Run}{}{0..*}{TestCase}{}{1}
         \association{Run}{}{0..*}{Dut}{}{1}
-        \association{Experiment}{}{0..*}{Dut}{}{1}
-        \association{Experiment}{}{0..*}{MeasuringInstrument}{}{1}
-        \association{Experiment}{}{0..*}{Dut}{}{1}
-        \association{Experiment}{}{1}{RawData}{}{1}
-        \association{Experiment}{}{1}{TimeSeries}{}{1}
-        \association{Experiment}{}{0..*}{Configuration}{}{1}
-        \association{Experiment}{}{0..*}{Measurement}{}{0..*}
-        \association{Experiment}{}{0..*}{TestCase}{}{1}
+        \association{Measurement}{}{0..*}{Dut}{}{1}
+        \association{Measurement}{}{0..*}{MeasuringInstrument}{}{1}
+        \association{Measurement}{}{0..*}{Dut}{}{1}
+        \association{Measurement}{}{1}{RawData}{}{1}
+        \association{Measurement}{}{1}{TimeSeries}{}{1}
+        \association{Measurement}{}{0..*}{Configuration}{}{1}
+        \association{Measurement}{}{0..*}{Environment}{}{0..*}
+        \association{Measurement}{}{0..*}{TestCase}{}{1}
     \end{tikzpicture}
     \caption{An UML diagram representing the tables in the SQL database} \label{fig:uml_diagram}
 \end{figure}
