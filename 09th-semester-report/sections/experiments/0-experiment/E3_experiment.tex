@@ -1,10 +1,21 @@
 \subsection{E3 Experiments}\label[subsec]{sec:E3Experiments}
 
-The following experiments with E3 address some of the discoveries made in the initial testing, which contradicts the statements in the available sources\cite[]{E3Doc,E3Video,E3WinHec}. 
+The following experiments with E3 address some of the discoveries made in the initial testing, which contradicts the statements in the available sources\cite[]{E3Doc,E3Video,E3WinHec}.\newline
 
-This experiment was conducted based on observations where there were deviations from the expected output in the log file according to the sources and the actual output. In the output log file for E3, each row represents the measurement of one application in a given state. It is claimed that an application needs to run for $1-5$ minutes before it is added to the file. Based on observations this is not true, as the lowest measurements were observed to be as low as  $0$ and $1.554$ seconds. The highest value found in the test is $902$ minutes, which also does not match the claim. Another aspect is that E3 counts the same application as different measurements depending on its status.
-Example \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique} will all be counted as different measurements in E3. Where \texttt{App.Status=Focus} is when the application is in focus. \texttt{App.Status=Visible} is when the application is not in focus, but still visible on the screen. \texttt{App.Status=Minimized} is when the application is minimized. \texttt{App.Status=NotUnique} are background processes which do not have a user interface. This has been concluded by looking at the processes with this status and the frequency of their repetition over a period. 
-Because of the uncertainty about how E3 functions it was deemed necessary to conduct some further experiments to determine when a process is included in the measurements and when it is not. To carry out these experiments different scenarios were formulated, which will be covered now.
+This experiment was conducted based on observations where there were deviations from the expected output in the log file according to the sources and the actual output. The output of E3, is a log file, where each row in this file represents the measurement of one application in a given state. It is claimed that an application needs to run for $1-5$ minutes before the application will be added to this file. Based on observations this is not true, as the lowest measurements were observed to be as low as  $0$ and $1.554$ seconds. The highest value found in the test is $902$ minutes, which also does not match the claim. Another aspect is that E3 counts the same application as different measurements depending on its status. A status in the context of E3 could for example be \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique}, and these will all be counted as different measurements in E3. The different states in E3, means the following:
+
+\begin{itemize}
+    \item \texttt{App.Status=Focus}: The application is in focus
+    \item \texttt{App.Status=Visible}: When the application is not in focus, but still visible on the screen
+    \item \texttt{App.Status=Minimized}: When the application is minimized
+    \item \texttt{App.Status=NotUnique}: Background processes which do not have a user interface
+\end{itemize}
+
+The description of the different states of applications in E3 are not from any documentation, but is rather based on observation. Because of the uncertainty about how E3 functions it was deemed necessary to conduct some further experiments to determine when a process is included in the measurements and when it is not. To carry out these experiments different scenarios were formulated, which will be covered now.
+
+
+
+
 
 % \begin{itemize}
 %     \item Order of measurement
@@ -42,7 +53,7 @@ Because of the uncertainty about how E3 functions it was deemed necessary to con
 The first three scenarios are designed to see when measurements are recorded by E3. The initial expectation is that E3 uses the start and exit timestamp for the measured process. Because of this, expectations are that scenarios 1 and 2 would not record a process but that scenario 3 would.
 
 \paragraph{Findings}
-Scenarios 1 and 2 were both contrary to our expectations, where scenario 1 resulted in several measurements of the process, and similar results were obtained from scenario 2. In scenario 3, the process is not found, which is also contrary to our expectations. These results point to E3 instead of using the start and end times instead take several snapshots of the process over some time. Exactly how frequent these snapshots are will be tested later. 
+Scenarios 1 and 2 were both included in the file contrary to our expectations, where scenario 1 resulted in several measurements of the process, and similar results were obtained from scenario 2. In scenario 3, the process is not found, which is also contrary to our expectations. These results point to E3 instead of using the start and end times instead take several snapshots of the process over some time. Exactly how frequent these snapshots are will be tested later. 
 
 \paragraph{State Change}
 
