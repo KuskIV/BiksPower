@@ -2,7 +2,7 @@
 
 In this section, the various statistical methods covered in \cref{subsec:distribution} and \cref{subsec:correlation} will be used to analyze the data collected from experiment \#1. This analysis will first of all aim to check if the data is normally distributed as it has an effect on which statistical methods can be used in the later stages of the analysis. When checking if the data is normally distributed, the Shapiro-Wilk test\cite{razali2011power} will be used. In the next step of the analysis, the Mann-Whitney U Test\cite{mann1947test} will test if the different test case measurements are from the same population or not, and finally, the correlation between the different test case measurements will be calculated and analyzed.
 
-\subsection{Normal distribution}\label{subsec:NormalDist1}
+\subsection{Normal Distribution}\label{subsec:NormalDist1}
 The Shapiro-Wilk test will be used to test if the data is normally distributed, this is important as it affects which statistical methods can be applied to the test case measurements correctly when finding correlations as covered in \cref{subsec:distribution}. 
 
 \paragraph{Expectations:} For the Shapiro-Wilk test the expectation is that the majority of the test case measurements will be normally distributed. This assumption is primarily based on the findings by Koedijk et al.\cite{Koedijk2022diff}. We expect most of the data to either be normally distributed, with some exceptions that behave differently.
@@ -30,7 +30,7 @@ As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are b
 This aligns with the expectations that the samples are mostly independent of each other in the majority of cases.
 
 \subsection{Correlation}\label{subsec:correlation1}
-In this section the correlation between the data will be calculated. To do this the Kendall Tau coefficient\cite{kendall1938new} described in \cref{subsec:NormalDist1} will be used, as the data was not normally distributed. When testing the test case measurements from experiment \#1 with Kendall Tau coefficients, the following data is processed in the following manner. When using the Kendall Tau coefficient, the test case measurements for each of the test cases were combined for each DUT, and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.
+In this section the correlation between the data will be calculated. To do this Kendall's Tau coefficient\cite{kendall1938new} described in \cref{subsec:NormalDist1} will be used, as the data was not normally distributed. When testing the test case measurements from experiment \#1 with Kendall's Tau coefficient, the following data is processed in the following manner. When using Kendall's Tau coefficient, the test case measurements for each of the test cases were combined for each DUT, and sorted based on the test case, where an example of this can be seen in \cref{tab:RainBowGraph}.
 
 \input{tabels/experiment_results/exp_one/StatQuest/stats.tex}
 
