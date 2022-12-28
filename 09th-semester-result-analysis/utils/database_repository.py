@@ -80,6 +80,11 @@ class DataRepository:
                         else:
                             used_between = between
 
+                        if o in special_between and t in special_between[o]:
+                            used_between = special_between[o][t]
+                        else:
+                            used_between = between
+
                         config = Configuration(
                             min_temp,
                             max_temp,

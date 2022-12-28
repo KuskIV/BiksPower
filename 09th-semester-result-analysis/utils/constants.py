@@ -9,6 +9,7 @@ REVERSE_COMPLEMENT = "ReverseComplement"
 FANNKUCH_REDUX = "FannkuchRedux"
 NBODY = "Nbody"
 FASTA = "Fasta"
+TEST_CASE_DELAY = "TestCaseIdleDelay"
 
 INTEL_POWER_GADGET = "IntelPowerGadget"
 RAPL = "RAPL"
