@@ -1,17 +1,17 @@
 \section{Measuring Instruments}\label{sec:measuring_instruments}
 
-The aim of this work is to compare different measuring instruments across different DUTs and OSs, as is covered in \textbf{RQ2-4}. In this section, different measuring instruments used in this work will be introduced. When considering measuring approaches, three different kinds exists:
+The aim of this work is to compare different measuring instruments across different DUTs and OSs, as is covered in \textbf{RQ2-4}. In this section, different measuring instruments used in this work will be introduced. When considering measuring approaches, three different kinds exist:
 
 \begin{itemize}
     \item Hardware-based measurements: System-level physical measurements
-    \item Software based measurements: RAPL, LHM, Intel Power Gadget and E3s.
+    \item Software-based measurements: Intel's Running Average Power Limit, Libre Hardware Monitor, Intel Power Gadget and Microsoft's Energy Estimation Engine.
     \item Energy predictive models: A model estimating the energy consumption based on performance monitoring counters.
 \end{itemize}
 
 \paragraph*{}
-When selecting measuring instruments, they can be either a energy predictive model, software based, hardware based or a combination. When considering software-based measuring instruments, multiple versions exists, where this work will aim to include a wide variety. This will include a Linux and Windows version created by Intel, this being RAPL and Intel Power Gadget. RAPL was chosen as \cref{ch:related_work} found measuring instrument this to be widely used in the literature, and Intel Power Gadget was chosen as it is created by the same company. Microsoft has also made their own mesuring instrument for Windows, this being E3. This was chosen based on the assumption of how their domain knowledge could prove valuable when creating a measuring instrument. Another measuring instrument included is Libre Hardware Monitor (LHM), representing an open source solution. LHM was chosen as their implementation was easy to use. An assumption here is that all open source versions will measure energy in a similar fashion.\newline
+When selecting measuring instruments, they can be either an energy predictive model, software-based, hardware-based, or a combination. When considering software-based measuring instruments, multiple versions exist, and this work will aim to include a variety of measuring instruments. This will include a Linux and Windows version created by Intel, this being RAPL and Intel Power Gadget. RAPL was chosen as \cref{ch:related_work} found this particular measuring instrument to be widely used in the literature, and Intel Power Gadget was chosen as it is created by the same company. Microsoft has also made its own measuring instrument for Windows, this being E3. This was chosen based on the assumption that their domain knowledge could prove valuable when creating a measuring instrument. Another measuring instrument included is Libre Hardware Monitor (LHM), which represents an open-source solution. LHM was chosen as its implementation was easy to use. An assumption we had here is that all open-source versions will measure energy with a similar method.\newline
 
-Energy predictive models are models estimating the energy consumption based on performance monitoring counters, and will be used by E3 in some cases, depending on the hardware of the DUT. Lastly a hardware measuring instrument is also included, and will serve as the ground truth.
+Energy predictive models are models estimating the energy consumption based on performance monitoring counters and will be used by E3 in some cases\todo{RAPL bruger da også hardware counters}, depending on the hardware of the DUT. Lastly, a hardware measuring instrument is also included and will serve as the ground truth.
 
 
 

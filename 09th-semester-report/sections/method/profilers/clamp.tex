@@ -1,11 +1,11 @@
 \subsection{Hardware Measurements}\label[subsec]{subsec:HardwareMeasurementsIntro}
-Hardware-based measuring instruments are often from the literature seen as the most accurate way to measure the energy consumption of a system, and has been used to compare the software-based measuring instruments\cite{fahad2019comparative}. The hardware-based measuring instruments are usually using some electrical probe, but the exact make and model are not consistent in the literature, which can be seen in \cref{tab:Hardware_based_Measuring_instruments}. To determine what hardware measuring instrument to use, the MoSCoW Method\cite{MoSCoW} has been used as shown below, where the criteria are gathered from the literature presented in\cref{ch:related_work}.
+Hardware-based measuring instruments are often from the literature seen as the most accurate way to measure the energy consumption of a system and have been used to compare the software-based measuring instruments\cite{fahad2019comparative}. The hardware-based measuring instruments are usually using some electrical probe, but the exact make and model are not consistent in the literature, which can be seen in \cref{tab:Hardware_based_Measuring_instruments}. To determine what hardware measuring instrument to use, the MoSCoW Method\cite{MoSCoW} has been used as shown below, where the criteria are gathered from the literature presented in\cref{ch:related_work}.
 
 \begin{itemize}
     \item Must have
     \begin{itemize}
-        \item Accuracy: The measurement should be as least as accurate as Watts Up Pro ($1.5\%$)\cite{fahad2019comparative}.
-        \item Frequency: The measurements should be as frequent as Watts Up Pro (1Hz)\cite{fahad2019comparative}.
+        \item Accuracy: The measurement should be as least as accurate as the Watts Up Pro's ($1.5\%$)\cite{fahad2019comparative}.
+        \item Frequency: The measurements should be as frequent as the Watts Up Pro's (1Hz)\cite{fahad2019comparative}.
         \item Safety: as the measurements could involve high voltages safety is a concern.\cite{sik}.
     \end{itemize}
     \item Should have
@@ -15,13 +15,13 @@ Hardware-based measuring instruments are often from the literature seen as the m
     \item Could have
     \begin{itemize}
         \item Availability: It should be available for a private consumer to promote reproducibility.
-        \item Price: It should be affordable for a private consumer to promote reproducibility .
+        \item Price: It should be affordable for a private consumer to promote reproducibility.
     \end{itemize}
-    \item Wont have
+    \item Won't have
     \begin{itemize}
         \item DC measuring: When measuring DC, measurements are from each component within the system, which requires more experience.
     \end{itemize}
 \end{itemize}
 
-When considering the hardware measuring instruments presented in \cref{ch:related_work}, one possibility is the WattsUpPro but this device is not in production anymore, where the other devices used in \cref{ch:related_work} do not meet the criteria. The Plugwise has a reported accuracy of 5\%\cite{PlugWise}, which is not accurate enough since a higher degree of accuracy is prioritized in our work. The ZES ZIMMER LMG450 is extremely accurate at about $0.11\%$\cite{hackenberg2013}, but could not be used because of the steep price point of around \EUR{6800}, and this exceeds our budget. We were not able to find a Kill A Watt\cite{KillAWatt} that fits the european wall socket, therefore it is not a suitable choice for our use case. None of the devices fits the exact needs of our work, therefore a custom setup has to be made. It also has to measure in AC, as DC measurings are beyond our experience within the area. AC measurings on the wire from the wall socket to the DUT provides measurements for the whole system, which is desired for a ground truth measurement. The setup will involve some type of electrical probe able to measure the current of the energy going into the power supply of the DUT. The probe will then be connected to a logging device, chosen in \cref{par:AnalDisc2}. 
+When considering the hardware-based measuring instruments presented in \cref{ch:related_work}, one possibility is the WattsUpPro but this device is not in production anymore, whereas the other devices used in \cref{ch:related_work} do not meet the criteria. The Plugwise has a reported accuracy of 5\%\cite{PlugWise}, which is not accurate enough since a higher degree of accuracy is prioritized in our work. The ZES ZIMMER LMG450 is extremely accurate at about $0.11\%$\cite{hackenberg2013}, but could not be used because of the steep price point of around \EUR{6800}, and this exceeds our budget. We were not able to find a Kill A Watt\cite{KillAWatt} that fits the European wall socket, therefore it is not a suitable choice for our use case. None of the devices fits the exact needs of our work, therefore a custom setup has to be made. It also has to measure in AC, as DC measurements are beyond our experience within the area. AC measurements on the wire from the wall socket to the DUT provide measurements for the whole system, which is desired for a ground truth measurement. The setup will involve some type of electrical probe able to measure the current of the energy going into the power supply of the DUT. The probe will then be connected to a logging device, chosen in \cref{par:AnalDisc2}. 
 
