@@ -2,17 +2,17 @@
 
 In this section, the expected energy consumption of the different components within the DUTs will be covered. The values and calculations will be covered, in addition to the rationale behind them. This will be achieved by looking at the expected range of energy consumption of each component individually, this will then provide a lower and upper limit for the consumption of the DUT.
 
-When referring to the energy consumption of computer components, a common term is Thermal Design Power (TDP). In the work by Hennessy\cite{hennessy2011computer}, TDP is defined as a representation of the average power a processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than its TDP. The lower power limit of a CPU is disputed, but it is approximated To be around $10-25$W for most modern CPU's\cite{CPUPowerCum}.
+When referring to the energy consumption of computer components, a common term is Thermal Design Power (TDP). In the work by Hennessy\cite{hennessy2011computer}, TDP is defined as a representation of the average power a processor will draw, when all cores are active and under a high complexity workload. While under peak workload the processor can reach around $1.5$ times more than its TDP. The lower power limit of a CPU is disputed, but it is approximated To be around $10-25$W for most modern CPUs\cite {CPUPowerCum}.
 
-\paragraph{Workstation} The first DUT is the workstations, and the energy consumption for the different components can be seen in \cref{tab:WorkstationEstEnergCon}.
+\paragraph{Workstation:} The first DUT is the workstations, and the energy consumption for the different components can be seen in \cref{tab:WorkstationEstEnergCon}.
 
 \input{tabels/workstation_components.tex}
 
-The power supply does not have a specific energy consumption but instead has an energy efficiency rating. The energy efficiency rating represents how much of the energy going into the power supply, is used by the system. The power supply used in the workstation has an 80-Plus Gold certification, representing an efficiency of $90\%$ at a load of 20\%, an efficiency of $92\%$ at a load of 50\% and an efficiency of $89\%$ at a load of 100\%. This is highly relevant for the clamp measurements as they are measured before going into the power supply and will thus be around 8-11\% higher that the actual system consumption.
+The power supply does not have a specific energy consumption but instead has an energy efficiency rating. The energy efficiency rating represents how much of the energy going into the power supply, is used by the system. The power supply used in the workstation has an 80-Plus Gold certification, representing an efficiency of $90\%$ at a load of 20\%, an efficiency of $92\%$ at a load of 50\%, and an efficiency of $89\%$ at a load of 100\%. This is highly relevant for the clamp measurements as they are measured before going into the power supply and will thus be around 8-11\% higher than the actual system consumption.
 
 Using these values lower and upper bounds for the expected energy consumption can be created for the DUTs.
 
-\paragraph{Software-based measuring instruments}: The different software approaches measure the CPU and RAM individually so the minimum and maximum values for the CPU and RAM are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
+\paragraph{Software-based measuring instruments:} The different software approaches measure the CPU and RAM individually so the minimum and maximum values for the CPU and RAM are the values the measurements should be between. Given the test cases will not put the DUT under a significant load, the measurements would be expected to be close to the following:
 
 \begin{gather*}
     CPU: 10W < x < 65W \\
@@ -26,19 +26,19 @@ Using these values lower and upper bounds for the expected energy consumption ca
     Min = {MinCPU, MinBoard, MinRam, AvgSSD, CPUFan, CaseFan}
 \end{equation}
 
-Based in $Min$, the $LowerCase$ can be calculated, representing the minimum energy consumption of the DUT. This is calculated as:
+Based on $Min$, the $LowerCase$ can be calculated, representing the minimum energy consumption of the DUT. This is calculated as:
 
 \begin{equation}
     LowerCase = \left ( \sum_{m \in Min} m \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 35.75W
 \end{equation}
 
-A thing to note here, is how $avgSSD$ was used instead of $minSSD$. This decision is based on observations, where the SSD is used by the OS all the time. Next up, the average case can be calculated. Here, the equation is the same, but the values change. They are as following:
+A thing to note here is how $avgSSD$ was used instead of $minSSD$. This decision is based on observations, where the SSD is used by the OS all the time. Next up, the average case can be calculated. Here, the equation is the same, but the values change. They are as follows:
 
 \begin{eqnarray}
     Avg = {AvgCPU, AvgBoard, AvgRam, AvgSSD, CPUFan, CaseFan}
 \end{eqnarray}
 
-And $AverageCase$ is as following:
+And $AverageCase$ is as follows:
 
 \begin{equation}
     AverageCase = \left ( \sum_{a \in Avg} a \right ) * \left (1 + \left ( \frac{1}{MinEff} \right ) \right ) = 119.6W
@@ -57,7 +57,7 @@ The measurements from the clamp are expected to be between the $LowerCase$ and $
 
 \input{tabels/surface_book_components.tex}
 
-\paragraph{Surface Pro 4} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface book. They are similar in terms of the RAM, and the CPU is from the same generation, but CPU in the Surface Pro 4 is slightly better with a higher turbo clock speed and bigger L3 cache. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
+\paragraph{Surface Pro 4:} The Surface Pro 4 is also a laptop and is hardware wise similar to the Surface Book. They are similar in terms of the RAM, and the CPU is from the same generation, but the CPU in the Surface Pro 4 is slightly better with a higher turbo clock speed and bigger L3 cache. The energy consumption for the Surface Pro 4 can be seen in \cref{tab:proQuadroEstEnergCon}, and the upper and lower bounds are as follows:
 
 \begin{gather*}
     CPU: 9.5W < x < 15W \\

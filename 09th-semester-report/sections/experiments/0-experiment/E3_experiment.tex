@@ -2,16 +2,16 @@
 
 The following experiments with E3 address some of the discoveries made in the initial testing, which contradicts the statements in the available sources\cite[]{E3Doc,E3Video,E3WinHec}.\newline
 
-This experiment was conducted based on observations where there were deviations from the expected output in the log file according to the sources and the actual output. The output of E3, is a log file, where each row in this file represents the measurement of one application in a given state. It is claimed that an application needs to run for $1-5$ minutes before the application will be added to this file. Based on observations this is not true, as the lowest measurements were observed to be as low as  $0$ and $1.554$ seconds. The highest value found in the test is $902$ minutes, which also does not match the claim. Another aspect is that E3 counts the same application as different measurements depending on its status. A status in the context of E3 could for example be \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique}, and these will all be counted as different measurements in E3. The different states in E3, means the following:
+This experiment was conducted based on observations where there were deviations from the expected output in the log file according to the sources and the actual output. The output of E3 is a log file, where each row in this file represents the measurement of one application in a given state. It is claimed that an application needs to run for $1-5$ minutes before the application will be added to this file. Based on observations this is not true, as the lowest measurements were observed to be as low as  $0$ and $1.554$ seconds. The highest value found in the test is $902$ minutes, which also does not match the claim. Another aspect is that E3 counts the same application as different measurements depending on its status. Status in the context of E3 could for example be \texttt{App.Status=Focus}, \texttt{App.Status=Visible}, \texttt{App.Status=Minimized} and \texttt{App.Status=NotUnique}, and these will all be counted as different measurements in E3. The different statuses in E3 mean the following:
 
 \begin{itemize}
     \item \texttt{App.Status=Focus}: The application is in focus
     \item \texttt{App.Status=Visible}: When the application is not in focus, but still visible on the screen
     \item \texttt{App.Status=Minimized}: When the application is minimized
-    \item \texttt{App.Status=NotUnique}: Background processes which do not have a user interface
+    \item \texttt{App.Status=NotUnique}: Background processes that do not have a user interface
 \end{itemize}
 
-The description of the different states of applications in E3 are not from any documentation, but is rather based on observation. Because of the uncertainty about how E3 functions it was deemed necessary to conduct some further experiments to determine when a process is included in the measurements and when it is not. To carry out these experiments different scenarios were formulated, which will be covered now.
+The description of the different states of applications in E3 is not from any documentation but is rather based on observation. Because of the uncertainty about how E3 functions it was deemed necessary to conduct some further experiments to determine when a process is included in the measurements and when it is not. To carry out these experiments different scenarios were formulated, which will be covered now.
 
 
 
@@ -105,4 +105,4 @@ From the experiments, several aspects of E3 has been uncovered, and an understan
     \item Each snapshot is taken at the start of every minute
 \end{itemize} 
 
-Taking these discoveries into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. Because a snapshot is taken each minute, the test case will be executed for one minute. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usages to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that two minutes is adequate for isolating the measurements.    
+Taking these discoveries into account a process for recommended usage can be created. Our process for using E3 is the following: Await the start of a new snapshot and then execute the program repeatedly until another snapshot is taken. Because a snapshot is taken each minute, the test case will be executed for one minute. The energy for the test case is then calculated by going through the measurement experiment id and summing each of their energy usage to get the dynamic energy usage for the whole test case. There must be some time between the snapshot for the next measurement to not include the same process twice, our findings suggest that two minutes is adequate for isolating the measurements.    
