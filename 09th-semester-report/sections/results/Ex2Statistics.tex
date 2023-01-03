@@ -10,7 +10,7 @@ The first part of the analysis will be analyzing the distribution for this exper
 \input{tabels/experiment_results/exp_two/StatQuest/NormDist.tex} 
 
 
-\paragraph{Results:} The results from the Shapiro Wilk test can be seen in \cref{tab:NormDist2}, it shows the data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
+\paragraph{Results:} The results from the Shapiro Wilk test can be seen in \cref{tab:NormDist2}, it shows that a lot of our data is not normally distributed, where the data from this experiment is generally further away from being normally distributed than in \cref{sec:Stat1}. One reason why this experiment is further away from being normally distributed could be a result of fewer measurements compared to the first experiment.
 
 \subsection{Independence Test}\label{subsec:independence2}
 It was found in \cref{subsec:NormalDist2}, that the data for this experiment was not normally distributed. Because of this, the Mann-Whitney U Test\cite{mann1947test} will be used to test independence equal to the method used in \cref{subsec:independence1}.
@@ -19,7 +19,7 @@ It was found in \cref{subsec:NormalDist2}, that the data for this experiment was
 
 \input{tabels/experiment_results/exp_two/StatQuest/MannWhitFann.tex}
 
-\paragraph{Results:} The results from the Mann-Whitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}, and the results from the rest of the test cases can be found in \cref{app:stat2}. In \cref{tab:HeatFannkuchRedux2} the results from the test case FannkuchRedux can be seen, where a similar tendency to the first experiment can be observed. This tendency is that we can reject $H_0$ in most cases. When comparing this analysis to the one conducted in the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of fewer measurements compared to the first experiment, meaning outliers has a larger effect.
+\paragraph{Results:} The results from the Mann-Whitney U test on the test case FannkuckRedux can be seen here in \cref{tab:HeatFannkuchRedux2}, and the results from the rest of the test cases can be found in \cref{app:stat2}. In \cref{tab:HeatFannkuchRedux2}  a similar tendency to the first experiment can be observed. This tendency is that we can reject $H_0$ in most cases. When comparing this analysis to the one conducted in the first experiment, we find more cases where we cannot reject $H_0$ in this experiment. This could be a result of fewer measurements compared to the first experiment, meaning outliers has a larger effect.
 
 \subsection{Correlation}\label{subsec:correlation2}
 In this section, the correlation between the different measuring instruments will be conducted for the second experiment. Kendall's Tau coefficient\cite{kendall1938new} will again be used as it was in \cref{subsec:correlation1}
@@ -38,7 +38,7 @@ These coefficients show higher correlations between the different DUTs and their
 \paragraph{RQ2:} When comparing the measuring instruments to each other the average correlation for each instrument can be calculated. These will then be compared with the results from \cref{sec:Stat1}, to see what effect disabling the C-States have had on the measurements.
 
 \begin{itemize}
-    \item \textbf{Experiment 1}
+    \item \textbf{Experiment \#1}
     \begin{itemize}
         \item $IPG = 0.772$ %0.81+0.80+0.77+0.71
         \item $LHM = 0.775$ %0.81+0.80+0.78+0.71
@@ -46,7 +46,7 @@ These coefficients show higher correlations between the different DUTs and their
         \item $CLAMP(win) = 0.755$ %0.77+0.78+0.77+0.70
         \item $CLAMP(lin) = 0.710$ %0.71+0.71+0.72+0.70
     \end{itemize}
-    \item \textbf{Experiment 2}
+    \item \textbf{Experiment \#2}
     \begin{itemize}
         \item $IPG = 0.805$ %0.85+0.83+0.78+0.76
         \item $LHM = 0.787$ %0.85+0.78+0.76+0.76
@@ -66,21 +66,21 @@ When looking at the average correlation for the measuring instruments across the
 
 % \input{tabels/experiment_results/exp_two/StatQuest/NormDist.tex} 
 
-% As can be seen in \cref{tab:NormDist2}, the data is not normally distributed the data from experiment 2 is generally further away from being normally distributed than the experiment 1. This is not that surprising given that experiment 2 contain less actual runs as these were not needed as found in \cref{subsec:CockUse}. 
+% As can be seen in \cref{tab:NormDist2}, the data is not normally distributed the data from experiment \#2 is generally further away from being normally distributed than experiment \#1. This is not that surprising given that experiment \#2 contains fewer actual runs as these were not needed as found in \cref{subsec:CockUse}. 
 
-% For the MannWhitney U test we would again expect very similar results to the results from experiment one, where the null hypotheses can be rejected in most of the cases.
-% The results from the MannWhitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}.
+% For the Mann-Whitney U test we would again expect very similar results to the results from experiment one, where the null hypotheses can be rejected in most of the cases.
+% The results from the Mann-Whitney U test can be seen here in \cref{tab:HeatFannkuchRedux2}.
 % \input{tabels/experiment_results/exp_two/StatQuest/MannWhitFann.tex}
-% The shown table in \cref{tab:HeatFannkuchRedux2}, is again from the FannkuchRedux Test Case as in \cref{subsec:Stat1}. Again we see a similar tendency in that for most cases we can reject $H_0$, but for experiment 2 there are a few more cases where we cannot reject $H_0$. Once possible reason why that might be the case is that there are fewer samples in experiment 2 so outlier have a larger effect on the Ex1Statistics.
+% The shown table in \cref{tab:HeatFannkuchRedux2}, is again from the FannkuchRedux Test Case as in \cref{subsec:Stat1}. Again we see a similar tendency in that for most cases we can reject $H_0$, but for experiment \#2 there are a few more cases where we cannot reject $H_0$. Once possible reason why that might be the case is that there are fewer samples in experiment \#2 so outlier have a larger effect on the Ex1Statistics.
 
-% Finally for the Correlations between the measuring instruments, the expectations for the correlations in Experiment 2 is that they are either are a bit more correlated since the uncertainty's of the C-Stats have been removed, or that i will remain nearly exactly the same. The calculated Correlations for experiments 2 can be seen in \cref{tab:correlationWork2}.
+% Finally for the Correlations between the measuring instruments, the expectations for the correlations in experiment \#2 is that they are either are a bit more correlated since the uncertainty's of the C-Stats have been removed, or that i will remain nearly exactly the same. The calculated Correlations for experiments \#2 can be seen in \cref{tab:correlationWork2}.
 % \input{tabels/experiment_results/exp_two/StatQuest/CorrelationPower.tex}
-% At an first these results look very similar to the once from experiment 1, but to verify these number more in depth we can compare the averages of the correlations as before.
+% At an first these results look very similar to the once from experiment \#1, but to verify these number more in depth we can compare the averages of the correlations as before.
 
 
-% This slight increase in overall correlation matches up with our expectations as the added consistency in the experiments should help reduce inconsistencies. Generally the correlations are higher in experiment 2, but the correlation does fall in certain cases, these cases will be looked at a bit here.
+% This slight increase in overall correlation matches up with our expectations as the added consistency in the experiments should help reduce inconsistencies. Generally the correlations are higher in experiment \#2, but the correlation does fall in certain cases, these cases will be looked at a bit here.
 
-% The first case is the $RAPL|CLAMP(win)$ which used to in experiment one to have a coefficients of $0.77$, but in Experiment 2 as $0.76$, while this is only a marginal decrease it could be caused by the fact that one measures linux and the other windows. Another one is $LHM|RAPL$ which went from $0.80$ to $0.78$ these measurements are again done on separate OSs. 
+% The first case is the $RAPL|CLAMP(win)$ which used to in experiment one to have a coefficients of $0.77$, but in experiment \#2 as $0.76$, while this is only a marginal decrease it could be caused by the fact that one measures linux and the other windows. Another one is $LHM|RAPL$ which went from $0.80$ to $0.78$ these measurements are again done on separate OSs. 
 
 % So the divide between linux and windows seems to have gotten larger.   
 
