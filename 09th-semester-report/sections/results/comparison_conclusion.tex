@@ -1,10 +1,10 @@
 \section{Summary}
 
-Based on the comparison of this first experiment,\todo{if the first and second experiment eller hvad skal der stå her?} it is difficult to find a clear conclusion. This is because patterns across the different DUTs are difficult to find, and the lack of consistency across the DUTs. Some things are however clear:
+Based on the comparison between the measuring instruments of this first experiment, it is difficult to find a clear conclusion. This is because patterns across the different DUTs are difficult to find, and the lack of consistency across the DUTs. Some things are however clear:
 
 \begin{itemize}
     \item IPG and LHM are in most cases similar. This could be due to both measuring instruments measuring similarly. An observation was made on how LHM made measurements, where it made system calls to a process called RAPL. It could be interesting to see if a similar call is made by IPG, but this is a subject for future work.
-    \item The clamp measurements deviate the most, especially on windows. This could be due to the OS having more background processes, or us not disabling enough. Linux still has outliers, but most measurements are within the 25th and 75th percentile.\todo{Bent: Hvad kan der gøres ved det?}
+    \item The clamp measurements deviate the most, especially on windows. This could be due to the OS having more background processes, or us not disabling enough. Linux still has outliers, but most measurements are within the 25th and 75th percentile.
     \item RAPL measurements deviate less compared to the other measuring instruments.
 \end{itemize}
 

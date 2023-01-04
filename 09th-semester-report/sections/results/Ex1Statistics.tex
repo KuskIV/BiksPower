@@ -1,9 +1,9 @@
 \section{Statistical Analysis of Experiment \#1}\label{sec:Stat1}
 
-In this section, the various statistical methods covered in \cref{subsec:distribution,subsec:correlation} will be used to analyze the data collected from experiment \#1, with an overall goal of finding which measuring instruments are correlated with each other. This analysis will first of all aim to check if the data is normally distributed as it has an effect on which statistical methods can be used in the later stages of the analysis. When checking if the data is normally distributed, the Shapiro-Wilk test\cite{razali2011power} will be used, then either the T-test or the Mann-Whitney U Test\cite{mann1947test} will test if the different test case measurements are from the same population or not, and finally, the correlation between the different test case measurements will be calculated and analyzed using Kendall's Tau coefficient\cite{kendall1938new}.
+In this section, the various statistical methods covered in \cref{subsec:distribution,subsec:correlation} will be used to analyze the data collected from experiment \#1, with an overall goal of finding which measuring instruments are correlated with each other. This analysis will first of all aim to check if the data is normally distributed as it has an effect on which statistical methods can be used in the later stages of the analysis.
 
 \subsection{Normal Distribution}\label{subsec:NormalDist1}
-The Shapiro-Wilk test will be used to test if the data is normally distributed, this is important as it affects which statistical methods can be applied to the test case measurements correctly when finding correlations as covered in \cref{subsec:distribution}. \todo{det ret meget en gentagelse}
+The Shapiro-Wilk test will be used to test if the data is normally distributed, this is important as it affects which statistical methods can be applied to the test case measurements correctly when finding correlations as covered in \cref{subsec:distribution}.
 
 \paragraph{Expectations:} For the Shapiro-Wilk test the expectation is that the majority of the test case measurements will be normally distributed. This assumption is primarily based on the findings by Koedijk et al.\cite{Koedijk2022diff}.
 
@@ -26,7 +26,7 @@ The results from the FannkuchRedux test case can be seen in \cref{tab:HeatFannku
 
 \input{tabels/experiment_results/exp_one/StatQuest/Distribution/MannWFannkuchRedux.tex} 
 
-% As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis is rejected, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This could indicate that IPG and LHM might not be independent of each other, we have suspected from the results that the measurements from these two are done the same way. This serves as another indication of this hypothesis being true.\todo{har vi snakket om det tidligere i rapporten? Det mindes jeg ikke} However to further investigate this is future work.
+% As can be seen in \cref{tab:HeatFannkuchRedux}, the majority of the values are below $p = 0.05$. When $p < 0.05$ the null hypothesis is rejected, which it is only with a few exceptions, including SP4 LHM and SP4 IPG. This could indicate that IPG and LHM might not be independent of each other, we have suspected from the results that the measurements from these two are done the same way. This serves as another indication of this hypothesis being true.\{har vi snakket om det tidligere i rapporten? Det mindes jeg ikke} However to further investigate this is future work.
 % This aligns with the expectations that the samples are mostly independent of each other in the majority of cases.
 
 \subsection{Correlation}\label{subsec:correlation1}
@@ -57,7 +57,7 @@ Next up, the average correlation between the different software-based measuring 
 
 $$IPG | Clamp = (0.77+0.71)/2 = 0.74$$
 $$LHM | Clamp = (0.78+0.71)/2 = 0.745$$
-$$RAPL | Clamp = (0.77+0.72)/2 = 0.745$$\todo{Hvorfor er de mon så ens}
+$$RAPL | Clamp = (0.77+0.72)/2 = 0.745$$
 
 Similarly, the average correlation between the different measuring instruments from the DUTs with a battery is calculated, to see how they are correlated with E3.
 
