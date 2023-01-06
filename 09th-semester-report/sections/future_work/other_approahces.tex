@@ -1,0 +1,15 @@
+\section{Use Windows Measuring Instruments}
+
+The idea of this project was to create a source about the accuracy of measuring instruments on Windows. In this work, RAPL is concluded to be the best measuring instrument with a correlation coefficient between RAPL and the clamp of $0.81$, where IPG and LHM were $0.78$ and $0.76$ in \cref{tab:correlationWork2} respectively. Given the small difference between the measuring instruments on Windows and Linux, it could be interesting to reproduce some tools made for Linux, on Windows.\newline
+
+%% Energy Measurements of Tests
+One such example could be the Continuous Integration Pipeline for the MSTest made by Joergensen et al.\cite{Joergensen2022}. The idea of this pipeline was to run methods similarly to running a unit test, but instead of either passing or failing, the methods are run multiple times, where a distribution of the energy consumption is found. The methods are run multiple times, as a single run is found to be insufficient given the impact of the JIT compiler and background processes.\newline
+
+%% IDE Extension for Reasoning About Energy Consumption
+Another work we could reproduce in Windows is the work by Nielsen et al.\cite{Nielsen2021}. In this work, an extension for VS code is made to help developers optimize code with respect to energy consumption. The energy consumption is estimated using a static analysis using either machine learning, energy models, or by measuring the energy consumption of the CPU using RAPL and then isolating the energy consumption of the code. The static analysis was in this work performed using an interpreter on the Common Intermediate Language (CIL), where the different instructions are analyzed. The instructions can be analyzed by a machine learning model, or by an energy model where each instruction is then mapped to an energy consumption. Given that the energy consumption is shown to be different between Linux and Windows in this work, both the machine learning model and the energy model should be run on energy measurements made on Windows, by either LHM or IPG. For the best performing models in the work by Nielsen et al.\cite{Nielsen2021}, which were nonlinear models like random forest, the performance was between $-7.5$\% and $9.2$\% from the ground truth, where this would be the score to beat on Windows.
+
+% RAPL 0.81
+% IGP 0.78
+% LHM 0.76
+
+% \cref{tab:correlationWork2}

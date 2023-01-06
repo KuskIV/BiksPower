@@ -2,7 +2,7 @@
 Anomaly detection is important when using the data, as outliers can influence the results from the experiments. When an anomaly is detected it will be removed from the data to avoid corrupting the results.
 
 \paragraph{DBScan}
-To find and remove these anomalies the DBScan algorithm will be used. The DBScan algorithm is a clustering algorithm used to cluster data into groups, but it can also be used for density-based abnormality detection. The pseudocode for the DBScan algorithm is from Ester et al.\cite{ester1996density} and is shown here:
+To find and remove these anomalies the DBScan algorithm will be used. The DBScan algorithm is a clustering algorithm used to cluster data into groups, but it can also be used for density-based abnormality detection. The pseudocode for the DBScan algorithm is from Ester et al.\cite{ester1996density} and is shown here:\newpage
 
 \begin{lstlisting}
 DBSCAN(D(*@\feetnote{D is the dataset}@*), eps(*@\feetnote{esp is a radius around a point}@*), MinPts(*@\feetnote{MinPts is the minimum amount of points found in the radius of a point to be a core point}@*))
